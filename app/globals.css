@@ -1,26 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&family=Raleway:wght@200;300;400&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:        #3D0845;
+  --gold:      #B8942A;
+  --gold-lt:   #D4AF6A;
+  --gold-sh:   #F0D080;
+  --cream:     #F5EDD8;
+  --cream-dim: rgba(245,237,216,0.5);
+  --white:     #FDF8F0;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-brand-bg:       #3D0845;
+  --color-brand-gold:     #B8942A;
+  --color-brand-gold-lt:  #D4AF6A;
+  --color-brand-gold-sh:  #F0D080;
+  --color-brand-cream:    #F5EDD8;
+  --color-brand-white:    #FDF8F0;
+  --font-cinzel:          var(--font-cinzel);
+  --font-raleway:         var(--font-raleway);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg);
+  background-image: url('/images/bg-texture.jpg');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: var(--cream);
+  font-family: var(--font-raleway), sans-serif;
 }
