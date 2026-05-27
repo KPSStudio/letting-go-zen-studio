@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -16,12 +17,18 @@ const navLinks = [
 ]
 
 // Main navigation shown on every page.
-// Desktop shows full links. Mobile hides links and shows a MENU button.
+// Desktop shows full links. Mobile uses a dropdown drawer.
 export default function Nav() {
     const pathname = usePathname()
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     // Removes language prefix from paths like /pl/body or /en/body.
     const cleanPathname = pathname.replace(/^\/(pl|en)/, '') || '/'
+
+    // Closes mobile menu after a link is clicked.
+    function closeMobileMenu() {
+        setIsMobileMenuOpen(false)
+    }
 
     return (
         <nav className="site-nav">
@@ -29,6 +36,7 @@ export default function Nav() {
                 href="/"
                 className="site-nav-brand"
                 aria-label="Go to homepage"
+                onClick={closeMobileMenu}
             >
                 <span className="site-nav-brand-word">LETTING GO</span>
 
@@ -63,10 +71,31 @@ export default function Nav() {
             <button
                 type="button"
                 className="site-nav-mobile-button"
-                aria-label="Open mobile menu"
+                aria-label={isMobileMenuOpen ? 'Close mobile menu' : 'Open mobile menu'}
+                aria-expanded={isMobileMenuOpen}
+                onClick={() => setIsMobileMenuOpen((currentValue) => !currentValue)}
             >
-                MENU
+                {isMobileMenuOpen ? 'CLOSE' : 'MENU'}
             </button>
+
+            {isMobileMenuOpen && (
+                <div className="site-mobile-menu">
+                    {navLinks.map((link) => {
+                        const isActive = cleanPathname === link.href
+
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                onClick={closeMobileMenu}
+                                className={isActive ? 'site-mobile-menu-link site-mobile-menu-link-active' : 'site-mobile-menu-link'}
+                            >
+                                {link.label}
+                            </Link>
+                        )
+                    })}
+                </div>
+            )}
         </nav>
     )
 }
