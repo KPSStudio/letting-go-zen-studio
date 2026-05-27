@@ -5,15 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/home/CUDPillars.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/home/Hero.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/layout/Footer.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/layout/Nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Nav.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +172,7 @@
       <workItem from="1779731722395" duration="4364000" />
       <workItem from="1779737041974" duration="52000" />
       <workItem from="1779737122858" duration="1470000" />
-      <workItem from="1779739645336" duration="11995000" />
+      <workItem from="1779739645336" duration="12993000" />
     </task>
     <servers />
   </component>
