@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/components/home/CUDPillars.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/home/Hero.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/layout/Footer.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layout/Nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Nav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="TypeScript JSX File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KPSProjects&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/lettinggozenstudio-dot/letting-go-zen-studio.git&quot;,
+    &quot;accountId&quot;: &quot;35805acc-1f0e-4432-bf85-8d9f5cb14d9e&quot;
+  }
+}</component>
+  <component name="NextEditCompletionFeaturesState">
+    <decayedCancelled>
+      <entry key="MS100" value="1.000000000017067" />
+      <entry key="MS500" value="1.0070215244266487" />
+      <entry key="S2" value="1.289472860513332" />
+      <entry key="S5" value="1.6090362477231808" />
+      <entry key="S10" value="1.780407744530499" />
+      <entry key="S30" value="1.9206767801095144" />
+      <entry key="S60" value="1.9595190358244667" />
+      <entry key="M2" value="1.9795504253607707" />
+      <entry key="M5" value="1.9917699436851812" />
+      <entry key="M10" value="1.9993060396008502" />
+      <entry key="M15" value="2.065152667631222" />
+      <entry key="M30" value="3.396397985060922" />
+      <entry key="H1" value="8.684203390837656" />
+      <entry key="H2" value="18.252786765403556" />
+      <entry key="H4" value="29.89823034008239" />
+      <entry key="D1" value="49.88544888662129" />
+      <entry key="W1" value="55.06687108263617" />
+    </decayedCancelled>
+    <decayedSelected>
+      <entry key="MS100" value="0.0" />
+      <entry key="MS500" value="0.0" />
+      <entry key="S2" value="0.0" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="7.409184082054214E-239" />
+      <entry key="S30" value="4.200072576609548E-80" />
+      <entry key="S60" value="2.0494078599950644E-40" />
+      <entry key="M2" value="1.4315753071337408E-20" />
+      <entry key="M5" value="1.154318562320324E-8" />
+      <entry key="M10" value="1.0743921827341838E-4" />
+      <entry key="M15" value="0.0022600006280314683" />
+      <entry key="M30" value="0.04753946390138898" />
+      <entry key="H1" value="0.21803546477898728" />
+      <entry key="H2" value="0.4669426782582498" />
+      <entry key="H4" value="0.6833320410007493" />
+      <entry key="D1" value="0.9385094086653655" />
+      <entry key="W1" value="0.9909749159520956" />
+    </decayedSelected>
+    <decayedShown>
+      <entry key="MS100" value="0.5625292423527049" />
+      <entry key="MS500" value="0.8973892863388104" />
+      <entry key="S2" value="1.250869179145358" />
+      <entry key="S5" value="1.5888781866160162" />
+      <entry key="S10" value="1.769065619814632" />
+      <entry key="S30" value="1.9165512627416859" />
+      <entry key="S60" value="1.9574085149792353" />
+      <entry key="M2" value="1.9784828472456224" />
+      <entry key="M5" value="1.9913399177488225" />
+      <entry key="M10" value="1.9991964160328632" />
+      <entry key="M15" value="2.0672491544141365" />
+      <entry key="M30" value="3.443671936309287" />
+      <entry key="H1" value="8.901765569072694" />
+      <entry key="H2" value="18.719228350485185" />
+      <entry key="H4" value="30.581179905203133" />
+      <entry key="D1" value="50.823863211461344" />
+      <entry key="W1" value="56.05783136258685" />
+    </decayedShown>
+  </component>
+  <component name="PackageJsonUpdateNotifier">
+    <dismissed value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5,
+  &quot;fromUser&quot;: false
+}</component>
+  <component name="ProjectId" id="3EE79AvDYqE76AAGR0osLWbl3JE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "javascript.preferred.runtime.type.id": "node",
+    "js.debugger.nextJs.config.created.client": "true",
+    "js.debugger.nextJs.config.created.server": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "to.speed.mode.migration.done": "true",
+    "ts.external.directory.path": "C:\\Users\\kamil\\OneDrive\\Documents\\Websites\\letting-go-zen-studio\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\public\images" />
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio" />
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\letting-go-zen-studio" />
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\letting-go-zen-studio\public\images" />
+    </key>
+  </component>
+  <component name="RunManager" selected="npm.Next.js: server-side">
+    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="Next.js: server-side" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.24374.125" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="" />
+      <created>1779731721205</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1779731721205</updated>
+      <workItem from="1779731722395" duration="4364000" />
+      <workItem from="1779737041974" duration="52000" />
+      <workItem from="1779737122858" duration="1470000" />
+      <workItem from="1779739645336" duration="11995000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

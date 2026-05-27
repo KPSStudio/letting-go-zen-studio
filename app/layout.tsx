@@ -7,6 +7,7 @@ import { Cinzel, Raleway } from "next/font/google";
 import "./globals.css";
 import UtilityBar from "@/components/layout/UtilityBar";
 import Nav from "@/components/layout/Nav";
+import Footer from "@/components/layout/Footer";
 
 const cinzel = Cinzel({
     variable: "--font-cinzel",
@@ -38,6 +39,7 @@ export default function RootLayout({
         <main className="flex-1">
             {children}
         </main>
+        <Footer/>
         </body>
         </html>
     );

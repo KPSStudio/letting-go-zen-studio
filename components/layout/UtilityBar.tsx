@@ -1,43 +1,80 @@
 // components/layout/UtilityBar.tsx
-// This is the thin bar at the very top of every page
-// It shows: phone number on the left, language/currency/cart on the right
+import Link from 'next/link'
 
+// Thin top utility bar shown above the main navigation.
 export default function UtilityBar() {
     return (
-        <div className="w-full py-2 px-6 flex justify-between items-center text-sm"
-             style={{ background: 'rgba(0,0,0,0.4)', borderBottom: '1px solid rgba(184,148,42,0.2)' }}>
+        <div className="utility-bar">
 
-            {/* Left side — phone number */}
-            <a href="tel:07590572043"
-               className="text-brand-cream hover:text-brand-gold-lt transition-colors">
-                📱 07590 572 043
-            </a>
+            {/* Left side: phone number, account label, and subtle admin link */}
+            <div className="utility-left">
+                <a
+                    href="tel:07590572043"
+                    className="utility-phone"
+                    aria-label="Call Letting Go Zen Studio"
+                >
+                    <span className="utility-phone-flag">🇬🇧</span>
+                    <span>07590 572 043</span>
+                </a>
 
-            {/* Right side — language, currency, cart */}
-            <div className="flex items-center gap-4">
-
-                {/* Language toggle */}
-                <div className="flex items-center gap-2 text-brand-cream">
-                    <button className="hover:text-brand-gold transition-colors">🇵🇱 PL</button>
-                    <span className="opacity-30">|</span>
-                    <button className="hover:text-brand-gold transition-colors">🇬🇧 EN</button>
-                </div>
-
-                {/* Currency toggle */}
-                <div className="flex items-center gap-2 text-brand-cream">
-                    <button className="hover:text-brand-gold transition-colors">£</button>
-                    <span className="opacity-30">|</span>
-                    <button className="hover:text-brand-gold transition-colors">zł</button>
-                </div>
-
-                {/* Cart */}
-                <button className="text-brand-cream hover:text-brand-gold transition-colors flex items-center gap-1">
-                    🛒 <span>Koszyk</span>
-                    <span className="bg-brand-gold text-brand-bg text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
-            0
-          </span>
+                <button
+                    type="button"
+                    className="utility-account"
+                    aria-label="Account"
+                >
+                    ACCOUNT
                 </button>
 
+                <Link
+                    href="/admin"
+                    className="utility-admin"
+                    aria-label="Admin panel"
+                >
+                    Admin
+                </Link>
+            </div>
+
+            {/* Right side: language, currency, and cart controls */}
+            <div className="utility-right">
+                <button type="button" className="utility-pill">
+                    PL
+                </button>
+
+                <span className="utility-divider" aria-hidden="true" />
+
+                <button type="button" className="utility-pill">
+                    GB EN
+                </button>
+
+                <span className="utility-gap" aria-hidden="true" />
+
+                <button type="button" className="utility-pill utility-currency">
+                    £
+                </button>
+
+                <button type="button" className="utility-pill utility-currency">
+                    zł
+                </button>
+
+                <button type="button" className="utility-pill utility-currency">
+                    €
+                </button>
+
+                <button type="button" className="utility-pill utility-currency">
+                    $
+                </button>
+
+                <span className="utility-gap" aria-hidden="true" />
+
+                <Link
+                    href="/koszyk"
+                    className="utility-cart"
+                    aria-label="Open cart"
+                >
+                    <span className="utility-cart-icon">🛒</span>
+                    <span>CART</span>
+                    <span className="utility-cart-count">0</span>
+                </Link>
             </div>
         </div>
     )
