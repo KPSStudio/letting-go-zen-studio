@@ -11,6 +11,7 @@
     "moreInfo": "WIĘCEJ INFO",
     "close": "Zamknij",
     "session": "Sesja",
+    "session": "Sesja",
     "package": "Pakiet",
     "availability": "Dostępność",
     "includes": "Co obejmuje",
@@ -641,6 +642,54 @@
       "pdf": "PDF",
       "ebook": "ebook",
       "product": "produkt"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "label": "DOKUMENT PRAWNY",
+      "titleStart": "Polityka",
+      "titleGold": "Prywatności",
+      "intro": "RODO — do weryfikacji przez prawnika przed uruchomieniem strony.",
+      "warning": "PLACEHOLDER — Ten dokument wymaga weryfikacji przez prawnika przed uruchomieniem strony.",
+      "sections": {
+        "dataController": {
+          "title": "ADMINISTRATOR DANYCH",
+          "content": "Joanna Witkowska — Letting Go Zen Studio. Kontakt: lettinggozenstudio@gmail.com"
+        },
+        "gdprArticle13": {
+          "title": "ART. 13 RODO",
+          "content": "Zbieramy: imię, email, telefon opcjonalnie. Dane używane wyłącznie do realizacji usług i kontaktu."
+        },
+        "clientRights": {
+          "title": "ART. 14 RODO — PRAWA KLIENTA",
+          "content": "Masz prawo do dostępu, sprostowania, usunięcia i przenoszenia swoich danych."
+        }
+      }
+    },
+    "terms": {
+      "label": "DOKUMENT PRAWNY",
+      "titleStart": "Regulamin",
+      "titleGold": "Serwisu",
+      "intro": "Do weryfikacji przez prawnika przed uruchomieniem strony.",
+      "warning": "PLACEHOLDER — Ten dokument wymaga weryfikacji przez prawnika przed uruchomieniem strony.",
+      "sections": {
+        "general": {
+          "title": "§1 POSTANOWIENIA OGÓLNE",
+          "content": "Niniejszy Regulamin określa zasady korzystania z usług oferowanych przez Letting Go Zen Studio, prowadzonego przez Joannę Witkowską."
+        },
+        "serviceNature": {
+          "title": "§2 CHARAKTER USŁUG",
+          "content": "Wszystkie usługi mają charakter komplementarny i holistyczny. Nie stanowią diagnozy medycznej ani leczenia."
+        },
+        "payments": {
+          "title": "§3 PŁATNOŚCI",
+          "content": "Płatności realizowane są przez Stripe. Raporty PDF dostarczane w języku angielskim w terminie określonym przy każdej usłudze."
+        },
+        "refunds": {
+          "title": "§4 ANULACJE I ZWROTY",
+          "content": "[Placeholder — warunki do uzupełnienia z prawnikiem]"
+        }
+      }
     }
   }
 }

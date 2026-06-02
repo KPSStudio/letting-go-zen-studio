@@ -619,5 +619,53 @@
       "ebook": "ebook",
       "product": "product"
     }
+  },
+  "legal": {
+    "privacy": {
+      "label": "LEGAL DOCUMENT",
+      "titleStart": "Privacy",
+      "titleGold": "Policy",
+      "intro": "GDPR — to be reviewed by a lawyer before the website goes live.",
+      "warning": "PLACEHOLDER — This document must be reviewed by a lawyer before the website goes live.",
+      "sections": {
+        "dataController": {
+          "title": "DATA CONTROLLER",
+          "content": "Joanna Witkowska — Letting Go Zen Studio. Contact: lettinggozenstudio@gmail.com"
+        },
+        "gdprArticle13": {
+          "title": "ARTICLE 13 GDPR",
+          "content": "We collect: name, email address, and phone number optionally. The data is used only to provide services and for contact purposes."
+        },
+        "clientRights": {
+          "title": "ARTICLE 14 GDPR — CLIENT RIGHTS",
+          "content": "You have the right to access, correct, delete, and transfer your personal data."
+        }
+      }
+    },
+    "terms": {
+      "label": "LEGAL DOCUMENT",
+      "titleStart": "Terms",
+      "titleGold": "of Service",
+      "intro": "To be reviewed by a lawyer before the website goes live.",
+      "warning": "PLACEHOLDER — This document must be reviewed by a lawyer before the website goes live.",
+      "sections": {
+        "general": {
+          "title": "§1 GENERAL PROVISIONS",
+          "content": "These Terms define the rules for using the services offered by Letting Go Zen Studio, operated by Joanna Witkowska."
+        },
+        "serviceNature": {
+          "title": "§2 NATURE OF SERVICES",
+          "content": "All services are complementary and holistic in nature. They do not constitute medical diagnosis or medical treatment."
+        },
+        "payments": {
+          "title": "§3 PAYMENTS",
+          "content": "Payments are processed through Stripe. PDF reports are delivered in English within the timeframe specified for each service."
+        },
+        "refunds": {
+          "title": "§4 CANCELLATIONS AND REFUNDS",
+          "content": "[Placeholder — terms to be completed with a lawyer]"
+        }
+      }
+    }
   }
 }
