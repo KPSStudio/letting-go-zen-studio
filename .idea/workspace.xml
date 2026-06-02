@@ -5,7 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="Changes to navigation bar on mobile so it now acts as a dropdown menu rather than a static button">
+      <change afterPath="$PROJECT_DIR$/app/[locale]/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/i18n/request.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/CartContext.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/CurrencyContext.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/messages/pl.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/favicon.ico" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/home/CUDPillars.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/CUDPillars.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/home/Hero.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/Hero.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Footer.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layout/Nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Nav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,6 +37,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="tsconfig.json" />
+        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
       </list>
     </option>
@@ -36,61 +60,61 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.150867951787145" />
-      <entry key="MS500" value="2.2354769512502584" />
-      <entry key="S2" value="6.331957266122483" />
-      <entry key="S5" value="12.674072301968025" />
-      <entry key="S10" value="17.871125376391017" />
-      <entry key="S30" value="23.38111224331304" />
-      <entry key="S60" value="25.701635803461805" />
-      <entry key="M2" value="28.627495475431953" />
-      <entry key="M5" value="32.79553283940885" />
-      <entry key="M10" value="35.16877976593139" />
-      <entry key="M15" value="36.26176043816335" />
-      <entry key="M30" value="38.25435297335088" />
-      <entry key="H1" value="42.88019884685516" />
-      <entry key="H2" value="52.154206026858844" />
-      <entry key="H4" value="64.4455966545747" />
-      <entry key="D1" value="86.89508424897303" />
-      <entry key="W1" value="92.90975687659538" />
+      <entry key="MS100" value="1.0694054766771317" />
+      <entry key="MS500" value="2.8405872044812686" />
+      <entry key="S2" value="4.860892293611878" />
+      <entry key="S5" value="5.50560387097447" />
+      <entry key="S10" value="5.745815842663994" />
+      <entry key="S30" value="5.913667012552536" />
+      <entry key="S60" value="5.956698675927225" />
+      <entry key="M2" value="5.986703007279266" />
+      <entry key="M5" value="6.38902353936511" />
+      <entry key="M10" value="10.388611908179334" />
+      <entry key="M15" value="17.47856074798916" />
+      <entry key="M30" value="38.97807854586158" />
+      <entry key="H1" value="64.51056467881497" />
+      <entry key="H2" value="85.14310358693545" />
+      <entry key="H4" value="100.85757990755552" />
+      <entry key="D1" value="162.02901369746752" />
+      <entry key="W1" value="199.65486922752282" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="0.0" />
-      <entry key="S10" value="2.621087661285E-312" />
-      <entry key="S30" value="1.3787764238873156E-104" />
-      <entry key="S60" value="1.1742131083782517E-52" />
-      <entry key="M2" value="1.0836111426052471E-26" />
-      <entry key="M5" value="4.111018061846801E-11" />
-      <entry key="M10" value="6.411722125799583E-6" />
-      <entry key="M15" value="3.451303312623345E-4" />
-      <entry key="M30" value="0.018577683689371335" />
-      <entry key="H1" value="0.1362999768502232" />
-      <entry key="H2" value="0.3691882674872308" />
-      <entry key="H4" value="0.6076086466527875" />
-      <entry key="D1" value="0.9203167455159318" />
-      <entry key="W1" value="0.9882075990620375" />
+      <entry key="S5" value="9.769541681196033E-199" />
+      <entry key="S10" value="9.8840991907184E-100" />
+      <entry key="S30" value="9.961216172841464E-34" />
+      <entry key="S60" value="3.156139441286052E-17" />
+      <entry key="M2" value="5.617952866735398E-9" />
+      <entry key="M5" value="5.009925139558997E-4" />
+      <entry key="M10" value="0.02238286205908213" />
+      <entry key="M15" value="0.07942253514386372" />
+      <entry key="M30" value="0.2818200403518782" />
+      <entry key="H1" value="0.5308676070544001" />
+      <entry key="H2" value="0.7292013671906076" />
+      <entry key="H4" value="0.8779768435461481" />
+      <entry key="D1" value="1.5124889555261485" />
+      <entry key="W1" value="1.9116175477909019" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.1050001415471964" />
-      <entry key="MS500" value="2.2192618461676235" />
-      <entry key="S2" value="6.321875330461777" />
-      <entry key="S5" value="12.6661380843712" />
-      <entry key="S10" value="17.865519455580845" />
-      <entry key="S30" value="23.378657044776833" />
-      <entry key="S60" value="25.700278620883566" />
-      <entry key="M2" value="28.626729157053862" />
-      <entry key="M5" value="32.795173440807204" />
-      <entry key="M10" value="35.16858022562662" />
-      <entry key="M15" value="36.261948204902914" />
-      <entry key="M30" value="38.2727586624867" />
-      <entry key="H1" value="43.01616829536936" />
-      <entry key="H2" value="52.52298063189524" />
-      <entry key="H4" value="65.0528564369472" />
-      <entry key="D1" value="87.81530628671803" />
-      <entry key="W1" value="93.89794967081603" />
+      <entry key="MS100" value="0.18055087801152822" />
+      <entry key="MS500" value="2.4737605066686106" />
+      <entry key="S2" value="4.750727637423056" />
+      <entry key="S5" value="5.459742057306086" />
+      <entry key="S10" value="5.722570830066073" />
+      <entry key="S30" value="5.90584741990895" />
+      <entry key="S60" value="5.9527798644440395" />
+      <entry key="M2" value="5.9847404230625685" />
+      <entry key="M5" value="6.388714316098463" />
+      <entry key="M10" value="10.410415181972114" />
+      <entry key="M15" value="17.557338898943474" />
+      <entry key="M30" value="39.25909378716627" />
+      <entry key="H1" value="65.04069937894614" />
+      <entry key="H2" value="85.87179563315773" />
+      <entry key="H4" value="101.73524129907445" />
+      <entry key="D1" value="163.5413891852411" />
+      <entry key="W1" value="201.5664645588431" />
     </decayedShown>
   </component>
   <component name="PackageJsonUpdateNotifier">
@@ -119,6 +143,7 @@
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
     "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/kamil/OneDrive/Documents/Websites/letting-go-zen-studio/app/[locale]",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -131,11 +156,16 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\app\[locale]" />
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\app" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\i18n" />
+      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\app\[locale]" />
       <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\public\images" />
       <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio" />
       <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\letting-go-zen-studio" />
-      <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\letting-go-zen-studio\public\images" />
     </key>
   </component>
   <component name="RunManager" selected="npm.Next.js: server-side">
@@ -170,7 +200,13 @@
       <workItem from="1779731722395" duration="4364000" />
       <workItem from="1779737041974" duration="52000" />
       <workItem from="1779737122858" duration="1470000" />
-      <workItem from="1779739645336" duration="13505000" />
+      <workItem from="1779739645336" duration="17520000" />
+      <workItem from="1780041770711" duration="4779000" />
+      <workItem from="1780339672039" duration="4731000" />
+      <workItem from="1780397650170" duration="640000" />
+      <workItem from="1780398306260" duration="1064000" />
+      <workItem from="1780399384604" duration="61000" />
+      <workItem from="1780399457938" duration="2427000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />
@@ -188,7 +224,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779897038950</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Changes to navigation bar on mobile so it now acts as a dropdown menu rather than a static button">
+      <option name="closed" value="true" />
+      <created>1779897307405</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1779897307405</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

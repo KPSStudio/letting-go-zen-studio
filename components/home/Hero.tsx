@@ -1,8 +1,14 @@
-// components/home/Hero.tsx
+'use client'
+
+import { useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Hero() {
+    // t() looks up text from messages/pl.json or messages/en.json
+    // depending on which language is active
+    const t = useTranslations('hero')
+
     return (
         <section className="hero-section">
 
@@ -16,13 +22,9 @@ export default function Hero() {
             {/* Thin animated vertical gold line */}
             <span className="hero-vertical-line" aria-hidden="true" />
 
-            {/* Rising gold dots from the lower C.U.D area */}
+            {/* Rising gold dots */}
             <div className="hero-rising-dots" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
+                <span /><span /><span /><span /><span />
             </div>
 
             {/* Main hero content */}
@@ -40,32 +42,27 @@ export default function Hero() {
                     />
                 </div>
 
-                {/* C.U.D line */}
+                {/* Tagline */}
                 <div className="hero-tagline-wrap">
                     <span className="hero-tagline-line" />
-                    <p className="hero-tagline">
-                        Ciało&nbsp;&nbsp; Umysł&nbsp;&nbsp; Dusza
-                    </p>
+                    <p className="hero-tagline">{t('tagline')}</p>
                     <span className="hero-tagline-line" />
                 </div>
 
-                {/* Main animated title */}
-                <h1 className="hero-title">
-                    Letting Go
-                </h1>
+                {/* Main title */}
+                <h1 className="hero-title">{t('title1')}</h1>
 
                 {/* Subtitle */}
-                <h2 className="hero-subtitle">
-                    Zen Studio
-                </h2>
+                <h2 className="hero-subtitle">{t('title2')}</h2>
 
                 {/* Button */}
                 <Link href="/o-mnie" className="hero-button">
-                    O Mnie
+                    {t('button')}
                 </Link>
 
-                {/* Decorative vertical line between Hero and C.U.D cards */}
+                {/* Decorative line */}
                 <span className="hero-bottom-line" aria-hidden="true" />
+
             </div>
         </section>
     )

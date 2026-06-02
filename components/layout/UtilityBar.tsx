@@ -1,80 +1,83 @@
 // components/layout/UtilityBar.tsx
-import Link from 'next/link'
+'use client'
 
-// Thin top utility bar shown above the main navigation.
+import Link from 'next/link'
+import { useRouter, usePathname } from 'next/navigation'
+import { useLocale } from 'next-intl'
+import { useCurrency, Currency } from '@/lib/CurrencyContext'
+import { useCart } from '@/lib/CartContext'
+
 export default function UtilityBar() {
+    const { currency, setCurrency } = useCurrency()
+    const { count } = useCart()
+    const locale = useLocale()
+    const router = useRouter()
+    const pathname = usePathname()
+
+    // Switches language by replacing the locale prefix in the URL
+    // e.g. /pl/body → /en/body
+    const switchLocale = (newLocale: string) => {
+        const segments = pathname.split('/')
+        segments[1] = newLocale
+        router.push(segments.join('/'))
+    }
+
     return (
         <div className="utility-bar">
 
-            {/* Left side: phone number, account label, and subtle admin link */}
+            {/* Left — phone */}
             <div className="utility-left">
-                <a
-                    href="tel:07590572043"
-                    className="utility-phone"
-                    aria-label="Call Letting Go Zen Studio"
-                >
-                    <span className="utility-phone-flag">🇬🇧</span>
-                    <span>07590 572 043</span>
+                <a href="tel:07590572043" className="utility-phone">
+                    📱 07590 572 043
                 </a>
-
-                <button
-                    type="button"
-                    className="utility-account"
-                    aria-label="Account"
-                >
-                    ACCOUNT
-                </button>
-
-                <Link
-                    href="/admin"
-                    className="utility-admin"
-                    aria-label="Admin panel"
-                >
-                    Admin
-                </Link>
             </div>
 
-            {/* Right side: language, currency, and cart controls */}
-            <div className="utility-right">
-                <button type="button" className="utility-pill">
-                    PL
-                </button>
+            {/* Right — language, currency, cart */}
+            <div className="utility-right" style={{ gap: '0.35rem', display: 'flex', alignItems: 'center' }}>
 
-                <span className="utility-divider" aria-hidden="true" />
+                {/* Language toggles */}
+                {(['pl', 'en'] as const).map((l) => (
+                    <button
+                        key={l}
+                        onClick={() => switchLocale(l)}
+                        className="utility-pill"
+                        style={{
+                            color: locale === l ? 'var(--gold-lt)' : undefined,
+                            borderColor: locale === l ? 'rgba(212,175,106,0.8)' : undefined,
+                        }}
+                    >
+                        {l === 'pl' ? '🇵🇱 PL' : '🇬🇧 EN'}
+                    </button>
+                ))}
 
-                <button type="button" className="utility-pill">
-                    GB EN
-                </button>
+                <div className="utility-divider" />
+                <div className="utility-gap" />
 
-                <span className="utility-gap" aria-hidden="true" />
+                {/* Currency toggles */}
+                {(['GBP', 'PLN', 'EUR', 'USD'] as Currency[]).map((c) => (
+                    <button
+                        key={c}
+                        onClick={() => setCurrency(c)}
+                        className="utility-pill utility-currency"
+                        style={{
+                            color: currency === c ? 'var(--gold-lt)' : undefined,
+                            borderColor: currency === c ? 'rgba(212,175,106,0.8)' : undefined,
+                        }}
+                    >
+                        {c === 'GBP' ? '£' : c === 'PLN' ? 'zł' : c === 'EUR' ? '€' : '$'}
+                    </button>
+                ))}
 
-                <button type="button" className="utility-pill utility-currency">
-                    £
-                </button>
+                <div className="utility-gap" />
+                <div className="utility-divider" />
+                <div className="utility-gap" />
 
-                <button type="button" className="utility-pill utility-currency">
-                    zł
-                </button>
-
-                <button type="button" className="utility-pill utility-currency">
-                    €
-                </button>
-
-                <button type="button" className="utility-pill utility-currency">
-                    $
-                </button>
-
-                <span className="utility-gap" aria-hidden="true" />
-
-                <Link
-                    href="/koszyk"
-                    className="utility-cart"
-                    aria-label="Open cart"
-                >
-                    <span className="utility-cart-icon">🛒</span>
-                    <span>CART</span>
-                    <span className="utility-cart-count">0</span>
+                {/* Cart */}
+                <Link href="/koszyk" className="utility-cart">
+                    🛒 Koszyk
+                    <span className="utility-cart-count">{count}</span>
                 </Link>
+
             </div>
         </div>
     )

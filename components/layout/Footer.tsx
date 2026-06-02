@@ -1,35 +1,53 @@
 // components/layout/Footer.tsx
 // Footer appears on every page.
-// It matches the approved demo style: slim, dark, balanced, and understated.
+// All footer navigation labels translate through next-intl.
+
+'use client'
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLocale, useTranslations } from 'next-intl'
 
-const navLinks = [
-    { label: 'CIAŁO', href: '/body' },
-    { label: 'UMYSŁ', href: '/mind' },
-    { label: 'DUSZA', href: '/soul' },
-    { label: 'SKLEP', href: '/sklep' },
-    { label: 'WSPÓŁPRACA', href: '/wspolpraca' },
-    { label: 'O MNIE', href: '/o-mnie' },
-    { label: 'KONTAKT', href: '/kontakt' },
+type FooterLink = {
+    labelKey: string
+    href: string
+}
+
+const navLinks: FooterLink[] = [
+    { labelKey: 'body', href: '/body' },
+    { labelKey: 'mind', href: '/mind' },
+    { labelKey: 'soul', href: '/soul' },
+    { labelKey: 'sklep', href: '/sklep' },
+    { labelKey: 'wspolpraca', href: '/wspolpraca' },
+    { labelKey: 'omnie', href: '/o-mnie' },
+    { labelKey: 'kontakt', href: '/kontakt' },
 ]
 
 const socialLinks = [
-    { label: 'f', href: 'https://facebook.com/lettinggozenstudio' },
+    { label: 'f', href: 'https://www.facebook.com/lettinggostudiozen/' },
     { label: '◎', href: 'https://instagram.com/lettinggozenstudio' },
-    { label: '♪', href: 'https://tiktok.com/@lettinggozenstudio' },
+    { label: '♪', href: 'https://www.tiktok.com/@lettinggozenstudi' },
 ]
 
 export default function Footer() {
+    const locale = useLocale()
+    const t = useTranslations('footer')
+
+    function getLocalizedHref(href: string): string {
+        if (href === '/') {
+            return `/${locale}`
+        }
+
+        return `/${locale}${href}`
+    }
+
     return (
         <footer className="site-footer">
-            {/* Top row — brand, navigation, social links */}
             <div className="footer-top-row">
                 <Link
-                    href="/"
+                    href={`/${locale}`}
                     className="footer-brand"
-                    aria-label="Letting Go Zen Studio homepage"
+                    aria-label={t('homepageAria')}
                 >
                     <Image
                         src="/images/logo.png"
@@ -45,16 +63,16 @@ export default function Footer() {
                 </Link>
 
                 <nav
-                    aria-label="Footer navigation"
+                    aria-label={t('navigationAria')}
                     className="footer-nav"
                 >
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
-                            href={link.href}
+                            href={getLocalizedHref(link.href)}
                             className="footer-nav-link"
                         >
-                            {link.label}
+                            {t(link.labelKey)}
                         </Link>
                     ))}
                 </nav>
@@ -66,7 +84,7 @@ export default function Footer() {
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={`Open ${social.label}`}
+                            aria-label={t('socialAria', { platform: social.label })}
                             className="footer-social-link"
                         >
                             {social.label}
@@ -75,25 +93,24 @@ export default function Footer() {
                 </div>
             </div>
 
-            {/* Bottom row — copyright and legal links */}
             <div className="footer-bottom-row">
                 <span className="footer-copyright">
-                    © 2025 Letting Go Zen Studio · Joanna Witkowska
+                    © 2026 Letting Go Zen Studio · Joanna Witkowska
                 </span>
 
                 <div className="footer-legal-links">
                     <Link
-                        href="/regulamin"
+                        href={getLocalizedHref('/regulamin')}
                         className="footer-bottom-link"
                     >
-                        REGULAMIN
+                        {t('terms')}
                     </Link>
 
                     <Link
-                        href="/polityka-prywatnosci"
+                        href={getLocalizedHref('/polityka-prywatnosci')}
                         className="footer-bottom-link"
                     >
-                        POLITYKA PRYWATNOŚCI
+                        {t('privacy')}
                     </Link>
                 </div>
             </div>

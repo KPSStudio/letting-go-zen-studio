@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "home": "Strona Główna",
+    "body": "Ciało",
+    "mind": "Umysł",
+    "soul": "Dusza",
+    "sklep": "Sklep",
+    "wspolpraca": "Współpraca",
+    "omnie": "O Mnie",
+    "kontakt": "Kontakt"
+  },
+  "utility": {
+    "phone": "07590 572 043",
+    "cart": "Koszyk"
+  },
+  "hero": {
+    "tagline": "Ciało · Umysł · Dusza",
+    "title1": "Letting Go",
+    "title2": "Zen Studio",
+    "button": "O Mnie"
+  },
+  "pillars": {
+    "heading": "Wybierz swoją ścieżkę",
+    "subtitle": "C · U · D",
+    "explore": "ODKRYJ →",
+    "bodyLetter": "C",
+    "bodyName": "CIAŁO",
+    "bodyHref": "/body",
+    "mindLetter": "U",
+    "mindName": "UMYSŁ",
+    "mindHref": "/mind",
+    "soulLetter": "D",
+    "soulName": "DUSZA",
+    "soulHref": "/soul"
+  },
+  "footer": {
+    "body": "CIAŁO",
+    "mind": "UMYSŁ",
+    "soul": "DUSZA",
+    "sklep": "SKLEP",
+    "wspolpraca": "WSPÓŁPRACA",
+    "omnie": "O MNIE",
+    "kontakt": "KONTAKT",
+    "terms": "REGULAMIN",
+    "privacy": "POLITYKA PRYWATNOŚCI",
+    "homepageAria": "Strona główna Letting Go Zen Studio",
+    "navigationAria": "Nawigacja stopki",
+    "socialAria": "Otwórz profil: {platform}"
+  }
+}

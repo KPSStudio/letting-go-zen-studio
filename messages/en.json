@@ -1,0 +1,50 @@
+{
+  "nav": {
+    "home": "Home",
+    "body": "Body",
+    "mind": "Mind",
+    "soul": "Soul",
+    "sklep": "Shop",
+    "wspolpraca": "Collaborate",
+    "omnie": "About Me",
+    "kontakt": "Contact"
+  },
+  "utility": {
+    "phone": "07590 572 043",
+    "cart": "Cart"
+  },
+  "hero": {
+    "tagline": "Body · Mind · Soul",
+    "title1": "Letting Go",
+    "title2": "Zen Studio",
+    "button": "About Me"
+  },
+  "pillars": {
+    "heading": "Choose your path",
+    "subtitle": "B · M · S",
+    "explore": "EXPLORE →",
+    "bodyLetter": "B",
+    "bodyName": "BODY",
+    "bodyHref": "/body",
+    "mindLetter": "M",
+    "mindName": "MIND",
+    "mindHref": "/mind",
+    "soulLetter": "S",
+    "soulName": "SOUL",
+    "soulHref": "/soul"
+  },
+  "footer": {
+    "body": "BODY",
+    "mind": "MIND",
+    "soul": "SOUL",
+    "sklep": "SHOP",
+    "wspolpraca": "COLLABORATE",
+    "omnie": "ABOUT",
+    "kontakt": "CONTACT",
+    "terms": "TERMS",
+    "privacy": "PRIVACY POLICY",
+    "homepageAria": "Letting Go Zen Studio homepage",
+    "navigationAria": "Footer navigation",
+    "socialAria": "Open social profile: {platform}"
+  }
+}
