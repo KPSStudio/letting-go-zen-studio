@@ -3,7 +3,7 @@
 
 import Link from 'next/link'
 import { useRouter, usePathname } from 'next/navigation'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { useCurrency, Currency } from '@/lib/CurrencyContext'
 import { useCart } from '@/lib/CartContext'
 
@@ -13,6 +13,7 @@ export default function UtilityBar() {
     const locale = useLocale()
     const router = useRouter()
     const pathname = usePathname()
+    const t = useTranslations('utility')
 
     // Switches language by replacing the locale prefix in the URL
     // e.g. /pl/body → /en/body
@@ -28,17 +29,25 @@ export default function UtilityBar() {
             {/* Left — phone */}
             <div className="utility-left">
                 <a href="tel:07590572043" className="utility-phone">
-                    📱 07590 572 043
+                    📱 {t('phone')}
                 </a>
             </div>
 
             {/* Right — language, currency, cart */}
-            <div className="utility-right" style={{ gap: '0.35rem', display: 'flex', alignItems: 'center' }}>
+            <div
+                className="utility-right"
+                style={{
+                    gap: '0.35rem',
+                    display: 'flex',
+                    alignItems: 'center',
+                }}
+            >
 
                 {/* Language toggles */}
                 {(['pl', 'en'] as const).map((l) => (
                     <button
                         key={l}
+                        type="button"
                         onClick={() => switchLocale(l)}
                         className="utility-pill"
                         style={{
@@ -57,6 +66,7 @@ export default function UtilityBar() {
                 {(['GBP', 'PLN', 'EUR', 'USD'] as Currency[]).map((c) => (
                     <button
                         key={c}
+                        type="button"
                         onClick={() => setCurrency(c)}
                         className="utility-pill utility-currency"
                         style={{
@@ -73,8 +83,8 @@ export default function UtilityBar() {
                 <div className="utility-gap" />
 
                 {/* Cart */}
-                <Link href="/koszyk" className="utility-cart">
-                    🛒 Koszyk
+                <Link href={`/${locale}/koszyk`} className="utility-cart">
+                    🛒 {t('cart')}
                     <span className="utility-cart-count">{count}</span>
                 </Link>
 

@@ -5,29 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="Changes to navigation bar on mobile so it now acts as a dropdown menu rather than a static button">
-      <change afterPath="$PROJECT_DIR$/app/[locale]/layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/i18n/request.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/CartContext.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/CurrencyContext.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/messages/pl.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/next.config.mjs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/body/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/kontakt/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/koszyk/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/mind/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/sklep/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/soul/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/[locale]/wspolpraca/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/favicon.ico" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/home/CUDPillars.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/CUDPillars.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/home/Hero.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/home/Hero.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/layout/Nav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Nav.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/UtilityBar.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/public/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/pl.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/pl.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,61 +50,61 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0694054766771317" />
-      <entry key="MS500" value="2.8405872044812686" />
-      <entry key="S2" value="4.860892293611878" />
-      <entry key="S5" value="5.50560387097447" />
-      <entry key="S10" value="5.745815842663994" />
-      <entry key="S30" value="5.913667012552536" />
-      <entry key="S60" value="5.956698675927225" />
-      <entry key="M2" value="5.986703007279266" />
-      <entry key="M5" value="6.38902353936511" />
-      <entry key="M10" value="10.388611908179334" />
-      <entry key="M15" value="17.47856074798916" />
-      <entry key="M30" value="38.97807854586158" />
-      <entry key="H1" value="64.51056467881497" />
-      <entry key="H2" value="85.14310358693545" />
-      <entry key="H4" value="100.85757990755552" />
-      <entry key="D1" value="162.02901369746752" />
-      <entry key="W1" value="199.65486922752282" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0000000005568856" />
+      <entry key="S30" value="1.000822726195545" />
+      <entry key="S60" value="1.0286832040669263" />
+      <entry key="M2" value="1.1693611645979698" />
+      <entry key="M5" value="1.491669001426845" />
+      <entry key="M10" value="1.7541413975418454" />
+      <entry key="M15" value="2.307614781577559" />
+      <entry key="M30" value="8.601336873728599" />
+      <entry key="H1" value="28.714371794819105" />
+      <entry key="H2" value="56.82040541810874" />
+      <entry key="H4" value="82.9359736663213" />
+      <entry key="D1" value="158.19648275739456" />
+      <entry key="W1" value="200.61205683506736" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
       <entry key="MS500" value="0.0" />
       <entry key="S2" value="0.0" />
-      <entry key="S5" value="9.769541681196033E-199" />
-      <entry key="S10" value="9.8840991907184E-100" />
-      <entry key="S30" value="9.961216172841464E-34" />
-      <entry key="S60" value="3.156139441286052E-17" />
-      <entry key="M2" value="5.617952866735398E-9" />
-      <entry key="M5" value="5.009925139558997E-4" />
-      <entry key="M10" value="0.02238286205908213" />
-      <entry key="M15" value="0.07942253514386372" />
-      <entry key="M30" value="0.2818200403518782" />
-      <entry key="H1" value="0.5308676070544001" />
-      <entry key="H2" value="0.7292013671906076" />
-      <entry key="H4" value="0.8779768435461481" />
-      <entry key="D1" value="1.5124889555261485" />
-      <entry key="W1" value="1.9116175477909019" />
+      <entry key="S5" value="0.0" />
+      <entry key="S10" value="3.104709936765755E-237" />
+      <entry key="S30" value="1.4588378092082026E-79" />
+      <entry key="S60" value="3.819473535983983E-40" />
+      <entry key="M2" value="1.9543473427167382E-20" />
+      <entry key="M5" value="1.3073765805791566E-8" />
+      <entry key="M10" value="1.1434056937846483E-4" />
+      <entry key="M15" value="0.002355773689339268" />
+      <entry key="M30" value="0.04853631310000132" />
+      <entry key="H1" value="0.2203097315908667" />
+      <entry key="H2" value="0.4697547734783464" />
+      <entry key="H4" value="0.7046848350138751" />
+      <entry key="D1" value="1.4580671405506813" />
+      <entry key="W1" value="1.9016363984068114" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.18055087801152822" />
-      <entry key="MS500" value="2.4737605066686106" />
-      <entry key="S2" value="4.750727637423056" />
-      <entry key="S5" value="5.459742057306086" />
-      <entry key="S10" value="5.722570830066073" />
-      <entry key="S30" value="5.90584741990895" />
-      <entry key="S60" value="5.9527798644440395" />
-      <entry key="M2" value="5.9847404230625685" />
-      <entry key="M5" value="6.388714316098463" />
-      <entry key="M10" value="10.410415181972114" />
-      <entry key="M15" value="17.557338898943474" />
-      <entry key="M30" value="39.25909378716627" />
-      <entry key="H1" value="65.04069937894614" />
-      <entry key="H2" value="85.87179563315773" />
-      <entry key="H4" value="101.73524129907445" />
-      <entry key="D1" value="163.5413891852411" />
-      <entry key="W1" value="201.5664645588431" />
+      <entry key="MS100" value="0.9659363289248456" />
+      <entry key="MS500" value="0.9930924954370359" />
+      <entry key="S2" value="0.9982686325973925" />
+      <entry key="S5" value="0.9993070929904525" />
+      <entry key="S10" value="0.9996534870159475" />
+      <entry key="S30" value="1.0007070372748368" />
+      <entry key="S60" value="1.028622461372813" />
+      <entry key="M2" value="1.1693234796953156" />
+      <entry key="M5" value="1.4916472205749334" />
+      <entry key="M10" value="1.7542397119780933" />
+      <entry key="M15" value="2.3099421210510074" />
+      <entry key="M30" value="8.649729576509243" />
+      <entry key="H1" value="28.934374774508633" />
+      <entry key="H2" value="57.28983076222836" />
+      <entry key="H4" value="83.64040464459976" />
+      <entry key="D1" value="159.65444040080945" />
+      <entry key="W1" value="202.5136711169612" />
     </decayedShown>
   </component>
   <component name="PackageJsonUpdateNotifier">
@@ -206,7 +196,7 @@
       <workItem from="1780397650170" duration="640000" />
       <workItem from="1780398306260" duration="1064000" />
       <workItem from="1780399384604" duration="61000" />
-      <workItem from="1780399457938" duration="2427000" />
+      <workItem from="1780399457938" duration="9088000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />

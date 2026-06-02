@@ -1,4 +1,260 @@
 {
+  "body": {
+    "back": "← POWRÓT",
+    "titleMain": "Ciało —",
+    "titleGold": "Body",
+    "intro": "Terapie fizyczne wspierające zdrowie, regenerację i witalność ciała.",
+    "count": "{count} Usługi",
+    "inCart": "✓ W KOSZYKU",
+    "addToCartShort": "+ KOSZYK",
+    "addToCartFull": "+ Dodaj do Koszyka",
+    "moreInfo": "WIĘCEJ INFO",
+    "close": "Zamknij",
+    "session": "Sesja",
+    "package": "Pakiet",
+    "availability": "Dostępność",
+    "includes": "Co obejmuje",
+    "whoFor": "Dla kogo",
+    "pdfDelivery": "Dostawa PDF",
+    "importantInfo": "Ważne informacje",
+    "products": [
+      {
+        "id": "body-1",
+        "namePl": "Biorezonas — Sesja 1:1",
+        "desc": "Biorezonas 1:1 to sesja bezbólowa gdzie twoje ciało niczym \"nietoperz\" nadaje częstotliwość a biorezonas odczytuje co jest na jego drodze. To szukanie odpowiedzi na przyczynę Dezharmonii w ciele.",
+        "pdfNote": "Skan ciała + raport PDF po sesji",
+        "pdfDelivery": "Skan ciała + raport PDF wysyłany po sesji na email lub WhatsApp.",
+        "type": "sesja",
+        "duration": "1h",
+        "availability": "Studio",
+        "includes": [
+          "Skan ciała + raport",
+          "47 organów",
+          "Reakcje kręgosłupa na zmiany w organizmie",
+          "Zakwaszenie organizmu",
+          "Poziom wody",
+          "Minerały, witaminy, aminokwasy",
+          "Patogeny — wirusy, bakterie, pasożyty, grzyby",
+          "Toksyny, metale ciężkie",
+          "Alergie pokarmowe"
+        ],
+        "whoFor": [
+          "Szukający odpowiedzi na przyczynę dezharmonii w ciele",
+          "Profilaktyka zdrowotna",
+          "Problemy bez wyraźnej przyczyny",
+          "Optymalizacja zdrowia"
+        ],
+        "warning": "Zastrzeżenie: Biorezonas 1:1 to sesja bezbólowa gdzie twoje ciało niczym \"nietoperz\" nadaje częstotliwość a biorezonas odczytuje co jest na jego drodze. Zalecam zawsze udać się do lekarza po takim teście by przeanalizować wskazówki oraz ustalić odpowiednie badania. Nie zalecam odstawiania leków i działania bez konsultacji medycznej przy wyborze leczenia. Uważam, że dbanie o swoje zdrowie jest naszym priorytetem na długie życie."
+      },
+      {
+        "id": "body-2",
+        "namePl": "Quex Biofeedback — Sesja 1:1",
+        "desc": "Skan ciała — przypuszczalne obciążenia analiza. Sesja 1:1 w studiu lub online.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "2h",
+        "availability": "Studio | Online",
+        "includes": [
+          "Skan ciała",
+          "Przypuszczalne obciążenia analiza",
+          "Sesja 1:1",
+          "Możliwość sesji w studiu lub online"
+        ],
+        "whoFor": [
+          "Osoby chcące poznać przypuszczalne obciążenia organizmu",
+          "Osoby szukające analizy stanu ciała",
+          "Wsparcie pracy z ciałem i umysłem"
+        ],
+        "warning": "Zastrzeżenie: Sesja Biofeedback ma charakter analizy przypuszczalnych obciążeń i nie zastępuje diagnozy medycznej. Wszystkie działania klient powinien zawsze konsultować z lekarzem."
+      },
+      {
+        "id": "body-3",
+        "namePl": "Biofeedback — Wspierająca Regeneracja",
+        "desc": "Biofeedback wspierająca regeneracja.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "1h",
+        "availability": "Studio | Online",
+        "includes": [
+          "Sesja wspierająca regenerację",
+          "Wsparcie pracy z ciałem",
+          "Wsparcie dobrostanu"
+        ],
+        "whoFor": [
+          "Osoby potrzebujące regeneracji",
+          "Osoby po przeciążeniu organizmu",
+          "Osoby chcące zadbać o dobrostan ciała"
+        ],
+        "warning": "Zastrzeżenie: Sesja ma charakter wspierający i nie zastępuje diagnozy medycznej. Wszystkie działania klient powinien zawsze konsultować z lekarzem."
+      },
+      {
+        "id": "body-4",
+        "namePl": "Presoterapia + Aroma&Hz (30 min)",
+        "desc": "Presoterapia to rodzaj masażu limfatycznego, który wykorzystuje kontrolowane uciski powietrza. Dodatkowo stosuje podczas sesji Aromaterapię & Muzykoterapię Hz.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "30 min",
+        "availability": "Studio",
+        "includes": [
+          "Masaż limfatyczny",
+          "Kontrolowane uciski powietrza",
+          "Skafander do presoterapii",
+          "Specjalny kombinezon podzielony na komory w określonej sekwencji i z różnym ciśnieniem",
+          "Delikatny, rytmiczny ucisk, który porusza się wzdłuż ciała",
+          "Poprawa krążenia limfy i krwi",
+          "Pomoc w usunięciu nadmiaru płynów i toksyn z organizmu",
+          "Redukcja cellulitu",
+          "Wspomaganie odchudzania",
+          "Aromaterapia & Muzykoterapia Hz"
+        ],
+        "whoFor": [
+          "Obrzęki i uczucie ciężkich nóg",
+          "Redukcja cellulitu",
+          "Wspomaganie odchudzania",
+          "Relaksacja",
+          "Wsparcie usuwania toksyn"
+        ],
+        "warning": "Zastrzeżenie: Presoterapia jest przeciwwskazana przy zakrzepicy, ciąży i ostrych stanach zapalnych. Wszystkie działania klient powinien zawsze konsultować z lekarzem."
+      },
+      {
+        "id": "body-5",
+        "namePl": "Presoterapia + Aroma&Hz (60 min)",
+        "desc": "Presoterapia to rodzaj masażu limfatycznego, który wykorzystuje kontrolowane uciski powietrza. Dodatkowo stosuje podczas sesji Aromaterapię & Muzykoterapię Hz.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "60 min",
+        "availability": "Studio",
+        "includes": [
+          "Masaż limfatyczny",
+          "Kontrolowane uciski powietrza",
+          "Skafander do presoterapii",
+          "Specjalny kombinezon podzielony na komory w określonej sekwencji i z różnym ciśnieniem",
+          "Delikatny, rytmiczny ucisk, który porusza się wzdłuż ciała",
+          "Poprawa krążenia limfy i krwi",
+          "Pomoc w usunięciu nadmiaru płynów i toksyn z organizmu",
+          "Redukcja cellulitu",
+          "Wspomaganie odchudzania",
+          "Aromaterapia & Muzykoterapia Hz"
+        ],
+        "whoFor": [
+          "Obrzęki i uczucie ciężkich nóg",
+          "Redukcja cellulitu",
+          "Wspomaganie odchudzania",
+          "Relaksacja",
+          "Wsparcie usuwania toksyn"
+        ],
+        "warning": "Zastrzeżenie: Presoterapia jest przeciwwskazana przy zakrzepicy, ciąży i ostrych stanach zapalnych. Wszystkie działania klient powinien zawsze konsultować z lekarzem."
+      },
+      {
+        "id": "body-6",
+        "namePl": "Hocell — Inhalacje",
+        "desc": "Generator wodoru HOCELL to nowoczesne urządzenie do inhalacji wykorzystujące technologię elektrolizy do produkcji wodoru molekularnego. Wspiera wydolność, odnowę biologiczną i regenerację całego organizmu.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "Czas sesji ustalany indywidualnie od stanu zdrowia",
+        "availability": "Studio",
+        "includes": [
+          "Inhalacje wodorem",
+          "Generator wodoru HOCELL",
+          "Technologia elektrolizy do produkcji wodoru molekularnego",
+          "Wsparcie wydolności, odnowy biologicznej i regeneracji całego organizmu",
+          "Woda wodorowa",
+          "Inhalacje wodoru w czystej postaci za pomocą specjalistycznych generatorów",
+          "Dobrane akcesoria do potrzeb klienta, takie jak okulary i kaniulki do inhalacji"
+        ],
+        "whoFor": [
+          "Wsparcie wydolności",
+          "Odnowa biologiczna",
+          "Regeneracja całego organizmu",
+          "Wsparcie codziennego samopoczucia",
+          "Stres oksydacyjny",
+          "Chroniczne zmęczenie"
+        ],
+        "warning": "Zastrzeżenie: Wodór molekularny w inhalacji oraz w wodzie od kilku lat znajduje się w centrum zainteresowania badań naukowych dotyczących m.in. stresu oksydacyjnego, regeneracji organizmu oraz wsparcia codziennego samopoczucia. Skonsultuj się z lekarzem jeśli masz poważne schorzenia."
+      },
+      {
+        "id": "body-7",
+        "namePl": "Hocell — Inhalacje dla 2 osób",
+        "desc": "Zakup 1 sesji dla 2 osób. Inhalacje wodorem dla dwóch osób jednocześnie.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "Czas sesji ustalany indywidualnie od stanu zdrowia",
+        "availability": "Studio",
+        "includes": [
+          "1 sesja dla 2 osób",
+          "Inhalacje wodorem dla dwóch osób",
+          "Generator wodoru HOCELL",
+          "Dobrane akcesoria do potrzeb klienta, takie jak okulary i kaniulki do inhalacji",
+          "Wsparcie wydolności, odnowy biologicznej i regeneracji całego organizmu"
+        ],
+        "whoFor": [
+          "Pary",
+          "Przyjaciele i rodzina",
+          "Wspólna profilaktyka",
+          "Wspólna regeneracja"
+        ],
+        "warning": "Zastrzeżenie: Wodór molekularny w inhalacji oraz w wodzie od kilku lat znajduje się w centrum zainteresowania badań naukowych dotyczących m.in. stresu oksydacyjnego, regeneracji organizmu oraz wsparcia codziennego samopoczucia. Skonsultuj się z lekarzem jeśli masz poważne schorzenia."
+      },
+      {
+        "id": "body-8",
+        "namePl": "Hocell — Pakiet 5 spotkań + 2L wody wodorowej",
+        "desc": "Pakiet 5 spotkań + 2L wody wodorowej.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "pakiet",
+        "duration": "Pakiet 5 spotkań",
+        "availability": "Studio",
+        "includes": [
+          "Pakiet 5 spotkań",
+          "2L wody wodorowej",
+          "Inhalacje wodorem",
+          "Generator wodoru HOCELL",
+          "Dobrane akcesoria do potrzeb klienta, takie jak okulary i kaniulki do inhalacji",
+          "Woda pitna wzbogacona w wodór",
+          "Woda wodorowa nie zmienia odczynu pH organizmu"
+        ],
+        "whoFor": [
+          "Regularna profilaktyka",
+          "Długoterminowe wsparcie zdrowia",
+          "Regeneracja całego organizmu",
+          "Wsparcie codziennego samopoczucia"
+        ],
+        "warning": "Zastrzeżenie: Woda wodorowa nie zmienia odczynu pH organizmu, a zalecane dzienne spożycie wynosi zazwyczaj od 1 do 3 litrów, którą możesz u nas zamówić. Skonsultuj się z lekarzem jeśli masz poważne schorzenia."
+      },
+      {
+        "id": "body-9",
+        "namePl": "Hocell — Pakiet 5 spotkań dla 2 osób + 4L wody wodorowej",
+        "desc": "Pakiet 5 spotkań dla 2 osób + 4L wody wodorowej.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "pakiet",
+        "duration": "Pakiet 5 spotkań",
+        "availability": "Studio",
+        "includes": [
+          "Pakiet 5 spotkań dla 2 osób",
+          "4L wody wodorowej",
+          "Inhalacje wodorem dla dwóch osób",
+          "Generator wodoru HOCELL",
+          "Dobrane akcesoria do potrzeb klienta, takie jak okulary i kaniulki do inhalacji",
+          "Woda pitna wzbogacona w wodór",
+          "Woda wodorowa nie zmienia odczynu pH organizmu"
+        ],
+        "whoFor": [
+          "Pary i rodziny",
+          "Regularna wspólna profilaktyka",
+          "Wspólna regeneracja",
+          "Długoterminowe wsparcie zdrowia"
+        ],
+        "warning": "Zastrzeżenie: Woda wodorowa nie zmienia odczynu pH organizmu, a zalecane dzienne spożycie wynosi zazwyczaj od 1 do 3 litrów, którą możesz u nas zamówić. Skonsultuj się z lekarzem jeśli masz poważne schorzenia."
+      }
+    ]
+  },
   "nav": {
     "home": "Strona Główna",
     "body": "Ciało",
@@ -46,5 +302,345 @@
     "homepageAria": "Strona główna Letting Go Zen Studio",
     "navigationAria": "Nawigacja stopki",
     "socialAria": "Otwórz profil: {platform}"
+  },
+  "kontakt": {
+    "label": "KONTAKT",
+    "heroTitle": "Skontaktuj się",
+    "heroTitleGold": "z nami",
+    "heroSubtitle": "Chętnie odpowiemy na Twoje pytania. Napisz do nas lub zadzwoń.",
+
+    "whatsappTitle": "WhatsApp / Telefon",
+    "whatsappText": "Napisz lub zadzwoń do Joanny bezpośrednio przez WhatsApp.",
+
+    "emailTitle": "Email",
+    "emailText": "Wyślij nam wiadomość email — odpowiemy w ciągu 24 godzin.",
+
+    "successMessage": "Wiadomość wysłana! Joanna skontaktuje się z Tobą w ciągu 24 godzin.",
+    "formTitle": "Wyślij wiadomość",
+
+    "nameLabel": "IMIĘ I NAZWISKO",
+    "namePlaceholder": "Anna Kowalska",
+
+    "emailLabel": "EMAIL",
+    "emailPlaceholder": "anna@email.com",
+
+    "phoneLabel": "TELEFON OPCJONALNIE",
+    "phonePlaceholder": "+44 7700 000000",
+
+    "subjectLabel": "TEMAT",
+    "subjectPlaceholder": "Wybierz temat...",
+    "subjectOther": "Inne",
+
+    "messageLabel": "WIADOMOŚĆ",
+    "messagePlaceholder": "Napisz swoją wiadomość...",
+
+    "submitButton": "WYŚLIJ WIADOMOŚĆ",
+
+    "socialTitle": "Znajdź nas w mediach społecznościowych"
+  },
+  "mindPage": {
+    "back": "← POWRÓT",
+    "titleBefore": "Umysł —",
+    "titleGold": "Mind",
+    "intro": "Analiza energetyczna i praca z podświadomością dla jasności umysłu, transformacji emocjonalnej i wewnętrznej równowagi.",
+    "serviceCount": "{count} Usługi",
+    "approxPln": "≈ zł{amount}",
+    "types": {
+      "session": "Sesja",
+      "package": "Pakiet"
+    },
+    "buttons": {
+      "addToCart": "+ KOSZYK",
+      "inCart": "✓ W KOSZYKU",
+      "moreInfo": "WIĘCEJ INFO",
+      "addToCartLong": "+ Dodaj do Koszyka · {price}",
+      "close": "Zamknij"
+    },
+    "modal": {
+      "consultation": "Konsultacja",
+      "availability": "Dostępność",
+      "includes": "Co obejmuje",
+      "whoFor": "Dla kogo",
+      "warning": "Ważne informacje"
+    },
+    "products": {
+      "mind-1": {
+        "name": "Hipnoterapia — Sesja 1:1",
+        "desc": "\"Nie ma pytań bez odpowiedzi...\" Nie używam klasycznej formuły hipnozy — wykorzystuję swój dar do przeprowadzenia cię przez zakamarki twojej podświadomości. Bezpłatna 15-minutowa konsultacja wstępna.",
+        "pdfNote": null,
+        "freeConsultation": "Bezpłatna 15-minutowa konsultacja wstępna",
+        "includes": [
+          "Bezpłatna 15-minutowa konsultacja wstępna",
+          "Sesja relaksacyjna",
+          "Sesja reinkarnacyjna",
+          "Sesja zmiany nawyków",
+          "Sesja regresyjna",
+          "Sesja oczyszczająca",
+          "Schemat sesji ustalany indywidualnie po rozmowie"
+        ],
+        "whoFor": [
+          "Osoby szukające odpowiedzi na pytania i lęki",
+          "Praca z podświadomością",
+          "Transformacja blokujących schematów myślowych",
+          "Głęboka praca z emocjami"
+        ],
+        "warning": "Sesje są częścią naszej prywatności — to co zostaje wypowiedziane i przeżyte, zmienia patrzenie i czucie świata."
+      },
+      "mind-2": {
+        "name": "Konsultacja Energetyczna",
+        "desc": "Indywidualna konsultacja dotycząca Twojego pola energetycznego. Analiza blokad, wsparcie w przywróceniu równowagi energetycznej.",
+        "pdfNote": null,
+        "freeConsultation": null,
+        "includes": [
+          "Indywidualna konsultacja pola energetycznego",
+          "Analiza blokad energetycznych",
+          "Wsparcie w przywróceniu równowagi energetycznej"
+        ],
+        "whoFor": [
+          "Osoby odczuwające blokady energetyczne",
+          "Wsparcie w równowadze emocjonalnej",
+          "Analiza stanu energetycznego"
+        ],
+        "warning": null
+      },
+      "mind-3": {
+        "name": "Alchemik — Sesja 1:1",
+        "desc": "Sesja łącząca analizę z określeniem emocji, celów i drogi do odkrycia potencjału. Praca z podświadomością, NLP i energetyką. 1:1 lub online.",
+        "pdfNote": null,
+        "freeConsultation": null,
+        "includes": [
+          "Analiza emocji i celów",
+          "Praca z podświadomością",
+          "NLP i energetyka",
+          "Droga do odkrycia potencjału"
+        ],
+        "whoFor": [
+          "Osoby szukające swojej drogi",
+          "Praca z emocjami i celami",
+          "Odkrycie wewnętrznego potencjału"
+        ],
+        "warning": null
+      },
+      "mind-4": {
+        "name": "Alchemik — Pakiet 5 sesji",
+        "desc": "Pakiet 5 sesji Alchemik po 30 minut. Głęboka transformacja przez analizę emocji, celów i odkrycie wewnętrznego potencjału.",
+        "pdfNote": null,
+        "freeConsultation": null,
+        "includes": [
+          "5 sesji po 30 minut",
+          "Głęboka transformacja",
+          "Analiza emocji i celów",
+          "Odkrycie wewnętrznego potencjału"
+        ],
+        "whoFor": [
+          "Osoby gotowe na głębszą pracę",
+          "Długoterminowa transformacja",
+          "Regularna praca z podświadomością"
+        ],
+        "warning": null
+      }
+    }
+  },
+  "aboutPage": {
+    "label": "O MNIE",
+    "heroTitle": "Joanna",
+    "heroTitleGold": "Witkowska",
+    "logoAlt": "Letting Go Zen Studio",
+    "photoPlaceholder": "ZDJĘCIE JOANNY",
+    "photoName": "JOANNA WITKOWSKA",
+
+    "bioParagraphs": [
+      "Witaj w moim świecie — Letting Go Zen Studio. Nazywam się Joanna Witkowska i jestem szczęśliwą mamą oraz spełnioną kobietą, która doświadczyła w przeszłości traumy i straty.",
+      "Porównam się do Alchemika, który doświadcza i podąża za swoimi marzeniami, uczy się na błędach i wierzy w siłę przeznaczenia. Kogoś, kto jest otwarty na nowe doświadczenia, by znaleźć swoją formułę mocy. I wiem, że każdego z nas ciekawi odkrycie własnego skarbu.",
+      "Mogłabym w tym miejscu wyliczać ukończone szkoły, studia i szkolenia, karmiąc swoje Ego i chwaląc się dyplomami na ścianie. Mój wewnętrzny głos mówi mi jednak wyraźnie: Jestem tutaj Tu i Teraz po to, aby dzielić się z Tobą wiedzą i wspierać Cię najlepiej, jak potrafię — od serca dla serca.",
+      "Moje perspektywy ukształtowała m.in. praca w opiece paliatywnej oraz z osobami dotkniętymi demencją. To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń.",
+      "Letting Go Zen Studio to Akademia Alchemii Energii — most między nauką a energią, która czeka na Ciebie. Pomagam Ci wydobyć siłę i uwolnić negatywne emocje przez różnorodne warsztaty, zajęcia i terapie. To przestrzeń, w której łączę naukę, duchowość i pracę z ciałem."
+    ],
+
+    "supportTitle": "W CZYM MOGĘ CIĘ WESPRZEĆ?",
+
+    "supportItems": [
+      "Sesje terapeutyczne & NLP — transformacja blokujących schematów myślowych.",
+      "Hipnoterapia & Praca z Podświadomością — docieranie do źródła Twojej wewnętrznej siły.",
+      "Mindfulness — powrót do obecności i spokoju w tu i teraz.",
+      "Fizyka Kwantowa, Metafizyka i Ezoteryka — odkrywanie głębszych praw wszechświata i energii.",
+      "Alchemia Energii, Medycyna Chińska, Wellness — biofeedback i holistyczne zadbanie o dobrostan Twojego ciała."
+    ],
+
+    "methodParagraph": "Każda z tych metod opiera się na sprawdzonych technikach oraz moim osobistym, życiowym doświadczeniu. Nie dzielę ludzi ze względu na religię czy poglądy — szanuję nasz wspólny początek i koniec, a z życia chcę po prostu wydobywać najczystszą esencję.",
+
+    "alchemikTitle": "ALCHEMIK",
+    "alchemikDescription": "Sesje łączące analizę z określeniem emocji, celów i drogi do odkrycia potencjałów. 1:1 lub online.",
+    "alchemikSession": "1 sesja · 30 min · £30",
+    "alchemikPackage": "Pakiet 5 sesji · £120",
+    "alchemikButton": "ZAREZERWUJ ALCHEMIK",
+
+    "closingParagraphs": [
+      "Wierzę, że każdy z nas ma w sobie potencjał Alchemika — moc do uzdrowienia samego siebie i odnalezienia prawdziwego szczęścia.",
+      "Skoro tutaj jesteś, to znaczy, że nic nie dzieje się bez powodu.",
+      "Zapraszam Cię do wspólnej, niezwykłej podróży w głąb siebie."
+    ],
+
+    "signature": "Z miłością, Joanna"
+  },
+  "sklep": {
+    "label": "PRODUKTY CYFROWE",
+    "titleMain": "Sklep",
+    "titleGold": "Online",
+    "intro": "Raporty PDF i produkty cyfrowe — zamów online, otrzymaj na email lub WhatsApp.",
+    "buyNow": "KUP TERAZ",
+    "moreInfo": "WIĘCEJ INFO",
+    "modalBadge": "PDF · NATYCHMIASTOWE POBRANIE",
+    "includesLabel": "Co zawiera",
+    "close": "Zamknij",
+    "products": {
+      "energyGuide": {
+        "desc": "Produkt testowy. Przewodnik po energetyce, chakrach i codziennej praktyce energetycznej. Dostępny natychmiast po zakupie.",
+        "deliveryNote": "PDF · Natychmiastowe pobranie po zakupie",
+        "includes": {
+          "energy": "Przewodnik po energetyce",
+          "chakras": "Opis i analiza chakr",
+          "practice": "Codzienna praktyka energetyczna",
+          "instantPdf": "Format PDF — dostęp natychmiastowy po zakupie"
+        }
+      }
+    }
+  },
+  "soul": {
+    "back": "← POWRÓT",
+    "titleStart": "Dusza —",
+    "titleGold": "Soul",
+    "intro": "Raporty PDF, sesje Ajurwedy i analiza matrycy losu. Odkryj swoją duchową misję i talenty.",
+    "serviceCount": "Usługi",
+    "bannerStrong": "Ważna informacja:",
+    "bannerText": "Wszystkie pliki PDF są dostępne wyłącznie w języku angielskim.",
+
+    "type": {
+      "session": "Sesja",
+      "package": "Pakiet",
+      "pdf": "PDF"
+    },
+
+    "button": {
+      "addToCart": "+ KOSZYK",
+      "inCart": "✓ W KOSZYKU",
+      "moreInfo": "WIĘCEJ INFO",
+      "addToCartFull": "+ Dodaj do Koszyka",
+      "close": "Zamknij"
+    },
+
+    "modal": {
+      "availability": "Dostępność",
+      "includes": "Co obejmuje",
+      "whoFor": "Dla kogo",
+      "warning": "Ważne informacje"
+    },
+
+    "products": {
+      "soul1": {
+        "desc": "3D Skan Aury + Konsultacja Energetyczna + Terapia Dźwiękiem Kamarton. Pełny obraz stanu energetycznego i plan działania.",
+        "pdfNote": "Raport po sesji",
+        "duration": "1h",
+        "availability": "Studio",
+        "includes": [
+          "3D Skan Aury",
+          "Konsultacja Energetyczna",
+          "Terapia Dźwiękiem Kamarton",
+          "Pełny obraz stanu energetycznego",
+          "Plan działania",
+          "Raport po sesji"
+        ],
+        "whoFor": [
+          "Osoby szukające jasności umysłu",
+          "Analiza stanu energetycznego",
+          "Równowaga emocjonalna",
+          "Wsparcie duchowe"
+        ],
+        "warning": "Sesja ma charakter komplementarny i nie zastępuje diagnozy medycznej."
+      },
+
+      "soul2": {
+        "desc": "Szczegółowy raport na podstawie daty, godziny i miejsca urodzenia. Analiza kosmogramu — Twój unikalny profil psychologiczny i osobisty. Raport PDF 20–48 stron.",
+        "pdfNote": "PDF w języku angielskim, realizacja do 7 dni",
+        "duration": "30 min + realizacja do 7 dni",
+        "availability": "Online",
+        "includes": [
+          "Osobowość i temperament: główne cechy charakteru, mocne strony i potencjalne wyzwania",
+          "Relacje i miłość: dynamika w związkach, potrzeby emocjonalne i styl budowania bliskości",
+          "Kariera i powołanie: potencjał zawodowy, talenty i ścieżki, które mogą przynieść satysfakcję",
+          "Finanse i dobrobyt: podejście do pieniędzy, zasobów i materialnego bezpieczeństwa",
+          "Rodzina i dom: wpływ wczesnych lat, relacje z bliskimi i znaczenie środowiska domowego",
+          "Rozwój osobisty: obszary, w których możesz dążyć do samodoskonalenia i wzrostu",
+          "Raport PDF 20–48 stron w języku angielskim"
+        ],
+        "whoFor": [
+          "Osoby szukające głębszego zrozumienia siebie",
+          "Odkrycie potencjału i talentów",
+          "Zrozumienie swojej ścieżki życia",
+          "Analiza relacji i powołania"
+        ],
+        "warning": "Raport dostarczany wyłącznie w języku angielskim w ciągu 7 dni od zakupu."
+      },
+
+      "soul3": {
+        "desc": "Sesja 1:1 w studiu. Zdjęcie aury 3D i szczegółowa analiza stanu energetycznego 7 chakr. Otrzymujesz wydruk kolorowego zdjęcia aury.",
+        "duration": "30 min",
+        "availability": "Studio",
+        "includes": [
+          "Zdjęcie aury 3D",
+          "Szczegółowa analiza stanu energetycznego",
+          "Analiza 7 chakr",
+          "Wydruk kolorowego zdjęcia aury"
+        ],
+        "whoFor": [
+          "Osoby ciekawe swojego stanu energetycznego",
+          "Analiza chakr",
+          "Zdjęcie i dokumentacja aury",
+          "Wsparcie energetyczne"
+        ]
+      }
+    }
+  },
+  "wspolpraca": {
+    "label": "WSPÓŁPRACA I PROTOKÓŁ",
+    "titleStart": "Jak",
+    "titleGold": "Pracuję",
+    "intro": "Zanim zarezerwujesz sesję — przeczytaj, jak wygląda nasza współpraca.",
+    "studioLabel": "MOJE STUDIO",
+    "studioText": "W moim studiu pomagam zachować balans w sferze Umysł · Ciało · Dusza. Nie diagnozuję ani nie leczę — analizuję potencjalne obciążenia i oddziaływanie stresu na całe ciało i umysł. Wykorzystuję możliwości techniki kwantowej, wodorowej i hipnoterapii. Każdy klient jest traktowany indywidualnie, na podstawie wstępnej rozmowy i ankiety.",
+    "importantLabel": "WAŻNE INFORMACJE",
+    "importantTextOne": "Nie zalecam leczenia ani odstawiania leków czy rezygnowania z tradycyjnej medycyny. Wszystkie podejmowane działania klient powinien zawsze konsultować z lekarzem.",
+    "importantTextTwo": "Dbam o dobro klienta zgodnie z Art. 13 RODO i Art. 14 RODO.",
+    "bookingLabel": "PLACEHOLDER CALENDLY",
+    "bookingText": "Tutaj później podłączymy prawdziwy link lub osadzony kalendarz Calendly.",
+    "bookingButton": "ZAREZERWUJ SESJĘ"
+  },
+  "cartPage": {
+    "label": "TWOJE ZAMÓWIENIE",
+    "title": "Koszyk",
+    "emptyTitle": "Koszyk jest pusty",
+    "emptyText": "Wybierz produkty z Ciało, Umysł lub Dusza",
+    "browseButton": "PRZEGLĄDAJ PRODUKTY",
+    "clearCart": "WYCZYŚĆ KOSZYK",
+    "removeItem": "Usuń produkt z koszyka",
+    "totalLabel": "Razem do zapłaty",
+    "payButton": "ZAPŁAĆ TERAZ",
+    "summary": {
+      "products": "Produkty",
+      "currency": "Waluta",
+      "delivery": "Dostawa PDF",
+      "deliveryValue": "WhatsApp / Email · 48h"
+    },
+    "security": {
+      "ssl": "Szyfrowanie SSL",
+      "safePayment": "Bezpieczna płatność"
+    },
+    "types": {
+      "session": "sesja",
+      "package": "pakiet",
+      "pdf": "PDF",
+      "ebook": "ebook",
+      "product": "produkt"
+    }
   }
 }

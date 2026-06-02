@@ -1,4 +1,260 @@
 {
+  "body": {
+    "back": "← BACK",
+    "titleMain": "Ciało —",
+    "titleGold": "Body",
+    "intro": "Physical therapies supporting health, regeneration, and body vitality.",
+    "count": "{count} Services",
+    "inCart": "✓ IN CART",
+    "addToCartShort": "+ CART",
+    "addToCartFull": "+ Add to Cart",
+    "moreInfo": "MORE INFO",
+    "close": "Close",
+    "session": "Session",
+    "package": "Package",
+    "availability": "Availability",
+    "includes": "What is included",
+    "whoFor": "Who it is for",
+    "pdfDelivery": "PDF Delivery",
+    "importantInfo": "Important information",
+    "products": [
+      {
+        "id": "body-1",
+        "namePl": "Biorezonas — Sesja 1:1",
+        "desc": "Biorezonas 1:1 is a painless session where your body, like a bat, emits a frequency and the bioresonance system reads what is on its path. It is a way of looking for the cause of disharmony in the body.",
+        "pdfNote": "Body scan + PDF report after the session",
+        "pdfDelivery": "Body scan + PDF report sent after the session by email or WhatsApp.",
+        "type": "sesja",
+        "duration": "1h",
+        "availability": "Studio",
+        "includes": [
+          "Body scan + report",
+          "47 organs",
+          "Spinal reactions to changes in the body",
+          "Body acidity",
+          "Water level",
+          "Minerals, vitamins, amino acids",
+          "Pathogens — viruses, bacteria, parasites, fungi",
+          "Toxins, heavy metals",
+          "Food allergies"
+        ],
+        "whoFor": [
+          "People looking for the cause of disharmony in the body",
+          "Preventive health support",
+          "Issues without a clear cause",
+          "Health optimisation"
+        ],
+        "warning": "Disclaimer: Biorezonas 1:1 is a painless session where your body, like a bat, emits a frequency and the bioresonance system reads what is on its path. I always recommend seeing a doctor after such a test to analyse the indications and decide on appropriate medical tests. I do not recommend stopping medication or taking action without medical consultation when choosing treatment. I believe that caring for your health is a priority for a long life."
+      },
+      {
+        "id": "body-2",
+        "namePl": "Quex Biofeedback — Sesja 1:1",
+        "desc": "Body scan — analysis of possible burdens. A 1:1 session in the studio or online.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "2h",
+        "availability": "Studio | Online",
+        "includes": [
+          "Body scan",
+          "Analysis of possible burdens",
+          "1:1 session",
+          "Available in studio or online"
+        ],
+        "whoFor": [
+          "People who want to understand possible burdens on the body",
+          "People looking for body-state analysis",
+          "Support for body and mind work"
+        ],
+        "warning": "Disclaimer: A Biofeedback session is an analysis of possible burdens and does not replace a medical diagnosis. Clients should always consult all actions with a doctor."
+      },
+      {
+        "id": "body-3",
+        "namePl": "Biofeedback — Wspierająca Regeneracja",
+        "desc": "Biofeedback supporting regeneration.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "1h",
+        "availability": "Studio | Online",
+        "includes": [
+          "Regeneration-supporting session",
+          "Support for body work",
+          "Wellbeing support"
+        ],
+        "whoFor": [
+          "People needing regeneration",
+          "People after physical or energetic overload",
+          "People who want to support body wellbeing"
+        ],
+        "warning": "Disclaimer: This session is supportive in nature and does not replace a medical diagnosis. Clients should always consult all actions with a doctor."
+      },
+      {
+        "id": "body-4",
+        "namePl": "Presoterapia + Aroma&Hz (30 min)",
+        "desc": "Pressotherapy is a type of lymphatic massage that uses controlled air pressure. Aromatherapy and Hz music therapy are also used during the session.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "30 min",
+        "availability": "Studio",
+        "includes": [
+          "Lymphatic massage",
+          "Controlled air pressure",
+          "Pressotherapy suit",
+          "A special suit divided into chambers working in a specific sequence and with different pressure levels",
+          "Gentle, rhythmic pressure moving along the body",
+          "Improved lymph and blood circulation",
+          "Support in removing excess fluids and toxins from the body",
+          "Cellulite reduction",
+          "Weight-loss support",
+          "Aromatherapy & Hz music therapy"
+        ],
+        "whoFor": [
+          "Swelling and heavy legs",
+          "Cellulite reduction",
+          "Weight-loss support",
+          "Relaxation",
+          "Support in toxin removal"
+        ],
+        "warning": "Disclaimer: Pressotherapy is contraindicated in cases of thrombosis, pregnancy, and acute inflammatory conditions. Clients should always consult all actions with a doctor."
+      },
+      {
+        "id": "body-5",
+        "namePl": "Presoterapia + Aroma&Hz (60 min)",
+        "desc": "Pressotherapy is a type of lymphatic massage that uses controlled air pressure. Aromatherapy and Hz music therapy are also used during the session.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "60 min",
+        "availability": "Studio",
+        "includes": [
+          "Lymphatic massage",
+          "Controlled air pressure",
+          "Pressotherapy suit",
+          "A special suit divided into chambers working in a specific sequence and with different pressure levels",
+          "Gentle, rhythmic pressure moving along the body",
+          "Improved lymph and blood circulation",
+          "Support in removing excess fluids and toxins from the body",
+          "Cellulite reduction",
+          "Weight-loss support",
+          "Aromatherapy & Hz music therapy"
+        ],
+        "whoFor": [
+          "Swelling and heavy legs",
+          "Cellulite reduction",
+          "Weight-loss support",
+          "Relaxation",
+          "Support in toxin removal"
+        ],
+        "warning": "Disclaimer: Pressotherapy is contraindicated in cases of thrombosis, pregnancy, and acute inflammatory conditions. Clients should always consult all actions with a doctor."
+      },
+      {
+        "id": "body-6",
+        "namePl": "Hocell — Inhalacje",
+        "desc": "The HOCELL hydrogen generator is a modern inhalation device using electrolysis technology to produce molecular hydrogen. It supports performance, biological renewal, and whole-body regeneration.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "Session time is agreed individually depending on health condition",
+        "availability": "Studio",
+        "includes": [
+          "Hydrogen inhalation",
+          "HOCELL hydrogen generator",
+          "Electrolysis technology for producing molecular hydrogen",
+          "Support for performance, biological renewal, and whole-body regeneration",
+          "Hydrogen water",
+          "Pure hydrogen inhalation using specialist generators",
+          "Accessories selected for the client’s needs, such as glasses and inhalation cannulas"
+        ],
+        "whoFor": [
+          "Performance support",
+          "Biological renewal",
+          "Whole-body regeneration",
+          "Daily wellbeing support",
+          "Oxidative stress",
+          "Chronic fatigue"
+        ],
+        "warning": "Disclaimer: Molecular hydrogen in inhalation and water has been the subject of scientific interest for several years in relation to oxidative stress, body regeneration, and everyday wellbeing support. Consult a doctor if you have serious medical conditions."
+      },
+      {
+        "id": "body-7",
+        "namePl": "Hocell — Inhalacje dla 2 osób",
+        "desc": "Purchase one session for two people. Hydrogen inhalation for two people at the same time.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "sesja",
+        "duration": "Session time is agreed individually depending on health condition",
+        "availability": "Studio",
+        "includes": [
+          "One session for two people",
+          "Hydrogen inhalation for two people",
+          "HOCELL hydrogen generator",
+          "Accessories selected for the client’s needs, such as glasses and inhalation cannulas",
+          "Support for performance, biological renewal, and whole-body regeneration"
+        ],
+        "whoFor": [
+          "Couples",
+          "Friends and family",
+          "Shared prevention",
+          "Shared regeneration"
+        ],
+        "warning": "Disclaimer: Molecular hydrogen in inhalation and water has been the subject of scientific interest for several years in relation to oxidative stress, body regeneration, and everyday wellbeing support. Consult a doctor if you have serious medical conditions."
+      },
+      {
+        "id": "body-8",
+        "namePl": "Hocell — Pakiet 5 spotkań + 2L wody wodorowej",
+        "desc": "Package of 5 meetings + 2L of hydrogen water.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "pakiet",
+        "duration": "Package of 5 meetings",
+        "availability": "Studio",
+        "includes": [
+          "Package of 5 meetings",
+          "2L of hydrogen water",
+          "Hydrogen inhalation",
+          "HOCELL hydrogen generator",
+          "Accessories selected for the client’s needs, such as glasses and inhalation cannulas",
+          "Drinking water enriched with hydrogen",
+          "Hydrogen water does not change the body’s pH"
+        ],
+        "whoFor": [
+          "Regular prevention",
+          "Long-term health support",
+          "Whole-body regeneration",
+          "Daily wellbeing support"
+        ],
+        "warning": "Disclaimer: Hydrogen water does not change the body’s pH, and the recommended daily intake is usually from 1 to 3 litres, which you can order from us. Consult a doctor if you have serious medical conditions."
+      },
+      {
+        "id": "body-9",
+        "namePl": "Hocell — Pakiet 5 spotkań dla 2 osób + 4L wody wodorowej",
+        "desc": "Package of 5 meetings for two people + 4L of hydrogen water.",
+        "pdfNote": null,
+        "pdfDelivery": null,
+        "type": "pakiet",
+        "duration": "Package of 5 meetings",
+        "availability": "Studio",
+        "includes": [
+          "Package of 5 meetings for two people",
+          "4L of hydrogen water",
+          "Hydrogen inhalation for two people",
+          "HOCELL hydrogen generator",
+          "Accessories selected for the client’s needs, such as glasses and inhalation cannulas",
+          "Drinking water enriched with hydrogen",
+          "Hydrogen water does not change the body’s pH"
+        ],
+        "whoFor": [
+          "Couples and families",
+          "Regular shared prevention",
+          "Shared regeneration",
+          "Long-term health support"
+        ],
+        "warning": "Disclaimer: Hydrogen water does not change the body’s pH, and the recommended daily intake is usually from 1 to 3 litres, which you can order from us. Consult a doctor if you have serious medical conditions."
+      }
+    ]
+  },
   "nav": {
     "home": "Home",
     "body": "Body",
@@ -46,5 +302,322 @@
     "homepageAria": "Letting Go Zen Studio homepage",
     "navigationAria": "Footer navigation",
     "socialAria": "Open social profile: {platform}"
+  },
+  "kontakt": {
+    "label": "CONTACT",
+    "heroTitle": "Contact",
+    "heroTitleGold": "us",
+    "heroSubtitle": "We will gladly answer your questions. Send us a message or call us.",
+    "whatsappTitle": "WhatsApp / Phone",
+    "whatsappText": "Message or call Joanna directly through WhatsApp.",
+    "emailTitle": "Email",
+    "emailText": "Send us an email — we will reply within 24 hours.",
+    "successMessage": "Message sent! Joanna will contact you within 24 hours.",
+    "formTitle": "Send a message",
+    "nameLabel": "FULL NAME",
+    "namePlaceholder": "Anna Kowalska",
+    "emailLabel": "EMAIL",
+    "emailPlaceholder": "anna@email.com",
+    "phoneLabel": "PHONE OPTIONAL",
+    "phonePlaceholder": "+44 7700 000000",
+    "subjectLabel": "SUBJECT",
+    "subjectPlaceholder": "Choose a subject...",
+    "subjectOther": "Other",
+    "messageLabel": "MESSAGE",
+    "messagePlaceholder": "Write your message...",
+    "submitButton": "SEND MESSAGE",
+    "socialTitle": "Find us on social media"
+  },
+  "mindPage": {
+    "back": "← BACK",
+    "titleBefore": "Umysł —",
+    "titleGold": "Mind",
+    "intro": "Energy analysis and subconscious work for mental clarity, emotional transformation, and inner balance.",
+    "serviceCount": "{count} Services",
+    "approxPln": "≈ zł{amount}",
+    "types": {
+      "session": "Session",
+      "package": "Package"
+    },
+    "buttons": {
+      "addToCart": "+ CART",
+      "inCart": "✓ IN CART",
+      "moreInfo": "MORE INFO",
+      "addToCartLong": "+ Add to Cart · {price}",
+      "close": "Close"
+    },
+    "modal": {
+      "consultation": "Consultation",
+      "availability": "Availability",
+      "includes": "What is included",
+      "whoFor": "Who this is for",
+      "warning": "Important information"
+    },
+    "products": {
+      "mind-1": {
+        "name": "Hipnoterapia — Sesja 1:1",
+        "desc": "\"There are no questions without answers...\" I do not use a classic hypnosis formula — I use my gift to guide you through the hidden spaces of your subconscious. Includes a free 15-minute introductory consultation.",
+        "pdfNote": null,
+        "freeConsultation": "Free 15-minute introductory consultation",
+        "includes": [
+          "Free 15-minute introductory consultation",
+          "Relaxation session",
+          "Reincarnation session",
+          "Habit-change session",
+          "Regression session",
+          "Cleansing session",
+          "The session structure is agreed individually after a conversation"
+        ],
+        "whoFor": [
+          "People looking for answers around questions and fears",
+          "Subconscious work",
+          "Transforming limiting thought patterns",
+          "Deep emotional work"
+        ],
+        "warning": "Sessions are part of our privacy — what is spoken and experienced can change the way you see and feel the world."
+      },
+      "mind-2": {
+        "name": "Konsultacja Energetyczna",
+        "desc": "An individual consultation focused on your energetic field. Blockage analysis and support in restoring energetic balance.",
+        "pdfNote": null,
+        "freeConsultation": null,
+        "includes": [
+          "Individual energetic field consultation",
+          "Energetic blockage analysis",
+          "Support in restoring energetic balance"
+        ],
+        "whoFor": [
+          "People experiencing energetic blockages",
+          "Support with emotional balance",
+          "Energetic state analysis"
+        ],
+        "warning": null
+      },
+      "mind-3": {
+        "name": "Alchemik — Sesja 1:1",
+        "desc": "A session combining analysis with emotional clarity, goal setting, and discovering your potential. Work with the subconscious, NLP, and energy. Available 1:1 or online.",
+        "pdfNote": null,
+        "freeConsultation": null,
+        "includes": [
+          "Analysis of emotions and goals",
+          "Subconscious work",
+          "NLP and energetic work",
+          "A path to discovering your potential"
+        ],
+        "whoFor": [
+          "People searching for their path",
+          "Working with emotions and goals",
+          "Discovering inner potential"
+        ],
+        "warning": null
+      },
+      "mind-4": {
+        "name": "Alchemik — Pakiet 5 sesji",
+        "desc": "A package of 5 Alchemik sessions, 30 minutes each. Deep transformation through analysis of emotions, goals, and inner potential.",
+        "pdfNote": null,
+        "freeConsultation": null,
+        "includes": [
+          "5 sessions of 30 minutes each",
+          "Deep transformation",
+          "Analysis of emotions and goals",
+          "Discovery of inner potential"
+        ],
+        "whoFor": [
+          "People ready for deeper work",
+          "Long-term transformation",
+          "Regular subconscious work"
+        ],
+        "warning": null
+      }
+    }
+  },
+  "aboutPage": {
+    "label": "ABOUT ME",
+    "heroTitle": "Joanna",
+    "heroTitleGold": "Witkowska",
+    "logoAlt": "Letting Go Zen Studio",
+    "photoPlaceholder": "JOANNA'S PHOTO",
+    "photoName": "JOANNA WITKOWSKA",
+    "bioParagraphs": [
+      "Welcome to my world — Letting Go Zen Studio. My name is Joanna Witkowska. I am a happy mother and a fulfilled woman who has experienced trauma and loss in the past.",
+      "I compare myself to the Alchemist — someone who experiences life, follows their dreams, learns from mistakes, and believes in the power of destiny. Someone open to new experiences in order to find their own formula of strength. I know that each of us is curious to discover our own treasure.",
+      "I could list my completed schools, studies, and training here, feeding my Ego and showing off diplomas on the wall. But my inner voice tells me clearly: I am here, Here and Now, to share knowledge with you and support you as best I can — from heart to heart.",
+      "My perspective has been shaped, among other things, by working in palliative care and with people affected by dementia. That is where I understood how precious time is, and how great a loss it is to suppress emotions and give up on your own dreams.",
+      "Letting Go Zen Studio is an Academy of Energy Alchemy — a bridge between science and energy that is waiting for you. I help you bring out your strength and release negative emotions through various workshops, classes, and therapies. It is a space where I combine science, spirituality, and body work."
+    ],
+    "supportTitle": "HOW CAN I SUPPORT YOU?",
+    "supportItems": [
+      "Therapeutic sessions & NLP — transformation of limiting thought patterns.",
+      "Hypnotherapy & Subconscious Work — reaching the source of your inner strength.",
+      "Mindfulness — returning to presence and calm in the here and now.",
+      "Quantum Physics, Metaphysics and Esotericism — discovering the deeper laws of the universe and energy.",
+      "Energy Alchemy, Chinese Medicine, Wellness — biofeedback and holistic care for your body's wellbeing."
+    ],
+    "methodParagraph": "Each of these methods is based on proven techniques and my own personal life experience. I do not divide people by religion or beliefs — I respect our shared beginning and end, and I simply want to bring out the purest essence from life.",
+    "alchemikTitle": "ALCHEMIK",
+    "alchemikDescription": "Sessions combining analysis with defining emotions, goals, and the path to discovering your potential. Available 1:1 or online.",
+    "alchemikSession": "1 session · 30 min · £30",
+    "alchemikPackage": "Package of 5 sessions · £120",
+    "alchemikButton": "BOOK ALCHEMIK",
+    "closingParagraphs": [
+      "I believe that each of us carries the potential of the Alchemist — the power to heal ourselves and find true happiness.",
+      "Since you are here, it means that nothing happens without a reason.",
+      "I invite you into a shared, extraordinary journey deep within yourself."
+    ],
+    "signature": "With love, Joanna"
+  },
+  "sklep": {
+    "label": "DIGITAL PRODUCTS",
+    "titleMain": "Sklep",
+    "titleGold": "Online",
+    "intro": "PDF reports and digital products — order online and receive them by email or WhatsApp.",
+    "buyNow": "BUY NOW",
+    "moreInfo": "MORE INFO",
+    "modalBadge": "PDF · INSTANT DOWNLOAD",
+    "includesLabel": "What is included",
+    "close": "Close",
+    "products": {
+      "energyGuide": {
+        "desc": "Test product. A guide to energy work, chakras, and daily energetic practice. Available instantly after purchase.",
+        "deliveryNote": "PDF · Instant download after purchase",
+        "includes": {
+          "energy": "Guide to energy work",
+          "chakras": "Chakra description and analysis",
+          "practice": "Daily energetic practice",
+          "instantPdf": "PDF format — instant access after purchase"
+        }
+      }
+    }
+  },
+  "soul": {
+    "back": "← BACK",
+    "titleStart": "Dusza —",
+    "titleGold": "Soul",
+    "intro": "PDF reports, Ayurveda sessions, and destiny matrix analysis. Discover your spiritual mission, gifts, and inner direction.",
+    "serviceCount": "Services",
+    "bannerStrong": "Important note:",
+    "bannerText": "All PDF files are available in English only.",
+    "type": {
+      "session": "Session",
+      "package": "Package",
+      "pdf": "PDF"
+    },
+    "button": {
+      "addToCart": "+ CART",
+      "inCart": "✓ IN CART",
+      "moreInfo": "MORE INFO",
+      "addToCartFull": "+ Add to Cart",
+      "close": "Close"
+    },
+    "modal": {
+      "availability": "Availability",
+      "includes": "What is included",
+      "whoFor": "Who it is for",
+      "warning": "Important information"
+    },
+    "products": {
+      "soul1": {
+        "desc": "3D Aura Scan + Energy Consultation + Kamarton Sound Therapy. A full overview of your energetic state with a practical action plan.",
+        "pdfNote": "Post-session report",
+        "duration": "1h",
+        "availability": "Studio",
+        "includes": [
+          "3D Aura Scan",
+          "Energy Consultation",
+          "Kamarton Sound Therapy",
+          "Full overview of the energetic state",
+          "Action plan",
+          "Post-session report"
+        ],
+        "whoFor": [
+          "People seeking mental clarity",
+          "Energetic state analysis",
+          "Emotional balance",
+          "Spiritual support"
+        ],
+        "warning": "This session is complementary and does not replace medical diagnosis."
+      },
+      "soul2": {
+        "desc": "A detailed report based on your date, time, and place of birth. Cosmogram analysis — your unique psychological and personal profile. PDF report, 20–48 pages.",
+        "pdfNote": "PDF in English, delivered within 7 days",
+        "duration": "30 min + delivery within 7 days",
+        "availability": "Online",
+        "includes": [
+          "Personality and temperament: main character traits, strengths, and potential challenges",
+          "Relationships and love: relationship dynamics, emotional needs, and style of building closeness",
+          "Career and vocation: professional potential, talents, and paths that may bring fulfilment",
+          "Finances and wellbeing: your approach to money, resources, and material security",
+          "Family and home: early-life influences, close relationships, and the meaning of the home environment",
+          "Personal growth: areas where you can develop, improve, and expand",
+          "20–48 page PDF report in English"
+        ],
+        "whoFor": [
+          "People seeking deeper self-understanding",
+          "Discovering potential and talents",
+          "Understanding your life path",
+          "Analysing relationships and vocation"
+        ],
+        "warning": "The report is delivered only in English within 7 days of purchase."
+      },
+      "soul3": {
+        "desc": "A 1:1 studio session. 3D aura photo and detailed analysis of the energetic state of the 7 chakras. You receive a printed colour aura photo.",
+        "duration": "30 min",
+        "availability": "Studio",
+        "includes": [
+          "3D aura photo",
+          "Detailed energetic state analysis",
+          "Analysis of the 7 chakras",
+          "Printed colour aura photo"
+        ],
+        "whoFor": [
+          "People curious about their energetic state",
+          "Chakra analysis",
+          "Aura photo and documentation",
+          "Energetic support"
+        ]
+      }
+    }
+  },
+  "wspolpraca": {
+    "label": "COLLABORATION AND PROTOCOL",
+    "titleStart": "How",
+    "titleGold": "I Work",
+    "intro": "Before you book a session — please read how our collaboration works.",
+    "studioLabel": "MY STUDIO",
+    "studioText": "In my studio, I help support balance across Mind · Body · Soul. I do not diagnose or treat medical conditions — I analyse potential energetic burdens and the impact of stress on the body and mind. I work with quantum, hydrogen and hypnotherapy-based techniques. Every client is treated individually, based on an initial conversation and questionnaire.",
+    "importantLabel": "IMPORTANT INFORMATION",
+    "importantTextOne": "I do not recommend medical treatment, stopping medication, or replacing traditional medicine. Any health-related decisions should always be discussed with a qualified doctor.",
+    "importantTextTwo": "I care for the client's wellbeing in accordance with GDPR Article 13 and GDPR Article 14.",
+    "bookingLabel": "CALENDLY PLACEHOLDER",
+    "bookingText": "Later, we will connect the real Calendly link or embedded booking calendar here.",
+    "bookingButton": "BOOK A SESSION"
+  },
+  "cartPage": {
+    "label": "YOUR ORDER",
+    "title": "Cart",
+    "emptyTitle": "Your cart is empty",
+    "emptyText": "Choose products from Body, Mind or Soul",
+    "browseButton": "BROWSE PRODUCTS",
+    "clearCart": "CLEAR CART",
+    "removeItem": "Remove item from cart",
+    "totalLabel": "Total to pay",
+    "payButton": "PAY NOW",
+    "summary": {
+      "products": "Products",
+      "currency": "Currency",
+      "delivery": "PDF delivery",
+      "deliveryValue": "WhatsApp / Email · 48h"
+    },
+    "security": {
+      "ssl": "SSL encryption",
+      "safePayment": "Secure payment"
+    },
+    "types": {
+      "session": "session",
+      "package": "package",
+      "pdf": "PDF",
+      "ebook": "ebook",
+      "product": "product"
+    }
   }
 }
