@@ -1,14 +1,14 @@
 // components/layout/Nav.tsx
 // Main navigation shown on every page.
-// Ciało, Umysł, Dusza, Sklep, and Współpraca stay Polish as brand/category names.
-// Only general UI labels like Home, O Mnie, and Kontakt use translations.
+// Desktop shows full nav links.
+// Mobile shows hamburger menu with nav links and PL/EN language switcher.
 
 'use client'
 
 import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 
 type StaticLink = {
@@ -17,25 +17,26 @@ type StaticLink = {
     labelKey?: string
 }
 
-const staticLinks = [
-    { labelKey: 'home',       href: '/' },
-    { labelKey: 'body',       href: '/body' },
-    { labelKey: 'mind',       href: '/mind' },
-    { labelKey: 'soul',       href: '/soul' },
-    { labelKey: 'sklep',      href: '/sklep' },
+const staticLinks: StaticLink[] = [
+    { labelKey: 'home', href: '/' },
+    { labelKey: 'body', href: '/body' },
+    { labelKey: 'mind', href: '/mind' },
+    { labelKey: 'soul', href: '/soul' },
+    { labelKey: 'sklep', href: '/sklep' },
     { labelKey: 'wspolpraca', href: '/wspolpraca' },
-    { labelKey: 'omnie',      href: '/o-mnie' },
-    { labelKey: 'kontakt',    href: '/kontakt' },
+    { labelKey: 'omnie', href: '/o-mnie' },
+    { labelKey: 'kontakt', href: '/kontakt' },
 ]
 
 export default function Nav() {
     const pathname = usePathname()
+    const router = useRouter()
     const locale = useLocale()
     const t = useTranslations('nav')
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-    // Removes /pl or /en from the current URL so active-link checking works.
+    // Removes /pl or /en from current URL so active-link checking works.
     // Example: /pl/body becomes /body.
     const cleanPathname = pathname.replace(/^\/(pl|en)(?=\/|$)/, '') || '/'
 
@@ -53,8 +54,19 @@ export default function Nav() {
         return `/${locale}${href}`
     }
 
+    // Switches the current page between Polish and English.
+    // Example: /pl/body becomes /en/body.
+    function switchLocale(newLocale: 'pl' | 'en') {
+        const segments = pathname.split('/')
+
+        segments[1] = newLocale
+
+        setIsMobileMenuOpen(false)
+        router.push(segments.join('/'))
+    }
+
     // Uses translation when labelKey exists.
-    // Uses fixed Polish label when label exists.
+    // Uses fixed label when label exists.
     function getLabel(link: StaticLink): string {
         if (link.labelKey) {
             return t(link.labelKey)
@@ -110,16 +122,34 @@ export default function Nav() {
             <button
                 type="button"
                 className="site-nav-mobile-button"
-                aria-label={isMobileMenuOpen ? t('closeMenu') : t('openMenu')}
+                aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
                 aria-expanded={isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen((value) => !value)}
             >
-                {isMobileMenuOpen ? t('closeMenu') : t('openMenu')}
+                {isMobileMenuOpen ? '×' : '☰'}
             </button>
 
             {/* Mobile dropdown */}
             {isMobileMenuOpen && (
                 <div className="site-mobile-menu">
+                    {/* Mobile language switcher */}
+                    <div className="site-mobile-language-row">
+                        {(['pl', 'en'] as const).map((language) => (
+                            <button
+                                key={language}
+                                type="button"
+                                onClick={() => switchLocale(language)}
+                                className={
+                                    locale === language
+                                        ? 'site-mobile-language-button site-mobile-language-button-active'
+                                        : 'site-mobile-language-button'
+                                }
+                            >
+                                {language === 'pl' ? '🇵🇱 PL' : '🇬🇧 EN'}
+                            </button>
+                        ))}
+                    </div>
+
                     {staticLinks.map((link) => {
                         const isActive = cleanPathname === link.href
 
