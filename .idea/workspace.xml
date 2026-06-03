@@ -4,13 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="Changes to navbar on mobile">
-      <change afterPath="$PROJECT_DIR$/app/[locale]/polityka-prywatnosci/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/[locale]/regulamin/page.tsx" afterDir="false" />
+    <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/pl.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/pl.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,23 +38,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0534199106606417" />
-      <entry key="MS500" value="3.07204051166479" />
-      <entry key="S2" value="5.563655325133556" />
-      <entry key="S5" value="6.374806468414044" />
-      <entry key="S10" value="6.751396318461548" />
-      <entry key="S30" value="9.544397358539554" />
-      <entry key="S60" value="13.460323055258273" />
-      <entry key="M2" value="17.24688933635603" />
-      <entry key="M5" value="21.736728541515607" />
-      <entry key="M10" value="25.49969349842058" />
-      <entry key="M15" value="27.58796980868332" />
-      <entry key="M30" value="31.42877445925126" />
-      <entry key="H1" value="42.46437432932297" />
-      <entry key="H2" value="67.26325393214891" />
-      <entry key="H4" value="97.9100837512923" />
-      <entry key="D1" value="185.59164493518514" />
-      <entry key="W1" value="233.39755024667008" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.00000000000079" />
+      <entry key="S10" value="1.000003042013605" />
+      <entry key="S30" value="1.0757388395933802" />
+      <entry key="S60" value="1.9530162821340336" />
+      <entry key="M2" value="4.381452829043051" />
+      <entry key="M5" value="8.230046471207306" />
+      <entry key="M10" value="10.314502602321783" />
+      <entry key="M15" value="11.135220334321025" />
+      <entry key="M30" value="12.028261454833105" />
+      <entry key="H1" value="12.503915520330526" />
+      <entry key="H2" value="12.819263497660744" />
+      <entry key="H4" value="16.175423432886774" />
+      <entry key="D1" value="125.03816573642831" />
+      <entry key="W1" value="243.07912585690258" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -67,37 +62,37 @@
       <entry key="S2" value="0.0" />
       <entry key="S5" value="0.0" />
       <entry key="S10" value="0.0" />
-      <entry key="S30" value="3.654418497934462E-132" />
-      <entry key="S60" value="1.9116533414650385E-66" />
-      <entry key="M2" value="1.3826255246685678E-33" />
-      <entry key="M5" value="7.1826024289919E-14" />
-      <entry key="M10" value="2.6800377663368637E-7" />
-      <entry key="M15" value="4.1568141652790476E-5" />
-      <entry key="M30" value="0.0064473360120926955" />
-      <entry key="H1" value="0.08029535858943146" />
-      <entry key="H2" value="0.28359566123062746" />
-      <entry key="H4" value="0.5475315075939111" />
-      <entry key="D1" value="1.3980194739671694" />
-      <entry key="W1" value="1.8902458597732221" />
+      <entry key="S30" value="0.0" />
+      <entry key="S60" value="0.0" />
+      <entry key="M2" value="5.831375048884384E-219" />
+      <entry key="M5" value="5.08520411444387E-88" />
+      <entry key="M10" value="2.255039714604571E-44" />
+      <entry key="M15" value="7.981835932484154E-30" />
+      <entry key="M30" value="2.8252143162052734E-15" />
+      <entry key="H1" value="5.315278058801544E-8" />
+      <entry key="H2" value="2.3073706052396348E-4" />
+      <entry key="H4" value="0.015617733303675888" />
+      <entry key="D1" value="0.7727660527721134" />
+      <entry key="W1" value="1.7367509883806829" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.16608325073833818" />
-      <entry key="MS500" value="2.7069422431094674" />
-      <entry key="S2" value="5.453520248679179" />
-      <entry key="S5" value="6.328873851697362" />
-      <entry key="S10" value="6.727965007524178" />
-      <entry key="S30" value="9.535054574917318" />
-      <entry key="S60" value="13.454587116209852" />
-      <entry key="M2" value="17.243500392558108" />
-      <entry key="M5" value="21.73488546968297" />
-      <entry key="M10" value="25.498348045733657" />
-      <entry key="M15" value="27.586920088176928" />
-      <entry key="M30" value="31.434513580847852" />
-      <entry key="H1" value="42.544165101056976" />
-      <entry key="H2" value="67.54644033022657" />
-      <entry key="H4" value="98.45730905392593" />
-      <entry key="D1" value="186.98954071299704" />
-      <entry key="W1" value="235.28777143601206" />
+      <entry key="MS100" value="0.8585654364377537" />
+      <entry key="MS500" value="0.9699619103417348" />
+      <entry key="S2" value="0.9924043746858185" />
+      <entry key="S5" value="0.9969547984670409" />
+      <entry key="S10" value="0.9984792788257258" />
+      <entry key="S30" value="1.0752177788220063" />
+      <entry key="S60" value="1.9526803555332026" />
+      <entry key="M2" value="4.381179952781715" />
+      <entry key="M5" value="8.22987058858248" />
+      <entry key="M10" value="10.31439655865265" />
+      <entry key="M15" value="11.13514488401873" />
+      <entry key="M30" value="12.02822114212758" />
+      <entry key="H1" value="12.503894727589177" />
+      <entry key="H2" value="12.819483293787584" />
+      <entry key="H4" value="16.191026964128664" />
+      <entry key="D1" value="125.81086213799942" />
+      <entry key="W1" value="244.81585396023905" />
     </decayedShown>
   </component>
   <component name="PackageJsonUpdateNotifier">
@@ -189,7 +184,7 @@
       <workItem from="1780397650170" duration="640000" />
       <workItem from="1780398306260" duration="1064000" />
       <workItem from="1780399384604" duration="61000" />
-      <workItem from="1780399457938" duration="12289000" />
+      <workItem from="1780399457938" duration="13562000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />
@@ -223,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1780410884317</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="TERMS AND PRIVACY POLICY posted and updated">
+      <option name="closed" value="true" />
+      <created>1780412702231</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1780412702231</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,6 +247,7 @@
     <MESSAGE value="Changes to Mobile version of the webapp" />
     <MESSAGE value="Changes to navigation bar on mobile so it now acts as a dropdown menu rather than a static button" />
     <MESSAGE value="Changes to navbar on mobile" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changes to navbar on mobile" />
+    <MESSAGE value="TERMS AND PRIVACY POLICY posted and updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="TERMS AND PRIVACY POLICY posted and updated" />
   </component>
 </project>
