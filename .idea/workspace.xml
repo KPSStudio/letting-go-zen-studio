@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,23 +41,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.00000000000079" />
-      <entry key="S10" value="1.000003042013605" />
-      <entry key="S30" value="1.0757388395933802" />
-      <entry key="S60" value="1.9530162821340336" />
-      <entry key="M2" value="4.381452829043051" />
-      <entry key="M5" value="8.230046471207306" />
-      <entry key="M10" value="10.314502602321783" />
-      <entry key="M15" value="11.135220334321025" />
-      <entry key="M30" value="12.028261454833105" />
-      <entry key="H1" value="12.503915520330526" />
-      <entry key="H2" value="12.819263497660744" />
-      <entry key="H4" value="16.175423432886774" />
-      <entry key="D1" value="125.03816573642831" />
-      <entry key="W1" value="243.07912585690258" />
+      <entry key="MS100" value="1.022861066747089" />
+      <entry key="MS500" value="2.7872282485662634" />
+      <entry key="S2" value="5.405757421510142" />
+      <entry key="S5" value="6.300074129146381" />
+      <entry key="S10" value="6.638716468646733" />
+      <entry key="S30" value="6.876961312812517" />
+      <entry key="S60" value="6.938450773029667" />
+      <entry key="M2" value="7.023531140227046" />
+      <entry key="M5" value="8.411357058842196" />
+      <entry key="M10" value="11.28389776968625" />
+      <entry key="M15" value="13.200436567509463" />
+      <entry key="M30" value="15.976549242562324" />
+      <entry key="H1" value="17.80208959431428" />
+      <entry key="H2" value="18.9150506034446" />
+      <entry key="H4" value="22.594601973925307" />
+      <entry key="D1" value="131.27871435575852" />
+      <entry key="W1" value="249.86766587435045" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -64,35 +67,35 @@
       <entry key="S10" value="0.0" />
       <entry key="S30" value="0.0" />
       <entry key="S60" value="0.0" />
-      <entry key="M2" value="5.831375048884384E-219" />
-      <entry key="M5" value="5.08520411444387E-88" />
-      <entry key="M10" value="2.255039714604571E-44" />
-      <entry key="M15" value="7.981835932484154E-30" />
-      <entry key="M30" value="2.8252143162052734E-15" />
-      <entry key="H1" value="5.315278058801544E-8" />
-      <entry key="H2" value="2.3073706052396348E-4" />
-      <entry key="H4" value="0.015617733303675888" />
-      <entry key="D1" value="0.7727660527721134" />
-      <entry key="W1" value="1.7367509883806829" />
+      <entry key="M2" value="7.258940395928419E-221" />
+      <entry key="M5" value="8.797297769503783E-89" />
+      <entry key="M10" value="9.379391115367658E-45" />
+      <entry key="M15" value="4.447504853709449E-30" />
+      <entry key="M30" value="2.1089108216597003E-15" />
+      <entry key="H1" value="4.5922909689467476E-8" />
+      <entry key="H2" value="2.1447123859966765E-4" />
+      <entry key="H4" value="0.015057187359920659" />
+      <entry key="D1" value="0.7680727267765213" />
+      <entry key="W1" value="1.7352401938284143" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8585654364377537" />
-      <entry key="MS500" value="0.9699619103417348" />
-      <entry key="S2" value="0.9924043746858185" />
-      <entry key="S5" value="0.9969547984670409" />
-      <entry key="S10" value="0.9984792788257258" />
-      <entry key="S30" value="1.0752177788220063" />
-      <entry key="S60" value="1.9526803555332026" />
-      <entry key="M2" value="4.381179952781715" />
-      <entry key="M5" value="8.22987058858248" />
-      <entry key="M10" value="10.31439655865265" />
-      <entry key="M15" value="11.13514488401873" />
-      <entry key="M30" value="12.02822114212758" />
-      <entry key="H1" value="12.503894727589177" />
-      <entry key="H2" value="12.819483293787584" />
-      <entry key="H4" value="16.191026964128664" />
-      <entry key="D1" value="125.81086213799942" />
-      <entry key="W1" value="244.81585396023905" />
+      <entry key="MS100" value="0.08458244898532265" />
+      <entry key="MS500" value="2.3436220812993422" />
+      <entry key="S2" value="5.265312140278043" />
+      <entry key="S5" value="6.240855173996447" />
+      <entry key="S10" value="6.608567385779869" />
+      <entry key="S30" value="6.866788440154309" />
+      <entry key="S60" value="6.933348677186891" />
+      <entry key="M2" value="7.020972803684995" />
+      <entry key="M5" value="8.410303713265042" />
+      <entry key="M10" value="11.283342046569125" />
+      <entry key="M15" value="13.200053413835217" />
+      <entry key="M30" value="15.97634857698089" />
+      <entry key="H1" value="17.8019863385727" />
+      <entry key="H2" value="18.915212258318295" />
+      <entry key="H4" value="22.609624145328954" />
+      <entry key="D1" value="132.04671430037817" />
+      <entry key="W1" value="251.60288269533044" />
     </decayedShown>
   </component>
   <component name="PackageJsonUpdateNotifier">
@@ -116,7 +119,7 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "upgrade-next-15",
     "javascript.preferred.runtime.type.id": "node",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
@@ -184,7 +187,7 @@
       <workItem from="1780397650170" duration="640000" />
       <workItem from="1780398306260" duration="1064000" />
       <workItem from="1780399384604" duration="61000" />
-      <workItem from="1780399457938" duration="13562000" />
+      <workItem from="1780399457938" duration="14839000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />

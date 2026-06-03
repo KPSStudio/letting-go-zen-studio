@@ -8,12 +8,14 @@ import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 
 type OMniePageProps = {
-    params: {
+    params: Promise<{
         locale: string
-    }
+    }>
 }
 
 export default async function OMniePage({ params }: OMniePageProps) {
+    const { locale } = await params
+
     // Loads the "aboutPage" translation section from the active language file.
     const t = await getTranslations('aboutPage')
 
@@ -117,7 +119,7 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </div>
 
                 <Link
-                    href={`/${params.locale}/kontakt`}
+                    href={`/${locale}/kontakt`}
                     className="inline-block bg-gradient-to-br from-[#D4AF6A] to-[#8A6A1A] px-10 py-4 font-cinzel text-[0.75rem] tracking-[0.25em] text-[#3D0845] no-underline transition-opacity hover:opacity-80"
                 >
                     {t('alchemikButton')}
