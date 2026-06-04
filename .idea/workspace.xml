@@ -5,8 +5,35 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated">
+      <change afterPath="$PROJECT_DIR$/app/api/contact/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/studio/[[...tool]]/page.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/studio/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/body/bodyClient.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/body/bodyProducts.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/mind/mindClient.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/sklep/sklepClient.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/soul/soulClient.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/supabase-admin.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/supabase.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity.config.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity/lib/sanity.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity/schemas/galleryImage.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity/schemas/service.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity/schemas/siteSettings.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity/schemas/sklepProduct.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/sanity/schemas/testimonial.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/importProducts.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/scripts/importSklepProduct.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/body/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/body/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/kontakt/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/kontakt/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/mind/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/mind/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/sklep/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/sklep/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/soul/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/soul/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messages/pl.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/pl.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
@@ -19,8 +46,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="tsconfig.json" />
-        <option value="TypeScript File" />
         <option value="TypeScript JSX File" />
+        <option value="TypeScript File" />
       </list>
     </option>
   </component>
@@ -41,23 +68,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.022861066747089" />
-      <entry key="MS500" value="2.7872282485662634" />
-      <entry key="S2" value="5.405757421510142" />
-      <entry key="S5" value="6.300074129146381" />
-      <entry key="S10" value="6.638716468646733" />
-      <entry key="S30" value="6.876961312812517" />
-      <entry key="S60" value="6.938450773029667" />
-      <entry key="M2" value="7.023531140227046" />
-      <entry key="M5" value="8.411357058842196" />
-      <entry key="M10" value="11.28389776968625" />
-      <entry key="M15" value="13.200436567509463" />
-      <entry key="M30" value="15.976549242562324" />
-      <entry key="H1" value="17.80208959431428" />
-      <entry key="H2" value="18.9150506034446" />
-      <entry key="H4" value="22.594601973925307" />
-      <entry key="D1" value="131.27871435575852" />
-      <entry key="W1" value="249.86766587435045" />
+      <entry key="MS100" value="1.0" />
+      <entry key="MS500" value="1.0" />
+      <entry key="S2" value="1.0" />
+      <entry key="S5" value="1.0" />
+      <entry key="S10" value="1.0" />
+      <entry key="S30" value="1.0000000000999767" />
+      <entry key="S60" value="1.0000229804610565" />
+      <entry key="M2" value="1.0115848217705248" />
+      <entry key="M5" value="1.523544002399737" />
+      <entry key="M10" value="3.0711513845000673" />
+      <entry key="M15" value="4.8317288721148" />
+      <entry key="M30" value="10.80948077831415" />
+      <entry key="H1" value="19.75971093002862" />
+      <entry key="H2" value="28.141165381964324" />
+      <entry key="H4" value="37.23749894712019" />
+      <entry key="D1" value="181.96894259181138" />
+      <entry key="W1" value="402.2996202921705" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -67,39 +94,39 @@
       <entry key="S10" value="0.0" />
       <entry key="S30" value="0.0" />
       <entry key="S60" value="0.0" />
-      <entry key="M2" value="7.258940395928419E-221" />
-      <entry key="M5" value="8.797297769503783E-89" />
-      <entry key="M10" value="9.379391115367658E-45" />
-      <entry key="M15" value="4.447504853709449E-30" />
-      <entry key="M30" value="2.1089108216597003E-15" />
-      <entry key="H1" value="4.5922909689467476E-8" />
-      <entry key="H2" value="2.1447123859966765E-4" />
-      <entry key="H4" value="0.015057187359920659" />
-      <entry key="D1" value="0.7680727267765213" />
-      <entry key="W1" value="1.7352401938284143" />
+      <entry key="M2" value="0.0" />
+      <entry key="M5" value="6.714954185911396E-178" />
+      <entry key="M10" value="2.59132286408147E-89" />
+      <entry key="M15" value="8.756845445190733E-60" />
+      <entry key="M30" value="2.9591967567565552E-30" />
+      <entry key="H1" value="1.7202327468931219E-15" />
+      <entry key="H2" value="4.150954439644145E-8" />
+      <entry key="H4" value="2.0947553478183626E-4" />
+      <entry key="D1" value="0.3766753956118843" />
+      <entry key="W1" value="1.5673088495995011" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.08458244898532265" />
-      <entry key="MS500" value="2.3436220812993422" />
-      <entry key="S2" value="5.265312140278043" />
-      <entry key="S5" value="6.240855173996447" />
-      <entry key="S10" value="6.608567385779869" />
-      <entry key="S30" value="6.866788440154309" />
-      <entry key="S60" value="6.933348677186891" />
-      <entry key="M2" value="7.020972803684995" />
-      <entry key="M5" value="8.410303713265042" />
-      <entry key="M10" value="11.283342046569125" />
-      <entry key="M15" value="13.200053413835217" />
-      <entry key="M30" value="15.97634857698089" />
-      <entry key="H1" value="17.8019863385727" />
-      <entry key="H2" value="18.915212258318295" />
-      <entry key="H4" value="22.609624145328954" />
-      <entry key="D1" value="132.04671430037817" />
-      <entry key="W1" value="251.60288269533044" />
+      <entry key="MS100" value="0.8235910172675731" />
+      <entry key="MS500" value="0.9619274546647747" />
+      <entry key="S2" value="0.9903428719330246" />
+      <entry key="S5" value="0.9961258995541646" />
+      <entry key="S10" value="0.9980610700524115" />
+      <entry key="S30" value="0.9993532719700639" />
+      <entry key="S60" value="0.9997039891641449" />
+      <entry key="M2" value="1.0135170270926577" />
+      <entry key="M5" value="1.6080275753002724" />
+      <entry key="M10" value="3.3615754994672606" />
+      <entry key="M15" value="5.270097570674242" />
+      <entry key="M30" value="11.471297961366712" />
+      <entry key="H1" value="20.573064680133847" />
+      <entry key="H2" value="29.042956796013637" />
+      <entry key="H4" value="38.187308355878976" />
+      <entry key="D1" value="183.33698177216655" />
+      <entry key="W1" value="404.8656731371616" />
     </decayedShown>
   </component>
-  <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/package.json" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5,
@@ -110,32 +137,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "upgrade-next-15",
-    "javascript.preferred.runtime.type.id": "node",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "C:/Users/kamil/OneDrive/Documents/Websites/letting-go-zen-studio/app/[locale]",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
-    "to.speed.mode.migration.done": "true",
-    "ts.external.directory.path": "C:\\Users\\kamil\\OneDrive\\Documents\\Websites\\letting-go-zen-studio\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;upgrade-next-15&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/kamil/OneDrive/Documents/Websites/letting-go-zen-studio/app/[locale]&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
+    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\kamil\\OneDrive\\Documents\\Websites\\letting-go-zen-studio\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\kamil\OneDrive\Documents\Websites\letting-go-zen-studio\app\[locale]" />
@@ -187,7 +214,8 @@
       <workItem from="1780397650170" duration="640000" />
       <workItem from="1780398306260" duration="1064000" />
       <workItem from="1780399384604" duration="61000" />
-      <workItem from="1780399457938" duration="14839000" />
+      <workItem from="1780399457938" duration="29538000" />
+      <workItem from="1780574326763" duration="4203000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />

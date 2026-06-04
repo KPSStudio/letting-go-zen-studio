@@ -64,12 +64,29 @@ export default function KontaktPage() {
         }))
     }
 
-    function handleSubmit(event: FormEvent<HTMLFormElement>) {
-        event.preventDefault()
+    async function handleSubmit(e: React.FormEvent) {
+        e.preventDefault()
+        setSubmitted(false)
 
-        // Supabase / Resend integration comes later.
-        // For now this only shows the success message.
-        setSubmitted(true)
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    ...formData,
+                    locale: document.documentElement.lang || 'pl',
+                }),
+            })
+
+            if (res.ok) {
+                setSubmitted(true)
+                setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+            } else {
+                alert('Wystąpił błąd. Spróbuj ponownie.')
+            }
+        } catch {
+            alert('Wystąpił błąd. Spróbuj ponownie.')
+        }
     }
 
     return (
