@@ -1,7 +1,7 @@
 // app/[locale]/polityka-prywatnosci/page.tsx
-// Temporary privacy policy page.
+// Privacy policy page.
+// This page explains how Letting Go Zen Studio processes personal data.
 // All visible text comes from next-intl translation files.
-// This is a placeholder and must be checked by a lawyer before launch.
 
 import { getTranslations } from 'next-intl/server'
 
@@ -15,26 +15,52 @@ export default async function PolitykaPrywatnosciPage() {
 
     const sections: LegalSection[] = [
         {
-            title: t('sections.dataController.title'),
-            content: t('sections.dataController.content'),
+            title: t('sections.controller.title'),
+            content: t('sections.controller.content'),
         },
         {
-            title: t('sections.gdprArticle13.title'),
-            content: t('sections.gdprArticle13.content'),
+            title: t('sections.collectedData.title'),
+            content: t('sections.collectedData.content'),
         },
         {
-            title: t('sections.clientRights.title'),
-            content: t('sections.clientRights.content'),
+            title: t('sections.specialCategoryData.title'),
+            content: t('sections.specialCategoryData.content'),
+        },
+        {
+            title: t('sections.purposes.title'),
+            content: t('sections.purposes.content'),
+        },
+        {
+            title: t('sections.legalBasis.title'),
+            content: t('sections.legalBasis.content'),
+        },
+        {
+            title: t('sections.retention.title'),
+            content: t('sections.retention.content'),
+        },
+        {
+            title: t('sections.sharing.title'),
+            content: t('sections.sharing.content'),
+        },
+        {
+            title: t('sections.rights.title'),
+            content: t('sections.rights.content'),
+        },
+        {
+            title: t('sections.cookies.title'),
+            content: t('sections.cookies.content'),
         },
     ]
 
     return (
         <main className="legal-page">
+            {/* Small label above the page title */}
             <p className="legal-label">
                 <span className="legal-label-line" />
                 {t('label')}
             </p>
 
+            {/* Main page heading */}
             <header className="legal-header">
                 <h1 className="legal-title">
                     {t('titleStart')} <span>{t('titleGold')}</span>
@@ -43,16 +69,13 @@ export default async function PolitykaPrywatnosciPage() {
                 <p className="legal-intro">
                     {t('intro')}
                 </p>
+
+                <p className="legal-effective-date">
+                    {t('effectiveDate')}
+                </p>
             </header>
 
-            <div className="legal-warning">
-                <span className="legal-warning-icon">⚠️</span>
-
-                <p className="legal-warning-text">
-                    {t('warning')}
-                </p>
-            </div>
-
+            {/* Privacy policy sections */}
             <div className="legal-section-list">
                 {sections.map((section) => (
                     <section key={section.title} className="legal-section-card">

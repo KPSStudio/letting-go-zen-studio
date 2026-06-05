@@ -301,6 +301,8 @@
     "kontakt": "KONTAKT",
     "terms": "REGULAMIN",
     "privacy": "POLITYKA PRYWATNOŚCI",
+    "serviceTerms": "ZASADY USŁUG",
+    "consent": "ZGODA ŚWIADOMA",
     "homepageAria": "Strona główna Letting Go Zen Studio",
     "navigationAria": "Nawigacja stopki",
     "socialAria": "Otwórz profil: {platform}"
@@ -310,34 +312,24 @@
     "heroTitle": "Skontaktuj się",
     "heroTitleGold": "z nami",
     "heroSubtitle": "Chętnie odpowiemy na Twoje pytania. Napisz do nas lub zadzwoń.",
-
     "whatsappTitle": "WhatsApp / Telefon",
     "whatsappText": "Napisz lub zadzwoń do Joanny bezpośrednio przez WhatsApp.",
-
     "emailTitle": "Email",
     "emailText": "Wyślij nam wiadomość email — odpowiemy w ciągu 24 godzin.",
-
     "successMessage": "Wiadomość wysłana! Joanna skontaktuje się z Tobą w ciągu 24 godzin.",
     "formTitle": "Wyślij wiadomość",
-
     "nameLabel": "IMIĘ I NAZWISKO",
     "namePlaceholder": "Anna Kowalska",
-
     "emailLabel": "EMAIL",
     "emailPlaceholder": "anna@email.com",
-
     "phoneLabel": "TELEFON OPCJONALNIE",
     "phonePlaceholder": "+44 7700 000000",
-
     "subjectLabel": "TEMAT",
     "subjectPlaceholder": "Wybierz temat...",
     "subjectOther": "Inne",
-
     "messageLabel": "WIADOMOŚĆ",
     "messagePlaceholder": "Napisz swoją wiadomość...",
-
     "submitButton": "WYŚLIJ WIADOMOŚĆ",
-
     "socialTitle": "Znajdź nas w mediach społecznościowych"
   },
   "mindPage": {
@@ -450,7 +442,6 @@
     "logoAlt": "Letting Go Zen Studio",
     "photoPlaceholder": "ZDJĘCIE JOANNY",
     "photoName": "JOANNA WITKOWSKA",
-
     "bioParagraphs": [
       "Witaj w moim świecie — Letting Go Zen Studio. Nazywam się Joanna Witkowska i jestem szczęśliwą mamą oraz spełnioną kobietą, która doświadczyła w przeszłości traumy i straty.",
       "Porównam się do Alchemika, który doświadcza i podąża za swoimi marzeniami, uczy się na błędach i wierzy w siłę przeznaczenia. Kogoś, kto jest otwarty na nowe doświadczenia, by znaleźć swoją formułę mocy. I wiem, że każdego z nas ciekawi odkrycie własnego skarbu.",
@@ -458,9 +449,7 @@
       "Moje perspektywy ukształtowała m.in. praca w opiece paliatywnej oraz z osobami dotkniętymi demencją. To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń.",
       "Letting Go Zen Studio to Akademia Alchemii Energii — most między nauką a energią, która czeka na Ciebie. Pomagam Ci wydobyć siłę i uwolnić negatywne emocje przez różnorodne warsztaty, zajęcia i terapie. To przestrzeń, w której łączę naukę, duchowość i pracę z ciałem."
     ],
-
     "supportTitle": "W CZYM MOGĘ CIĘ WESPRZEĆ?",
-
     "supportItems": [
       "Sesje terapeutyczne & NLP — transformacja blokujących schematów myślowych.",
       "Hipnoterapia & Praca z Podświadomością — docieranie do źródła Twojej wewnętrznej siły.",
@@ -468,21 +457,17 @@
       "Fizyka Kwantowa, Metafizyka i Ezoteryka — odkrywanie głębszych praw wszechświata i energii.",
       "Alchemia Energii, Medycyna Chińska, Wellness — biofeedback i holistyczne zadbanie o dobrostan Twojego ciała."
     ],
-
     "methodParagraph": "Każda z tych metod opiera się na sprawdzonych technikach oraz moim osobistym, życiowym doświadczeniu. Nie dzielę ludzi ze względu na religię czy poglądy — szanuję nasz wspólny początek i koniec, a z życia chcę po prostu wydobywać najczystszą esencję.",
-
     "alchemikTitle": "ALCHEMIK",
     "alchemikDescription": "Sesje łączące analizę z określeniem emocji, celów i drogi do odkrycia potencjałów. 1:1 lub online.",
     "alchemikSession": "1 sesja · 30 min · £30",
     "alchemikPackage": "Pakiet 5 sesji · £120",
     "alchemikButton": "ZAREZERWUJ ALCHEMIK",
-
     "closingParagraphs": [
       "Wierzę, że każdy z nas ma w sobie potencjał Alchemika — moc do uzdrowienia samego siebie i odnalezienia prawdziwego szczęścia.",
       "Skoro tutaj jesteś, to znaczy, że nic nie dzieje się bez powodu.",
       "Zapraszam Cię do wspólnej, niezwykłej podróży w głąb siebie."
     ],
-
     "signature": "Z miłością, Joanna"
   },
   "sklep": {
@@ -516,13 +501,11 @@
     "serviceCount": "Usługi",
     "bannerStrong": "Ważna informacja:",
     "bannerText": "Wszystkie pliki PDF są dostępne wyłącznie w języku angielskim.",
-
     "type": {
       "session": "Sesja",
       "package": "Pakiet",
       "pdf": "PDF"
     },
-
     "button": {
       "addToCart": "+ KOSZYK",
       "inCart": "✓ W KOSZYKU",
@@ -530,14 +513,12 @@
       "addToCartFull": "+ Dodaj do Koszyka",
       "close": "Zamknij"
     },
-
     "modal": {
       "availability": "Dostępność",
       "includes": "Co obejmuje",
       "whoFor": "Dla kogo",
       "warning": "Ważne informacje"
     },
-
     "products": {
       "soul1": {
         "desc": "3D Skan Aury + Konsultacja Energetyczna + Terapia Dźwiękiem Kamarton. Pełny obraz stanu energetycznego i plan działania.",
@@ -560,7 +541,6 @@
         ],
         "warning": "Sesja ma charakter komplementarny i nie zastępuje diagnozy medycznej."
       },
-
       "soul2": {
         "desc": "Szczegółowy raport na podstawie daty, godziny i miejsca urodzenia. Analiza kosmogramu — Twój unikalny profil psychologiczny i osobisty. Raport PDF 20–48 stron.",
         "pdfNote": "PDF w języku angielskim, realizacja do 7 dni",
@@ -583,7 +563,6 @@
         ],
         "warning": "Raport dostarczany wyłącznie w języku angielskim w ciągu 7 dni od zakupu."
       },
-
       "soul3": {
         "desc": "Sesja 1:1 w studiu. Zdjęcie aury 3D i szczegółowa analiza stanu energetycznego 7 chakr. Otrzymujesz wydruk kolorowego zdjęcia aury.",
         "duration": "30 min",
@@ -646,49 +625,224 @@
     }
   },
   "legal": {
-    "privacy": {
-      "label": "DOKUMENT PRAWNY",
-      "titleStart": "Polityka",
-      "titleGold": "Prywatności",
-      "intro": "RODO — do weryfikacji przez prawnika przed uruchomieniem strony.",
-      "warning": "PLACEHOLDER — Ten dokument wymaga weryfikacji przez prawnika przed uruchomieniem strony.",
+    "terms": {
+      "label": "REGULAMIN SKLEPU INTERNETOWEGO",
+      "titleStart": "Regulamin",
+      "titleGold": "Sklepu Internetowego",
+      "intro": "Regulamin określa zasady korzystania ze sklepu internetowego Letting Go Zen Studio, zakupu produktów cyfrowych, materiałów edukacyjnych, kursów online oraz realizacji płatności.",
+      "effectiveDate": "Data obowiązywania: 05/06/2026",
       "sections": {
-        "dataController": {
-          "title": "ADMINISTRATOR DANYCH",
-          "content": "Joanna Witkowska — Letting Go Zen Studio. Kontakt: lettinggozenstudio@gmail.com"
+        "seller": {
+          "title": "§1. Informacje o Sprzedawcy",
+          "content": "Sklep internetowy prowadzony jest przez Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Działalność prowadzona jest jako self-employed business. Kontakt: lettinggozenstudio@gmail.com."
         },
-        "gdprArticle13": {
-          "title": "ART. 13 RODO",
-          "content": "Zbieramy: imię, email, telefon opcjonalnie. Dane używane wyłącznie do realizacji usług i kontaktu."
+        "definitions": {
+          "title": "§2. Definicje",
+          "content": "Klient oznacza osobę fizyczną lub prawną dokonującą zakupu za pośrednictwem sklepu. Sklep oznacza serwis internetowy Letting Go Zen Studio. Produkt Cyfrowy oznacza treść dostarczaną elektronicznie, w szczególności e-booki, pliki PDF, medytacje audio, nagrania relaksacyjne, nagrania hipnotyczne, kursy online oraz materiały szkoleniowe. Usługa oznacza sesje online lub stacjonarne oferowane przez Letting Go Zen Studio."
         },
-        "clientRights": {
-          "title": "ART. 14 RODO — PRAWA KLIENTA",
-          "content": "Masz prawo do dostępu, sprostowania, usunięcia i przenoszenia swoich danych."
+        "scope": {
+          "title": "§3. Zakres działalności",
+          "content": "Sklep umożliwia zakup produktów cyfrowych, materiałów edukacyjnych, nagrań audio, kursów online, usług wellness, sesji hipnoterapii, sesji EFT, konsultacji indywidualnych, sesji biorezonansu oraz sesji biofeedback."
+        },
+        "orders": {
+          "title": "§4. Składanie zamówień",
+          "content": "Zamówienia można składać 24 godziny na dobę. Klient zobowiązany jest do podania prawdziwych danych. Złożenie zamówienia oznacza akceptację niniejszego Regulaminu. Umowa zostaje zawarta z chwilą otrzymania potwierdzenia płatności."
+        },
+        "prices": {
+          "title": "§5. Ceny i płatności",
+          "content": "Wszystkie ceny podawane są w GBP (£) lub innej walucie wskazanej na stronie. Płatności realizowane są przez operatorów płatności wskazanych na stronie. Sprzedawca zastrzega sobie prawo do zmiany cen, przy czym zmiany nie dotyczą zamówień już opłaconych."
+        },
+        "delivery": {
+          "title": "§6. Dostawa Produktów Cyfrowych",
+          "content": "Produkty cyfrowe dostarczane są elektronicznie. Dostawa następuje poprzez link do pobrania, wiadomość e-mail lub konto użytkownika w serwisie. Dostęp do produktu następuje po zaksięgowaniu płatności."
+        },
+        "withdrawal": {
+          "title": "§7. Prawo odstąpienia od umowy",
+          "content": "W przypadku produktów cyfrowych Klient wyraża zgodę na rozpoczęcie dostarczania treści cyfrowych przed upływem terminu odstąpienia od umowy oraz przyjmuje do wiadomości, że po uzyskaniu dostępu do produktu traci prawo do odstąpienia od umowy w zakresie dopuszczalnym przez obowiązujące przepisy prawa."
+        },
+        "complaints": {
+          "title": "§8. Reklamacje",
+          "content": "Klient ma prawo zgłosić reklamację dotyczącą wadliwego pliku, braku możliwości pobrania produktu lub błędów technicznych. Reklamacje należy zgłaszać drogą elektroniczną. Reklamacje będą rozpatrywane w terminie do 14 dni."
+        },
+        "copyright": {
+          "title": "§9. Własność intelektualna",
+          "content": "Wszystkie materiały dostępne w sklepie są chronione prawem autorskim. Zabrania się kopiowania, rozpowszechniania, publikowania, odsprzedaży oraz udostępniania osobom trzecim bez uprzedniej pisemnej zgody właściciela praw autorskich."
+        },
+        "liability": {
+          "title": "§10. Ograniczenie odpowiedzialności",
+          "content": "Materiały oferowane przez Letting Go Zen Studio mają charakter edukacyjny, informacyjny, relaksacyjny i wspierający rozwój osobisty. Nie stanowią diagnozy medycznej, porady lekarskiej, psychoterapii ani leczenia chorób. Korzystanie z materiałów odbywa się na własną odpowiedzialność użytkownika."
+        },
+        "sessions": {
+          "title": "§11. Sesje i konsultacje",
+          "content": "Klient zobowiązuje się do podania prawdziwych informacji dotyczących stanu zdrowia. Letting Go Zen Studio może odmówić realizacji usługi, jeżeli uzna ją za niewłaściwą lub potencjalnie niebezpieczną dla klienta. Nie gwarantuje się osiągnięcia określonych rezultatów terapeutycznych lub rozwojowych."
+        },
+        "data": {
+          "title": "§12. Ochrona danych osobowych",
+          "content": "Przetwarzanie danych osobowych odbywa się zgodnie z Polityką Prywatności oraz obowiązującymi przepisami UK GDPR i RODO."
+        },
+        "final": {
+          "title": "§13. Postanowienia końcowe",
+          "content": "Regulamin podlega prawu obowiązującemu na terenie Zjednoczonego Królestwa. W przypadku klientów z krajów Unii Europejskiej zastosowanie mają również bezwzględnie obowiązujące przepisy ochrony konsumentów właściwe dla miejsca zamieszkania klienta. Spory będą rozstrzygane w pierwszej kolejności polubownie."
+        }
+      },
+      "digitalConsent": {
+        "title": "Obowiązkowa zgoda przy zakupie PDF lub kursu",
+        "terms": "Zapoznałem/am się z Regulaminem Sklepu oraz Polityką Prywatności.",
+        "instantDelivery": "Wyrażam zgodę na natychmiastowe dostarczenie treści cyfrowej i przyjmuję do wiadomości, że po uzyskaniu dostępu do produktu tracę prawo odstąpienia od umowy w zakresie przewidzianym przez obowiązujące przepisy prawa."
+      }
+    },
+    "serviceTerms": {
+      "label": "REGULAMIN ŚWIADCZENIA USŁUG",
+      "titleStart": "Zasady",
+      "titleGold": "Usług",
+      "intro": "Regulamin określa zasady korzystania z usług oferowanych przez Letting Go Zen Studio, w tym sesji online i stacjonarnych, rezerwacji, płatności, odwołań wizyt, przeciwwskazań oraz odpowiedzialności klienta.",
+      "effectiveDate": "Data obowiązywania: 5 czerwca 2026",
+      "sections": {
+        "provider": {
+          "title": "1. Informacje o Usługodawcy",
+          "content": "Usługodawcą jest Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Działalność prowadzona jest jako self-employed business. Kontakt: lettinggozenstudio@gmail.com."
+        },
+        "scope": {
+          "title": "2. Zakres usług",
+          "content": "Letting Go Zen Studio świadczy usługi w zakresie hipnoterapii, EFT, konsultacji wellness, sesji relaksacyjnych, masażu i terapii manualnych, biorezonansu, biofeedbacku, warsztatów i szkoleń, sprzedaży online oraz konsultacji online i stacjonarnych."
+        },
+        "nature": {
+          "title": "3. Charakter usług",
+          "content": "Wszystkie usługi mają charakter wspierający dobrostan, rozwój osobisty, relaksację oraz edukację. Usługi oferowane przez Letting Go Zen Studio nie stanowią świadczeń medycznych, nie zastępują diagnozy lekarskiej, nie zastępują leczenia psychiatrycznego, psychologicznego ani farmakologicznego i nie gwarantują określonych rezultatów. Klient pozostaje odpowiedzialny za własne decyzje dotyczące zdrowia oraz leczenia."
+        },
+        "booking": {
+          "title": "4. Rezerwacje i płatności",
+          "content": "Rezerwacja sesji następuje poprzez stronę internetową, wiadomość e-mail, telefonicznie lub inne udostępnione kanały komunikacji. Płatność może być dokonana online, przelewem bankowym lub innymi metodami wskazanymi podczas rezerwacji. Sesja zostaje potwierdzona po otrzymaniu płatności lub zgodnie z indywidualnymi ustaleniami."
+        },
+        "cancellation": {
+          "title": "5. Odwołanie wizyty",
+          "content": "Klient może bezpłatnie odwołać wizytę do 24 godzin przed terminem. W przypadku późniejszego odwołania lub niestawienia się na wizytę opłata może nie podlegać zwrotowi. W wyjątkowych sytuacjach Usługodawca może zaproponować zmianę terminu."
+        },
+        "contraindications": {
+          "title": "6. Przeciwwskazania",
+          "content": "Klient zobowiązany jest poinformować o wszystkich istotnych problemach zdrowotnych. W szczególności dotyczy to epilepsji, chorób psychicznych, schizofrenii, psychoz, ciężkich zaburzeń neurologicznych oraz ciąży w przypadku niektórych terapii. Usługodawca może odmówić wykonania usługi, jeśli uzna ją za niewłaściwą lub potencjalnie niebezpieczną."
+        },
+        "liability": {
+          "title": "7. Odpowiedzialność",
+          "content": "Klient korzysta z usług dobrowolnie i na własną odpowiedzialność. Letting Go Zen Studio nie ponosi odpowiedzialności za decyzje podjęte przez klienta po sesji, nieosiągnięcie oczekiwanych rezultatów ani skutki zatajenia informacji zdrowotnych."
+        },
+        "copyright": {
+          "title": "8. Prawa autorskie",
+          "content": "Wszelkie materiały zamieszczone na stronie internetowej są chronione prawem autorskim. Kopiowanie, rozpowszechnianie lub wykorzystywanie materiałów bez zgody właściciela jest zabronione."
         }
       }
     },
-    "terms": {
-      "label": "DOKUMENT PRAWNY",
-      "titleStart": "Regulamin",
-      "titleGold": "Serwisu",
-      "intro": "Do weryfikacji przez prawnika przed uruchomieniem strony.",
-      "warning": "PLACEHOLDER — Ten dokument wymaga weryfikacji przez prawnika przed uruchomieniem strony.",
+    "consent": {
+      "label": "KLAUZULA ŚWIADOMEJ ZGODY",
+      "titleStart": "Zgoda",
+      "titleGold": "Świadoma",
+      "intro": "Przed rozpoczęciem sesji klient potwierdza, że rozumie charakter usługi, bierze udział dobrowolnie oraz przekazuje prawdziwe informacje dotyczące zdrowia.",
+      "effectiveDate": "Data obowiązywania: 5 czerwca 2026",
+      "confirmationTitle": "Przed rozpoczęciem sesji klient potwierdza, że:",
+      "points": {
+        "voluntary": "bierze udział dobrowolnie.",
+        "nature": "rozumie charakter usługi.",
+        "notMedical": "rozumie, że usługa nie jest leczeniem medycznym.",
+        "truthfulHealth": "podał/a prawdziwe informacje dotyczące zdrowia.",
+        "stopAnytime": "może przerwać sesję w dowolnym momencie.",
+        "dataProcessing": "wyraża zgodę na przetwarzanie danych związanych z realizacją usługi."
+      },
+      "signatureTitle": "Dane do podpisu",
+      "fields": {
+        "fullName": "Imię i nazwisko: ____________________",
+        "date": "Data: ____________________",
+        "signature": "Podpis: ____________________"
+      },
+      "serviceDisclaimerTitle": "Komunikat dla stron usług",
+      "serviceDisclaimer": "Uwaga: Usługi oferowane przez Letting Go Zen Studio mają charakter wspierający dobrostan, relaksację i rozwój osobisty. Nie stanowią diagnozy medycznej ani leczenia chorób. W przypadku problemów zdrowotnych należy skonsultować się z lekarzem lub innym wykwalifikowanym specjalistą."
+    },
+    "privacy": {
+      "label": "POLITYKA PRYWATNOŚCI",
+      "titleStart": "Polityka",
+      "titleGold": "Prywatności",
+      "intro": "Polityka Prywatności wyjaśnia, jakie dane osobowe mogą być przetwarzane przez Letting Go Zen Studio, w jakim celu są wykorzystywane oraz jakie prawa przysługują użytkownikowi zgodnie z UK GDPR i RODO.",
+      "effectiveDate": "Data obowiązywania: 5 czerwca 2026",
       "sections": {
-        "general": {
-          "title": "§1 POSTANOWIENIA OGÓLNE",
-          "content": "Niniejszy Regulamin określa zasady korzystania z usług oferowanych przez Letting Go Zen Studio, prowadzonego przez Joannę Witkowską."
+        "controller": {
+          "title": "1. Administrator danych",
+          "content": "Administratorem danych osobowych jest Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Kontakt: lettinggozenstudio@gmail.com."
         },
-        "serviceNature": {
-          "title": "§2 CHARAKTER USŁUG",
-          "content": "Wszystkie usługi mają charakter komplementarny i holistyczny. Nie stanowią diagnozy medycznej ani leczenia."
+        "collectedData": {
+          "title": "2. Jakie dane zbieramy",
+          "content": "Możemy przetwarzać imię i nazwisko, adres e-mail, numer telefonu, dane do płatności, informacje podane w formularzach kontaktowych oraz informacje zawarte w ankietach przed sesją."
         },
-        "payments": {
-          "title": "§3 PŁATNOŚCI",
-          "content": "Płatności realizowane są przez Stripe. Raporty PDF dostarczane w języku angielskim w terminie określonym przy każdej usłudze."
+        "specialCategoryData": {
+          "title": "3. Dane szczególnej kategorii",
+          "content": "W przypadku hipnoterapii, EFT oraz biorezonansu mogą być przetwarzane informacje dotyczące zdrowia i samopoczucia klienta. Dane te są przetwarzane wyłącznie za wyraźną zgodą klienta."
         },
-        "refunds": {
-          "title": "§4 ANULACJE I ZWROTY",
-          "content": "[Placeholder — warunki do uzupełnienia z prawnikiem]"
+        "purposes": {
+          "title": "4. Cele przetwarzania",
+          "content": "Dane są przetwarzane w celu realizacji usług, kontaktu z klientem, prowadzenia dokumentacji sesji, realizacji obowiązków podatkowych i księgowych oraz ochrony prawnej działalności."
+        },
+        "legalBasis": {
+          "title": "5. Podstawy prawne",
+          "content": "Przetwarzanie odbywa się na podstawie zgody osoby, której dane dotyczą, wykonania umowy, prawnie uzasadnionego interesu administratora oraz obowiązków prawnych wynikających z przepisów podatkowych."
+        },
+        "retention": {
+          "title": "6. Przechowywanie danych",
+          "content": "Dane przechowywane są tylko przez okres niezbędny do realizacji celu, dla którego zostały zebrane. Dokumentacja księgowa przechowywana jest zgodnie z obowiązującymi przepisami prawa brytyjskiego."
+        },
+        "sharing": {
+          "title": "7. Udostępnianie danych",
+          "content": "Dane mogą być przekazywane podmiotom wspierającym działalność, takim jak operatorzy płatności, dostawcy hostingu, dostawcy poczty elektronicznej oraz biuro księgowe. Dane nie są sprzedawane osobom trzecim."
+        },
+        "rights": {
+          "title": "8. Prawa użytkownika",
+          "content": "Użytkownik ma prawo do dostępu do danych, sprostowania danych, usunięcia danych, ograniczenia przetwarzania, przeniesienia danych, wycofania zgody oraz wniesienia skargi do organu nadzorczego. W Wielkiej Brytanii organem nadzorczym jest Information Commissioner's Office (ICO)."
+        },
+        "cookies": {
+          "title": "9. Pliki Cookies",
+          "content": "Strona wykorzystuje pliki cookies w celu prawidłowego działania strony, analizy ruchu oraz poprawy jakości usług. Użytkownik może zmienić ustawienia cookies w swojej przeglądarce."
+        }
+      }
+    },
+    "privacy": {
+      "label": "POLITYKA PRYWATNOŚCI",
+      "titleStart": "Polityka",
+      "titleGold": "Prywatności",
+      "intro": "Polityka Prywatności wyjaśnia, jakie dane osobowe mogą być przetwarzane przez Letting Go Zen Studio, w jakim celu są wykorzystywane oraz jakie prawa przysługują użytkownikowi zgodnie z UK GDPR i RODO.",
+      "effectiveDate": "Data obowiązywania: 5 czerwca 2026",
+      "sections": {
+        "controller": {
+          "title": "1. Administrator danych",
+          "content": "Administratorem danych osobowych jest Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Kontakt: lettinggozenstudio@gmail.com."
+        },
+        "collectedData": {
+          "title": "2. Jakie dane zbieramy",
+          "content": "Możemy przetwarzać imię i nazwisko, adres e-mail, numer telefonu, dane do płatności, informacje podane w formularzach kontaktowych oraz informacje zawarte w ankietach przed sesją."
+        },
+        "specialCategoryData": {
+          "title": "3. Dane szczególnej kategorii",
+          "content": "W przypadku hipnoterapii, EFT oraz biorezonansu mogą być przetwarzane informacje dotyczące zdrowia i samopoczucia klienta. Dane te są przetwarzane wyłącznie za wyraźną zgodą klienta."
+        },
+        "purposes": {
+          "title": "4. Cele przetwarzania",
+          "content": "Dane są przetwarzane w celu realizacji usług, kontaktu z klientem, prowadzenia dokumentacji sesji, realizacji obowiązków podatkowych i księgowych oraz ochrony prawnej działalności."
+        },
+        "legalBasis": {
+          "title": "5. Podstawy prawne",
+          "content": "Przetwarzanie odbywa się na podstawie zgody osoby, której dane dotyczą, wykonania umowy, prawnie uzasadnionego interesu administratora oraz obowiązków prawnych wynikających z przepisów podatkowych."
+        },
+        "retention": {
+          "title": "6. Przechowywanie danych",
+          "content": "Dane przechowywane są tylko przez okres niezbędny do realizacji celu, dla którego zostały zebrane. Dokumentacja księgowa przechowywana jest zgodnie z obowiązującymi przepisami prawa brytyjskiego."
+        },
+        "sharing": {
+          "title": "7. Udostępnianie danych",
+          "content": "Dane mogą być przekazywane podmiotom wspierającym działalność, takim jak operatorzy płatności, dostawcy hostingu, dostawcy poczty elektronicznej oraz biuro księgowe. Dane nie są sprzedawane osobom trzecim."
+        },
+        "rights": {
+          "title": "8. Prawa użytkownika",
+          "content": "Użytkownik ma prawo do dostępu do danych, sprostowania danych, usunięcia danych, ograniczenia przetwarzania, przeniesienia danych, wycofania zgody oraz wniesienia skargi do organu nadzorczego. W Wielkiej Brytanii organem nadzorczym jest Information Commissioner's Office (ICO)."
+        },
+        "cookies": {
+          "title": "9. Pliki Cookies",
+          "content": "Strona wykorzystuje pliki cookies w celu prawidłowego działania strony, analizy ruchu oraz poprawy jakości usług. Użytkownik może zmienić ustawienia cookies w swojej przeglądarce."
         }
       }
     }

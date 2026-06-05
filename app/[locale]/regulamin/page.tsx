@@ -1,7 +1,7 @@
 // app/[locale]/regulamin/page.tsx
-// Temporary legal terms page.
+// Online shop terms page.
+// This page is only for digital products, online purchases and shop checkout rules.
 // All visible text comes from next-intl translation files.
-// This is a placeholder and must be checked by a lawyer before launch.
 
 import { getTranslations } from 'next-intl/server'
 
@@ -15,20 +15,56 @@ export default async function RegulaminPage() {
 
     const sections: LegalSection[] = [
         {
-            title: t('sections.general.title'),
-            content: t('sections.general.content'),
+            title: t('sections.seller.title'),
+            content: t('sections.seller.content'),
         },
         {
-            title: t('sections.serviceNature.title'),
-            content: t('sections.serviceNature.content'),
+            title: t('sections.definitions.title'),
+            content: t('sections.definitions.content'),
         },
         {
-            title: t('sections.payments.title'),
-            content: t('sections.payments.content'),
+            title: t('sections.scope.title'),
+            content: t('sections.scope.content'),
         },
         {
-            title: t('sections.refunds.title'),
-            content: t('sections.refunds.content'),
+            title: t('sections.orders.title'),
+            content: t('sections.orders.content'),
+        },
+        {
+            title: t('sections.prices.title'),
+            content: t('sections.prices.content'),
+        },
+        {
+            title: t('sections.delivery.title'),
+            content: t('sections.delivery.content'),
+        },
+        {
+            title: t('sections.withdrawal.title'),
+            content: t('sections.withdrawal.content'),
+        },
+        {
+            title: t('sections.complaints.title'),
+            content: t('sections.complaints.content'),
+        },
+        {
+            title: t('sections.copyright.title'),
+            content: t('sections.copyright.content'),
+        },
+        {
+            title: t('sections.liability.title'),
+            content: t('sections.liability.content'),
+        },
+        {
+            title: t('sections.sessions.title'),
+            content: t('sections.sessions.content'),
+        },
+        {
+            title: t('sections.data.title'),
+            content: t('sections.data.content'),
+        },
+        {
+            title: t('sections.final.title'),
+            content: t('sections.final.content'),
         },
     ]
 
@@ -49,18 +85,13 @@ export default async function RegulaminPage() {
                 <p className="legal-intro">
                     {t('intro')}
                 </p>
+
+                <p className="legal-effective-date">
+                    {t('effectiveDate')}
+                </p>
             </header>
 
-            {/* Visible warning because this is not final legal copy */}
-            <div className="legal-warning">
-                <span className="legal-warning-icon">⚠️</span>
-
-                <p className="legal-warning-text">
-                    {t('warning')}
-                </p>
-            </div>
-
-            {/* Legal sections */}
+            {/* Online shop legal sections */}
             <div className="legal-section-list">
                 {sections.map((section) => (
                     <section key={section.title} className="legal-section-card">
@@ -74,6 +105,23 @@ export default async function RegulaminPage() {
                     </section>
                 ))}
             </div>
+
+            {/* Mandatory consent wording for PDF/course checkout */}
+            <section className="legal-section-card legal-consent-card">
+                <h2 className="legal-section-title">
+                    {t('digitalConsent.title')}
+                </h2>
+
+                <div className="legal-checkbox-list">
+                    <p className="legal-section-text">
+                        ☐ {t('digitalConsent.terms')}
+                    </p>
+
+                    <p className="legal-section-text">
+                        ☐ {t('digitalConsent.instantDelivery')}
+                    </p>
+                </div>
+            </section>
         </main>
     )
 }

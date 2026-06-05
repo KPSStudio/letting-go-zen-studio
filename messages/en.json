@@ -300,6 +300,8 @@
     "kontakt": "CONTACT",
     "terms": "TERMS",
     "privacy": "PRIVACY POLICY",
+    "serviceTerms": "SERVICE TERMS",
+    "consent": "CONSCIOUS CONSENT",
     "homepageAria": "Letting Go Zen Studio homepage",
     "navigationAria": "Footer navigation",
     "socialAria": "Open social profile: {platform}"
@@ -622,49 +624,179 @@
     }
   },
   "legal": {
+    "terms": {
+      "label": "ONLINE SHOP TERMS AND CONDITIONS",
+      "titleStart": "Online Shop",
+      "titleGold": "Terms and Conditions",
+      "intro": "These terms set out the rules for using the Letting Go Zen Studio online shop, purchasing digital products, educational materials, online courses and processing payments.",
+      "effectiveDate": "Effective date: 05/06/2026",
+      "sections": {
+        "seller": {
+          "title": "§1. Seller Information",
+          "content": "The online shop is operated by Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. The business operates as a self-employed business. Contact: lettinggozenstudio@gmail.com."
+        },
+        "definitions": {
+          "title": "§2. Definitions",
+          "content": "Customer means a natural or legal person making a purchase through the shop. Shop means the Letting Go Zen Studio online service. Digital Product means content delivered electronically, including e-books, PDF files, audio meditations, relaxation recordings, hypnosis recordings, online courses and training materials. Service means online or in-person sessions offered by Letting Go Zen Studio."
+        },
+        "scope": {
+          "title": "§3. Scope of Activity",
+          "content": "The shop allows the purchase of digital products, educational materials, audio recordings, online courses, wellness services, hypnotherapy sessions, EFT sessions, individual consultations, bioresonance sessions and biofeedback sessions."
+        },
+        "orders": {
+          "title": "§4. Placing Orders",
+          "content": "Orders may be placed 24 hours a day. The Customer is required to provide truthful information. Placing an order means accepting these Terms and Conditions. The contract is concluded once payment confirmation is received."
+        },
+        "prices": {
+          "title": "§5. Prices and Payments",
+          "content": "All prices are shown in GBP (£) or another currency displayed on the website. Payments are processed by the payment providers shown on the website. The Seller reserves the right to change prices, but changes do not apply to orders that have already been paid."
+        },
+        "delivery": {
+          "title": "§6. Delivery of Digital Products",
+          "content": "Digital products are delivered electronically. Delivery takes place through a download link, email message or user account in the service. Access to the product is granted after payment has been processed."
+        },
+        "withdrawal": {
+          "title": "§7. Right of Withdrawal",
+          "content": "For digital products, the Customer agrees to the delivery of digital content beginning before the withdrawal period expires and acknowledges that, after gaining access to the product, they lose the right to withdraw from the contract to the extent permitted by applicable law."
+        },
+        "complaints": {
+          "title": "§8. Complaints",
+          "content": "The Customer has the right to submit a complaint concerning a defective file, inability to download a product or technical errors. Complaints should be submitted electronically. Complaints will be reviewed within 14 days."
+        },
+        "copyright": {
+          "title": "§9. Intellectual Property",
+          "content": "All materials available in the shop are protected by copyright. Copying, distributing, publishing, reselling or sharing them with third parties without prior written consent from the copyright owner is prohibited."
+        },
+        "liability": {
+          "title": "§10. Limitation of Liability",
+          "content": "Materials offered by Letting Go Zen Studio are educational, informational, relaxation-based and intended to support personal development. They do not constitute medical diagnosis, medical advice, psychotherapy or treatment of illness. Use of the materials is at the user's own responsibility."
+        },
+        "sessions": {
+          "title": "§11. Sessions and Consultations",
+          "content": "The Customer is required to provide truthful information about their health condition. Letting Go Zen Studio may refuse to provide a service if it considers the service inappropriate or potentially unsafe for the Customer. No specific therapeutic or personal development results are guaranteed."
+        },
+        "data": {
+          "title": "§12. Personal Data Protection",
+          "content": "Personal data is processed in accordance with the Privacy Policy and applicable UK GDPR and GDPR regulations."
+        },
+        "final": {
+          "title": "§13. Final Provisions",
+          "content": "These Terms and Conditions are governed by the law applicable in the United Kingdom. For customers from European Union countries, mandatory consumer protection provisions applicable in the customer's place of residence may also apply. Disputes will first be resolved amicably."
+        }
+      },
+      "digitalConsent": {
+        "title": "Mandatory consent when purchasing a PDF or course",
+        "terms": "I have read and accepted the Online Shop Terms and Conditions and Privacy Policy.",
+        "instantDelivery": "I agree to the immediate delivery of digital content and acknowledge that, after gaining access to the product, I lose the right to withdraw from the contract to the extent permitted by applicable law."
+      }
+    },
+    "consent": {
+      "label": "CONSCIOUS CONSENT CLAUSE",
+      "titleStart": "Conscious",
+      "titleGold": "Consent",
+      "intro": "Before starting a session, the client confirms that they understand the nature of the service, participate voluntarily and provide truthful health-related information.",
+      "effectiveDate": "Effective date: 5 June 2026",
+      "confirmationTitle": "Before starting a session, the client confirms that:",
+      "points": {
+        "voluntary": "they participate voluntarily.",
+        "nature": "they understand the nature of the service.",
+        "notMedical": "they understand that the service is not medical treatment.",
+        "truthfulHealth": "they have provided truthful health-related information.",
+        "stopAnytime": "they may stop the session at any time.",
+        "dataProcessing": "they consent to the processing of data connected with the provision of the service."
+      },
+      "signatureTitle": "Signature details",
+      "fields": {
+        "fullName": "Full name: ____________________",
+        "date": "Date: ____________________",
+        "signature": "Signature: ____________________"
+      },
+      "serviceDisclaimerTitle": "Service page notice",
+      "serviceDisclaimer": "Notice: Services offered by Letting Go Zen Studio are intended to support wellbeing, relaxation and personal development. They do not constitute medical diagnosis or treatment of illness. If you have health concerns, please consult a doctor or another qualified professional."
+    },
     "privacy": {
-      "label": "LEGAL DOCUMENT",
+      "label": "PRIVACY POLICY",
       "titleStart": "Privacy",
       "titleGold": "Policy",
-      "intro": "GDPR — to be reviewed by a lawyer before the website goes live.",
-      "warning": "PLACEHOLDER — This document must be reviewed by a lawyer before the website goes live.",
+      "intro": "This Privacy Policy explains what personal data may be processed by Letting Go Zen Studio, why it is used and what rights users have under UK GDPR and GDPR.",
+      "effectiveDate": "Effective date: 5 June 2026",
       "sections": {
-        "dataController": {
-          "title": "DATA CONTROLLER",
-          "content": "Joanna Witkowska — Letting Go Zen Studio. Contact: lettinggozenstudio@gmail.com"
+        "controller": {
+          "title": "1. Data Controller",
+          "content": "The data controller is Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Contact: lettinggozenstudio@gmail.com."
         },
-        "gdprArticle13": {
-          "title": "ARTICLE 13 GDPR",
-          "content": "We collect: name, email address, and phone number optionally. The data is used only to provide services and for contact purposes."
+        "collectedData": {
+          "title": "2. What Data We Collect",
+          "content": "We may process your full name, email address, phone number, payment data, information submitted through contact forms and information included in pre-session questionnaires."
         },
-        "clientRights": {
-          "title": "ARTICLE 14 GDPR — CLIENT RIGHTS",
-          "content": "You have the right to access, correct, delete, and transfer your personal data."
+        "specialCategoryData": {
+          "title": "3. Special Category Data",
+          "content": "In the case of hypnotherapy, EFT and bioresonance, information relating to the client's health and wellbeing may be processed. This data is processed only with the client's explicit consent."
+        },
+        "purposes": {
+          "title": "4. Purposes of Processing",
+          "content": "Data is processed to provide services, contact clients, maintain session documentation, fulfil tax and accounting obligations and protect the legal interests of the business."
+        },
+        "legalBasis": {
+          "title": "5. Legal Basis",
+          "content": "Processing is based on the consent of the data subject, performance of a contract, the legitimate interests of the controller and legal obligations arising from tax regulations."
+        },
+        "retention": {
+          "title": "6. Data Retention",
+          "content": "Data is stored only for the period necessary to fulfil the purpose for which it was collected. Accounting documentation is stored in accordance with applicable UK law."
+        },
+        "sharing": {
+          "title": "7. Data Sharing",
+          "content": "Data may be shared with service providers supporting the business, such as payment operators, hosting providers, email providers and accounting services. Data is not sold to third parties."
+        },
+        "rights": {
+          "title": "8. User Rights",
+          "content": "Users have the right to access their data, rectify their data, erase their data, restrict processing, transfer their data, withdraw consent and lodge a complaint with a supervisory authority. In the United Kingdom, the supervisory authority is the Information Commissioner's Office (ICO)."
+        },
+        "cookies": {
+          "title": "9. Cookies",
+          "content": "The website uses cookies to ensure proper website operation, analyse traffic and improve service quality. Users can change cookie settings in their browser."
         }
       }
     },
-    "terms": {
-      "label": "LEGAL DOCUMENT",
-      "titleStart": "Terms",
-      "titleGold": "of Service",
-      "intro": "To be reviewed by a lawyer before the website goes live.",
-      "warning": "PLACEHOLDER — This document must be reviewed by a lawyer before the website goes live.",
+    "serviceTerms": {
+      "label": "SERVICE TERMS AND CONDITIONS",
+      "titleStart": "Service",
+      "titleGold": "Terms",
+      "intro": "These terms explain the rules for using services offered by Letting Go Zen Studio, including online and in-person sessions, bookings, payments, appointment cancellations, contraindications and client responsibility.",
+      "effectiveDate": "Effective date: 5 June 2026",
       "sections": {
-        "general": {
-          "title": "§1 GENERAL PROVISIONS",
-          "content": "These Terms define the rules for using the services offered by Letting Go Zen Studio, operated by Joanna Witkowska."
+        "provider": {
+          "title": "1. Service Provider Information",
+          "content": "The service provider is Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. The business operates as a self-employed business. Contact: lettinggozenstudio@gmail.com."
         },
-        "serviceNature": {
-          "title": "§2 NATURE OF SERVICES",
-          "content": "All services are complementary and holistic in nature. They do not constitute medical diagnosis or medical treatment."
+        "scope": {
+          "title": "2. Scope of Services",
+          "content": "Letting Go Zen Studio provides services in the field of hypnotherapy, EFT, wellness consultations, relaxation sessions, massage and manual therapies, bioresonance, biofeedback, workshops and training, online sales, and online or in-person consultations."
         },
-        "payments": {
-          "title": "§3 PAYMENTS",
-          "content": "Payments are processed through Stripe. PDF reports are delivered in English within the timeframe specified for each service."
+        "nature": {
+          "title": "3. Nature of Services",
+          "content": "All services are intended to support wellbeing, personal development, relaxation and education. Services offered by Letting Go Zen Studio do not constitute medical services, do not replace medical diagnosis, do not replace psychiatric, psychological or pharmacological treatment, and do not guarantee specific results. The Customer remains responsible for their own health and treatment decisions."
         },
-        "refunds": {
-          "title": "§4 CANCELLATIONS AND REFUNDS",
-          "content": "[Placeholder — terms to be completed with a lawyer]"
+        "booking": {
+          "title": "4. Bookings and Payments",
+          "content": "Session bookings may be made through the website, by email, by phone or through other available communication channels. Payment may be made online, by bank transfer or through other methods indicated during booking. A session is confirmed after payment is received or according to individual arrangements."
+        },
+        "cancellation": {
+          "title": "5. Appointment Cancellation",
+          "content": "The Customer may cancel an appointment free of charge up to 24 hours before the scheduled time. In the event of later cancellation or failure to attend, the fee may be non-refundable. In exceptional situations, the Service Provider may offer to reschedule the appointment."
+        },
+        "contraindications": {
+          "title": "6. Contraindications",
+          "content": "The Customer is required to disclose all relevant health issues. This particularly includes epilepsy, mental illness, schizophrenia, psychosis, severe neurological disorders and pregnancy in the case of certain therapies. The Service Provider may refuse to provide a service if it considers the service inappropriate or potentially unsafe."
+        },
+        "liability": {
+          "title": "7. Liability",
+          "content": "The Customer uses the services voluntarily and at their own responsibility. Letting Go Zen Studio is not responsible for decisions made by the Customer after a session, failure to achieve expected results or the consequences of withholding health information."
+        },
+        "copyright": {
+          "title": "8. Copyright",
+          "content": "All materials published on the website are protected by copyright. Copying, distributing or using materials without the owner's consent is prohibited."
         }
       }
     }

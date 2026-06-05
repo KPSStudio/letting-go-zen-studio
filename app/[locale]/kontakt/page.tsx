@@ -1,3 +1,6 @@
+// app/[locale]/kontakt/page.tsx
+// Kontakt page — contact form, WhatsApp/email cards, and social links.
+
 'use client'
 
 import type { ChangeEvent, FormEvent } from 'react'
@@ -58,18 +61,18 @@ export default function KontaktPage() {
     ) {
         const { name, value } = event.target
 
-        setFormData(prev => ({
-            ...prev,
+        setFormData((previousData) => ({
+            ...previousData,
             [name]: value,
         }))
     }
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault()
+    async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault()
         setSubmitted(false)
 
         try {
-            const res = await fetch('/api/contact', {
+            const response = await fetch('/api/contact', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -78,9 +81,15 @@ export default function KontaktPage() {
                 }),
             })
 
-            if (res.ok) {
+            if (response.ok) {
                 setSubmitted(true)
-                setFormData({ name: '', email: '', phone: '', subject: '', message: '' })
+                setFormData({
+                    name: '',
+                    email: '',
+                    phone: '',
+                    subject: '',
+                    message: '',
+                })
             } else {
                 alert('Wystąpił błąd. Spróbuj ponownie.')
             }
@@ -90,42 +99,33 @@ export default function KontaktPage() {
     }
 
     return (
-        <main className="mx-auto max-w-[900px] px-8 pb-24 pt-12">
-
-            {/* Page label */}
-            <p className="mb-4 flex items-center gap-3 font-cinzel text-[0.7rem] tracking-[0.3em] text-brand-gold">
-                <span className="inline-block h-px w-8 bg-brand-gold" />
+        <main className="contact-page">
+            <p className="contact-label">
+                <span />
                 {t('label')}
             </p>
 
-            {/* Page hero */}
-            <section className="mb-16">
-                <h1 className="mb-4 font-cinzel text-[clamp(2.5rem,6vw,5rem)] leading-[1.1] text-brand-white">
-                    {t('heroTitle')}{' '}
-                    <span className="text-brand-gold-lt">
-                        {t('heroTitleGold')}
-                    </span>
+            <section className="contact-header">
+                <h1 className="contact-title">
+                    {t('heroTitle')} <span>{t('heroTitleGold')}</span>
                 </h1>
 
-                <p className="font-montserrat text-[0.95rem] leading-7 text-brand-cream">
+                <p className="contact-intro">
                     {t('heroSubtitle')}
                 </p>
             </section>
 
-            {/* Contact cards */}
-            <section className="mb-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-
-                {/* WhatsApp card */}
-                <div className="border border-brand-gold/15 bg-black/25 p-8">
-                    <div className="mb-5 flex h-10 w-10 items-center justify-center border border-brand-gold/30 text-[1.1rem]">
+            <section className="contact-card-grid">
+                <article className="contact-card">
+                    <div className="contact-card-icon">
                         📱
                     </div>
 
-                    <h2 className="mb-3 font-cinzel text-[0.85rem] tracking-[0.15em] text-brand-white">
+                    <h2 className="contact-card-title">
                         {t('whatsappTitle')}
                     </h2>
 
-                    <p className="mb-5 font-montserrat text-[0.95rem] leading-7 text-brand-cream">
+                    <p className="contact-card-text">
                         {t('whatsappText')}
                     </p>
 
@@ -133,117 +133,108 @@ export default function KontaktPage() {
                         href="https://wa.me/447590572043"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 border border-brand-gold/30 bg-brand-gold/10 px-5 py-3 font-cinzel text-[0.7rem] tracking-[0.15em] text-brand-gold-lt no-underline transition hover:border-brand-gold-lt"
+                        className="contact-card-link"
                     >
                         📱 07590 572 043
                     </a>
-                </div>
+                </article>
 
-                {/* Email card */}
-                <div className="border border-brand-gold/15 bg-black/25 p-8">
-                    <div className="mb-5 flex h-10 w-10 items-center justify-center border border-brand-gold/30 text-[1.1rem]">
+                <article className="contact-card">
+                    <div className="contact-card-icon">
                         📧
                     </div>
 
-                    <h2 className="mb-3 font-cinzel text-[0.85rem] tracking-[0.15em] text-brand-white">
+                    <h2 className="contact-card-title">
                         {t('emailTitle')}
                     </h2>
 
-                    <p className="mb-5 font-montserrat text-[0.95rem] leading-7 text-brand-cream">
+                    <p className="contact-card-text">
                         {t('emailText')}
                     </p>
 
                     <a
                         href="mailto:lettinggozenstudio@gmail.com"
-                        className="inline-flex items-center gap-2 border border-brand-gold/30 bg-brand-gold/10 px-5 py-3 font-cinzel text-[0.7rem] tracking-[0.15em] text-brand-gold-lt no-underline transition hover:border-brand-gold-lt"
+                        className="contact-card-link"
                     >
                         📧 lettinggozenstudio@gmail.com
                     </a>
-                </div>
+                </article>
             </section>
 
-            {/* Contact form */}
-            <section className="mb-16 border border-brand-gold/15 bg-black/25 p-10">
-
-                {/* Success message */}
+            <section className="contact-form-card">
                 {submitted && (
-                    <div className="mb-8 flex items-center gap-3 border border-brand-gold/30 bg-brand-gold/10 px-6 py-4">
+                    <div className="contact-success-box">
                         <span>✉️</span>
 
-                        <p className="m-0 font-montserrat text-[0.95rem] text-brand-gold-lt">
+                        <p>
                             {t('successMessage')}
                         </p>
                     </div>
                 )}
 
-                <h2 className="mb-8 font-cinzel text-[1rem] tracking-[0.15em] text-brand-white">
+                <h2 className="contact-section-title">
                     {t('formTitle')}
                 </h2>
 
                 <form onSubmit={handleSubmit}>
-
-                    {/* Name */}
-                    <div className="mb-6">
-                        <label className="mb-2 block font-cinzel text-[0.65rem] tracking-[0.2em] text-brand-gold">
+                    <div className="contact-form-field">
+                        <label htmlFor="name">
                             {t('nameLabel')}
                         </label>
 
                         <input
+                            id="name"
                             type="text"
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
                             placeholder={t('namePlaceholder')}
                             required
-                            className="w-full border border-brand-gold/20 bg-black/30 px-4 py-3 font-montserrat text-[0.95rem] text-brand-cream outline-none placeholder:text-brand-cream/40 focus:border-brand-gold-lt"
                         />
                     </div>
 
-                    {/* Email */}
-                    <div className="mb-6">
-                        <label className="mb-2 block font-cinzel text-[0.65rem] tracking-[0.2em] text-brand-gold">
+                    <div className="contact-form-field">
+                        <label htmlFor="email">
                             {t('emailLabel')}
                         </label>
 
                         <input
+                            id="email"
                             type="email"
                             name="email"
                             value={formData.email}
                             onChange={handleChange}
                             placeholder={t('emailPlaceholder')}
                             required
-                            className="w-full border border-brand-gold/20 bg-black/30 px-4 py-3 font-montserrat text-[0.95rem] text-brand-cream outline-none placeholder:text-brand-cream/40 focus:border-brand-gold-lt"
                         />
                     </div>
 
-                    {/* Phone */}
-                    <div className="mb-6">
-                        <label className="mb-2 block font-cinzel text-[0.65rem] tracking-[0.2em] text-brand-gold">
+                    <div className="contact-form-field">
+                        <label htmlFor="phone">
                             {t('phoneLabel')}
                         </label>
 
                         <input
+                            id="phone"
                             type="tel"
                             name="phone"
                             value={formData.phone}
                             onChange={handleChange}
                             placeholder={t('phonePlaceholder')}
-                            className="w-full border border-brand-gold/20 bg-black/30 px-4 py-3 font-montserrat text-[0.95rem] text-brand-cream outline-none placeholder:text-brand-cream/40 focus:border-brand-gold-lt"
                         />
                     </div>
 
-                    {/* Subject */}
-                    <div className="mb-6">
-                        <label className="mb-2 block font-cinzel text-[0.65rem] tracking-[0.2em] text-brand-gold">
+                    <div className="contact-form-field">
+                        <label htmlFor="subject">
                             {t('subjectLabel')}
                         </label>
 
                         <select
+                            id="subject"
                             name="subject"
                             value={formData.subject}
                             onChange={handleChange}
                             required
-                            className="w-full cursor-pointer border border-brand-gold/20 bg-black/30 px-4 py-3 font-montserrat text-[0.95rem] text-brand-cream outline-none focus:border-brand-gold-lt"
                         >
                             <option value="" disabled>
                                 {t('subjectPlaceholder')}
@@ -257,57 +248,51 @@ export default function KontaktPage() {
                         </select>
                     </div>
 
-                    {/* Message */}
-                    <div className="mb-8">
-                        <label className="mb-2 block font-cinzel text-[0.65rem] tracking-[0.2em] text-brand-gold">
+                    <div className="contact-form-field">
+                        <label htmlFor="message">
                             {t('messageLabel')}
                         </label>
 
                         <textarea
+                            id="message"
                             name="message"
                             value={formData.message}
                             onChange={handleChange}
                             placeholder={t('messagePlaceholder')}
                             required
                             rows={5}
-                            className="w-full resize-y border border-brand-gold/20 bg-black/30 px-4 py-3 font-montserrat text-[0.95rem] text-brand-cream outline-none placeholder:text-brand-cream/40 focus:border-brand-gold-lt"
                         />
                     </div>
 
-                    {/* Submit button */}
-                    <button
-                        type="submit"
-                        className="flex w-full cursor-pointer items-center justify-center gap-2 border border-brand-gold-lt bg-brand-gold-lt px-6 py-4 font-cinzel text-[0.8rem] tracking-[0.25em] text-[#3D0845] transition hover:bg-brand-gold"
-                    >
+                    <button type="submit" className="contact-submit-button">
                         ✉️ {t('submitButton')}
                     </button>
                 </form>
             </section>
 
-            {/* Social media */}
-            <section>
-                <h2 className="mb-8 font-cinzel text-[1rem] tracking-[0.15em] text-brand-white">
+            <section className="contact-social-section">
+                <h2 className="contact-section-title">
                     {t('socialTitle')}
                 </h2>
 
-                <div className="flex flex-col gap-4">
-                    {socialLinks.map(social => (
+                <div className="contact-social-list">
+                    {socialLinks.map((social) => (
                         <a
                             key={social.label}
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-4 border border-brand-gold/15 bg-black/25 px-6 py-4 no-underline transition hover:border-brand-gold-lt"
+                            className="contact-social-link"
                         >
-                            <span className="w-6 text-center font-cinzel text-[0.9rem] text-brand-gold-lt">
+                            <span className="contact-social-icon">
                                 {social.icon}
                             </span>
 
-                            <span className="font-cinzel text-[0.8rem] tracking-[0.15em] text-brand-white">
+                            <span className="contact-social-name">
                                 {social.label}
                             </span>
 
-                            <span className="font-montserrat text-[0.85rem] text-brand-cream/50">
+                            <span className="contact-social-handle">
                                 · {social.handle}
                             </span>
                         </a>

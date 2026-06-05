@@ -23,6 +23,13 @@ const navLinks: FooterLink[] = [
     { labelKey: 'kontakt', href: '/kontakt' },
 ]
 
+const legalLinks: FooterLink[] = [
+    { labelKey: 'terms', href: '/regulamin' },
+    { labelKey: 'privacy', href: '/polityka-prywatnosci' },
+    { labelKey: 'serviceTerms', href: '/zasady-uslug' },
+    { labelKey: 'consent', href: '/zgoda-swiadoma' },
+]
+
 const socialLinks = [
     { label: 'f', href: 'https://www.facebook.com/lettinggostudiozen/' },
     { label: '◎', href: 'https://instagram.com/lettinggozenstudio' },
@@ -99,19 +106,15 @@ export default function Footer() {
                 </span>
 
                 <div className="footer-legal-links">
-                    <Link
-                        href={getLocalizedHref('/regulamin')}
-                        className="footer-bottom-link"
-                    >
-                        {t('terms')}
-                    </Link>
-
-                    <Link
-                        href={getLocalizedHref('/polityka-prywatnosci')}
-                        className="footer-bottom-link"
-                    >
-                        {t('privacy')}
-                    </Link>
+                    {legalLinks.map((link) => (
+                        <Link
+                            key={link.href}
+                            href={getLocalizedHref(link.href)}
+                            className="footer-bottom-link"
+                        >
+                            {t(link.labelKey)}
+                        </Link>
+                    ))}
                 </div>
             </div>
         </footer>

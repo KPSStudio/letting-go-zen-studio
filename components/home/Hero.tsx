@@ -12,6 +12,15 @@ export default function Hero() {
     return (
         <section className="hero-section">
 
+            {/* Mystical floating symbols */}
+            <div className="hero-mystic-symbols" aria-hidden="true">
+                <span className="hero-mystic-symbol hero-mystic-eye" />
+                <span className="hero-mystic-symbol hero-mystic-circle" />
+                <span className="hero-mystic-symbol hero-mystic-pyramid" />
+                <span className="hero-mystic-symbol hero-mystic-eye-two" />
+                <span className="hero-mystic-symbol hero-mystic-circle-two" />
+            </div>
+
             {/* Large decorative orbit around the hero content */}
             <div className="hero-orbit" aria-hidden="true">
                 <span className="hero-orbit-dot hero-orbit-dot-one" />

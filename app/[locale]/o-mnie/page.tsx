@@ -44,23 +44,27 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </h1>
             </section>
 
-            {/* Photo placeholder */}
-            <section className="mx-auto mb-16 flex h-[320px] w-[260px] flex-col items-center justify-center gap-4 border border-dashed border-[rgba(184,148,42,0.4)] bg-black/20">
-                <Image
-                    src="/images/logo.png"
-                    alt={t('logoAlt')}
-                    width={60}
-                    height={60}
-                    className="opacity-40"
-                />
+            {/* Joanna photo */}
+            <section className="about-photo-card">
+                <div className="about-photo-aura" />
+                <div className="about-photo-orbit" />
 
-                <p className="text-center font-cinzel text-[0.65rem] tracking-[0.2em] text-[rgba(245,237,216,0.4)]">
-                    {t('photoPlaceholder')}
-                </p>
+                <div className="about-photo-image-wrap">
+                    <Image
+                        src="/images/Joanna-photo.png"
+                        alt={t('photoAlt')}
+                        width={840}
+                        height={1040}
+                        priority
+                        className="about-photo-image"
+                    />
+                </div>
 
-                <p className="text-center font-cinzel text-[0.6rem] tracking-[0.15em] text-[rgba(212,175,106,0.5)]">
-                    {t('photoName')}
-                </p>
+                <div className="about-photo-name-box">
+                    <p className="about-photo-caption">
+                        {t('photoName')}
+                    </p>
+                </div>
             </section>
 
             {/* Main bio text */}
