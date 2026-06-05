@@ -1,13 +1,13 @@
 // lib/email.ts
-// Sends transactional emails via Resend
-// Used for Sklep download links and order confirmations
+// Sends transactional emails via Resend.
+// Used for Sklep download links and order notifications.
 
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 interface DownloadEmailProps {
-    to: 'lettinggozenstudio@gmail.com',
+    to: string
     productName: string
     downloadUrl: string
 }
@@ -85,7 +85,7 @@ export async function sendOrderNotificationToJoanna({
                                                     }: OrderNotificationProps) {
     const { error } = await resend.emails.send({
         from: 'Letting Go Zen Studio <onboarding@resend.dev>',
-        to: process.env.CONTACT_EMAIL!,
+        to: process.env.CONTACT_EMAIL ?? 'lettinggozenstudio@gmail.com',
         subject: `Nowa sprzedaż: ${productName}`,
         html: `
       <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 20px;">
