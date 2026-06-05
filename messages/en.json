@@ -581,6 +581,45 @@
       }
     }
   },
+  "bookingConsent": {
+    "back": "Back",
+    "label": "BOOKING CONSENT",
+    "titleMain": "Client",
+    "titleGold": "Confirmation",
+    "intro": "Before continuing to the booking page, please confirm the required information for the selected service.",
+    "serviceLabel": "Service",
+    "fallbackServiceName": "Selected service",
+    "confirmationsTitle": "Pre-session confirmations",
+    "signatureTitle": "Signature details",
+    "signatureNotice": "By submitting this form, the client confirms that the typed signature is their electronic confirmation for the selected service.",
+    "submit": "Continue to booking",
+    "submitting": "Saving...",
+    "checks": {
+      "participatesVoluntarily": "I participate voluntarily.",
+      "understandsServiceNature": "I understand the nature of the service.",
+      "understandsNotMedicalTreatment": "I understand this service is not medical treatment.",
+      "truthfulHealthInformation": "I confirm I have provided truthful health-related information.",
+      "mayStopAnyTime": "I understand I may stop the session at any time.",
+      "dataProcessingConsent": "I consent to the processing of data connected with the provision of the service.",
+      "acceptPrefix": "I accept the",
+      "terms": "Terms and Conditions",
+      "and": "and",
+      "privacy": "Privacy Policy"
+    },
+    "fields": {
+      "fullName": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "serviceName": "Service name",
+      "typedSignature": "Typed signature"
+    },
+    "errors": {
+      "missingService": "The selected service information is missing. Please go back to the services page and choose booking again.",
+      "incompleteForm": "Please complete all fields and tick all required confirmations.",
+      "saveFailed": "The consent could not be saved. Please try again.",
+      "connectionFailed": "A connection error occurred. Please try again."
+    }
+  },
   "wspolpraca": {
     "label": "COLLABORATION AND PROTOCOL",
     "titleStart": "How",

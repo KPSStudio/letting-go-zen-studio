@@ -12,7 +12,6 @@
     "moreInfo": "WIĘCEJ INFO",
     "close": "Zamknij",
     "session": "Sesja",
-    "session": "Sesja",
     "package": "Pakiet",
     "availability": "Dostępność",
     "includes": "Co obejmuje",
@@ -582,6 +581,45 @@
       }
     }
   },
+  "bookingConsent": {
+    "back": "Wróć",
+    "label": "ZGODA PRZED REZERWACJĄ",
+    "titleMain": "Potwierdzenie",
+    "titleGold": "Klienta",
+    "intro": "Przed przejściem do rezerwacji potwierdź wymagane informacje dotyczące wybranej usługi.",
+    "serviceLabel": "Usługa",
+    "fallbackServiceName": "Wybrana usługa",
+    "confirmationsTitle": "Potwierdzenia przed sesją",
+    "signatureTitle": "Dane podpisu",
+    "signatureNotice": "Wysyłając ten formularz, klient potwierdza, że wpisany podpis stanowi jego elektroniczne potwierdzenie dla wybranej usługi.",
+    "submit": "Przejdź do rezerwacji",
+    "submitting": "Zapisywanie...",
+    "checks": {
+      "participatesVoluntarily": "Uczestniczę dobrowolnie.",
+      "understandsServiceNature": "Rozumiem charakter usługi.",
+      "understandsNotMedicalTreatment": "Rozumiem, że ta usługa nie jest leczeniem medycznym.",
+      "truthfulHealthInformation": "Potwierdzam, że podałem/podałam prawdziwe informacje związane ze zdrowiem.",
+      "mayStopAnyTime": "Rozumiem, że mogę przerwać sesję w dowolnym momencie.",
+      "dataProcessingConsent": "Wyrażam zgodę na przetwarzanie danych związanych ze świadczeniem usługi.",
+      "acceptPrefix": "Akceptuję",
+      "terms": "Regulamin",
+      "and": "oraz",
+      "privacy": "Politykę Prywatności"
+    },
+    "fields": {
+      "fullName": "Imię i nazwisko",
+      "email": "Email",
+      "phone": "Telefon",
+      "serviceName": "Nazwa usługi",
+      "typedSignature": "Podpis wpisany"
+    },
+    "errors": {
+      "missingService": "Brakuje informacji o wybranej usłudze. Wróć do strony usług i wybierz rezerwację ponownie.",
+      "incompleteForm": "Uzupełnij wszystkie pola i zaznacz wszystkie wymagane zgody.",
+      "saveFailed": "Nie udało się zapisać zgody. Spróbuj ponownie.",
+      "connectionFailed": "Wystąpił błąd połączenia. Spróbuj ponownie."
+    }
+  },
   "wspolpraca": {
     "label": "WSPÓŁPRACA I PROTOKÓŁ",
     "titleStart": "Jak",
@@ -755,51 +793,6 @@
       },
       "serviceDisclaimerTitle": "Komunikat dla stron usług",
       "serviceDisclaimer": "Uwaga: Usługi oferowane przez Letting Go Zen Studio mają charakter wspierający dobrostan, relaksację i rozwój osobisty. Nie stanowią diagnozy medycznej ani leczenia chorób. W przypadku problemów zdrowotnych należy skonsultować się z lekarzem lub innym wykwalifikowanym specjalistą."
-    },
-    "privacy": {
-      "label": "POLITYKA PRYWATNOŚCI",
-      "titleStart": "Polityka",
-      "titleGold": "Prywatności",
-      "intro": "Polityka Prywatności wyjaśnia, jakie dane osobowe mogą być przetwarzane przez Letting Go Zen Studio, w jakim celu są wykorzystywane oraz jakie prawa przysługują użytkownikowi zgodnie z UK GDPR i RODO.",
-      "effectiveDate": "Data obowiązywania: 5 czerwca 2026",
-      "sections": {
-        "controller": {
-          "title": "1. Administrator danych",
-          "content": "Administratorem danych osobowych jest Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Kontakt: lettinggozenstudio@gmail.com."
-        },
-        "collectedData": {
-          "title": "2. Jakie dane zbieramy",
-          "content": "Możemy przetwarzać imię i nazwisko, adres e-mail, numer telefonu, dane do płatności, informacje podane w formularzach kontaktowych oraz informacje zawarte w ankietach przed sesją."
-        },
-        "specialCategoryData": {
-          "title": "3. Dane szczególnej kategorii",
-          "content": "W przypadku hipnoterapii, EFT oraz biorezonansu mogą być przetwarzane informacje dotyczące zdrowia i samopoczucia klienta. Dane te są przetwarzane wyłącznie za wyraźną zgodą klienta."
-        },
-        "purposes": {
-          "title": "4. Cele przetwarzania",
-          "content": "Dane są przetwarzane w celu realizacji usług, kontaktu z klientem, prowadzenia dokumentacji sesji, realizacji obowiązków podatkowych i księgowych oraz ochrony prawnej działalności."
-        },
-        "legalBasis": {
-          "title": "5. Podstawy prawne",
-          "content": "Przetwarzanie odbywa się na podstawie zgody osoby, której dane dotyczą, wykonania umowy, prawnie uzasadnionego interesu administratora oraz obowiązków prawnych wynikających z przepisów podatkowych."
-        },
-        "retention": {
-          "title": "6. Przechowywanie danych",
-          "content": "Dane przechowywane są tylko przez okres niezbędny do realizacji celu, dla którego zostały zebrane. Dokumentacja księgowa przechowywana jest zgodnie z obowiązującymi przepisami prawa brytyjskiego."
-        },
-        "sharing": {
-          "title": "7. Udostępnianie danych",
-          "content": "Dane mogą być przekazywane podmiotom wspierającym działalność, takim jak operatorzy płatności, dostawcy hostingu, dostawcy poczty elektronicznej oraz biuro księgowe. Dane nie są sprzedawane osobom trzecim."
-        },
-        "rights": {
-          "title": "8. Prawa użytkownika",
-          "content": "Użytkownik ma prawo do dostępu do danych, sprostowania danych, usunięcia danych, ograniczenia przetwarzania, przeniesienia danych, wycofania zgody oraz wniesienia skargi do organu nadzorczego. W Wielkiej Brytanii organem nadzorczym jest Information Commissioner's Office (ICO)."
-        },
-        "cookies": {
-          "title": "9. Pliki Cookies",
-          "content": "Strona wykorzystuje pliki cookies w celu prawidłowego działania strony, analizy ruchu oraz poprawy jakości usług. Użytkownik może zmienić ustawienia cookies w swojej przeglądarce."
-        }
-      }
     },
     "privacy": {
       "label": "POLITYKA PRYWATNOŚCI",

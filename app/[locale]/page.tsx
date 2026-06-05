@@ -1,13 +1,12 @@
 // app/[locale]/page.tsx
-import { useTranslations } from 'next-intl'
 import Hero from '@/components/home/Hero'
 import CUDPillars from '@/components/home/CUDPillars'
 
 export default function Home() {
-  return (
-    <>
-      <Hero />
-      <CUDPillars />
-    </>
-  )
+    return (
+        <>
+            <Hero />
+            <CUDPillars />
+        </>
+    )
 }

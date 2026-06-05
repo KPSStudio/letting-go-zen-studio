@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import { useCart } from '@/lib/CartContext'
 import { useCurrency } from '@/lib/CurrencyContext'
@@ -15,7 +15,6 @@ import {
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
-// Stripe appearance matching our design
 const stripeAppearance = {
     theme: 'night' as const,
     variables: {
@@ -64,7 +63,6 @@ const stripeAppearance = {
     },
 }
 
-// Inner payment form component
 function PaymentForm({
                          onBack,
                          total,
@@ -83,7 +81,6 @@ function PaymentForm({
     async function handlePay(e: React.FormEvent) {
         e.preventDefault()
         if (!stripe || !elements) return
-
         setPaying(true)
         setError(null)
 
@@ -102,7 +99,6 @@ function PaymentForm({
 
     return (
         <form onSubmit={handlePay}>
-
             <div style={{ marginBottom: '2rem' }}>
                 <PaymentElement />
             </div>
@@ -153,7 +149,6 @@ function PaymentForm({
             <p className="cart-security-text" style={{ marginTop: '1rem' }}>
                 🔐 Szyfrowanie SSL · Stripe · 🛡️ Bezpieczna płatność
             </p>
-
         </form>
     )
 }
@@ -161,11 +156,29 @@ function PaymentForm({
 export default function KoszykPage() {
     const t = useTranslations('cartPage')
     const locale = useLocale()
-    const { items, removeItem, clearCart, count, totalGBP, totalPLN } = useCart()
+    const { items, addItem, removeItem, clearCart, count, totalGBP, totalPLN } = useCart()
     const { currency, formatPrice } = useCurrency()
     const [termsAccepted, setTermsAccepted] = useState(false)
     const [clientSecret, setClientSecret] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
+
+    // Pre-fill cart when redirected from Cal.com booking
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search)
+        if (params.get('booked') === 'true') {
+            const serviceName = params.get('service')
+            const price = parseFloat(params.get('price') ?? '0')
+            if (serviceName && price > 0) {
+                addItem({
+                    id: serviceName,
+                    name: serviceName,
+                    type: 'sesja',
+                    gbp: price,
+                    pln: Math.round(price * 5.2),
+                })
+            }
+        }
+    }, [])
 
     const isSuccess = typeof window !== 'undefined' &&
         new URLSearchParams(window.location.search).get('success') === 'true'
@@ -216,31 +229,36 @@ export default function KoszykPage() {
     // Success page
     if (isSuccess) {
         return (
-            <main className="cart-page">
-                <div style={{ textAlign: 'center', padding: '6rem 2rem' }}>
-                    <div style={{ fontSize: '3rem', marginBottom: '1.5rem' }}>✨</div>
-                    <h1 style={{
-                        fontFamily: 'var(--font-cinzel)',
-                        fontSize: '2rem',
-                        color: 'var(--gold-lt)',
-                        marginBottom: '1rem',
-                    }}>
-                        Dziękujemy!
-                    </h1>
-                    <p style={{
-                        fontFamily: 'var(--font-raleway)',
-                        fontSize: '1rem',
-                        color: 'var(--cream)',
-                        opacity: 0.8,
-                        marginBottom: '2rem',
-                    }}>
+            <div className="thankyou-page">
+                <div className="thankyou-orbit">
+                    <div className="thankyou-orbit-dot" />
+                    <div className="thankyou-orbit-dot" />
+                    <div className="thankyou-orbit-dot" />
+                </div>
+                <div className="thankyou-aura" />
+                <div className="thankyou-rising-dots">
+                    <span /><span /><span /><span /><span />
+                </div>
+                <div className="thankyou-content">
+                    <div className="thankyou-symbol">✦</div>
+                    <p className="thankyou-label">
+                        <span />
+                        Letting Go Zen Studio
+                        <span />
+                    </p>
+                    <h1 className="thankyou-title">Dziękujemy</h1>
+                    <div className="thankyou-divider" />
+                    <p className="thankyou-text">
                         Joanna skontaktuje się z Tobą w ciągu 24 godzin na WhatsApp lub email.
                     </p>
-                    <Link href={`/${locale}`} className="cart-primary-link">
-                        Wróć na stronę główną
+                    <p className="thankyou-subtext">
+                        Ciało · Umysł · Dusza
+                    </p>
+                    <Link href={`/${locale}`} className="thankyou-button">
+                        Wróć na Stronę Główną
                     </Link>
                 </div>
-            </main>
+            </div>
         )
     }
 
@@ -328,12 +346,20 @@ export default function KoszykPage() {
                             />
                             <span>
                 Akceptuję{' '}
-                                <Link href={`/${locale}/regulamin`} style={{ color: 'var(--gold-lt)' }}>
+                                <Link href={`/${locale}/regulamin`} className="cart-terms-link">
                   regulamin
                 </Link>
-                                {' '}i{' '}
-                                <Link href={`/${locale}/polityka-prywatnosci`} style={{ color: 'var(--gold-lt)' }}>
+                                {', '}
+                                <Link href={`/${locale}/polityka-prywatnosci`} className="cart-terms-link">
                   politykę prywatności
+                </Link>
+                                {', '}
+                                <Link href={`/${locale}/zasady-uslug`} className="cart-terms-link">
+                  zasady usług
+                </Link>
+                                {' oraz '}
+                                <Link href={`/${locale}/zgoda-swiadoma`} className="cart-terms-link">
+                  zgodę świadomą
                 </Link>
               </span>
                         </label>
@@ -374,7 +400,6 @@ export default function KoszykPage() {
                             PŁATNOŚĆ · {formatPrice(total)}
                         </p>
 
-                        {/* Order summary */}
                         <div style={{
                             borderBottom: '1px solid rgba(184,148,42,0.15)',
                             marginBottom: '1.5rem',
@@ -407,10 +432,7 @@ export default function KoszykPage() {
 
                         <Elements
                             stripe={stripePromise}
-                            options={{
-                                clientSecret,
-                                appearance: stripeAppearance,
-                            }}
+                            options={{ clientSecret, appearance: stripeAppearance }}
                         >
                             <PaymentForm
                                 onBack={() => setClientSecret(null)}

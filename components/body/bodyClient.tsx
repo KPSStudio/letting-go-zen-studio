@@ -1,6 +1,6 @@
 // components/body/BodyClient.tsx
-// Client component — handles translations, cart and modal
-// Receives products from server component
+// Client component — handles translations, cart, modal and booking consent routing.
+// Services come from Sanity. Booking services now go to consent first, then Cal.com.
 
 'use client'
 
@@ -41,6 +41,14 @@ export default function BodyClient({ products, locale }: Props) {
         return locale === 'en' && product.descEn ? product.descEn : product.descPl
     }
 
+    function getConsentHref(product: SanityService) {
+        const serviceSlug = getCalSlug(product.namePl) ?? ''
+        const serviceName = product.namePl
+        const price = product.priceGBP.toString()
+
+        return `/${locale}/zgoda-rezerwacja?service=${encodeURIComponent(serviceSlug)}&serviceName=${encodeURIComponent(serviceName)}&price=${price}&locale=${locale}`
+    }
+
     return (
         <main className="body-page">
             <Link href="/" className="body-back-link">
@@ -51,7 +59,9 @@ export default function BodyClient({ products, locale }: Props) {
                 <h1 className="body-title">
                     {t('titleMain')} <span>{t('titleGold')}</span>
                 </h1>
+
                 <p className="body-intro">{t('intro')}</p>
+
                 <p className="body-count">
                     {t('count', { count: products.length })}
                 </p>
@@ -115,7 +125,7 @@ export default function BodyClient({ products, locale }: Props) {
 
                                     {product.requiresBooking ? (
                                         <Link
-                                            href={`/${locale}/rezerwacja?service=${getCalSlug(product.namePl) ?? ''}`}
+                                            href={getConsentHref(product)}
                                             className="body-cart-button"
                                             style={{
                                                 display: 'block',
@@ -192,6 +202,7 @@ export default function BodyClient({ products, locale }: Props) {
                                 <p className="body-modal-label">
                                     📍 {t('availability')}
                                 </p>
+
                                 <p className="body-modal-text">
                                     {selectedProduct.availability}
                                 </p>
@@ -204,6 +215,7 @@ export default function BodyClient({ products, locale }: Props) {
                                     <p className="body-modal-label">
                                         {t('includes')}
                                     </p>
+
                                     <ul className="body-modal-list">
                                         {selectedProduct.includes.map(
                                             (item: string, i: number) => (
@@ -220,6 +232,7 @@ export default function BodyClient({ products, locale }: Props) {
                                     <p className="body-modal-label">
                                         {t('whoFor')}
                                     </p>
+
                                     <ul className="body-modal-list">
                                         {selectedProduct.whoFor.map(
                                             (item: string, i: number) => (
@@ -235,6 +248,7 @@ export default function BodyClient({ products, locale }: Props) {
                                 <p className="body-modal-label">
                                     ⚠️ {t('importantInfo')}
                                 </p>
+
                                 <p className="body-warning-text">
                                     {selectedProduct.warning}
                                 </p>
@@ -244,7 +258,7 @@ export default function BodyClient({ products, locale }: Props) {
                         <div className="body-modal-actions">
                             {selectedProduct.requiresBooking ? (
                                 <Link
-                                    href={`/${locale}/rezerwacja?service=${getCalSlug(selectedProduct.namePl) ?? ''}`}
+                                    href={getConsentHref(selectedProduct)}
                                     className="body-modal-cart-button"
                                     onClick={() => setSelectedProduct(null)}
                                 >

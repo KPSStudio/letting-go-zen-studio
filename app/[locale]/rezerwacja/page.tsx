@@ -17,6 +17,9 @@ const DEFAULT_EVENT = 'cialo-biorezonans-sesja-1-1'
 function BookingEmbed() {
     const searchParams = useSearchParams()
     const service = searchParams.get('service') ?? DEFAULT_EVENT
+    const serviceName = searchParams.get('serviceName') ?? ''
+    const price = searchParams.get('price') ?? ''
+    const locale = searchParams.get('locale') ?? 'pl'
     const calLink = `${CAL_USERNAME}/${service}`
 
     useEffect(() => {
@@ -31,16 +34,20 @@ function BookingEmbed() {
                 hideEventTypeDetails: false,
             })
 
-            // After booking confirmed, redirect to koszyk
+            // After booking confirmed, redirect to koszyk with service pre-added
             cal('on', {
                 action: 'bookingSuccessful',
-                callback: (e: any) => {
-                    const { data } = e.detail
-                    window.location.href = `/${data.locale ?? 'pl'}/koszyk?booked=true&service=${encodeURIComponent(data.eventType?.title ?? '')}`
+                callback: () => {
+                    const params = new URLSearchParams({
+                        booked: 'true',
+                        service: serviceName || service,
+                        price,
+                    })
+                    window.location.href = `/${locale}/koszyk?${params.toString()}`
                 },
             })
         })
-    }, [])
+    }, [service, serviceName, price, locale])
 
     return (
         <Cal
