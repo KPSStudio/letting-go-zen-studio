@@ -5,35 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated">
-      <change afterPath="$PROJECT_DIR$/app/api/contact/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/studio/[[...tool]]/page.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/studio/layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/body/bodyClient.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/body/bodyProducts.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/mind/mindClient.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/sklep/sklepClient.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/soul/soulClient.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/supabase-admin.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/supabase.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity.config.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity/lib/sanity.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity/schemas/galleryImage.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity/schemas/service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity/schemas/siteSettings.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity/schemas/sklepProduct.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sanity/schemas/testimonial.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/importProducts.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/scripts/importSklepProduct.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/checkout/session/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/checkout/sklep/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/webhooks/stripe/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/email.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/stripe.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/supabase-storage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/body/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/body/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/kontakt/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/kontakt/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/mind/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/mind/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/sklep/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/sklep/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/soul/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/soul/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/en.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/en.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/messages/pl.json" beforeDir="false" afterPath="$PROJECT_DIR$/messages/pl.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/middleware.ts" beforeDir="false" afterPath="$PROJECT_DIR$/middleware.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/koszyk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/koszyk/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/sklep/sklepClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sklep/sklepClient.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
@@ -68,23 +48,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.0" />
-      <entry key="MS500" value="1.0" />
-      <entry key="S2" value="1.0" />
-      <entry key="S5" value="1.0" />
-      <entry key="S10" value="1.0" />
-      <entry key="S30" value="1.0000000000999767" />
-      <entry key="S60" value="1.0000229804610565" />
-      <entry key="M2" value="1.0115848217705248" />
-      <entry key="M5" value="1.523544002399737" />
-      <entry key="M10" value="3.0711513845000673" />
-      <entry key="M15" value="4.8317288721148" />
-      <entry key="M30" value="10.80948077831415" />
-      <entry key="H1" value="19.75971093002862" />
-      <entry key="H2" value="28.141165381964324" />
-      <entry key="H4" value="37.23749894712019" />
-      <entry key="D1" value="181.96894259181138" />
-      <entry key="W1" value="402.2996202921705" />
+      <entry key="MS100" value="1.8146623437892027" />
+      <entry key="MS500" value="4.751388603065098" />
+      <entry key="S2" value="10.135749006754132" />
+      <entry key="S5" value="18.904346676152066" />
+      <entry key="S10" value="27.190196828406496" />
+      <entry key="S30" value="36.94783449810293" />
+      <entry key="S60" value="40.24656742353675" />
+      <entry key="M2" value="42.06237387685934" />
+      <entry key="M5" value="43.33657448820554" />
+      <entry key="M10" value="44.72890788966849" />
+      <entry key="M15" value="46.0669875802092" />
+      <entry key="M30" value="48.7085941428296" />
+      <entry key="H1" value="51.539231367446426" />
+      <entry key="H2" value="57.43133233458187" />
+      <entry key="H4" value="69.00989336361934" />
+      <entry key="D1" value="211.74685621247724" />
+      <entry key="W1" value="448.20599981457013" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -95,34 +75,34 @@
       <entry key="S30" value="0.0" />
       <entry key="S60" value="0.0" />
       <entry key="M2" value="0.0" />
-      <entry key="M5" value="6.714954185911396E-178" />
-      <entry key="M10" value="2.59132286408147E-89" />
-      <entry key="M15" value="8.756845445190733E-60" />
-      <entry key="M30" value="2.9591967567565552E-30" />
-      <entry key="H1" value="1.7202327468931219E-15" />
-      <entry key="H2" value="4.150954439644145E-8" />
-      <entry key="H4" value="2.0947553478183626E-4" />
-      <entry key="D1" value="0.3766753956118843" />
-      <entry key="W1" value="1.5673088495995011" />
+      <entry key="M5" value="1.2077332434160024E-195" />
+      <entry key="M10" value="3.4752456652961956E-98" />
+      <entry key="M15" value="1.0649364045918416E-65" />
+      <entry key="M30" value="3.263336336623589E-33" />
+      <entry key="H1" value="5.712565701141817E-17" />
+      <entry key="H2" value="7.56432126025254E-9" />
+      <entry key="H4" value="8.942198520057315E-5" />
+      <entry key="D1" value="0.3268529579714691" />
+      <entry key="W1" value="1.5358629598783" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="0.8235910172675731" />
-      <entry key="MS500" value="0.9619274546647747" />
-      <entry key="S2" value="0.9903428719330246" />
-      <entry key="S5" value="0.9961258995541646" />
-      <entry key="S10" value="0.9980610700524115" />
-      <entry key="S30" value="0.9993532719700639" />
-      <entry key="S60" value="0.9997039891641449" />
-      <entry key="M2" value="1.0135170270926577" />
-      <entry key="M5" value="1.6080275753002724" />
-      <entry key="M10" value="3.3615754994672606" />
-      <entry key="M15" value="5.270097570674242" />
-      <entry key="M30" value="11.471297961366712" />
-      <entry key="H1" value="20.573064680133847" />
-      <entry key="H2" value="29.042956796013637" />
-      <entry key="H4" value="38.187308355878976" />
-      <entry key="D1" value="183.33698177216655" />
-      <entry key="W1" value="404.8656731371616" />
+      <entry key="MS100" value="1.747756617004515" />
+      <entry key="MS500" value="4.720365993996526" />
+      <entry key="S2" value="10.120613209085489" />
+      <entry key="S5" value="18.893547774847637" />
+      <entry key="S10" value="27.182485576662458" />
+      <entry key="S30" value="36.94433484383157" />
+      <entry key="S60" value="40.24465849500473" />
+      <entry key="M2" value="42.06137526444623" />
+      <entry key="M5" value="43.33611322334099" />
+      <entry key="M10" value="44.72847429705531" />
+      <entry key="M15" value="46.06653647648879" />
+      <entry key="M30" value="48.7089297857941" />
+      <entry key="H1" value="51.565972678238275" />
+      <entry key="H2" value="57.59550887173283" />
+      <entry key="H4" value="69.41526729110034" />
+      <entry key="D1" value="212.9339310929654" />
+      <entry key="W1" value="450.72056614191644" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -146,7 +126,7 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;upgrade-next-15&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/stripe-payments&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
@@ -194,7 +174,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.24374.125" />
+        <option value="bundled-js-predefined-d6986cc7102b-31caf2ab9e3c-JavaScript-WS-261.25134.101" />
       </set>
     </attachedChunks>
   </component>
@@ -215,7 +195,8 @@
       <workItem from="1780398306260" duration="1064000" />
       <workItem from="1780399384604" duration="61000" />
       <workItem from="1780399457938" duration="29538000" />
-      <workItem from="1780574326763" duration="4203000" />
+      <workItem from="1780574326763" duration="6486000" />
+      <workItem from="1780645314655" duration="3823000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />
