@@ -826,11 +826,6 @@ body::after {
     color: transparent;
 }
 
-.body-title span {
-    color: var(--gold-lt);
-    text-shadow: 0 0 18px rgba(212, 175, 106, 0.3);
-}
-
 .body-intro {
     max-width: 600px;
     margin: 0;
@@ -2650,6 +2645,10 @@ body::after {
         margin-bottom: 3rem;
     }
 
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+
     .contact-form-card {
         padding: 1.75rem 1.25rem;
         margin-bottom: 3rem;
@@ -3447,6 +3446,27 @@ body::after {
     text-transform: uppercase;
     text-decoration: none;
     color: rgba(232, 215, 184, 0.72);
+}
+
+.footer-credit {
+    font-family: var(--font-cinzel);
+    font-size: 0.52rem;
+    letter-spacing: 0.2em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: rgba(232, 215, 184, 0.42);
+    white-space: nowrap;
+    transition:
+            color 0.35s ease,
+            text-shadow 0.35s ease,
+            transform 0.35s ease;
+}
+
+.footer-credit:hover {
+    color: rgba(212, 175, 106, 0.78);
+    text-shadow: 0 0 10px rgba(212, 175, 106, 0.26);
+    transform: translateY(-1px);
 }
 
 .footer-nav-link {

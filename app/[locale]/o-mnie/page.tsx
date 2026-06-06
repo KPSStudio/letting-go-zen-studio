@@ -123,7 +123,7 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </div>
 
                 <Link
-                    href={`/${locale}/kontakt`}
+                    href={`/${locale}/zgoda-rezerwacja?service=umysl-alchemik-sesja-1-1&serviceName=Alchemik%20%E2%80%94%20Sesja%201%3A1&price=30&locale=${locale}`}
                     className="inline-block bg-gradient-to-br from-[#D4AF6A] to-[#8A6A1A] px-10 py-4 font-cinzel text-[0.75rem] tracking-[0.25em] text-[#3D0845] no-underline transition-opacity hover:opacity-80"
                 >
                     {t('alchemikButton')}

@@ -13,6 +13,12 @@ type FooterLink = {
     href: string
 }
 
+type SocialLink = {
+    label: string
+    href: string
+    platform: string
+}
+
 const navLinks: FooterLink[] = [
     { labelKey: 'body', href: '/body' },
     { labelKey: 'mind', href: '/mind' },
@@ -30,10 +36,22 @@ const legalLinks: FooterLink[] = [
     { labelKey: 'consent', href: '/zgoda-swiadoma' },
 ]
 
-const socialLinks = [
-    { label: 'f', href: 'https://www.facebook.com/lettinggostudiozen/' },
-    { label: '◎', href: 'https://instagram.com/lettinggozenstudio' },
-    { label: '♪', href: 'https://www.tiktok.com/@lettinggozenstudi' },
+const socialLinks: SocialLink[] = [
+    {
+        label: 'f',
+        href: 'https://www.facebook.com/lettinggostudiozen/',
+        platform: 'Facebook',
+    },
+    {
+        label: '◎',
+        href: 'https://instagram.com/lettinggozenstudio',
+        platform: 'Instagram',
+    },
+    {
+        label: '♪',
+        href: 'https://www.tiktok.com/@lettinggozenstudi',
+        platform: 'TikTok',
+    },
 ]
 
 export default function Footer() {
@@ -87,11 +105,13 @@ export default function Footer() {
                 <div className="footer-social-row">
                     {socialLinks.map((social) => (
                         <a
-                            key={social.label}
+                            key={social.platform}
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            aria-label={t('socialAria', { platform: social.label })}
+                            aria-label={t('socialAria', {
+                                platform: social.platform,
+                            })}
                             className="footer-social-link"
                         >
                             {social.label}
@@ -116,6 +136,15 @@ export default function Footer() {
                         </Link>
                     ))}
                 </div>
+
+                <a
+                    href="www.linkedin.com/in/kamil-szynklewski-917786297"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="footer-credit"
+                >
+                    Designed &amp; Developed by KPS Studio
+                </a>
             </div>
         </footer>
     )

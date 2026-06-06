@@ -5,17 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated">
-      <change afterPath="$PROJECT_DIR$/app/api/checkout/session/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/checkout/sklep/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/api/webhooks/stripe/route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/email.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/stripe.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/supabase-storage.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/koszyk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/koszyk/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/sklep/sklepClient.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/sklep/sklepClient.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Footer.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,23 +41,23 @@
 }</component>
   <component name="NextEditCompletionFeaturesState">
     <decayedCancelled>
-      <entry key="MS100" value="1.8146623437892027" />
-      <entry key="MS500" value="4.751388603065098" />
-      <entry key="S2" value="10.135749006754132" />
-      <entry key="S5" value="18.904346676152066" />
-      <entry key="S10" value="27.190196828406496" />
-      <entry key="S30" value="36.94783449810293" />
-      <entry key="S60" value="40.24656742353675" />
-      <entry key="M2" value="42.06237387685934" />
-      <entry key="M5" value="43.33657448820554" />
-      <entry key="M10" value="44.72890788966849" />
-      <entry key="M15" value="46.0669875802092" />
-      <entry key="M30" value="48.7085941428296" />
-      <entry key="H1" value="51.539231367446426" />
-      <entry key="H2" value="57.43133233458187" />
-      <entry key="H4" value="69.00989336361934" />
-      <entry key="D1" value="211.74685621247724" />
-      <entry key="W1" value="448.20599981457013" />
+      <entry key="MS100" value="1.0107970248370286" />
+      <entry key="MS500" value="2.4801217495189336" />
+      <entry key="S2" value="5.18926105862167" />
+      <entry key="S5" value="6.192907166960229" />
+      <entry key="S10" value="6.581163876256399" />
+      <entry key="S30" value="6.857036152880055" />
+      <entry key="S60" value="7.025123709764587" />
+      <entry key="M2" value="9.12231661095883" />
+      <entry key="M5" value="20.901503373748938" />
+      <entry key="M10" value="33.41347870984666" />
+      <entry key="M15" value="40.28588791117299" />
+      <entry key="M30" value="49.97764310249319" />
+      <entry key="H1" value="57.1512839196903" />
+      <entry key="H2" value="65.37563880153252" />
+      <entry key="H4" value="78.17096981462325" />
+      <entry key="D1" value="221.83159709412533" />
+      <entry key="W1" value="458.9314509924517" />
     </decayedCancelled>
     <decayedSelected>
       <entry key="MS100" value="0.0" />
@@ -75,34 +68,34 @@
       <entry key="S30" value="0.0" />
       <entry key="S60" value="0.0" />
       <entry key="M2" value="0.0" />
-      <entry key="M5" value="1.2077332434160024E-195" />
-      <entry key="M10" value="3.4752456652961956E-98" />
-      <entry key="M15" value="1.0649364045918416E-65" />
-      <entry key="M30" value="3.263336336623589E-33" />
-      <entry key="H1" value="5.712565701141817E-17" />
-      <entry key="H2" value="7.56432126025254E-9" />
-      <entry key="H4" value="8.942198520057315E-5" />
-      <entry key="D1" value="0.3268529579714691" />
-      <entry key="W1" value="1.5358629598783" />
+      <entry key="M5" value="3.550199090323403E-196" />
+      <entry key="M10" value="1.884197200487091E-98" />
+      <entry key="M15" value="7.080831114676908E-66" />
+      <entry key="M30" value="2.6609831105595525E-33" />
+      <entry key="H1" value="5.158475220018271E-17" />
+      <entry key="H2" value="7.188115313935807E-9" />
+      <entry key="H4" value="8.716995911617063E-5" />
+      <entry key="D1" value="0.3254664114581296" />
+      <entry key="W1" value="1.5349305059620544" />
     </decayedSelected>
     <decayedShown>
-      <entry key="MS100" value="1.747756617004515" />
-      <entry key="MS500" value="4.720365993996526" />
-      <entry key="S2" value="10.120613209085489" />
-      <entry key="S5" value="18.893547774847637" />
-      <entry key="S10" value="27.182485576662458" />
-      <entry key="S30" value="36.94433484383157" />
-      <entry key="S60" value="40.24465849500473" />
-      <entry key="M2" value="42.06137526444623" />
-      <entry key="M5" value="43.33611322334099" />
-      <entry key="M10" value="44.72847429705531" />
-      <entry key="M15" value="46.06653647648879" />
-      <entry key="M30" value="48.7089297857941" />
-      <entry key="H1" value="51.565972678238275" />
-      <entry key="H2" value="57.59550887173283" />
-      <entry key="H4" value="69.41526729110034" />
-      <entry key="D1" value="212.9339310929654" />
-      <entry key="W1" value="450.72056614191644" />
+      <entry key="MS100" value="0.13886871314082158" />
+      <entry key="MS500" value="2.1310139559760297" />
+      <entry key="S2" value="5.083002224923713" />
+      <entry key="S5" value="6.148374123289409" />
+      <entry key="S10" value="6.558531934626193" />
+      <entry key="S30" value="6.849408119269456" />
+      <entry key="S60" value="7.021283165949423" />
+      <entry key="M2" value="9.120230448862293" />
+      <entry key="M5" value="20.900289641888115" />
+      <entry key="M10" value="33.412573130194005" />
+      <entry key="M15" value="40.28509768088544" />
+      <entry key="M30" value="49.9776451108249" />
+      <entry key="H1" value="57.175287896291465" />
+      <entry key="H2" value="65.53157627713428" />
+      <entry key="H4" value="78.56609722967856" />
+      <entry key="D1" value="223.0136299490306" />
+      <entry key="W1" value="461.4444897699039" />
     </decayedShown>
   </component>
   <component name="ProblemsViewState">
@@ -126,7 +119,7 @@
     &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
     &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
     &quot;com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;feature/stripe-payments&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;legal-pages-working&quot;,
     &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
     &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
     &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
@@ -197,6 +190,7 @@
       <workItem from="1780399457938" duration="29538000" />
       <workItem from="1780574326763" duration="6486000" />
       <workItem from="1780645314655" duration="3823000" />
+      <workItem from="1780767041928" duration="1462000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />
