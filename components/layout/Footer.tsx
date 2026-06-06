@@ -143,7 +143,7 @@ export default function Footer() {
                 </div>
 
                 <a
-                    href="www.linkedin.com/in/kamil-szynklewski-917786297"
+                    href="https://www.linkedin.com/in/kamil-szynklewski-917786297"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="footer-credit"
