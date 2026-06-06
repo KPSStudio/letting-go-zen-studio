@@ -52,6 +52,11 @@ const socialLinks: SocialLink[] = [
         href: 'https://www.tiktok.com/@lettinggozenstudi',
         platform: 'TikTok',
     },
+    {
+        label: 'in',
+        href: 'https://www.linkedin.com/in/kamil-szynklewski-917786297',
+        platform: 'LinkedIn',
+    },
 ]
 
 export default function Footer() {
