@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/[locale]/o-mnie/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/layout/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/layout/Footer.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="ada26b50-63cf-4a08-b4cb-b6018afc1714" name="Changes" comment="TERMS AND PRIVACY POLICY posted and updated" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -190,7 +185,7 @@
       <workItem from="1780399457938" duration="29538000" />
       <workItem from="1780574326763" duration="6486000" />
       <workItem from="1780645314655" duration="3823000" />
-      <workItem from="1780767041928" duration="1462000" />
+      <workItem from="1780767041928" duration="1593000" />
     </task>
     <task id="LOCAL-00001" summary="Changes to Mobile version of the webapp">
       <option name="closed" value="true" />
