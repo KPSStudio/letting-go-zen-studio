@@ -37,8 +37,12 @@ export default function SoulClient({ products }: Props) {
         return locale === 'en' && product.descEn ? product.descEn : product.descPl
     }
 
-    function getBookingHref(product: SanityService) {
-        return `/${locale}/rezerwacja?service=${getCalSlug(product.namePl) ?? ''}`
+    function getConsentHref(product: SanityService) {
+        const serviceSlug = getCalSlug(product.namePl) ?? ''
+        const serviceName = product.namePl
+        const price = product.priceGBP.toString()
+
+        return `/${locale}/zgoda-rezerwacja?service=${encodeURIComponent(serviceSlug)}&serviceName=${encodeURIComponent(serviceName)}&price=${price}&locale=${locale}`
     }
 
     return (
@@ -125,7 +129,7 @@ export default function SoulClient({ products }: Props) {
 
                                     {product.requiresBooking ? (
                                         <Link
-                                            href={getBookingHref(product)}
+                                            href={getConsentHref(product)}
                                             className="body-cart-button"
                                             style={{
                                                 display: 'block',
@@ -250,7 +254,7 @@ export default function SoulClient({ products }: Props) {
                         <div className="body-modal-actions">
                             {selectedProduct.requiresBooking ? (
                                 <Link
-                                    href={getBookingHref(selectedProduct)}
+                                    href={getConsentHref(selectedProduct)}
                                     className="body-modal-cart-button"
                                     onClick={() => setSelectedProduct(null)}
                                 >

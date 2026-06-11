@@ -63,14 +63,52 @@ const stripeAppearance = {
     },
 }
 
+type PendingBookingDetails = {
+    serviceId: string
+    serviceName: string
+    price: number
+    bookingUrl: string
+}
+
+function getPendingBookingFromSearchParams(
+    params: URLSearchParams,
+    locale: string
+): PendingBookingDetails | null {
+    const serviceId = params.get('serviceId') ?? params.get('service') ?? ''
+    const serviceName = params.get('serviceName') ?? params.get('service') ?? ''
+    const price = parseFloat(params.get('price') ?? '0')
+
+    if (!serviceId || !serviceName || price <= 0) {
+        return null
+    }
+
+    const bookingParams = new URLSearchParams({
+        service: serviceId,
+        serviceName,
+        price: price.toString(),
+        locale,
+        paid: 'true',
+    })
+
+    return {
+        serviceId,
+        serviceName,
+        price,
+        // This URL is only exposed after Stripe confirms payment.
+        bookingUrl: `/${locale}/rezerwacja?${bookingParams.toString()}`,
+    }
+}
+
 function PaymentForm({
                          onBack,
                          total,
                          formatPrice,
+                         pendingBooking,
                      }: {
     onBack: () => void
     total: number
     formatPrice: (n: number) => string
+    pendingBooking: PendingBookingDetails | null
 }) {
     const stripe = useStripe()
     const elements = useElements()
@@ -84,10 +122,21 @@ function PaymentForm({
         setPaying(true)
         setError(null)
 
+        const returnUrl = new URL(`${window.location.origin}/${locale}/koszyk`)
+        returnUrl.searchParams.set('success', 'true')
+
+        // Preserve the selected service through the Stripe redirect so the
+        // post-payment screen can send the client to the correct Cal.com event.
+        if (pendingBooking) {
+            returnUrl.searchParams.set('serviceId', pendingBooking.serviceId)
+            returnUrl.searchParams.set('serviceName', pendingBooking.serviceName)
+            returnUrl.searchParams.set('price', pendingBooking.price.toString())
+        }
+
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                return_url: `${window.location.origin}/${locale}/koszyk?success=true`,
+                return_url: returnUrl.toString(),
             },
         })
 
@@ -161,27 +210,35 @@ export default function KoszykPage() {
     const [termsAccepted, setTermsAccepted] = useState(false)
     const [clientSecret, setClientSecret] = useState<string | null>(null)
     const [loading, setLoading] = useState(false)
+    const [pendingBooking, setPendingBooking] = useState<PendingBookingDetails | null>(null)
 
-    // Pre-fill cart when redirected from Cal.com booking
+    const currentSearchParams = typeof window !== 'undefined'
+        ? new URLSearchParams(window.location.search)
+        : null
+    const isPaymentSuccess = currentSearchParams?.get('success') === 'true'
+    const isBookingComplete = currentSearchParams?.get('bookingComplete') === 'true'
+    const successBooking = currentSearchParams
+        ? getPendingBookingFromSearchParams(currentSearchParams, locale)
+        : null
+
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
-        if (params.get('booked') === 'true') {
-            const serviceName = params.get('service')
-            const price = parseFloat(params.get('price') ?? '0')
-            if (serviceName && price > 0) {
-                addItem({
-                    id: serviceName,
-                    name: serviceName,
-                    type: 'sesja',
-                    gbp: price,
-                    pln: Math.round(price * 5.2),
-                })
-            }
-        }
-    }, [])
+        const bookingDetails = getPendingBookingFromSearchParams(params, locale)
+        setPendingBooking(bookingDetails)
 
-    const isSuccess = typeof window !== 'undefined' &&
-        new URLSearchParams(window.location.search).get('success') === 'true'
+        // Pre-fill Koszyk immediately after the consent form.
+        // This keeps the current Body-style pattern, but makes payment happen
+        // before the Cal.com booking slot is shown.
+        if (params.get('booked') === 'true' && bookingDetails) {
+            addItem({
+                id: bookingDetails.serviceId,
+                name: bookingDetails.serviceName,
+                type: 'sesja',
+                gbp: bookingDetails.price,
+                pln: Math.round(bookingDetails.price * 5.2),
+            })
+        }
+    }, [addItem, locale])
 
     const total = currency === 'PLN' ? totalPLN : totalGBP
 
@@ -226,8 +283,81 @@ export default function KoszykPage() {
         }
     }
 
-    // Success page
-    if (isSuccess) {
+    // Final thank-you screen after Cal.com confirms a paid booking.
+    if (isBookingComplete) {
+        return (
+            <div className="thankyou-page">
+                <div className="thankyou-orbit">
+                    <div className="thankyou-orbit-dot" />
+                    <div className="thankyou-orbit-dot" />
+                    <div className="thankyou-orbit-dot" />
+                </div>
+                <div className="thankyou-aura" />
+                <div className="thankyou-rising-dots">
+                    <span /><span /><span /><span /><span />
+                </div>
+                <div className="thankyou-content">
+                    <div className="thankyou-symbol">✦</div>
+                    <p className="thankyou-label">
+                        <span />
+                        Letting Go Zen Studio
+                        <span />
+                    </p>
+                    <h1 className="thankyou-title">Dziękujemy</h1>
+                    <div className="thankyou-divider" />
+                    <p className="thankyou-text">
+                        Płatność została przyjęta, a rezerwacja została potwierdzona.
+                    </p>
+                    <p className="thankyou-subtext">
+                        Ciało · Umysł · Dusza
+                    </p>
+                    <Link href={`/${locale}`} className="thankyou-button">
+                        Wróć na Stronę Główną
+                    </Link>
+                </div>
+            </div>
+        )
+    }
+
+    // Payment success screen for service bookings.
+    // Stripe returns here first, then the client chooses the actual appointment slot.
+    if (isPaymentSuccess && successBooking) {
+        return (
+            <div className="thankyou-page">
+                <div className="thankyou-orbit">
+                    <div className="thankyou-orbit-dot" />
+                    <div className="thankyou-orbit-dot" />
+                    <div className="thankyou-orbit-dot" />
+                </div>
+                <div className="thankyou-aura" />
+                <div className="thankyou-rising-dots">
+                    <span /><span /><span /><span /><span />
+                </div>
+                <div className="thankyou-content">
+                    <div className="thankyou-symbol">✦</div>
+                    <p className="thankyou-label">
+                        <span />
+                        Letting Go Zen Studio
+                        <span />
+                    </p>
+                    <h1 className="thankyou-title">Płatność przyjęta</h1>
+                    <div className="thankyou-divider" />
+                    <p className="thankyou-text">
+                        Teraz wybierz termin dla usługi: {successBooking.serviceName}.
+                    </p>
+                    <p className="thankyou-subtext">
+                        Ciało · Umysł · Dusza
+                    </p>
+                    <Link href={successBooking.bookingUrl} className="thankyou-button">
+                        Przejdź do rezerwacji
+                    </Link>
+                </div>
+            </div>
+        )
+    }
+
+    // Generic payment success page for non-booking cart payments.
+    if (isPaymentSuccess) {
         return (
             <div className="thankyou-page">
                 <div className="thankyou-orbit">
@@ -438,6 +568,7 @@ export default function KoszykPage() {
                                 onBack={() => setClientSecret(null)}
                                 total={total}
                                 formatPrice={formatPrice}
+                                pendingBooking={pendingBooking}
                             />
                         </Elements>
                     </div>

@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { useCurrency, Currency } from '@/lib/CurrencyContext'
 import { useCart } from '@/lib/CartContext'
+import { buildLocaleHref } from '@/lib/localeRouting'
 
 export default function UtilityBar() {
     const { currency, setCurrency } = useCurrency()
@@ -15,12 +16,10 @@ export default function UtilityBar() {
     const pathname = usePathname()
     const t = useTranslations('utility')
 
-    // Switches language by replacing the locale prefix in the URL
-    // e.g. /pl/body → /en/body
-    const switchLocale = (newLocale: string) => {
-        const segments = pathname.split('/')
-        segments[1] = newLocale
-        router.push(segments.join('/'))
+    // Preserve route + query params so changing PL/EN does not reset an active
+    // consent, payment, or booking flow.
+    const switchLocale = (newLocale: 'pl' | 'en') => {
+        router.push(buildLocaleHref(pathname, window.location.search, newLocale))
     }
 
     return (

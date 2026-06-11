@@ -20,6 +20,7 @@ function BookingEmbed() {
     const serviceName = searchParams.get('serviceName') ?? ''
     const price = searchParams.get('price') ?? ''
     const locale = searchParams.get('locale') ?? 'pl'
+    const paid = searchParams.get('paid') === 'true'
     const calLink = `${CAL_USERNAME}/${service}`
 
     useEffect(() => {
@@ -34,10 +35,17 @@ function BookingEmbed() {
                 hideEventTypeDetails: false,
             })
 
-            // After booking confirmed, redirect to koszyk with service pre-added
+            // Payment-first flow:
+            // if the client reached Cal.com after Stripe payment, show the final
+            // thank-you screen instead of sending them back to Koszyk to pay.
             cal('on', {
                 action: 'bookingSuccessful',
                 callback: () => {
+                    if (paid) {
+                        window.location.href = `/${locale}/koszyk?bookingComplete=true`
+                        return
+                    }
+
                     const params = new URLSearchParams({
                         booked: 'true',
                         service: serviceName || service,
@@ -47,7 +55,7 @@ function BookingEmbed() {
                 },
             })
         })
-    }, [service, serviceName, price, locale])
+    }, [service, serviceName, price, locale, paid])
 
     return (
         <Cal

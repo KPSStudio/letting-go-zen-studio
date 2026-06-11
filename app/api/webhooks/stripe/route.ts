@@ -155,6 +155,28 @@ export async function POST(req: NextRequest) {
             }
 
             console.log(`Session order saved: ${paymentIntentId}`)
+
+            // ── BOOKING TOKEN CONFIRMATION ──
+            // This is the ONLY place a token advances to payment_confirmed.
+            // Stripe signs this webhook, so it cannot be faked from a browser.
+            const bookingToken = metadata?.bookingToken
+
+            if (bookingToken) {
+                const { error: tokenError } = await supabaseAdmin
+                    .from('booking_tokens')
+                    .update({
+                        status: 'payment_confirmed',
+                        stripe_payment_intent_id: paymentIntentId,
+                    })
+                    .eq('token', bookingToken)
+                    .eq('status', 'pending')
+
+                if (tokenError) {
+                    console.error('Booking token confirm error:', tokenError)
+                } else {
+                    console.log(`Booking token confirmed: ${bookingToken.slice(0, 8)}...`)
+                }
+            }
         }
     }
 

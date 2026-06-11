@@ -325,22 +325,15 @@ body::after {
     line-height: 0.94;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    background: linear-gradient(
-            90deg,
-            #6f3e18 0%,
-            #b8942a 24%,
-            #f0d080 45%,
-            #d4af6a 60%,
-            #8a4b2a 100%
-    );
+    background: linear-gradient(90deg, #6f3e18 0%, #b8942a 24%, #f0d080 45%, #d4af6a 60%, #8a4b2a 100%);
     background-size: 260% auto;
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    filter:
-            drop-shadow(0 0 18px rgba(212, 175, 106, 0.42))
-            drop-shadow(0 0 42px rgba(184, 148, 42, 0.24));
+    filter: drop-shadow(0 0 18px rgba(212, 175, 106, 0.42)) drop-shadow(0 0 42px rgba(184, 148, 42, 0.24));
     animation: heroGoldShine 6.2s linear infinite;
+    will-change: background-position;
+    transform: translateZ(0);
 }
 
 .hero-subtitle {
@@ -365,6 +358,8 @@ body::after {
     color: transparent;
     filter: drop-shadow(0 0 18px rgba(212, 175, 106, 0.36));
     animation: heroGoldShine 7s linear infinite;
+    will-change: background-position;
+    transform: translateZ(0);
 }
 
 .hero-button {

@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
+import { buildLocaleHref } from '@/lib/localeRouting'
 
 type StaticLink = {
     href: string
@@ -55,14 +56,11 @@ export default function Nav() {
     }
 
     // Switches the current page between Polish and English.
-    // Example: /pl/body becomes /en/body.
+    // Preserve query params so mobile PL/EN switching does not reset consent,
+    // payment, or booking flow state.
     function switchLocale(newLocale: 'pl' | 'en') {
-        const segments = pathname.split('/')
-
-        segments[1] = newLocale
-
         setIsMobileMenuOpen(false)
-        router.push(segments.join('/'))
+        router.push(buildLocaleHref(pathname, window.location.search, newLocale))
     }
 
     // Uses translation when labelKey exists.

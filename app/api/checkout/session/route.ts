@@ -1,12 +1,25 @@
 // app/api/checkout/session/route.ts
+// SECURITY: prices are NEVER taken from the client.
+// Every item is looked up in Sanity server-side and the real
+// price is used. Client-sent prices are ignored entirely.
+
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
+import { getServicePriceByName, gbpToPln } from '@/lib/sanity-server'
+
+type CheckoutItem = {
+    name: string
+}
 
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json()
-        const { items, currency, locale } = body
+        const { items, currency, locale, token } = body as {
+            items: CheckoutItem[]
+            currency?: string
+            locale?: string
+            token?: string
+        }
 
         if (!items || items.length === 0) {
             return NextResponse.json(
@@ -15,14 +28,47 @@ export async function POST(req: NextRequest) {
             )
         }
 
-        // Calculate total in smallest currency unit (pence/grosze)
-        const amount = currency === 'PLN'
-            ? items.reduce((sum: number, item: { pln: number }) => sum + Math.round(item.pln * 100), 0)
-            : items.reduce((sum: number, item: { gbp: number }) => sum + Math.round(item.gbp * 100), 0)
+        // ── SERVER-SIDE PRICE VALIDATION ──
+        // Look up each item's real price from Sanity by its Polish name.
+        // Reject the entire checkout if any item is unknown or inactive.
+        let amount = 0
+        const validatedNames: string[] = []
 
-        // Create Payment Intent
-        // allow_redirects: 'never' removes Klarna, Amazon Pay etc
-        // Leaves only card, Apple Pay and Google Pay
+        for (const item of items) {
+            if (!item.name) {
+                return NextResponse.json(
+                    { error: 'Invalid item in cart' },
+                    { status: 400 }
+                )
+            }
+
+            const realPrice = await getServicePriceByName(item.name)
+
+            if (!realPrice) {
+                console.error(`Checkout rejected — unknown service: "${item.name}"`)
+                return NextResponse.json(
+                    { error: `Service not found: ${item.name}` },
+                    { status: 400 }
+                )
+            }
+
+            if (currency === 'PLN') {
+                const pln = realPrice.pricePLN ?? gbpToPln(realPrice.priceGBP)
+                amount += Math.round(pln * 100)
+            } else {
+                amount += Math.round(realPrice.priceGBP * 100)
+            }
+
+            validatedNames.push(item.name)
+        }
+
+        if (amount <= 0) {
+            return NextResponse.json(
+                { error: 'Invalid total amount' },
+                { status: 400 }
+            )
+        }
+
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency: currency?.toLowerCase() ?? 'gbp',
@@ -33,7 +79,10 @@ export async function POST(req: NextRequest) {
             metadata: {
                 orderType: 'session',
                 locale: locale ?? 'pl',
-                items: JSON.stringify(items.map((i: { name: string }) => i.name)),
+                items: JSON.stringify(validatedNames),
+                // Booking token — the webhook uses this to confirm payment
+                // server-side. Empty string if this is a non-booking checkout.
+                bookingToken: token ?? '',
             },
         })
 

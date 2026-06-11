@@ -1,7 +1,7 @@
 // app/[locale]/zgoda-rezerwacja/page.tsx
 // Booking consent page.
 // All visible text comes from messages/pl.json and messages/en.json.
-// Client must confirm all required statements before being redirected to Cal.com booking.
+// Client confirms all required statements before being redirected to Koszyk/payment.
 
 'use client'
 

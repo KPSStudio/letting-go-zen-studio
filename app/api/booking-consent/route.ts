@@ -1,10 +1,13 @@
 // app/api/booking-consent/route.ts
-// Saves booking/session consent before the client is sent to Cal.com.
-// The record is saved in Supabase and a copy is emailed to Joanna through Resend.
+// Saves booking/session consent before the client is sent to payment.
+// Generates a single-use booking token. The token only advances to
+// 'payment_confirmed' via the Stripe webhook — never from the client.
 
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import { Resend } from 'resend'
+import { randomBytes } from 'crypto'
+import { getServicePriceByName } from '@/lib/sanity-server'
 
 type BookingConsentRequestBody = {
     serviceId: string
@@ -26,55 +29,17 @@ type BookingConsentRequestBody = {
     typedSignature: string
 }
 
-type BookingConsentInsert = {
-    service_id: string
-    service_name: string
-    cal_com_url: string
-
-    customer_full_name: string
-    customer_email: string
-    customer_phone: string
-
-    participates_voluntarily: boolean
-    understands_service_nature: boolean
-    understands_not_medical_treatment: boolean
-    truthful_health_information: boolean
-    may_stop_any_time: boolean
-    data_processing_consent: boolean
-    terms_and_privacy_accepted: boolean
-
-    typed_signature: string
-
-    locale: string
-    accepted_at: string
-
-    ip_address: string | null
-    user_agent: string | null
-}
-
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const resendApiKey = process.env.RESEND_API_KEY
 const contactEmailValue = process.env.CONTACT_EMAIL
 
-if (!supabaseUrl) {
-    throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL')
-}
-
-if (!supabaseServiceRoleKey) {
-    throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY')
-}
-
-if (!resendApiKey) {
-    throw new Error('Missing RESEND_API_KEY')
-}
-
-if (!contactEmailValue) {
-    throw new Error('Missing CONTACT_EMAIL')
-}
+if (!supabaseUrl) throw new Error('Missing NEXT_PUBLIC_SUPABASE_URL')
+if (!supabaseServiceRoleKey) throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY')
+if (!resendApiKey) throw new Error('Missing RESEND_API_KEY')
+if (!contactEmailValue) throw new Error('Missing CONTACT_EMAIL')
 
 const contactEmail: string = contactEmailValue
-
 const supabase = createClient(supabaseUrl, supabaseServiceRoleKey)
 const resend = new Resend(resendApiKey)
 
@@ -88,11 +53,7 @@ function normalizeText(value: string) {
 
 function getClientIp(request: NextRequest) {
     const forwardedFor = request.headers.get('x-forwarded-for')
-
-    if (!forwardedFor) {
-        return null
-    }
-
+    if (!forwardedFor) return null
     return forwardedFor.split(',')[0]?.trim() ?? null
 }
 
@@ -160,38 +121,79 @@ export async function POST(request: NextRequest) {
             )
         }
 
-        const price = (body as any).price ?? ''
-        const acceptedAt = new Date().toISOString()
-        const redirectUrl = `/${locale}/rezerwacja?service=${encodeURIComponent(serviceId)}&serviceName=${encodeURIComponent(serviceName)}&price=${encodeURIComponent(price)}&locale=${locale}`
+        // ── SERVER-SIDE PRICE LOOKUP ──
+        // We do NOT trust the price from the URL. We look up the real
+        // price in Sanity by the service's Polish name. If the service
+        // doesn't exist or is inactive, we refuse to continue.
+        const realPrice = await getServicePriceByName(serviceName)
 
-        const insertData: BookingConsentInsert = {
-            service_id: serviceId,
-            service_name: serviceName,
-            cal_com_url: redirectUrl,
-            customer_full_name: customerFullName,
-            customer_email: customerEmail,
-            customer_phone: customerPhone,
-            participates_voluntarily: body.participatesVoluntarily,
-            understands_service_nature: body.understandsServiceNature,
-            understands_not_medical_treatment: body.understandsNotMedicalTreatment,
-            truthful_health_information: body.truthfulHealthInformation,
-            may_stop_any_time: body.mayStopAnyTime,
-            data_processing_consent: body.dataProcessingConsent,
-            terms_and_privacy_accepted: body.termsAndPrivacyAccepted,
-            typed_signature: typedSignature,
-            locale,
-            accepted_at: acceptedAt,
-            ip_address: getClientIp(request),
-            user_agent: request.headers.get('user-agent'),
+        if (!realPrice) {
+            return NextResponse.json(
+                { error: 'Service not found or inactive.' },
+                { status: 400 }
+            )
         }
+
+        const acceptedAt = new Date().toISOString()
+
+        // ── BOOKING TOKEN ──
+        // 64-char random hex string. Expires in 2 hours.
+        // Status starts at 'pending' — only the Stripe webhook can
+        // advance it to 'payment_confirmed'.
+        const token = randomBytes(32).toString('hex')
+        const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 2)
+
+        const { error: tokenError } = await supabase
+            .from('booking_tokens')
+            .insert({
+                token,
+                service_id: serviceId,
+                service_name: serviceName,
+                price_gbp: realPrice.priceGBP,
+                customer_email: customerEmail,
+                locale,
+                status: 'pending',
+                expires_at: expiresAt.toISOString(),
+            })
+
+        if (tokenError) {
+            console.error('Booking token insert error:', tokenError)
+            return NextResponse.json(
+                { error: 'Could not create booking token.' },
+                { status: 500 }
+            )
+        }
+
+        const bookingUrl = `/${locale}/rezerwacja?service=${encodeURIComponent(serviceId)}&serviceName=${encodeURIComponent(serviceName)}&price=${encodeURIComponent(realPrice.priceGBP)}&locale=${locale}`
+
+        // Redirect to Koszyk carries the token + the REAL price from Sanity
+        const redirectUrl = `/${locale}/koszyk?booked=true&serviceId=${encodeURIComponent(serviceId)}&serviceName=${encodeURIComponent(serviceName)}&price=${encodeURIComponent(realPrice.priceGBP)}&token=${token}&locale=${locale}`
 
         const { error: supabaseError } = await supabase
             .from('booking_consents')
-            .insert(insertData)
+            .insert({
+                service_id: serviceId,
+                service_name: serviceName,
+                cal_com_url: bookingUrl,
+                customer_full_name: customerFullName,
+                customer_email: customerEmail,
+                customer_phone: customerPhone,
+                participates_voluntarily: body.participatesVoluntarily,
+                understands_service_nature: body.understandsServiceNature,
+                understands_not_medical_treatment: body.understandsNotMedicalTreatment,
+                truthful_health_information: body.truthfulHealthInformation,
+                may_stop_any_time: body.mayStopAnyTime,
+                data_processing_consent: body.dataProcessingConsent,
+                terms_and_privacy_accepted: body.termsAndPrivacyAccepted,
+                typed_signature: typedSignature,
+                locale,
+                accepted_at: acceptedAt,
+                ip_address: getClientIp(request),
+                user_agent: request.headers.get('user-agent'),
+            })
 
         if (supabaseError) {
             console.error('Supabase booking consent error:', supabaseError)
-
             return NextResponse.json(
                 { error: 'Could not save consent record.' },
                 { status: 500 }
@@ -207,6 +209,7 @@ export async function POST(request: NextRequest) {
                     <h1 style="color: #B8942A;">Nowa zgoda na rezerwację</h1>
 
                     <p><strong>Usługa:</strong> ${serviceName}</p>
+                    <p><strong>Cena:</strong> £${realPrice.priceGBP}</p>
                     <p><strong>Imię i nazwisko:</strong> ${customerFullName}</p>
                     <p><strong>Email:</strong> ${customerEmail}</p>
                     <p><strong>Telefon:</strong> ${customerPhone}</p>
@@ -223,12 +226,12 @@ export async function POST(request: NextRequest) {
                         <li>Rozumie, że usługa nie jest leczeniem medycznym: TAK</li>
                         <li>Potwierdza prawdziwość informacji zdrowotnych: TAK</li>
                         <li>Rozumie, że może przerwać sesję w dowolnym momencie: TAK</li>
-                        <li>Wyraża zgodę na przetwarzanie danych związanych z usługą: TAK</li>
+                        <li>Wyraża zgodę na przetwarzanie danych: TAK</li>
                         <li>Akceptuje Regulamin i Politykę Prywatności: TAK</li>
                     </ul>
 
                     <p style="font-size: 13px; color: #777;">
-                        Ten rekord został również zapisany w Supabase w tabeli booking_consents.
+                        Rekord zapisany w Supabase (booking_consents).
                     </p>
                 </div>
             `,
@@ -240,7 +243,6 @@ export async function POST(request: NextRequest) {
         })
     } catch (error) {
         console.error('Booking consent route error:', error)
-
         return NextResponse.json(
             { error: 'Unexpected server error.' },
             { status: 500 }
