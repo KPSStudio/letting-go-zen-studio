@@ -24,9 +24,82 @@ const raleway = Raleway({
     weight: ['200', '300', '400'],
 })
 
-export const metadata: Metadata = {
-    title: 'Letting Go Zen Studio',
-    description: 'Ciało · Umysł · Dusza — Holistyczne sesje terapeutyczne w UK',
+export async function generateMetadata({
+                                                   params,
+                                               }: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale } = await params
+    const baseUrl = 'https://www.lettinggozenstudio.com'
+    const activeLocale = locale === 'en' ? 'en' : 'pl'
+    const canonicalUrl = `${baseUrl}/${activeLocale}`
+
+    const metadataByLocale = {
+        pl: {
+            title: 'Letting Go Zen Studio | Holistyczne sesje terapeutyczne w UK',
+            description: 'Letting Go Zen Studio oferuje holistyczne sesje Ciało, Umysł i Dusza dla osób szukających wsparcia, równowagi i pracy ze stresem w UK.',
+            keywords: [
+                'Letting Go Zen Studio',
+                'holistyczne sesje UK',
+                'terapia holistyczna Aberdeen',
+                'hipnoterapia UK',
+                'EFT UK',
+                'biorezonans UK',
+                'biofeedback UK',
+                'wellbeing UK',
+            ],
+            openGraphLocale: 'pl_PL',
+        },
+        en: {
+            title: 'Letting Go Zen Studio | Holistic Wellness Sessions in the UK',
+            description: 'Letting Go Zen Studio offers holistic Body, Mind and Soul sessions for people seeking support, balance and stress relief in the UK.',
+            keywords: [
+                'Letting Go Zen Studio',
+                'holistic wellness UK',
+                'holistic therapy Aberdeen',
+                'hypnotherapy UK',
+                'EFT UK',
+                'bioresonance UK',
+                'biofeedback UK',
+                'stress relief UK',
+            ],
+            openGraphLocale: 'en_GB',
+        },
+    }
+
+    const metadata = metadataByLocale[activeLocale]
+
+    return {
+        metadataBase: new URL(baseUrl),
+        title: metadata.title,
+        description: metadata.description,
+        keywords: metadata.keywords,
+        openGraph: {
+            title: metadata.title,
+            description: metadata.description,
+            url: canonicalUrl,
+            siteName: 'Letting Go Zen Studio',
+            locale: metadata.openGraphLocale,
+            type: 'website',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: metadata.title,
+            description: metadata.description,
+        },
+        robots: {
+            index: true,
+            follow: true,
+        },
+        alternates: {
+            canonical: canonicalUrl,
+            languages: {
+                pl: `${baseUrl}/pl`,
+                en: `${baseUrl}/en`,
+                'x-default': `${baseUrl}/pl`,
+            },
+        },
+    }
 }
 
 export default async function LocaleLayout({
