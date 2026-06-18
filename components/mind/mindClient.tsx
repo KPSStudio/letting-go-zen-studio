@@ -38,7 +38,7 @@ export default function MindClient({ products }: Props) {
     }
 
     function getConsentHref(product: SanityService) {
-        const serviceSlug = getCalSlug(product.namePl) ?? ''
+        const serviceSlug = product.calComSlug ?? getCalSlug(product.namePl) ?? ''
         const serviceName = product.namePl
         const price = product.priceGBP.toString()
 

@@ -1,4 +1,29 @@
 {
+  "bookingPage": {
+    "label": "BOOKING",
+    "titleMain": "Book a",
+    "titleGold": "Session",
+    "intro": "Choose a convenient time. You will receive an email confirmation.",
+    "verifying": "Verifying payment...",
+    "loadingCalendar": "Loading calendar...",
+    "blockedTitle": "Booking requires choosing and paying for a session",
+    "blockedText": "To book an appointment, choose a service on the Body, Mind or Soul page, complete the consent form and pay for your session. The calendar opens automatically after payment.",
+    "bodyButton": "Body",
+    "mindButton": "Mind",
+    "soulButton": "Soul"
+  },
+  "bookingPending": {
+    "label": "Secure Booking",
+    "confirmingMain": "Confirming",
+    "confirmingGold": "Payment",
+    "waitText": "We are processing your payment. In a moment you will be redirected to the calendar to choose your session time. Please do not close this page.",
+    "usedMain": "Booking",
+    "usedGold": "Complete",
+    "usedText": "This payment has already been used to book an appointment. Check your email — a confirmation has been sent.",
+    "failedMain": "Something went",
+    "failedGold": "wrong",
+    "failedText": "We could not confirm your payment within a minute. If the funds were taken, your booking is safe — contact us and we will send you a link to choose your time: joanna@lettinggozenstudio.com"
+  },
   "body": {
     "emptyState": "Coming soon — services will appear here after they are added in the admin panel.",
     "back": "← BACK",
@@ -614,6 +639,7 @@
       "typedSignature": "Typed signature"
     },
     "errors": {
+      "noBookingConfigured": "This service does not have a booking calendar configured yet. Please contact us to arrange an appointment.",
       "missingService": "The selected service information is missing. Please go back to the services page and choose booking again.",
       "incompleteForm": "Please complete all fields and tick all required confirmations.",
       "saveFailed": "The consent could not be saved. Please try again.",
@@ -635,6 +661,28 @@
     "bookingButton": "BOOK A SESSION"
   },
   "cartPage": {
+    "thankYou": {
+      "label": "Letting Go Zen Studio",
+      "title": "Thank You",
+      "bookingText": "Your payment has been accepted and your booking has been confirmed.",
+      "paymentText": "Joanna will contact you within 24 hours by WhatsApp or email.",
+      "subtext": "Body · Mind · Soul",
+      "homeButton": "Return to Homepage"
+    },
+    "payment": {
+      "title": "Payment",
+      "loading": "Loading...",
+      "processing": "Processing...",
+      "pay": "Pay",
+      "backToCart": "Back to cart",
+      "fallbackError": "A payment error occurred.",
+      "ssl": "SSL encryption",
+      "safePayment": "Secure payment"
+    },
+    "errors": {
+      "acceptTerms": "Please accept the terms before payment.",
+      "generic": "Something went wrong. Please try again."
+    },
     "label": "YOUR ORDER",
     "title": "Cart",
     "emptyTitle": "Your cart is empty",
@@ -645,10 +693,19 @@
     "totalLabel": "Total to pay",
     "payButton": "PAY NOW",
     "summary": {
+      "title": "SUMMARY",
       "products": "Products",
       "currency": "Currency",
       "delivery": "PDF delivery",
       "deliveryValue": "WhatsApp / Email · 48h"
+    },
+    "terms": {
+      "accept": "I accept the",
+      "regulamin": "terms",
+      "privacy": "privacy policy",
+      "serviceRules": "service rules",
+      "and": "and",
+      "informedConsent": "informed consent"
     },
     "security": {
       "ssl": "SSL encryption",

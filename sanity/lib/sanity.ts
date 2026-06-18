@@ -30,6 +30,7 @@ export interface SanityService {
     availability?: string
     pdfNote?: string
     requiresBooking?: boolean
+    calComSlug?: string
     freeConsultation?: string
     includes?: string[]
     whoFor?: string[]

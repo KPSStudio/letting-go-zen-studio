@@ -9,58 +9,61 @@ export default function WspolpracaPage() {
     const t = useTranslations('wspolpraca')
 
     return (
-        <main className="protocol-page">
-            <p className="protocol-label">
-                <span />
-                {t('label')}
-            </p>
+        <main className="premium-content-page premium-content-pageProtocol">
+            <section className="premium-content-hero">
+                <p className="premium-content-eyebrow">
+                    <span className="premium-content-eyebrowLine" aria-hidden="true" />
+                    {t('label')}
+                </p>
 
-            <section className="protocol-header">
-                <h1 className="protocol-title">
-                    {t('titleStart')} <span>{t('titleGold')}</span>
+                <h1 className="premium-content-title">
+                    {t('titleStart')}{' '}
+                    <span className="premium-content-titleGold">
+                        {t('titleGold')}
+                    </span>
                 </h1>
 
-                <p className="protocol-intro">
+                <p className="premium-content-intro">
                     {t('intro')}
                 </p>
             </section>
 
-            <section className="protocol-card">
-                <p className="protocol-card-label">
-                    <span />
+            <section className="premium-content-card">
+                <p className="premium-content-cardLabel">
+                    <span className="premium-content-divider" aria-hidden="true" />
                     {t('studioLabel')}
                 </p>
 
-                <p className="protocol-text">
+                <p className="premium-content-text">
                     {t('studioText')}
                 </p>
             </section>
 
-            <section className="protocol-card protocol-card-large-gap">
-                <p className="protocol-card-label">
-                    <span />
+            <section className="premium-content-card premium-content-cardLargeGap premium-content-textStack">
+                <p className="premium-content-cardLabel">
+                    <span className="premium-content-divider" aria-hidden="true" />
                     {t('importantLabel')}
                 </p>
 
-                <p className="protocol-text protocol-text-gap">
+                <p className="premium-content-text">
                     {t('importantTextOne')}
                 </p>
 
-                <p className="protocol-text">
+                <p className="premium-content-text">
                     {t('importantTextTwo')}
                 </p>
             </section>
 
-            <section className="protocol-booking-box">
-                <p className="protocol-booking-label">
+            <section className="premium-content-card premium-content-cta premium-content-ctaCentered">
+                <p className="premium-content-ctaLabel">
                     {t('bookingLabel')}
                 </p>
 
-                <p className="protocol-booking-text">
+                <p className="premium-content-ctaText">
                     {t('bookingText')}
                 </p>
 
-                <Link href="/kontakt" className="protocol-booking-button">
+                <Link href="/kontakt" className="premium-content-ctaButton">
                     {t('bookingButton')}
                 </Link>
             </section>

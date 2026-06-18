@@ -67,35 +67,26 @@ type PendingBookingDetails = {
     serviceId: string
     serviceName: string
     price: number
-    bookingUrl: string
+    token: string
 }
 
 function getPendingBookingFromSearchParams(
-    params: URLSearchParams,
-    locale: string
+    params: URLSearchParams
 ): PendingBookingDetails | null {
     const serviceId = params.get('serviceId') ?? params.get('service') ?? ''
     const serviceName = params.get('serviceName') ?? params.get('service') ?? ''
     const price = parseFloat(params.get('price') ?? '0')
+    const token = params.get('token') ?? ''
 
-    if (!serviceId || !serviceName || price <= 0) {
+    if (!serviceId || !serviceName || price <= 0 || !token) {
         return null
     }
-
-    const bookingParams = new URLSearchParams({
-        service: serviceId,
-        serviceName,
-        price: price.toString(),
-        locale,
-        paid: 'true',
-    })
 
     return {
         serviceId,
         serviceName,
         price,
-        // This URL is only exposed after Stripe confirms payment.
-        bookingUrl: `/${locale}/rezerwacja?${bookingParams.toString()}`,
+        token,
     }
 }
 
@@ -112,25 +103,29 @@ function PaymentForm({
 }) {
     const stripe = useStripe()
     const elements = useElements()
+    const locale = useLocale()
+    const t = useTranslations('cartPage')
     const [paying, setPaying] = useState(false)
     const [error, setError] = useState<string | null>(null)
-    const locale = useLocale()
 
     async function handlePay(e: React.FormEvent) {
         e.preventDefault()
-        if (!stripe || !elements) return
+
+        if (!stripe || !elements) {
+            return
+        }
+
         setPaying(true)
         setError(null)
 
-        const returnUrl = new URL(`${window.location.origin}/${locale}/koszyk`)
-        returnUrl.searchParams.set('success', 'true')
+        let returnUrl: URL
 
-        // Preserve the selected service through the Stripe redirect so the
-        // post-payment screen can send the client to the correct Cal.com event.
         if (pendingBooking) {
-            returnUrl.searchParams.set('serviceId', pendingBooking.serviceId)
-            returnUrl.searchParams.set('serviceName', pendingBooking.serviceName)
-            returnUrl.searchParams.set('price', pendingBooking.price.toString())
+            returnUrl = new URL(`${window.location.origin}/${locale}/booking-pending`)
+            returnUrl.searchParams.set('token', pendingBooking.token)
+        } else {
+            returnUrl = new URL(`${window.location.origin}/${locale}/koszyk`)
+            returnUrl.searchParams.set('success', 'true')
         }
 
         const { error } = await stripe.confirmPayment({
@@ -141,7 +136,7 @@ function PaymentForm({
         })
 
         if (error) {
-            setError(error.message ?? 'Wystąpił błąd płatności.')
+            setError(error.message ?? t('payment.fallbackError'))
             setPaying(false)
         }
     }
@@ -153,12 +148,14 @@ function PaymentForm({
             </div>
 
             {error && (
-                <p style={{
-                    fontFamily: 'var(--font-raleway)',
-                    fontSize: '0.85rem',
-                    color: '#ff6b6b',
-                    marginBottom: '1rem',
-                }}>
+                <p
+                    style={{
+                        fontFamily: 'var(--font-raleway)',
+                        fontSize: '0.85rem',
+                        color: '#ff6b6b',
+                        marginBottom: '1rem',
+                    }}
+                >
                     {error}
                 </p>
             )}
@@ -173,7 +170,7 @@ function PaymentForm({
                     marginBottom: '1rem',
                 }}
             >
-                {paying ? 'Przetwarzanie...' : `🔒 Zapłać ${formatPrice(total)}`}
+                {paying ? t('payment.processing') : `🔒 ${t('payment.pay')} ${formatPrice(total)}`}
             </button>
 
             <button
@@ -192,11 +189,11 @@ function PaymentForm({
                     cursor: 'pointer',
                 }}
             >
-                ← Wróć do koszyka
+                ← {t('payment.backToCart')}
             </button>
 
             <p className="cart-security-text" style={{ marginTop: '1rem' }}>
-                🔐 Szyfrowanie SSL · Stripe · 🛡️ Bezpieczna płatność
+                🔐 {t('payment.ssl')} · Stripe · 🛡️ {t('payment.safePayment')}
             </p>
         </form>
     )
@@ -215,20 +212,15 @@ export default function KoszykPage() {
     const currentSearchParams = typeof window !== 'undefined'
         ? new URLSearchParams(window.location.search)
         : null
+
     const isPaymentSuccess = currentSearchParams?.get('success') === 'true'
     const isBookingComplete = currentSearchParams?.get('bookingComplete') === 'true'
-    const successBooking = currentSearchParams
-        ? getPendingBookingFromSearchParams(currentSearchParams, locale)
-        : null
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search)
-        const bookingDetails = getPendingBookingFromSearchParams(params, locale)
+        const bookingDetails = getPendingBookingFromSearchParams(params)
         setPendingBooking(bookingDetails)
 
-        // Pre-fill Koszyk immediately after the consent form.
-        // This keeps the current Body-style pattern, but makes payment happen
-        // before the Cal.com booking slot is shown.
         if (params.get('booked') === 'true' && bookingDetails) {
             addItem({
                 id: bookingDetails.serviceId,
@@ -260,30 +252,38 @@ export default function KoszykPage() {
 
     async function handleCheckout() {
         if (!termsAccepted) {
-            alert('Proszę zaakceptować regulamin przed płatnością.')
+            alert(t('errors.acceptTerms'))
             return
         }
+
         setLoading(true)
+
         try {
             const res = await fetch('/api/checkout/session', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ items, currency, locale }),
+                body: JSON.stringify({
+                    items,
+                    currency,
+                    locale,
+                    token: pendingBooking?.token ?? '',
+                }),
             })
+
             const data = await res.json()
+
             if (data.clientSecret) {
                 setClientSecret(data.clientSecret)
             } else {
-                alert('Wystąpił błąd. Spróbuj ponownie.')
+                alert(data.error ?? t('errors.generic'))
             }
         } catch {
-            alert('Wystąpił błąd. Spróbuj ponownie.')
+            alert(t('errors.generic'))
         } finally {
             setLoading(false)
         }
     }
 
-    // Final thank-you screen after Cal.com confirms a paid booking.
     if (isBookingComplete) {
         return (
             <div className="thankyou-page">
@@ -292,71 +292,46 @@ export default function KoszykPage() {
                     <div className="thankyou-orbit-dot" />
                     <div className="thankyou-orbit-dot" />
                 </div>
+
                 <div className="thankyou-aura" />
+
                 <div className="thankyou-rising-dots">
-                    <span /><span /><span /><span /><span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
                 </div>
+
                 <div className="thankyou-content">
                     <div className="thankyou-symbol">✦</div>
+
                     <p className="thankyou-label">
                         <span />
-                        Letting Go Zen Studio
+                        {t('thankYou.label')}
                         <span />
                     </p>
-                    <h1 className="thankyou-title">Dziękujemy</h1>
+
+                    <h1 className="thankyou-title">{t('thankYou.title')}</h1>
+
                     <div className="thankyou-divider" />
+
                     <p className="thankyou-text">
-                        Płatność została przyjęta, a rezerwacja została potwierdzona.
+                        {t('thankYou.bookingText')}
                     </p>
+
                     <p className="thankyou-subtext">
-                        Ciało · Umysł · Dusza
+                        {t('thankYou.subtext')}
                     </p>
+
                     <Link href={`/${locale}`} className="thankyou-button">
-                        Wróć na Stronę Główną
+                        {t('thankYou.homeButton')}
                     </Link>
                 </div>
             </div>
         )
     }
 
-    // Payment success screen for service bookings.
-    // Stripe returns here first, then the client chooses the actual appointment slot.
-    if (isPaymentSuccess && successBooking) {
-        return (
-            <div className="thankyou-page">
-                <div className="thankyou-orbit">
-                    <div className="thankyou-orbit-dot" />
-                    <div className="thankyou-orbit-dot" />
-                    <div className="thankyou-orbit-dot" />
-                </div>
-                <div className="thankyou-aura" />
-                <div className="thankyou-rising-dots">
-                    <span /><span /><span /><span /><span />
-                </div>
-                <div className="thankyou-content">
-                    <div className="thankyou-symbol">✦</div>
-                    <p className="thankyou-label">
-                        <span />
-                        Letting Go Zen Studio
-                        <span />
-                    </p>
-                    <h1 className="thankyou-title">Płatność przyjęta</h1>
-                    <div className="thankyou-divider" />
-                    <p className="thankyou-text">
-                        Teraz wybierz termin dla usługi: {successBooking.serviceName}.
-                    </p>
-                    <p className="thankyou-subtext">
-                        Ciało · Umysł · Dusza
-                    </p>
-                    <Link href={successBooking.bookingUrl} className="thankyou-button">
-                        Przejdź do rezerwacji
-                    </Link>
-                </div>
-            </div>
-        )
-    }
-
-    // Generic payment success page for non-booking cart payments.
     if (isPaymentSuccess) {
         return (
             <div className="thankyou-page">
@@ -365,27 +340,40 @@ export default function KoszykPage() {
                     <div className="thankyou-orbit-dot" />
                     <div className="thankyou-orbit-dot" />
                 </div>
+
                 <div className="thankyou-aura" />
+
                 <div className="thankyou-rising-dots">
-                    <span /><span /><span /><span /><span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
+                    <span />
                 </div>
+
                 <div className="thankyou-content">
                     <div className="thankyou-symbol">✦</div>
+
                     <p className="thankyou-label">
                         <span />
-                        Letting Go Zen Studio
+                        {t('thankYou.label')}
                         <span />
                     </p>
-                    <h1 className="thankyou-title">Dziękujemy</h1>
+
+                    <h1 className="thankyou-title">{t('thankYou.title')}</h1>
+
                     <div className="thankyou-divider" />
+
                     <p className="thankyou-text">
-                        Joanna skontaktuje się z Tobą w ciągu 24 godzin na WhatsApp lub email.
+                        {t('thankYou.paymentText')}
                     </p>
+
                     <p className="thankyou-subtext">
-                        Ciało · Umysł · Dusza
+                        {t('thankYou.subtext')}
                     </p>
+
                     <Link href={`/${locale}`} className="thankyou-button">
-                        Wróć na Stronę Główną
+                        {t('thankYou.homeButton')}
                     </Link>
                 </div>
             </div>
@@ -403,23 +391,20 @@ export default function KoszykPage() {
                 <h1 className="cart-title">{t('title')}</h1>
             </section>
 
-            {/* Empty cart */}
             {count === 0 && !clientSecret && (
                 <section className="cart-empty-card">
                     <div className="cart-empty-icon">🛒</div>
                     <h2 className="cart-empty-title">{t('emptyTitle')}</h2>
                     <p className="cart-empty-text">{t('emptyText')}</p>
+
                     <Link href={`/${locale}`} className="cart-primary-link">
                         {t('browseButton')}
                     </Link>
                 </section>
             )}
 
-            {/* Cart with items */}
             {count > 0 && !clientSecret && (
                 <section className="cart-layout">
-
-                    {/* Left — items */}
                     <div className="cart-items-column">
                         <div className="cart-items-card">
                             {items.map((item, index) => (
@@ -429,11 +414,16 @@ export default function KoszykPage() {
                                 >
                                     <div className="cart-item-main">
                                         <p className="cart-item-name">{item.name}</p>
+
                                         <p className="cart-item-type">
                                             {typeLabels[item.type] ?? item.type}
                                         </p>
                                     </div>
-                                    <p className="cart-item-price">{formatPrice(item.gbp)}</p>
+
+                                    <p className="cart-item-price">
+                                        {formatPrice(item.gbp)}
+                                    </p>
+
                                     <button
                                         onClick={() => removeItem(item.id)}
                                         aria-label={t('removeItem')}
@@ -444,14 +434,17 @@ export default function KoszykPage() {
                                 </article>
                             ))}
                         </div>
+
                         <button onClick={clearCart} className="cart-clear-button">
                             {t('clearCart')}
                         </button>
                     </div>
 
-                    {/* Right — summary */}
                     <aside className="cart-summary-card">
-                        <p className="cart-summary-label">PODSUMOWANIE</p>
+                        <p className="cart-summary-label">
+                            {t('summary.title')}
+                        </p>
+
                         <div className="cart-summary-rows">
                             {[
                                 { label: t('summary.products'), value: count.toString() },
@@ -464,35 +457,50 @@ export default function KoszykPage() {
                                 </div>
                             ))}
                         </div>
+
                         <div className="cart-total-row">
                             <span>{t('totalLabel')}</span>
                             <strong>{formatPrice(total)}</strong>
                         </div>
+
                         <label className="cart-terms-row">
                             <input
                                 type="checkbox"
                                 checked={termsAccepted}
                                 onChange={e => setTermsAccepted(e.target.checked)}
                             />
+
                             <span>
-                Akceptuję{' '}
+                                {t('terms.accept')}{' '}
+
                                 <Link href={`/${locale}/regulamin`} className="cart-terms-link">
-                  regulamin
-                </Link>
+                                    {t('terms.regulamin')}
+                                </Link>
+
                                 {', '}
+
                                 <Link href={`/${locale}/polityka-prywatnosci`} className="cart-terms-link">
-                  politykę prywatności
-                </Link>
+                                    {t('terms.privacy')}
+                                </Link>
+
                                 {', '}
+
                                 <Link href={`/${locale}/zasady-uslug`} className="cart-terms-link">
-                  zasady usług
-                </Link>
-                                {' oraz '}
+                                    {t('terms.serviceRules')}
+                                </Link>
+
+                                {' '}
+
+                                {t('terms.and')}
+
+                                {' '}
+
                                 <Link href={`/${locale}/zgoda-swiadoma`} className="cart-terms-link">
-                  zgodę świadomą
-                </Link>
-              </span>
+                                    {t('terms.informedConsent')}
+                                </Link>
+                            </span>
                         </label>
+
                         <button
                             onClick={handleCheckout}
                             disabled={!termsAccepted || loading}
@@ -502,8 +510,9 @@ export default function KoszykPage() {
                                 cursor: !termsAccepted || loading ? 'not-allowed' : 'pointer',
                             }}
                         >
-                            {loading ? 'Ładowanie...' : `🔒 ${t('payButton')}`}
+                            {loading ? t('payment.loading') : `🔒 ${t('payButton')}`}
                         </button>
+
                         <p className="cart-security-text">
                             🔐 {t('security.ssl')} · Stripe · 🛡️ {t('security.safePayment')}
                         </p>
@@ -511,51 +520,64 @@ export default function KoszykPage() {
                 </section>
             )}
 
-            {/* Custom Stripe Elements checkout */}
             {clientSecret && (
                 <div style={{ maxWidth: '560px', margin: '0 auto' }}>
-                    <div style={{
-                        background: 'rgba(0,0,0,0.3)',
-                        border: '1px solid rgba(184,148,42,0.2)',
-                        padding: '2.5rem',
-                        marginBottom: '1rem',
-                    }}>
-                        <p style={{
-                            fontFamily: 'var(--font-cinzel)',
-                            fontSize: '0.7rem',
-                            letterSpacing: '0.3em',
-                            color: 'var(--gold)',
-                            marginBottom: '1.5rem',
-                        }}>
-                            PŁATNOŚĆ · {formatPrice(total)}
+                    <div
+                        style={{
+                            background: 'rgba(0,0,0,0.3)',
+                            border: '1px solid rgba(184,148,42,0.2)',
+                            padding: '2.5rem',
+                            marginBottom: '1rem',
+                        }}
+                    >
+                        <p
+                            style={{
+                                fontFamily: 'var(--font-cinzel)',
+                                fontSize: '0.7rem',
+                                letterSpacing: '0.3em',
+                                color: 'var(--gold)',
+                                marginBottom: '1.5rem',
+                            }}
+                        >
+                            {t('payment.title').toUpperCase()} · {formatPrice(total)}
                         </p>
 
-                        <div style={{
-                            borderBottom: '1px solid rgba(184,148,42,0.15)',
-                            marginBottom: '1.5rem',
-                            paddingBottom: '1.5rem',
-                        }}>
+                        <div
+                            style={{
+                                borderBottom: '1px solid rgba(184,148,42,0.15)',
+                                marginBottom: '1.5rem',
+                                paddingBottom: '1.5rem',
+                            }}
+                        >
                             {items.map(item => (
-                                <div key={item.id} style={{
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    marginBottom: '0.5rem',
-                                }}>
-                  <span style={{
-                      fontFamily: 'var(--font-raleway)',
-                      fontSize: '0.85rem',
-                      color: 'var(--cream)',
-                      opacity: 0.8,
-                  }}>
-                    {item.name}
-                  </span>
-                                    <span style={{
-                                        fontFamily: 'var(--font-cinzel)',
-                                        fontSize: '0.85rem',
-                                        color: 'var(--gold-lt)',
-                                    }}>
-                    {formatPrice(item.gbp)}
-                  </span>
+                                <div
+                                    key={item.id}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        marginBottom: '0.5rem',
+                                    }}
+                                >
+                                    <span
+                                        style={{
+                                            fontFamily: 'var(--font-raleway)',
+                                            fontSize: '0.85rem',
+                                            color: 'var(--cream)',
+                                            opacity: 0.8,
+                                        }}
+                                    >
+                                        {item.name}
+                                    </span>
+
+                                    <span
+                                        style={{
+                                            fontFamily: 'var(--font-cinzel)',
+                                            fontSize: '0.85rem',
+                                            color: 'var(--gold-lt)',
+                                        }}
+                                    >
+                                        {formatPrice(item.gbp)}
+                                    </span>
                                 </div>
                             ))}
                         </div>
@@ -574,7 +596,6 @@ export default function KoszykPage() {
                     </div>
                 </div>
             )}
-
         </main>
     )
 }

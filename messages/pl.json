@@ -1,4 +1,29 @@
 {
+  "bookingPage": {
+    "label": "REZERWACJA",
+    "titleMain": "Zarezerwuj",
+    "titleGold": "Sesję",
+    "intro": "Wybierz dogodny termin. Otrzymasz potwierdzenie na email.",
+    "verifying": "Weryfikacja płatności...",
+    "loadingCalendar": "Ładowanie kalendarza...",
+    "blockedTitle": "Rezerwacja wymaga wyboru usługi i opłacenia sesji",
+    "blockedText": "Aby zarezerwować termin, wybierz usługę na stronie Ciało, Umysł lub Dusza, wypełnij formularz zgody i opłać sesję. Kalendarz otworzy się automatycznie po płatności.",
+    "bodyButton": "Ciało",
+    "mindButton": "Umysł",
+    "soulButton": "Dusza"
+  },
+  "bookingPending": {
+    "label": "Bezpieczna Rezerwacja",
+    "confirmingMain": "Potwierdzanie",
+    "confirmingGold": "Płatności",
+    "waitText": "Przetwarzamy Twoją płatność. Za chwilę zostaniesz przekierowany do kalendarza, aby wybrać termin sesji. Nie zamykaj tej strony.",
+    "usedMain": "Rezerwacja",
+    "usedGold": "Zakończona",
+    "usedText": "Ta płatność została już wykorzystana do rezerwacji terminu. Sprawdź swoją skrzynkę email — potwierdzenie zostało wysłane.",
+    "failedMain": "Coś poszło",
+    "failedGold": "nie tak",
+    "failedText": "Nie udało się potwierdzić płatności w ciągu minuty. Jeśli środki zostały pobrane, Twoja rezerwacja jest bezpieczna — skontaktuj się z nami, a prześlemy link do wyboru terminu: joanna@lettinggozenstudio.com"
+  },
   "body": {
     "emptyState": "Wkrótce — usługi pojawią się tutaj po dodaniu ich w panelu administracyjnym.",
     "back": "← POWRÓT",
@@ -614,6 +639,7 @@
       "typedSignature": "Podpis wpisany"
     },
     "errors": {
+      "noBookingConfigured": "Ta usługa nie ma jeszcze skonfigurowanego kalendarza rezerwacji. Skontaktuj się z nami, aby umówić termin.",
       "missingService": "Brakuje informacji o wybranej usłudze. Wróć do strony usług i wybierz rezerwację ponownie.",
       "incompleteForm": "Uzupełnij wszystkie pola i zaznacz wszystkie wymagane zgody.",
       "saveFailed": "Nie udało się zapisać zgody. Spróbuj ponownie.",
@@ -635,6 +661,28 @@
     "bookingButton": "ZAREZERWUJ SESJĘ"
   },
   "cartPage": {
+    "thankYou": {
+      "label": "Letting Go Zen Studio",
+      "title": "Dziękujemy",
+      "bookingText": "Płatność została przyjęta, a rezerwacja została potwierdzona.",
+      "paymentText": "Joanna skontaktuje się z Tobą w ciągu 24 godzin na WhatsApp lub email.",
+      "subtext": "Ciało · Umysł · Dusza",
+      "homeButton": "Wróć na Stronę Główną"
+    },
+    "payment": {
+      "title": "Płatność",
+      "loading": "Ładowanie...",
+      "processing": "Przetwarzanie...",
+      "pay": "Zapłać",
+      "backToCart": "Wróć do koszyka",
+      "fallbackError": "Wystąpił błąd płatności.",
+      "ssl": "Szyfrowanie SSL",
+      "safePayment": "Bezpieczna płatność"
+    },
+    "errors": {
+      "acceptTerms": "Proszę zaakceptować regulamin przed płatnością.",
+      "generic": "Wystąpił błąd. Spróbuj ponownie."
+    },
     "label": "TWOJE ZAMÓWIENIE",
     "title": "Koszyk",
     "emptyTitle": "Koszyk jest pusty",
@@ -645,10 +693,19 @@
     "totalLabel": "Razem do zapłaty",
     "payButton": "ZAPŁAĆ TERAZ",
     "summary": {
+      "title": "PODSUMOWANIE",
       "products": "Produkty",
       "currency": "Waluta",
       "delivery": "Dostawa PDF",
       "deliveryValue": "WhatsApp / Email · 48h"
+    },
+    "terms": {
+      "accept": "Akceptuję",
+      "regulamin": "regulamin",
+      "privacy": "politykę prywatności",
+      "serviceRules": "zasady usług",
+      "and": "oraz",
+      "informedConsent": "zgodę świadomą"
     },
     "security": {
       "ssl": "Szyfrowanie SSL",

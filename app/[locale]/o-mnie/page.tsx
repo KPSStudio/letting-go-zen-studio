@@ -26,33 +26,29 @@ export default async function OMniePage({ params }: OMniePageProps) {
     const closingParagraphs = t.raw('closingParagraphs') as string[]
 
     return (
-        <main className="mx-auto max-w-[900px] px-8 pb-24 pt-12">
+        <main className="premium-content-page premium-content-pageAbout">
+            <section className="premium-content-hero">
+                <p className="premium-content-eyebrow">
+                    <span className="premium-content-eyebrowLine" aria-hidden="true" />
+                    {t('label')}
+                </p>
 
-            {/* Page label */}
-            <p className="mb-4 flex items-center gap-3 font-cinzel text-[0.7rem] tracking-[0.3em] text-[var(--gold)]">
-                <span className="inline-block h-px w-8 bg-[var(--gold)]" />
-                {t('label')}
-            </p>
-
-            {/* Page hero */}
-            <section className="mb-16">
-                <h1 className="font-cinzel text-[clamp(2.5rem,6vw,5rem)] leading-[1.1] text-[var(--cream)]">
+                <h1 className="premium-content-title">
                     {t('heroTitle')}{' '}
-                    <span className="text-[var(--gold-lt)]">
+                    <span className="premium-content-titleGold">
                         {t('heroTitleGold')}
                     </span>
                 </h1>
             </section>
 
-            {/* Joanna photo */}
-            <section className="about-photo-card">
+            <section className="premium-content-photoStage about-photo-card">
                 <div className="about-photo-aura" />
                 <div className="about-photo-orbit" />
 
                 <div className="about-photo-image-wrap">
                     <Image
                         src="/images/Joanna-photo.png"
-                        alt={t('photoAlt')}
+                        alt={t('photoName')}
                         width={840}
                         height={1040}
                         priority
@@ -67,85 +63,74 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </div>
             </section>
 
-            {/* Main bio text */}
-            <section className="mb-12">
+            <section className="premium-content-card premium-content-textStack">
                 {bioParagraphs.map((paragraph) => (
-                    <p
-                        key={paragraph}
-                        className="mb-6 font-montserrat text-[0.95rem] leading-[1.9] text-[var(--cream)] opacity-90"
-                    >
+                    <p key={paragraph} className="premium-content-text">
                         {paragraph}
                     </p>
                 ))}
             </section>
 
-            {/* Support section */}
-            <section className="mb-12">
-                <p className="mb-6 flex items-center gap-3 font-cinzel text-[0.7rem] tracking-[0.3em] text-[var(--gold)]">
-                    <span className="inline-block h-px w-8 bg-[var(--gold)]" />
+            <section className="premium-content-card">
+                <p className="premium-content-cardLabel">
+                    <span className="premium-content-divider" aria-hidden="true" />
                     {t('supportTitle')}
                 </p>
 
-                {supportItems.map((item) => (
-                    <p
-                        key={item}
-                        className="mb-3 border-l-2 border-[rgba(184,148,42,0.3)] pl-6 font-montserrat text-[0.95rem] leading-[1.8] text-[var(--cream)] opacity-90"
-                    >
-                        ✦ {item}
-                    </p>
-                ))}
+                <div className="premium-content-list">
+                    {supportItems.map((item) => (
+                        <p key={item} className="premium-content-listItem">
+                            {item}
+                        </p>
+                    ))}
+                </div>
             </section>
 
-            {/* Closing paragraph before Alchemik card */}
-            <p className="mb-12 font-montserrat text-[0.95rem] leading-[1.9] text-[var(--cream)] opacity-90">
-                {t('methodParagraph')}
-            </p>
+            <section className="premium-content-card premium-content-textStack">
+                <p className="premium-content-text">
+                    {t('methodParagraph')}
+                </p>
+            </section>
 
-            {/* Alchemik card */}
-            <section className="mb-12 border border-[rgba(184,148,42,0.2)] bg-black/25 p-10">
-                <p className="mb-4 flex items-center gap-3 font-cinzel text-[0.7rem] tracking-[0.3em] text-[var(--gold)]">
-                    <span className="inline-block h-px w-8 bg-[var(--gold)]" />
+            <section className="premium-content-card premium-content-cta">
+                <p className="premium-content-cardLabel">
+                    <span className="premium-content-divider" aria-hidden="true" />
                     {t('alchemikTitle')}
                 </p>
 
-                <p className="mb-6 font-montserrat text-[0.95rem] leading-[1.8] text-[var(--cream)] opacity-90">
+                <p className="premium-content-text">
                     {t('alchemikDescription')}
                 </p>
 
-                <div className="mb-6 flex flex-wrap gap-8">
-                    <p className="font-montserrat text-[0.9rem] text-[var(--gold-lt)]">
-                        ✦ {t('alchemikSession')}
+                <div className="premium-content-offerList">
+                    <p className="premium-content-offerItem">
+                        {t('alchemikSession')}
                     </p>
 
-                    <p className="font-montserrat text-[0.9rem] text-[var(--gold-lt)]">
-                        ✦ {t('alchemikPackage')}
+                    <p className="premium-content-offerItem">
+                        {t('alchemikPackage')}
                     </p>
                 </div>
 
                 <Link
-                    href={`/${locale}/zgoda-rezerwacja?service=umysl-alchemik-sesja-1-1&serviceName=Alchemik%20%E2%80%94%20Sesja%201%3A1&price=30&locale=${locale}`}
-                    className="inline-block bg-gradient-to-br from-[#D4AF6A] to-[#8A6A1A] px-10 py-4 font-cinzel text-[0.75rem] tracking-[0.25em] text-[#3D0845] no-underline transition-opacity hover:opacity-80"
+                    href={`/${locale}/zgonpmda-rezerwacja?service=umysl-alchemik-sesja-1-1&serviceName=Alchemik%20%E2%80%94%20Sesja%201%3A1&price=30&locale=${locale}`}
+                    className="premium-content-ctaButton"
                 >
                     {t('alchemikButton')}
                 </Link>
             </section>
 
-            {/* Final closing words */}
-            <section className="mb-8">
+            <section className="premium-content-card premium-content-textStack">
                 {closingParagraphs.map((paragraph) => (
-                    <p
-                        key={paragraph}
-                        className="mb-4 font-montserrat text-[0.95rem] leading-[1.9] text-[var(--cream)] opacity-90"
-                    >
+                    <p key={paragraph} className="premium-content-text">
                         {paragraph}
                     </p>
                 ))}
 
-                <p className="font-cinzel text-[0.9rem] tracking-[0.1em] text-[var(--gold-lt)]">
+                <p className="premium-content-signature">
                     {t('signature')}
                 </p>
             </section>
-
         </main>
     )
 }

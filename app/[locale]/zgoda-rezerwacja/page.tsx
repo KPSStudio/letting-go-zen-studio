@@ -240,24 +240,24 @@ export default function BookingConsentPage() {
                                 onChange={event => acceptAllConsent(event.target.checked)}
                             />
                             <span>
-        {t('checks.acceptPrefix')}{' '}
+                                {t('checks.acceptPrefix')}{' '}
                                 <Link
                                     href={`/${locale}/regulamin`}
                                     target="_blank"
                                     className="cart-terms-link"
                                 >
-            {t('checks.terms')}
-        </Link>
+                                    {t('checks.terms')}
+                                </Link>
                                 {' '}{t('checks.and')}{' '}
                                 <Link
                                     href={`/${locale}/polityka-prywatnosci`}
                                     target="_blank"
                                     className="cart-terms-link"
                                 >
-            {t('checks.privacy')}
-        </Link>
-        .
-    </span>
+                                    {t('checks.privacy')}
+                                </Link>
+                                .
+                            </span>
                         </label>
                     </div>
                 </section>
@@ -347,6 +347,22 @@ export default function BookingConsentPage() {
                         {t('signatureNotice')}
                     </p>
                 </section>
+
+                {!serviceId && (
+                    <section className="legal-section-card">
+                        <p
+                            style={{
+                                margin: 0,
+                                fontFamily: 'var(--font-raleway)',
+                                fontSize: '0.9rem',
+                                color: '#ff6b6b',
+                                lineHeight: 1.7,
+                            }}
+                        >
+                            {t('errors.noBookingConfigured')}
+                        </p>
+                    </section>
+                )}
 
                 {error && (
                     <section className="legal-section-card">

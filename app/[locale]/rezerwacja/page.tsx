@@ -1,29 +1,58 @@
 // app/[locale]/rezerwacja/page.tsx
-// Booking page — embeds Cal.com calendar
-// Service slug passed via URL query param e.g. /rezerwacja?service=cialo-biorezonans-sesja-1-1
+// Cal.com booking calendar — protected and translated.
+// The calendar only renders when the booking token is payment_confirmed.
+// All visible text flows through next-intl.
 
 'use client'
 
+import { Suspense, useEffect, useState } from 'react'
+import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { Suspense } from 'react'
+import { useLocale, useTranslations } from 'next-intl'
 import Cal, { getCalApi } from '@calcom/embed-react'
-import { useEffect } from 'react'
 
 const CAL_USERNAME = 'lettinggozenstudio'
 
-// Default event if none specified
-const DEFAULT_EVENT = 'cialo-biorezonans-sesja-1-1'
+type GateStatus = 'checking' | 'allowed' | 'blocked'
+
+type VerifyBookingTokenResponse = {
+    valid?: boolean
+}
 
 function BookingEmbed() {
     const searchParams = useSearchParams()
-    const service = searchParams.get('service') ?? DEFAULT_EVENT
-    const serviceName = searchParams.get('serviceName') ?? ''
-    const price = searchParams.get('price') ?? ''
-    const locale = searchParams.get('locale') ?? 'pl'
-    const paid = searchParams.get('paid') === 'true'
+    const locale = useLocale()
+    const t = useTranslations('bookingPage')
+
+    const service = searchParams.get('service') ?? ''
+    const token = searchParams.get('token') ?? ''
+
+    const [gate, setGate] = useState<GateStatus>('checking')
     const calLink = `${CAL_USERNAME}/${service}`
 
     useEffect(() => {
+        if (!token || !service) {
+            setGate('blocked')
+            return
+        }
+
+        fetch('/api/verify-booking-token', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ token }),
+        })
+            .then(response => response.json())
+            .then((data: VerifyBookingTokenResponse) => {
+                setGate(data.valid === true ? 'allowed' : 'blocked')
+            })
+            .catch(() => setGate('blocked'))
+    }, [token, service])
+
+    useEffect(() => {
+        if (gate !== 'allowed') return
+
         getCalApi().then(cal => {
             cal('ui', {
                 theme: 'dark',
@@ -35,111 +64,103 @@ function BookingEmbed() {
                 hideEventTypeDetails: false,
             })
 
-            // Payment-first flow:
-            // if the client reached Cal.com after Stripe payment, show the final
-            // thank-you screen instead of sending them back to Koszyk to pay.
             cal('on', {
                 action: 'bookingSuccessful',
                 callback: () => {
-                    if (paid) {
+                    fetch('/api/consume-booking-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ token }),
+                    }).finally(() => {
                         window.location.href = `/${locale}/koszyk?bookingComplete=true`
-                        return
-                    }
-
-                    const params = new URLSearchParams({
-                        booked: 'true',
-                        service: serviceName || service,
-                        price,
                     })
-                    window.location.href = `/${locale}/koszyk?${params.toString()}`
                 },
             })
         })
-    }, [service, serviceName, price, locale, paid])
+    }, [gate, token, locale])
+
+    if (gate === 'checking') {
+        return (
+            <div className="booking-state booking-state-checking">
+                {t('verifying')}
+            </div>
+        )
+    }
+
+    if (gate === 'blocked') {
+        return (
+            <div className="booking-state booking-state-blocked">
+                <p className="booking-blocked-title">
+                    {t('blockedTitle')}
+                </p>
+
+                <p className="booking-blocked-text">
+                    {t('blockedText')}
+                </p>
+
+                <div className="booking-blocked-actions">
+                    <Link href={`/${locale}/body`} className="cart-primary-link">
+                        {t('bodyButton')}
+                    </Link>
+
+                    <Link href={`/${locale}/mind`} className="cart-primary-link">
+                        {t('mindButton')}
+                    </Link>
+
+                    <Link href={`/${locale}/soul`} className="cart-primary-link">
+                        {t('soulButton')}
+                    </Link>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <Cal
             calLink={calLink}
-            style={{ width: '100%', height: '100%', overflow: 'scroll' }}
+            className="booking-cal-embed"
             config={{ layout: 'month_view' }}
         />
     )
 }
 
-export default function RezerwacjaPage() {
-    return (
-        <main style={{
-            maxWidth: '1100px',
-            margin: '0 auto',
-            padding: '3rem 2rem 6rem',
-        }}>
+function RezerwacjaContent() {
+    const t = useTranslations('bookingPage')
 
-            {/* Page label */}
-            <p style={{
-                fontFamily: 'var(--font-cinzel)',
-                fontSize: '0.7rem',
-                letterSpacing: '0.3em',
-                color: 'var(--gold)',
-                marginBottom: '1rem',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.75rem',
-            }}>
-        <span style={{
-            display: 'inline-block',
-            width: '2rem',
-            height: '1px',
-            background: 'var(--gold)',
-        }} />
-                REZERWACJA
+    return (
+        <main className="body-page">
+            <p className="shop-label">
+                <span />
+                {t('label')}
             </p>
 
-            {/* Page hero */}
-            <div style={{ marginBottom: '3rem' }}>
-                <h1 style={{
-                    fontFamily: 'var(--font-cinzel)',
-                    fontSize: 'clamp(2rem, 5vw, 4rem)',
-                    color: 'var(--cream)',
-                    marginBottom: '1rem',
-                    lineHeight: 1.1,
-                }}>
-                    Zarezerwuj <span style={{ color: 'var(--gold-lt)' }}>Sesję</span>
+            <section className="body-header">
+                <h1 className="body-title">
+                    {t('titleMain')} <span>{t('titleGold')}</span>
                 </h1>
-                <p style={{
-                    fontFamily: 'var(--font-raleway)',
-                    fontSize: '1rem',
-                    color: 'var(--cream)',
-                    opacity: 0.8,
-                }}>
-                    Wybierz dogodny termin. Otrzymasz potwierdzenie na email.
-                </p>
-            </div>
 
-            {/* Cal.com embed */}
-            <div style={{
-                background: 'rgba(0,0,0,0.2)',
-                border: '1px solid rgba(184,148,42,0.15)',
-                minHeight: '600px',
-                overflow: 'hidden',
-            }}>
-                <Suspense fallback={
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        height: '600px',
-                        fontFamily: 'var(--font-cinzel)',
-                        fontSize: '0.85rem',
-                        letterSpacing: '0.2em',
-                        color: 'rgba(245,237,216,0.4)',
-                    }}>
-                        Ładowanie kalendarza...
-                    </div>
-                }>
+                <p className="body-intro">
+                    {t('intro')}
+                </p>
+            </section>
+
+            <section className="booking-panel">
+                <Suspense
+                    fallback={
+                        <div className="booking-state booking-state-checking">
+                            {t('loadingCalendar')}
+                        </div>
+                    }
+                >
                     <BookingEmbed />
                 </Suspense>
-            </div>
-
+            </section>
         </main>
     )
+}
+
+export default function RezerwacjaPage() {
+    return <RezerwacjaContent />
 }

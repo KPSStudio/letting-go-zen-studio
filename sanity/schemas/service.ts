@@ -102,6 +102,14 @@ export default defineType({
             initialValue: false,
         }),
         defineField({
+            name: 'calComSlug',
+            title: 'Cal.com — adres wydarzenia (slug)',
+            type: 'string',
+            description:
+                'Skopiuj końcówkę adresu wydarzenia z Cal.com. Przykład: jeśli adres to cal.com/lettinggozenstudio/cialo-biorezonans-sesja-1-1, wklej tutaj tylko: cialo-biorezonans-sesja-1-1',
+            hidden: ({ document }) => !document?.requiresBooking,
+        }),
+        defineField({
             name: 'freeConsultation',
             title: 'Bezpłatna konsultacja wstępna (zostaw puste jeśli brak)',
             type: 'string',
