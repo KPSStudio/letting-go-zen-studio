@@ -113,7 +113,7 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </div>
 
                 <Link
-                    href={`/${locale}/zgonpmda-rezerwacja?service=umysl-alchemik-sesja-1-1&serviceName=Alchemik%20%E2%80%94%20Sesja%201%3A1&price=30&locale=${locale}`}
+                    href={`/${locale}/zgoda-rezerwacja?service=umysl-alchemik-sesja-1-1&serviceName=Alchemik%20%E2%80%94%20Sesja%201%3A1&price=30&locale=${locale}`}
                     className="premium-content-ctaButton"
                 >
                     {t('alchemikButton')}

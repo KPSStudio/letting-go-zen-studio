@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { useCart } from '@/lib/CartContext'
@@ -15,9 +15,25 @@ interface Props {
 export default function SoulClient({ products }: Props) {
     const t = useTranslations('soul')
     const locale = useLocale()
-    const { currency, formatPrice } = useCurrency()
+    const { formatPrice } = useCurrency()
     const { addItem, items } = useCart()
     const [selectedProduct, setSelectedProduct] = useState<SanityService | null>(null)
+
+    // If arrived from search (?item=<id>), scroll to that card and flash it.
+    useEffect(() => {
+        const itemId = new URLSearchParams(window.location.search).get('item')
+        if (!itemId) return
+
+        const timer = setTimeout(() => {
+            const card = document.getElementById(`item-${itemId}`)
+            if (!card) return
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            card.classList.add('item-flash')
+            setTimeout(() => card.classList.remove('item-flash'), 2000)
+        }, 300)
+
+        return () => clearTimeout(timer)
+    }, [])
 
     function handleAddToCart(product: SanityService) {
         addItem({
@@ -99,7 +115,11 @@ export default function SoulClient({ products }: Props) {
                         const inCart = items.some((i) => i.id === product._id)
 
                         return (
-                            <article key={product._id} className="body-product-card">
+                            <article
+                                key={product._id}
+                                id={`item-${product._id}`}
+                                className="body-product-card"
+                            >
                                 <h2 className="body-product-name">
                                     {getProductName(product)}
                                 </h2>
@@ -119,12 +139,6 @@ export default function SoulClient({ products }: Props) {
                                         <span className="body-product-price">
                                             {formatPrice(product.priceGBP)}
                                         </span>
-
-                                        {currency !== 'PLN' && product.pricePLN && (
-                                            <span className="body-product-price-note">
-                                                ≈ zł{product.pricePLN}
-                                            </span>
-                                        )}
                                     </div>
 
                                     {product.requiresBooking ? (

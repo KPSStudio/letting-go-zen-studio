@@ -1,9 +1,13 @@
 'use client'
 
-import { useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { SanitySklepProduct } from '@/sanity/lib/sanity'
+import { normalizeText } from '@/lib/normalizeText'
+import Image from 'next/image'
+import { urlFor } from '@/sanity/lib/image'
+import type { SanityImageSource } from '@sanity/image-url'
 import { loadStripe } from '@stripe/stripe-js'
 import {
     Elements,
@@ -84,6 +88,7 @@ function SklepPaymentForm({
     onBack: () => void
     formatPrice: (n: number) => string
 }) {
+    const t = useTranslations('sklep')
     const stripe = useStripe()
     const elements = useElements()
     const locale = useLocale()
@@ -100,7 +105,7 @@ function SklepPaymentForm({
         if (!stripe || !elements) return
 
         if (!email) {
-            setError('Proszę podać adres email.')
+            setError(t('payment.emailRequired'))
             return
         }
 
@@ -120,7 +125,7 @@ function SklepPaymentForm({
         })
 
         if (stripeError) {
-            setError(stripeError.message ?? 'Wystąpił błąd płatności.')
+            setError(stripeError.message ?? t('payment.error'))
             setPaying(false)
         }
     }
@@ -139,14 +144,14 @@ function SklepPaymentForm({
                         marginBottom: '0.5rem',
                     }}
                 >
-                    EMAIL
+                    {t('payment.emailLabel')}
                 </label>
 
                 <input
                     type="email"
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    placeholder="twoj@email.com"
+                    placeholder={t('payment.emailPlaceholder')}
                     required
                     style={{
                         width: '100%',
@@ -189,7 +194,9 @@ function SklepPaymentForm({
                     cursor: !canPay ? 'not-allowed' : 'pointer',
                 }}
             >
-                {paying ? 'Przetwarzanie...' : `🔒 Zapłać ${formatPrice(product.priceGBP)}`}
+                {paying
+                    ? t('payment.processing')
+                    : t('payment.pay', { price: formatPrice(product.priceGBP) })}
             </button>
 
             <button
@@ -197,7 +204,7 @@ function SklepPaymentForm({
                 onClick={onBack}
                 className="shop-legal-back-button"
             >
-                ← Anuluj
+                {t('payment.cancel')}
             </button>
         </form>
     )
@@ -222,6 +229,25 @@ export default function SklepClient({ products }: Props) {
     const [digitalDeliveryAccepted, setDigitalDeliveryAccepted] = useState(false)
     const [legalError, setLegalError] = useState<string | null>(null)
 
+    // ── SEARCH STATE ──
+    const [query, setQuery] = useState('')
+
+    // If arrived from search (?item=<id>), scroll to that card and flash it.
+    useEffect(() => {
+        const itemId = new URLSearchParams(window.location.search).get('item')
+        if (!itemId) return
+
+        const timer = setTimeout(() => {
+            const card = document.getElementById(`item-${itemId}`)
+            if (!card) return
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' })
+            card.classList.add('item-flash')
+            setTimeout(() => card.classList.remove('item-flash'), 2000)
+        }, 300)
+
+        return () => clearTimeout(timer)
+    }, [])
+
     const isSuccess =
         typeof window !== 'undefined' &&
         new URLSearchParams(window.location.search).get('success') === 'true'
@@ -233,6 +259,39 @@ export default function SklepClient({ products }: Props) {
     function getProductDesc(product: SanitySklepProduct) {
         return locale === 'en' && product.descEn ? product.descEn : product.descPl
     }
+
+    // ── SEARCH: filter + rank the products we already have in memory ──
+    // We match against name, keywords, "includes" and description (both languages),
+    // and weight matches so the most relevant product floats to the top.
+    const filteredProducts = useMemo(() => {
+        const cleaned = normalizeText(query.trim())
+        if (!cleaned) return products
+
+        // Split the query into words so "vitamins energy" matches either word.
+        const terms = cleaned.split(/\s+/).filter(Boolean)
+
+        function scoreProduct(product: SanitySklepProduct): number {
+            const name = normalizeText(`${product.namePl} ${product.nameEn ?? ''}`)
+            const keywords = normalizeText((product.keywords ?? []).join(' '))
+            const includes = normalizeText((product.includes ?? []).join(' '))
+            const desc = normalizeText(`${product.descPl ?? ''} ${product.descEn ?? ''}`)
+
+            let score = 0
+            for (const term of terms) {
+                if (name.includes(term)) score += 5      // name match = most relevant
+                if (keywords.includes(term)) score += 4  // deliberate keyword tag
+                if (includes.includes(term)) score += 2  // "what's included" list
+                if (desc.includes(term)) score += 1      // somewhere in the description
+            }
+            return score
+        }
+
+        return products
+            .map(product => ({ product, score: scoreProduct(product) }))
+            .filter(entry => entry.score > 0)
+            .sort((a, b) => b.score - a.score)
+            .map(entry => entry.product)
+    }, [products, query])
 
     function openLegalStep(product: SanitySklepProduct) {
         setSelectedProduct(null)
@@ -279,10 +338,10 @@ export default function SklepClient({ products }: Props) {
                 setSelectedProduct(null)
                 setLegalProduct(null)
             } else {
-                alert('Wystąpił błąd. Spróbuj ponownie.')
+                alert(t('genericError'))
             }
         } catch {
-            alert('Wystąpił błąd. Spróbuj ponownie.')
+            alert(t('genericError'))
         } finally {
             setLoading(null)
         }
@@ -292,12 +351,12 @@ export default function SklepClient({ products }: Props) {
         if (!legalProduct) return
 
         if (!shopTermsAccepted) {
-            setLegalError('Musisz zaakceptować Regulamin Sklepu i Politykę Prywatności.')
+            setLegalError(t('legalStep.errorTerms'))
             return
         }
 
         if (!digitalDeliveryAccepted) {
-            setLegalError('Musisz wyrazić zgodę na natychmiastowe dostarczenie treści cyfrowej.')
+            setLegalError(t('legalStep.errorDelivery'))
             return
         }
 
@@ -330,16 +389,16 @@ export default function SklepClient({ products }: Props) {
                         Letting Go Zen Studio
                         <span />
                     </p>
-                    <h1 className="thankyou-title">Dziękujemy</h1>
+                    <h1 className="thankyou-title">{t('success.title')}</h1>
                     <div className="thankyou-divider" />
                     <p className="thankyou-text">
-                        Link do pobrania został wysłany na Twój email.
+                        {t('success.text')}
                     </p>
                     <p className="thankyou-subtext">
-                        PDF · Dostawa Natychmiastowa · 24h Link
+                        {t('success.subtext')}
                     </p>
                     <a href={`/${locale}`} className="thankyou-button">
-                        Wróć na Stronę Główną
+                        {t('success.button')}
                     </a>
                 </div>
             </div>
@@ -367,7 +426,7 @@ export default function SklepClient({ products }: Props) {
                                 marginBottom: '0.75rem',
                             }}
                         >
-                            ZGODY PRAWNE
+                            {t('legalStep.title')}
                         </p>
 
                         <h2
@@ -391,7 +450,7 @@ export default function SklepClient({ products }: Props) {
                                 marginBottom: '1.5rem',
                             }}
                         >
-                            Przed przejściem do płatności potwierdź wymagane zgody dotyczące zakupu produktu cyfrowego.
+                            {t('legalStep.intro')}
                         </p>
 
                         <label
@@ -422,23 +481,23 @@ export default function SklepClient({ products }: Props) {
                             />
 
                             <span>
-                                Zapoznałem/am się i akceptuję{' '}
+                                {t('legalStep.acceptPrefix')}{' '}
                                 <a
                                     href={`/${locale}/regulamin`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ color: 'var(--gold-lt)' }}
                                 >
-                                    Regulamin Sklepu
+                                    {t('legalStep.termsLink')}
                                 </a>
-                                {' '}oraz{' '}
+                                {' '}{t('legalStep.and')}{' '}
                                 <a
                                     href={`/${locale}/polityka-prywatnosci`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     style={{ color: 'var(--gold-lt)' }}
                                 >
-                                    Politykę Prywatności
+                                    {t('legalStep.privacyLink')}
                                 </a>.
                             </span>
                         </label>
@@ -471,7 +530,7 @@ export default function SklepClient({ products }: Props) {
                             />
 
                             <span>
-                                Wyrażam zgodę na natychmiastowe dostarczenie treści cyfrowej i przyjmuję do wiadomości, że po uzyskaniu dostępu do produktu tracę prawo odstąpienia od umowy w zakresie dozwolonym przez obowiązujące prawo.
+                                {t('legalStep.deliveryConsent')}
                             </span>
                         </label>
 
@@ -513,8 +572,8 @@ export default function SklepClient({ products }: Props) {
                             }}
                         >
                             {loading === legalProduct._id
-                                ? 'Ładowanie...'
-                                : `Przejdź do płatności — ${formatPrice(legalProduct.priceGBP)}`}
+                                ? t('loading')
+                                : t('legalStep.continueToPayment', { price: formatPrice(legalProduct.priceGBP) })}
                         </button>
 
                         <button
@@ -525,7 +584,7 @@ export default function SklepClient({ products }: Props) {
                             }}
                             className="shop-legal-back-button"
                         >
-                            ← Wróć
+                            {t('legalStep.back')}
                         </button>
                     </div>
                 </div>
@@ -548,7 +607,7 @@ export default function SklepClient({ products }: Props) {
                                 marginBottom: '0.5rem',
                             }}
                         >
-                            📄 PDF · NATYCHMIASTOWE POBRANIE
+                            📄 {t('modalBadge')}
                         </p>
 
                         <h2
@@ -612,6 +671,52 @@ export default function SklepClient({ products }: Props) {
                 </p>
             </section>
 
+            {/* ── SEARCH BOX (only when there are products to search) ── */}
+            {products.length > 0 && (
+                <div className="shop-search">
+                    <label htmlFor="sklep-search" className="shop-search-label">
+                        {t('search.label')}
+                    </label>
+
+                    <div className="shop-search-field">
+                        <svg
+                            className="shop-search-icon"
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                        >
+                            <circle cx="11" cy="11" r="7" />
+                            <line x1="16.5" y1="16.5" x2="21" y2="21" />
+                        </svg>
+
+                        <input
+                            id="sklep-search"
+                            type="search"
+                            value={query}
+                            onChange={e => setQuery(e.target.value)}
+                            placeholder={t('search.placeholder')}
+                            className="shop-search-input"
+                        />
+
+                        {query.trim() && (
+                            <button
+                                type="button"
+                                onClick={() => setQuery('')}
+                                className="shop-search-clear"
+                                aria-label={t('search.clear')}
+                            >
+                                ×
+                            </button>
+                        )}
+                    </div>
+
+                    {query.trim() && (
+                        <p className="shop-search-count">
+                            {t('search.results', { count: filteredProducts.length })}
+                        </p>
+                    )}
+                </div>
+            )}
+
             {products.length === 0 && (
                 <div
                     style={{
@@ -629,18 +734,64 @@ export default function SklepClient({ products }: Props) {
                             color: 'rgba(245,237,216,0.4)',
                         }}
                     >
-                        Produkty Wkrótce
+                        {t('comingSoon')}
                     </p>
                 </div>
             )}
 
-            {products.length > 0 && (
+            {/* No search matches */}
+            {products.length > 0 && query.trim() && filteredProducts.length === 0 && (
+                <div
+                    style={{
+                        textAlign: 'center',
+                        padding: '3rem',
+                        background: 'rgba(0,0,0,0.2)',
+                        border: '1px solid rgba(184,148,42,0.15)',
+                        maxWidth: '640px',
+                        margin: '0 auto',
+                    }}
+                >
+                    <p
+                        style={{
+                            fontFamily: 'var(--font-raleway)',
+                            fontSize: '0.95rem',
+                            color: 'var(--cream)',
+                            opacity: 0.7,
+                        }}
+                    >
+                        {t('search.none')}
+                    </p>
+                </div>
+            )}
+
+            {filteredProducts.length > 0 && (
                 <div className="body-product-grid">
-                    {products.map(product => (
-                        <article key={product._id} className="body-product-card">
+                    {filteredProducts.map(product => (
+                        <article
+                            key={product._id}
+                            id={`item-${product._id}`}
+                            className="body-product-card"
+                        >
+                            {product.images && product.images.length > 0 && (
+                                <div className="shop-card-image">
+                                    <Image
+                                        src={urlFor(product.images[0] as SanityImageSource)
+                                            .width(640)
+                                            .height(480)
+                                            .fit('crop')
+                                            .auto('format')
+                                            .url()}
+                                        alt={product.images[0].alt || getProductName(product)}
+                                        fill
+                                        sizes="(max-width: 720px) 100vw, 360px"
+                                        style={{ objectFit: 'cover' }}
+                                    />
+                                </div>
+                            )}
+
                             <p className="shop-delivery-badge">
                                 <span>📄</span>
-                                {product.deliveryNote?.toUpperCase() ?? 'PDF · NATYCHMIASTOWE POBRANIE'}
+                                {product.deliveryNote?.toUpperCase() ?? t('modalBadge')}
                             </p>
 
                             <h2 className="body-product-name">
@@ -660,12 +811,6 @@ export default function SklepClient({ products }: Props) {
                                     <span className="body-product-price">
                                         {formatPrice(product.priceGBP)}
                                     </span>
-
-                                    {currency !== 'PLN' && product.pricePLN && (
-                                        <span className="body-product-price-note">
-                                            ≈ zł{product.pricePLN}
-                                        </span>
-                                    )}
                                 </div>
 
                                 <button
@@ -679,7 +824,7 @@ export default function SklepClient({ products }: Props) {
                                     }}
                                 >
                                     {loading === product._id
-                                        ? 'Ładowanie...'
+                                        ? t('loading')
                                         : `🔒 ${t('buyNow')} — ${formatPrice(product.priceGBP)}`}
                                 </button>
 
@@ -722,7 +867,7 @@ export default function SklepClient({ products }: Props) {
                                 marginBottom: '0.75rem',
                             }}
                         >
-                            📄 PDF · NATYCHMIASTOWE POBRANIE
+                            📄 {t('modalBadge')}
                         </p>
 
                         <h2 className="body-modal-title">

@@ -11,6 +11,8 @@ import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
 import { CurrencyProvider } from '@/lib/CurrencyContext'
 import { CartProvider } from '@/lib/CartContext'
+import { getServicesByCategory, getSklepProducts } from '@/sanity/lib/sanity'
+import type { SearchItem } from '@/components/layout/NavSearch'
 
 const cinzel = Cinzel({
     variable: '--font-cinzel',
@@ -112,6 +114,56 @@ export default async function LocaleLayout({
     const { locale } = await params
     const messages = await getMessages()
 
+    // Build the site-wide search index (bookable services + shop products).
+    // Fetched here so the nav search has data on every page. Wrapped in
+    // try/catch so a Sanity hiccup can never take down the whole layout.
+    let searchItems: SearchItem[] = []
+    try {
+        const [bodyServices, mindServices, soulServices, sklepProducts] =
+            await Promise.all([
+                getServicesByCategory('body'),
+                getServicesByCategory('mind'),
+                getServicesByCategory('soul'),
+                getSklepProducts(),
+            ])
+
+        const serviceSearchItems: SearchItem[] = [
+            ...bodyServices,
+            ...mindServices,
+            ...soulServices,
+        ]
+            .filter(service => service.requiresBooking)
+            .map((service): SearchItem => ({
+                id: service._id,
+                namePl: service.namePl,
+                nameEn: service.nameEn,
+                descPl: service.descPl,
+                descEn: service.descEn,
+                includes: service.includes,
+                kind: 'service',
+                category: service.category,
+                href: `/${service.category}`,
+            }))
+
+        const productSearchItems: SearchItem[] = sklepProducts.map(
+            (product): SearchItem => ({
+                id: product._id,
+                namePl: product.namePl,
+                nameEn: product.nameEn,
+                descPl: product.descPl,
+                descEn: product.descEn,
+                keywords: product.keywords,
+                includes: product.includes,
+                kind: 'product',
+                href: '/sklep',
+            })
+        )
+
+        searchItems = [...serviceSearchItems, ...productSearchItems]
+    } catch {
+        searchItems = []
+    }
+
     return (
         <html lang={locale} className={`${cinzel.variable} ${raleway.variable} h-full`}>
         <body className="min-h-full flex flex-col">
@@ -119,7 +171,7 @@ export default async function LocaleLayout({
             <CurrencyProvider>
                 <CartProvider>
                     <UtilityBar />
-                    <Nav />
+                    <Nav searchItems={searchItems} />
                     <main className="flex-1">
                         {children}
                     </main>

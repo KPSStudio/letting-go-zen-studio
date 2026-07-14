@@ -55,6 +55,7 @@ export default function KontaktPage() {
     })
 
     const [submitted, setSubmitted] = useState(false)
+    const [errorShown, setErrorShown] = useState(false)
 
     function handleChange(
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -70,6 +71,7 @@ export default function KontaktPage() {
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
         setSubmitted(false)
+        setErrorShown(false)
 
         try {
             const response = await fetch('/api/contact', {
@@ -91,10 +93,10 @@ export default function KontaktPage() {
                     message: '',
                 })
             } else {
-                alert('Wystąpił błąd. Spróbuj ponownie.')
+                setErrorShown(true)
             }
         } catch {
-            alert('Wystąpił błąd. Spróbuj ponownie.')
+            setErrorShown(true)
         }
     }
 
@@ -168,6 +170,16 @@ export default function KontaktPage() {
 
                         <p>
                             {t('successMessage')}
+                        </p>
+                    </div>
+                )}
+
+                {errorShown && (
+                    <div className="contact-error-box">
+                        <span>⚠️</span>
+
+                        <p>
+                            {t('errorMessage')}
                         </p>
                     </div>
                 )}

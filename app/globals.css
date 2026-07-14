@@ -97,6 +97,15 @@ body::after {
     animation: sparkleDrift 34s linear infinite;
 }
 
+/* Mobile fix: background-attachment:fixed is unreliable on mobile browsers and
+   leaves a flat-purple gap below the first screen. Switching to 'scroll' makes
+   the velvet texture cover the full page height. Desktop keeps 'fixed'. */
+@media (max-width: 720px) {
+    body {
+        background-attachment: scroll;
+    }
+}
+
 /* HERO */
 
 .hero-section {
@@ -2361,6 +2370,28 @@ body::after {
     font-size: 0.8rem;
     letter-spacing: 0.12em;
     color: var(--gold-lt);
+}
+
+/* Error box for the contact form — same layout as the success box,
+   but tinted red so it clearly reads as an error. */
+.contact-error-box {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.1rem 1.5rem;
+    background: rgba(168, 64, 64, 0.1);
+    border: 1px solid rgba(200, 96, 96, 0.35);
+    border-left: 3px solid #b05050;
+    box-shadow: inset 0 0 24px rgba(168, 64, 64, 0.08);
+}
+
+.contact-error-box p {
+    margin: 0;
+    font-family: var(--font-cinzel);
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    color: #d99a9a;
 }
 
 .contact-section-title {
@@ -5325,4 +5356,384 @@ body::after {
     30% { opacity: 0.85; transform: scaleY(1); transform-origin: top; }
     70% { opacity: 0.85; transform: scaleY(1); transform-origin: top; }
     100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+}
+
+/* ── SHOP SEARCH ──────────────────────────────────────────────── */
+
+@keyframes shopSearchReveal {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.shop-search {
+    max-width: 640px;
+    margin: 0 auto 2.75rem;
+    padding: 0 1.25rem;
+    animation: shopSearchReveal 0.5s ease both;
+}
+
+.shop-search-label {
+    display: block;
+    font-family: var(--font-cinzel);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+}
+
+.shop-search-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* magnifying-glass icon (inline SVG in the markup) */
+.shop-search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: var(--gold-lt);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.7;
+    pointer-events: none;
+    transition: opacity 0.3s ease, stroke 0.3s ease;
+}
+
+.shop-search-input {
+    width: 100%;
+    padding: 0.95rem 2.75rem 0.95rem 2.85rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(184, 148, 42, 0.3);
+    border-radius: 0;
+    color: var(--cream);
+    font-family: var(--font-raleway);
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.shop-search-input::placeholder {
+    color: rgba(232, 215, 184, 0.4);
+}
+
+.shop-search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.shop-search-input:hover {
+    border-color: rgba(212, 175, 106, 0.55);
+}
+
+.shop-search-input:focus {
+    border-color: rgba(212, 175, 106, 0.85);
+    background: rgba(0, 0, 0, 0.4);
+    box-shadow:
+            0 0 0 1px rgba(212, 175, 106, 0.25),
+            0 0 22px rgba(212, 175, 106, 0.14);
+}
+
+.shop-search-field:focus-within .shop-search-icon {
+    opacity: 1;
+    stroke: var(--gold-sh);
+}
+
+.shop-search-clear {
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    background: transparent;
+    border: none;
+    color: var(--cream-soft);
+    font-size: 1.25rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.shop-search-clear:hover {
+    opacity: 1;
+    color: var(--gold-lt);
+    transform: translateY(-50%) scale(1.15);
+}
+
+.shop-search-count {
+    margin-top: 0.6rem;
+    font-family: var(--font-raleway);
+    font-size: 0.8rem;
+    color: var(--cream);
+    opacity: 0.6;
+    animation: shopSearchReveal 0.3s ease both;
+}
+
+@media (max-width: 720px) {
+    .shop-search {
+        margin-bottom: 2rem;
+        padding: 0 1rem;
+    }
+
+    .shop-search-label {
+        font-size: 0.66rem;
+    }
+
+    /* font-size 16px stops iOS Safari from auto-zooming on focus */
+    .shop-search-input {
+        font-size: 1rem;
+        padding: 0.9rem 2.6rem 0.9rem 2.7rem;
+    }
+}
+
+/* ── NAV SEARCH ───────────────────────────────────────────── */
+
+.nav-search {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+}
+
+.nav-search-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--cream);
+    cursor: pointer;
+    transition: color 0.25s ease;
+}
+
+.nav-search-toggle:hover {
+    color: var(--gold-lt);
+}
+
+.nav-search-toggle-icon,
+.nav-search-icon {
+    width: 18px;
+    height: 18px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+}
+
+.nav-search-panel {
+    position: absolute;
+    top: calc(100% + 0.6rem);
+    right: 0;
+    width: min(340px, 80vw);
+    padding: 0.9rem;
+    background: rgba(20, 4, 26, 0.97);
+    border: 1px solid rgba(184, 148, 42, 0.35);
+    box-shadow:
+            0 18px 48px rgba(0, 0, 0, 0.55),
+            0 0 26px rgba(184, 148, 42, 0.08);
+    z-index: 1200;
+    animation: shopSearchReveal 0.28s ease both;
+}
+
+.nav-search-field {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.nav-search-field .nav-search-icon {
+    position: absolute;
+    left: 0.85rem;
+    top: 50%;
+    transform: translateY(-50%);
+    stroke: var(--gold-lt);
+    opacity: 0.75;
+    pointer-events: none;
+}
+
+.nav-search-input {
+    width: 100%;
+    padding: 0.7rem 2.4rem 0.7rem 2.5rem;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(184, 148, 42, 0.3);
+    border-radius: 0;
+    color: var(--cream);
+    font-family: var(--font-raleway);
+    font-size: 0.9rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-search-input::placeholder {
+    color: rgba(232, 215, 184, 0.4);
+}
+
+.nav-search-input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.nav-search-input:focus {
+    border-color: rgba(212, 175, 106, 0.85);
+    box-shadow:
+            0 0 0 1px rgba(212, 175, 106, 0.25),
+            0 0 18px rgba(212, 175, 106, 0.12);
+}
+
+.nav-search-clear {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: transparent;
+    border: none;
+    color: var(--cream-soft);
+    font-size: 1.15rem;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0.65;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.nav-search-clear:hover {
+    opacity: 1;
+    color: var(--gold-lt);
+}
+
+.nav-search-results {
+    list-style: none;
+    margin: 0.6rem 0 0;
+    padding: 0;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.nav-search-result {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.6rem 0.65rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(184, 148, 42, 0.12);
+    color: var(--cream);
+    font-family: var(--font-raleway);
+    font-size: 0.85rem;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.nav-search-result:hover {
+    background: rgba(184, 148, 42, 0.1);
+    color: var(--gold-lt);
+}
+
+.nav-search-result-name {
+    flex: 1;
+}
+
+.nav-search-result-tag {
+    flex-shrink: 0;
+    font-family: var(--font-cinzel);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    opacity: 0.85;
+}
+
+.nav-search-empty {
+    padding: 0.75rem 0.65rem;
+    font-family: var(--font-raleway);
+    font-size: 0.85rem;
+    color: var(--cream-soft);
+    text-align: center;
+}
+
+/* Inline mode (inside the mobile drawer): no toggle, full width, results in flow */
+.nav-search--inline {
+    display: block;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.nav-search--inline .nav-search-panel {
+    position: static;
+    width: 100%;
+    padding: 0;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    animation: none;
+}
+
+.nav-search--inline .nav-search-results {
+    max-height: 260px;
+}
+
+@media (max-width: 720px) {
+    /* font-size 16px stops iOS Safari from auto-zooming on focus */
+    .nav-search-input {
+        font-size: 1rem;
+    }
+}
+
+/* ── SEARCH → CARD HIGHLIGHT ─────────────────────────────── */
+/* Applied briefly when a card is reached via the nav search (?item=<id>). */
+
+@keyframes itemFlash {
+    0% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 106, 0);
+    }
+    20% {
+        box-shadow:
+                0 0 0 2px rgba(212, 175, 106, 0.9),
+                0 0 28px rgba(212, 175, 106, 0.38);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(212, 175, 106, 0);
+    }
+}
+
+.item-flash {
+    animation: itemFlash 2s ease;
+}
+
+/* ── SHOP CARD IMAGE ───────────────────────────────── */
+/* Product photo at the top of physical/bundle shop cards. */
+
+.shop-card-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(184, 148, 42, 0.18);
+}
+
+.shop-card-image img {
+    object-fit: cover;
 }

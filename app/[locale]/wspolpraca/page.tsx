@@ -3,9 +3,10 @@
 // All visible text comes from next-intl translation files.
 
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 export default function WspolpracaPage() {
+    const locale = useLocale()
     const t = useTranslations('wspolpraca')
 
     return (
@@ -63,7 +64,7 @@ export default function WspolpracaPage() {
                     {t('bookingText')}
                 </p>
 
-                <Link href="/kontakt" className="premium-content-ctaButton">
+                <Link href={`/${locale}/kontakt`} className="premium-content-ctaButton">
                     {t('bookingButton')}
                 </Link>
             </section>

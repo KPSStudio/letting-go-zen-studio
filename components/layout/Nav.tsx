@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useLocale, useTranslations } from 'next-intl'
 import { buildLocaleHref } from '@/lib/localeRouting'
+import NavSearch, { type SearchItem } from './NavSearch'
 
 type StaticLink = {
     href: string
@@ -29,7 +30,7 @@ const staticLinks: StaticLink[] = [
     { labelKey: 'kontakt', href: '/kontakt' },
 ]
 
-export default function Nav() {
+export default function Nav({ searchItems }: { searchItems: SearchItem[] }) {
     const pathname = usePathname()
     const router = useRouter()
     const locale = useLocale()
@@ -114,6 +115,8 @@ export default function Nav() {
                         </Link>
                     )
                 })}
+
+                <NavSearch items={searchItems} mode="icon" />
             </div>
 
             {/* Mobile menu button */}
@@ -130,6 +133,8 @@ export default function Nav() {
             {/* Mobile dropdown */}
             {isMobileMenuOpen && (
                 <div className="site-mobile-menu">
+                    <NavSearch items={searchItems} mode="inline" />
+
                     {/* Mobile language switcher */}
                     <div className="site-mobile-language-row">
                         {(['pl', 'en'] as const).map((language) => (

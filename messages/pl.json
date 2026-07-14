@@ -17,12 +17,15 @@
     "confirmingMain": "Potwierdzanie",
     "confirmingGold": "Płatności",
     "waitText": "Przetwarzamy Twoją płatność. Za chwilę zostaniesz przekierowany do kalendarza, aby wybrać termin sesji. Nie zamykaj tej strony.",
+    "waitSubtext": "To zwykle trwa tylko kilka sekund.",
     "usedMain": "Rezerwacja",
     "usedGold": "Zakończona",
     "usedText": "Ta płatność została już wykorzystana do rezerwacji terminu. Sprawdź swoją skrzynkę email — potwierdzenie zostało wysłane.",
+    "usedSubtext": "Aby zarezerwować kolejną sesję, wróć na stronę usług i rozpocznij nową rezerwację.",
     "failedMain": "Coś poszło",
     "failedGold": "nie tak",
-    "failedText": "Nie udało się potwierdzić płatności w ciągu minuty. Jeśli środki zostały pobrane, Twoja rezerwacja jest bezpieczna — skontaktuj się z nami, a prześlemy link do wyboru terminu: joanna@lettinggozenstudio.com"
+    "failedText": "Nie udało się potwierdzić płatności w ciągu minuty. Jeśli środki zostały pobrane, Twoja rezerwacja jest bezpieczna — skontaktuj się z nami, a prześlemy link do wyboru terminu: joanna@lettinggozenstudio.com",
+    "failedSubtext": "Twoja płatność jest bezpieczna — odpowiemy najszybciej, jak to możliwe."
   },
   "body": {
     "emptyState": "Wkrótce — usługi pojawią się tutaj po dodaniu ich w panelu administracyjnym.",
@@ -341,6 +344,7 @@
     "emailTitle": "Email",
     "emailText": "Wyślij nam wiadomość email — odpowiemy w ciągu 24 godzin.",
     "successMessage": "Wiadomość wysłana! Joanna skontaktuje się z Tobą w ciągu 24 godzin.",
+    "errorMessage": "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie lub napisz do nas bezpośrednio na email.",
     "formTitle": "Wyślij wiadomość",
     "nameLabel": "IMIĘ I NAZWISKO",
     "namePlaceholder": "Anna Kowalska",
@@ -504,6 +508,44 @@
     "modalBadge": "PDF · NATYCHMIASTOWE POBRANIE",
     "includesLabel": "Co zawiera",
     "close": "Zamknij",
+    "comingSoon": "Produkty Wkrótce",
+    "loading": "Ładowanie...",
+    "genericError": "Wystąpił błąd. Spróbuj ponownie.",
+    "search": {
+      "label": "Szukaj w sklepie",
+      "placeholder": "Szukaj produktów… np. witaminy, energia, odporność",
+      "none": "Brak produktów pasujących do wyszukiwania. Spróbuj innego słowa.",
+      "clear": "Wyczyść wyszukiwanie",
+      "results": "{count, plural, one {# wynik} few {# wyniki} many {# wyników} other {# wyników}}"
+    },
+    "payment": {
+      "emailLabel": "EMAIL",
+      "emailPlaceholder": "twoj@email.com",
+      "emailRequired": "Proszę podać adres email.",
+      "pay": "🔒 Zapłać {price}",
+      "processing": "Przetwarzanie...",
+      "cancel": "← Anuluj",
+      "error": "Wystąpił błąd płatności."
+    },
+    "legalStep": {
+      "title": "ZGODY PRAWNE",
+      "intro": "Przed przejściem do płatności potwierdź wymagane zgody dotyczące zakupu produktu cyfrowego.",
+      "acceptPrefix": "Zapoznałem/am się i akceptuję",
+      "termsLink": "Regulamin Sklepu",
+      "and": "oraz",
+      "privacyLink": "Politykę Prywatności",
+      "deliveryConsent": "Wyrażam zgodę na natychmiastowe dostarczenie treści cyfrowej i przyjmuję do wiadomości, że po uzyskaniu dostępu do produktu tracę prawo odstąpienia od umowy w zakresie dozwolonym przez obowiązujące prawo.",
+      "continueToPayment": "Przejdź do płatności — {price}",
+      "back": "← Wróć",
+      "errorTerms": "Musisz zaakceptować Regulamin Sklepu i Politykę Prywatności.",
+      "errorDelivery": "Musisz wyrazić zgodę na natychmiastowe dostarczenie treści cyfrowej."
+    },
+    "success": {
+      "title": "Dziękujemy",
+      "text": "Link do pobrania został wysłany na Twój email.",
+      "subtext": "PDF · Dostawa Natychmiastowa · 24h Link",
+      "button": "Wróć na Stronę Główną"
+    },
     "products": {
       "energyGuide": {
         "desc": "Produkt testowy. Przewodnik po energetyce, chakrach i codziennej praktyce energetycznej. Dostępny natychmiast po zakupie.",

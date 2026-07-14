@@ -62,7 +62,7 @@ export default function UtilityBar() {
                 <div className="utility-gap" />
 
                 {/* Currency toggles */}
-                {(['GBP', 'PLN', 'EUR', 'USD'] as Currency[]).map((c) => (
+                {(['GBP', 'PLN'] as Currency[]).map((c) => (
                     <button
                         key={c}
                         type="button"
@@ -73,7 +73,7 @@ export default function UtilityBar() {
                             borderColor: currency === c ? 'rgba(212,175,106,0.8)' : undefined,
                         }}
                     >
-                        {c === 'GBP' ? '£' : c === 'PLN' ? 'zł' : c === 'EUR' ? '€' : '$'}
+                        {c === 'GBP' ? '£' : 'zł'}
                     </button>
                 ))}
 

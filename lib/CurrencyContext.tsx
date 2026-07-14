@@ -6,23 +6,19 @@
 
 import { createContext, useContext, useState, ReactNode } from 'react'
 
-// The four currencies we support
-export type Currency = 'GBP' | 'PLN' | 'EUR' | 'USD'
+// The two currencies we support
+export type Currency = 'GBP' | 'PLN'
 
 // Conversion rates relative to GBP
 export const RATES: Record<Currency, number> = {
     GBP: 1,
     PLN: 5.2,
-    EUR: 1.17,
-    USD: 1.27,
 }
 
 // Currency symbols
 export const SYMBOLS: Record<Currency, string> = {
     GBP: '£',
     PLN: 'zł',
-    EUR: '€',
-    USD: '$',
 }
 
 // What the context provides to every component

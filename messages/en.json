@@ -17,12 +17,15 @@
     "confirmingMain": "Confirming",
     "confirmingGold": "Payment",
     "waitText": "We are processing your payment. In a moment you will be redirected to the calendar to choose your session time. Please do not close this page.",
+    "waitSubtext": "This usually takes only a few seconds.",
     "usedMain": "Booking",
     "usedGold": "Complete",
     "usedText": "This payment has already been used to book an appointment. Check your email — a confirmation has been sent.",
+    "usedSubtext": "To book another session, return to the services page and start a new booking.",
     "failedMain": "Something went",
     "failedGold": "wrong",
-    "failedText": "We could not confirm your payment within a minute. If the funds were taken, your booking is safe — contact us and we will send you a link to choose your time: joanna@lettinggozenstudio.com"
+    "failedText": "We could not confirm your payment within a minute. If the funds were taken, your booking is safe — contact us and we will send you a link to choose your time: joanna@lettinggozenstudio.com",
+    "failedSubtext": "Your payment is safe — we will respond as soon as possible."
   },
   "body": {
     "emptyState": "Coming soon — services will appear here after they are added in the admin panel.",
@@ -341,6 +344,7 @@
     "emailTitle": "Email",
     "emailText": "Send us an email — we will reply within 24 hours.",
     "successMessage": "Message sent! Joanna will contact you within 24 hours.",
+    "errorMessage": "Something went wrong while sending your message. Please try again or email us directly.",
     "formTitle": "Send a message",
     "nameLabel": "FULL NAME",
     "namePlaceholder": "Anna Kowalska",
@@ -504,6 +508,44 @@
     "modalBadge": "PDF · INSTANT DOWNLOAD",
     "includesLabel": "What is included",
     "close": "Close",
+    "comingSoon": "Products Coming Soon",
+    "loading": "Loading...",
+    "genericError": "Something went wrong. Please try again.",
+    "search": {
+      "label": "Search the shop",
+      "placeholder": "Search products… e.g. vitamins, energy, immunity",
+      "none": "No products match your search. Try a different word.",
+      "clear": "Clear search",
+      "results": "{count, plural, one {# result} other {# results}}"
+    },
+    "payment": {
+      "emailLabel": "EMAIL",
+      "emailPlaceholder": "your@email.com",
+      "emailRequired": "Please provide an email address.",
+      "pay": "🔒 Pay {price}",
+      "processing": "Processing...",
+      "cancel": "← Cancel",
+      "error": "A payment error occurred."
+    },
+    "legalStep": {
+      "title": "LEGAL CONSENTS",
+      "intro": "Before continuing to payment, please confirm the required consents for purchasing a digital product.",
+      "acceptPrefix": "I have read and accept the",
+      "termsLink": "Shop Terms",
+      "and": "and",
+      "privacyLink": "Privacy Policy",
+      "deliveryConsent": "I consent to the immediate delivery of digital content and acknowledge that, after gaining access to the product, I lose the right to withdraw from the contract to the extent permitted by applicable law.",
+      "continueToPayment": "Continue to payment — {price}",
+      "back": "← Back",
+      "errorTerms": "You must accept the Shop Terms and Privacy Policy.",
+      "errorDelivery": "You must consent to the immediate delivery of digital content."
+    },
+    "success": {
+      "title": "Thank You",
+      "text": "A download link has been sent to your email.",
+      "subtext": "PDF · Instant Delivery · 24h Link",
+      "button": "Return to Homepage"
+    },
     "products": {
       "energyGuide": {
         "desc": "Test product. A guide to energy work, chakras, and daily energetic practice. Available instantly after purchase.",
