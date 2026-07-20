@@ -14,11 +14,10 @@ type CheckoutItem = {
 export async function POST(req: NextRequest) {
     try {
         const body = await req.json()
-        const { items, currency, locale, token } = body as {
+        const { items, currency, locale } = body as {
             items: CheckoutItem[]
             currency?: string
             locale?: string
-            token?: string
         }
 
         if (!items || items.length === 0) {
@@ -77,12 +76,12 @@ export async function POST(req: NextRequest) {
                 allow_redirects: 'never',
             },
             metadata: {
-                orderType: 'session',
+                // Marks this as OUR cart order. The webhook ignores any payment
+                // that isn't one of our known order types (e.g. Cal.com booking
+                // payments on the same Stripe account).
+                orderType: 'cart',
                 locale: locale ?? 'pl',
                 items: JSON.stringify(validatedNames),
-                // Booking token — the webhook uses this to confirm payment
-                // server-side. Empty string if this is a non-booking checkout.
-                bookingToken: token ?? '',
             },
         })
 

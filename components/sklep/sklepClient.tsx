@@ -116,6 +116,10 @@ function SklepPaymentForm({
             elements,
             confirmParams: {
                 return_url: `${window.location.origin}/${locale}/sklep?success=true&product=${encodeURIComponent(product.namePl)}`,
+                // receipt_email puts the address on the PaymentIntent, which is
+                // what the webhook reads (pi.receipt_email) to send the download
+                // link. Also kept on billing_details for the Stripe charge.
+                receipt_email: email,
                 payment_method_data: {
                     billing_details: {
                         email,

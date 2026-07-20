@@ -1,14 +1,19 @@
 // app/api/booking-consent/route.ts
-// Saves booking/session consent before the client is sent to payment.
-// Generates a single-use booking token. The token only advances to
-// 'payment_confirmed' via the Stripe webhook — never from the client.
+// Saves the booking consent (the legal audit record) before the customer
+// is shown the Cal.com calendar.
+//
+// Since bookings are now paid THROUGH the embedded Cal.com widget (Cal.com's
+// own Stripe integration), this route no longer creates a payment token or
+// takes payment itself. Its two jobs are:
+//   1. Validate that the requested service really exists and is bookable,
+//      and derive its Cal.com slug from Sanity (never trusting the URL).
+//   2. Store the signed consent in Supabase with an audit trail (IP + agent),
+//      then return the slug so the page can boot the correct calendar.
 
 import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
-import { Resend } from "resend";
-import { randomBytes } from "crypto";
 import { getBookableServiceByName } from "@/lib/sanity-server";
-import { getCalSlug } from "@/lib/calcom";
+import { getCalSlug, CAL_USERNAME } from "@/lib/calcom";
 
 type BookingConsentRequestBody = {
   serviceId: string;
@@ -32,15 +37,12 @@ type BookingConsentRequestBody = {
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseServiceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const resendApiKey = process.env.RESEND_API_KEY;
-const contactEmailValue = process.env.CONTACT_EMAIL;
 
 if (!supabaseUrl) throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL");
 if (!supabaseServiceRoleKey)
   throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY");
 
 const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -48,15 +50,6 @@ function isValidEmail(email: string) {
 
 function normalizeText(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
-}
-
-function escapeHtml(value: string) {
-  return value
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
 }
 
 function getClientIp(request: NextRequest) {
@@ -131,8 +124,10 @@ export async function POST(request: NextRequest) {
     }
 
     // ── SERVER-SIDE SERVICE LOOKUP ──
-    // We do NOT trust the price or Cal.com slug from the URL. We look up
-    // the bookable service in Sanity, then derive both from that one row.
+    // We never trust the Cal.com slug from the URL. We look the bookable
+    // service up in Sanity and derive its slug from that one row, so the
+    // customer always ends up on the calendar for the service they consented
+    // to. (Priority: the Sanity calComSlug, then the lib/calcom.ts fallback.)
     const service = await getBookableServiceByName(serviceName);
 
     if (!service) {
@@ -142,9 +137,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const trustedServiceId = service.calComSlug ?? getCalSlug(service.namePl) ?? "";
+    const calSlug = service.calComSlug ?? getCalSlug(service.namePl) ?? "";
 
-    if (!trustedServiceId) {
+    if (!calSlug) {
       return NextResponse.json(
         { error: "This service is missing its Cal.com booking slug." },
         { status: 400 },
@@ -153,43 +148,16 @@ export async function POST(request: NextRequest) {
 
     const acceptedAt = new Date().toISOString();
 
-    // ── BOOKING TOKEN ──
-    // 64-char random hex string. Expires in 2 hours.
-    // Status starts at 'pending' — only the Stripe webhook can
-    // advance it to 'payment_confirmed'.
-    const token = randomBytes(32).toString("hex");
-    const expiresAt = new Date(Date.now() + 1000 * 60 * 60 * 2);
-
-    const { error: tokenError } = await supabase.from("booking_tokens").insert({
-      token,
-      service_id: trustedServiceId,
-      service_name: service.namePl,
-      price_gbp: service.priceGBP,
-      customer_email: customerEmail,
-      locale,
-      status: "pending",
-      expires_at: expiresAt.toISOString(),
-    });
-
-    if (tokenError) {
-      console.error("Booking token insert error:", tokenError);
-      return NextResponse.json(
-        { error: "Could not create booking token." },
-        { status: 500 },
-      );
-    }
-
-    const bookingUrl = `/${locale}/rezerwacja?service=${encodeURIComponent(trustedServiceId)}&serviceName=${encodeURIComponent(service.namePl)}&price=${encodeURIComponent(service.priceGBP)}&locale=${locale}`;
-
-    // Redirect to Koszyk carries the token + the REAL price from Sanity
-    const redirectUrl = `/${locale}/koszyk?booked=true&serviceId=${encodeURIComponent(trustedServiceId)}&serviceName=${encodeURIComponent(service.namePl)}&price=${encodeURIComponent(service.priceGBP)}&token=${token}&locale=${locale}`;
+    // The public Cal.com link for this service, stored on the consent record
+    // purely as an audit reference of what the customer was sent to book.
+    const calComUrl = `${CAL_USERNAME}/${calSlug}`;
 
     const { error: supabaseError } = await supabase
       .from("booking_consents")
       .insert({
-        service_id: trustedServiceId,
+        service_id: calSlug,
         service_name: service.namePl,
-        cal_com_url: bookingUrl,
+        cal_com_url: calComUrl,
         customer_full_name: customerFullName,
         customer_email: customerEmail,
         customer_phone: customerPhone,
@@ -215,67 +183,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    if (resend && contactEmailValue) {
-      const safeServiceName = escapeHtml(service.namePl);
-      const safeCustomerFullName = escapeHtml(customerFullName);
-      const safeCustomerEmail = escapeHtml(customerEmail);
-      const safeCustomerPhone = escapeHtml(customerPhone);
-      const safeTypedSignature = escapeHtml(typedSignature);
-
-      try {
-        const { error: emailError } = await resend.emails.send({
-          from: "Letting Go Zen Studio <onboarding@resend.dev>",
-          to: contactEmailValue,
-          subject: `Nowa zgoda na rezerwację: ${service.namePl}`,
-          html: `
-                <div style="font-family: Arial, sans-serif; max-width: 680px; margin: 0 auto; padding: 24px;">
-                    <h1 style="color: #B8942A;">Nowa zgoda na rezerwację</h1>
-
-                    <p><strong>Usługa:</strong> ${safeServiceName}</p>
-                    <p><strong>Cena:</strong> £${service.priceGBP}</p>
-                    <p><strong>Imię i nazwisko:</strong> ${safeCustomerFullName}</p>
-                    <p><strong>Email:</strong> ${safeCustomerEmail}</p>
-                    <p><strong>Telefon:</strong> ${safeCustomerPhone}</p>
-                    <p><strong>Podpis wpisany:</strong> ${safeTypedSignature}</p>
-                    <p><strong>Data akceptacji:</strong> ${acceptedAt}</p>
-
-                    <hr />
-
-                    <h2 style="color: #B8942A;">Potwierdzenia klienta</h2>
-
-                    <ul>
-                        <li>Uczestniczy dobrowolnie: TAK</li>
-                        <li>Rozumie charakter usługi: TAK</li>
-                        <li>Rozumie, że usługa nie jest leczeniem medycznym: TAK</li>
-                        <li>Potwierdza prawdziwość informacji zdrowotnych: TAK</li>
-                        <li>Rozumie, że może przerwać sesję w dowolnym momencie: TAK</li>
-                        <li>Wyraża zgodę na przetwarzanie danych: TAK</li>
-                        <li>Akceptuje Regulamin i Politykę Prywatności: TAK</li>
-                    </ul>
-
-                    <p style="font-size: 13px; color: #777;">
-                        Rekord zapisany w Supabase (booking_consents).
-                    </p>
-                </div>
-            `,
-        });
-
-        if (emailError) {
-          console.error("Booking consent email error:", emailError);
-        }
-      } catch (emailError) {
-        console.error("Booking consent email error:", emailError);
-      }
-    } else {
-      console.warn("Booking consent email skipped: missing Resend API key or contact email.");
-    }
-
+    // The page uses calSlug to load the correct Cal.com calendar inline.
     return NextResponse.json({
       success: true,
-      token,
+      calSlug,
       serviceName: service.namePl,
-      priceGBP: service.priceGBP,
-      redirectUrl,
     });
   } catch (error) {
     console.error("Booking consent route error:", error);

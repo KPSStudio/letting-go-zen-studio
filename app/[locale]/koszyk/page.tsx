@@ -143,8 +143,10 @@ function PaymentForm({
       elements,
       confirmParams: {
         return_url: returnUrl.toString(),
-        // Attaches the email to the Stripe charge so the webhook can read it
-        // back as billing_details.email and send the confirmation.
+        // receipt_email puts the address on the PaymentIntent itself, which is
+        // what the webhook reads (pi.receipt_email) to send the confirmation.
+        // We also keep it on billing_details so it shows on the Stripe charge.
+        receipt_email: email,
         payment_method_data: {
           billing_details: {
             email,

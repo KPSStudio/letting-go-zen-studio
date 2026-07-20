@@ -1,13 +1,12 @@
 // lib/email.ts
 // Sends every transactional email via Resend.
 //
-// There are four:
+// There are three (bookings are confirmed by Cal.com directly, not here):
 //   1. sendDownloadEmail            — digital shop purchase (download link)
-//   2. sendBookingConfirmationEmail — session booking (payment confirmed)
-//   3. sendOrderConfirmationEmail   — cart purchase (Joanna delivers manually)
-//   4. sendOrderNotificationToJoanna— internal alert so Joanna can fulfil
+//   2. sendOrderConfirmationEmail   — cart purchase (Joanna delivers manually)
+//   3. sendOrderNotificationToJoanna— internal alert so Joanna can fulfil
 //
-// All four share the branded shell in lib/emailTemplates.ts and are bilingual:
+// All three share the branded shell in lib/emailTemplates.ts and are bilingual:
 // the locale travels through Stripe metadata from the original checkout.
 
 import { Resend } from 'resend'
@@ -18,7 +17,6 @@ import {
     resolveEmailLocale,
     EMAIL_FROM,
     EMAIL_REPLY_TO,
-    SITE_URL,
     type EmailLocale,
 } from '@/lib/emailTemplates'
 
@@ -98,77 +96,7 @@ export async function sendDownloadEmail({
 }
 
 // ─────────────────────────────────────────────────────────────
-// 2. BOOKING — payment confirmed, choose your time slot
-// ─────────────────────────────────────────────────────────────
-
-interface BookingEmailProps {
-    to: string
-    serviceName: string
-    amount: number
-    currency: string
-    bookingToken: string
-    locale?: EmailLocale
-}
-
-export async function sendBookingConfirmationEmail({
-                                                       to,
-                                                       serviceName,
-                                                       amount,
-                                                       currency,
-                                                       bookingToken,
-                                                       locale = 'pl',
-                                                   }: BookingEmailProps) {
-    const activeLocale = resolveEmailLocale(locale)
-    const isPolish = activeLocale === 'pl'
-
-    // Link straight back into the booking gate. This is the safety net for a
-    // customer who paid and then closed the tab before choosing a slot.
-    const bookingUrl = `${SITE_URL}/${locale}/rezerwacja?token=${bookingToken}`
-
-    const details = renderDetailsTable(
-        renderDetailRow(isPolish ? 'Usługa' : 'Service', serviceName) +
-        renderDetailRow(isPolish ? 'Zapłacono' : 'Paid', formatMoney(amount, currency))
-    )
-
-    const bodyHtml = isPolish
-        ? `<p style="margin: 0 0 4px;">Twoja płatność została potwierdzona.</p>
-           ${details}
-           <p style="margin: 0;">Pozostał ostatni krok — wybierz dogodny termin swojej sesji w kalendarzu.</p>`
-        : `<p style="margin: 0 0 4px;">Your payment has been confirmed.</p>
-           ${details}
-           <p style="margin: 0;">One last step — choose a time that suits you in the calendar.</p>`
-
-    const html = renderEmailShell({
-        locale: activeLocale,
-        preheader: isPolish
-            ? 'Płatność potwierdzona — wybierz termin sesji.'
-            : 'Payment confirmed — choose your session time.',
-        heading: isPolish ? 'Płatność potwierdzona' : 'Payment confirmed',
-        bodyHtml,
-        buttonLabel: isPolish ? 'WYBIERZ TERMIN' : 'CHOOSE YOUR TIME',
-        buttonUrl: bookingUrl,
-        footerNote: isPolish
-            ? 'Jeśli termin został już wybrany, potwierdzenie otrzymasz osobno z kalendarza.'
-            : 'If you have already picked a slot, your calendar confirmation arrives separately.',
-    })
-
-    const { error } = await resend.emails.send({
-        from: EMAIL_FROM,
-        replyTo: EMAIL_REPLY_TO,
-        to,
-        subject: isPolish
-            ? `Płatność potwierdzona — ${serviceName}`
-            : `Payment confirmed — ${serviceName}`,
-        html,
-    })
-
-    if (error) {
-        console.error('Resend booking email error:', error)
-    }
-}
-
-// ─────────────────────────────────────────────────────────────
-// 3. CART ORDER — Joanna fulfils manually within 48h
+// 2. CART ORDER — Joanna fulfils manually within 48h
 // ─────────────────────────────────────────────────────────────
 
 interface OrderConfirmationProps {
@@ -232,7 +160,7 @@ export async function sendOrderConfirmationEmail({
 }
 
 // ─────────────────────────────────────────────────────────────
-// 4. INTERNAL — notify Joanna of a sale
+// 3. INTERNAL — notify Joanna of a sale
 // ─────────────────────────────────────────────────────────────
 
 interface OrderNotificationProps {

@@ -1,8 +1,16 @@
 // app/[locale]/zgoda-rezerwacja/page.tsx
-// Booking consent page — now also handles payment on the SAME page.
-// Flow: customer fills consent + signature → we save it and create a
-// booking token → the Stripe payment appears right here (no cart) →
-// after paying, Stripe returns them to /rezerwacja to book the slot.
+// Booking consent page — now also shows the calendar on the SAME page.
+//
+// Flow:
+//   PHASE 1 (consent): the customer ticks the 7 confirmations, fills in their
+//     details and a typed signature, then submits. We save that consent record
+//     to Supabase (the legal audit trail) via /api/booking-consent.
+//   PHASE 2 (booking): once consent is saved we reveal the Cal.com calendar
+//     right here, embedded. The customer picks a slot and PAYS INSIDE the
+//     Cal.com widget (Cal.com's own Stripe integration) — we no longer take
+//     the payment ourselves, so there is no separate payment step and no
+//     booking token to manage.
+//
 // All visible text comes from messages/pl.json and messages/en.json.
 
 "use client";
@@ -10,68 +18,9 @@
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState, type FormEvent } from "react";
-import { useCurrency } from "@/lib/CurrencyContext";
-import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  PaymentElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
-
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
-);
-
-// Same Stripe look as the cart page, so payment feels identical everywhere.
-const stripeAppearance = {
-  theme: "night" as const,
-  variables: {
-    colorPrimary: "#D4AF6A",
-    colorBackground: "#1a0020",
-    colorText: "#E8D7B8",
-    colorDanger: "#ff6b6b",
-    fontFamily: "Montserrat, sans-serif",
-    borderRadius: "0px",
-    colorInputBackground: "#0a0010",
-    colorInputText: "#E8D7B8",
-    colorInputBorder: "rgba(184,148,42,0.3)",
-    colorInputPlaceholder: "rgba(232,215,184,0.4)",
-  },
-  rules: {
-    ".Input": {
-      border: "1px solid rgba(184,148,42,0.3)",
-      backgroundColor: "rgba(0,0,0,0.3)",
-      color: "#E8D7B8",
-    },
-    ".Input:focus": {
-      border: "1px solid rgba(212,175,106,0.8)",
-      boxShadow: "0 0 0 1px rgba(212,175,106,0.3)",
-    },
-    ".Label": {
-      color: "#B8942A",
-      fontFamily: "Montserrat, sans-serif",
-      fontSize: "0.75rem",
-      letterSpacing: "0.1em",
-      textTransform: "uppercase",
-    },
-    ".Tab": {
-      border: "1px solid rgba(184,148,42,0.3)",
-      backgroundColor: "rgba(0,0,0,0.2)",
-      color: "#E8D7B8",
-    },
-    ".Tab--selected": {
-      border: "1px solid rgba(212,175,106,0.8)",
-      backgroundColor: "rgba(184,148,42,0.1)",
-      color: "#D4AF6A",
-    },
-    ".Block": {
-      backgroundColor: "rgba(0,0,0,0.2)",
-      border: "1px solid rgba(184,148,42,0.2)",
-    },
-  },
-};
+import { useEffect, useState, type FormEvent } from "react";
+import Cal, { getCalApi } from "@calcom/embed-react";
+import { CAL_USERNAME } from "@/lib/calcom";
 
 type ConsentState = {
   participatesVoluntarily: boolean;
@@ -92,15 +41,8 @@ type ConsentItem = {
 
 type BookingConsentResponse = {
   success?: boolean;
-  token?: string;
+  calSlug?: string;
   serviceName?: string;
-  priceGBP?: number;
-  redirectUrl?: string;
-  error?: string;
-};
-
-type CheckoutSessionResponse = {
-  clientSecret?: string;
   error?: string;
 };
 
@@ -131,122 +73,11 @@ const consentItems: ConsentItem[] = [
   },
 ];
 
-// ── Inline payment form, shown after consent is saved ──
-// Reuses the cart page's existing payment translation keys, so we don't
-// have to touch the JSON files.
-function BookingPaymentForm({
-  token,
-  priceGBP,
-  locale,
-  onBack,
-}: {
-  token: string;
-  priceGBP: number;
-  locale: string;
-  onBack: () => void;
-}) {
-  const stripe = useStripe();
-  const elements = useElements();
-  const tCart = useTranslations("cartPage");
-  const tConsent = useTranslations("bookingConsent");
-  const { formatPrice } = useCurrency();
-  const [paying, setPaying] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function handlePay(event: FormEvent) {
-    event.preventDefault();
-
-    if (!stripe || !elements) {
-      return;
-    }
-
-    setPaying(true);
-    setError(null);
-
-    // After paying, Stripe returns the customer to the booking page,
-    // which waits for the webhook then shows the Cal.com calendar.
-    const returnUrl = new URL(`${window.location.origin}/${locale}/rezerwacja`);
-    returnUrl.searchParams.set("token", token);
-
-    const { error } = await stripe.confirmPayment({
-      elements,
-      confirmParams: {
-        return_url: returnUrl.toString(),
-      },
-    });
-
-    if (error) {
-      setError(error.message ?? tCart("payment.fallbackError"));
-      setPaying(false);
-    }
-  }
-
-  return (
-    <form onSubmit={handlePay}>
-      <div style={{ marginBottom: "2rem" }}>
-        <PaymentElement />
-      </div>
-
-      {error && (
-        <p
-          style={{
-            fontFamily: "var(--font-raleway)",
-            fontSize: "0.85rem",
-            color: "#ff6b6b",
-            marginBottom: "1rem",
-          }}
-        >
-          {error}
-        </p>
-      )}
-
-      <button
-        type="submit"
-        disabled={!stripe || paying}
-        className="cart-pay-button"
-        style={{
-          opacity: !stripe || paying ? 0.6 : 1,
-          cursor: !stripe || paying ? "not-allowed" : "pointer",
-          marginBottom: "1rem",
-        }}
-      >
-        {paying
-          ? tCart("payment.processing")
-          : `🔒 ${tCart("payment.pay")} ${formatPrice(priceGBP)}`}
-      </button>
-
-      <button
-        type="button"
-        onClick={onBack}
-        style={{
-          display: "block",
-          width: "100%",
-          padding: "0.75rem",
-          fontFamily: "var(--font-cinzel)",
-          fontSize: "0.7rem",
-          letterSpacing: "0.2em",
-          color: "rgba(245,237,216,0.4)",
-          background: "transparent",
-          border: "1px solid rgba(245,237,216,0.1)",
-          cursor: "pointer",
-        }}
-      >
-        ← {tConsent("back")}
-      </button>
-
-      <p className="cart-security-text" style={{ marginTop: "1rem" }}>
-        🔐 {tCart("payment.ssl")} · Stripe · 🛡️ {tCart("payment.safePayment")}
-      </p>
-    </form>
-  );
-}
-
 export default function BookingConsentPage() {
   const t = useTranslations("bookingConsent");
-  const tCart = useTranslations("cartPage");
+  const tBooking = useTranslations("bookingPage");
   const params = useParams<{ locale: string }>();
   const searchParams = useSearchParams();
-  const { currency, formatPrice } = useCurrency();
 
   const locale = params.locale;
   const serviceId = searchParams.get("service") ?? "";
@@ -271,14 +102,14 @@ export default function BookingConsentPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // ── Payment phase state ──
-  // Once consent is saved and a token exists, we reveal Stripe right here.
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [bookingToken, setBookingToken] = useState<string | null>(null);
-  const [confirmedPrice, setConfirmedPrice] = useState<number>(
-    parseFloat(searchParams.get("price") ?? "0"),
-  );
+  // ── Booking phase state ──
+  // Once consent is saved, the server returns the Cal.com slug and we reveal
+  // the calendar right here. We also keep the customer's name + email so we
+  // can prefill the Cal.com booking form (they just typed them).
+  const [calSlug, setCalSlug] = useState<string | null>(null);
   const [confirmedServiceName, setConfirmedServiceName] = useState(serviceName);
+  const [bookerName, setBookerName] = useState("");
+  const [bookerEmail, setBookerEmail] = useState("");
 
   const allConsentsAccepted =
     consent.participatesVoluntarily &&
@@ -338,14 +169,14 @@ export default function BookingConsentPage() {
     setError(null);
 
     try {
-      // 1) Save consent + create the booking token (status: pending).
+      // Save the consent record. The server validates the service against
+      // Sanity and returns the Cal.com slug to book (never trusting the URL).
       const response = await fetch("/api/booking-consent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          price: searchParams.get("price") ?? "",
           serviceId,
           serviceName,
           locale,
@@ -369,46 +200,18 @@ export default function BookingConsentPage() {
 
       const data = (await response.json()) as BookingConsentResponse;
 
-      if (!response.ok || !data.success || !data.token) {
+      if (!response.ok || !data.success || !data.calSlug) {
         setError(data.error ?? t("errors.saveFailed"));
         setSubmitting(false);
         return;
       }
 
-      const token = data.token;
-      const canonicalServiceName = data.serviceName ?? serviceName;
-      const priceGBP =
-        typeof data.priceGBP === "number" ? data.priceGBP : confirmedPrice;
-
-      // 2) Create the Stripe payment for this booking token.
-      //    The server re-checks the real price — we never trust the client.
-      const checkoutResponse = await fetch("/api/checkout/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          items: [{ name: canonicalServiceName }],
-          currency,
-          locale,
-          token,
-        }),
-      });
-
-      const checkoutData =
-        (await checkoutResponse.json()) as CheckoutSessionResponse;
-
-      if (!checkoutData.clientSecret) {
-        setError(checkoutData.error ?? t("errors.saveFailed"));
-        setSubmitting(false);
-        return;
-      }
-
-      // 3) Reveal the payment form on this same page.
-      setBookingToken(token);
-      setConfirmedServiceName(canonicalServiceName);
-      setConfirmedPrice(priceGBP);
-      setClientSecret(checkoutData.clientSecret);
+      // Reveal the Cal.com calendar for this service, prefilled with the
+      // details the customer just entered.
+      setConfirmedServiceName(data.serviceName ?? serviceName);
+      setBookerName(customerFullName);
+      setBookerEmail(customerEmail);
+      setCalSlug(data.calSlug);
       setSubmitting(false);
     } catch {
       setError(t("errors.connectionFailed"));
@@ -416,94 +219,60 @@ export default function BookingConsentPage() {
     }
   }
 
-  // ── PAYMENT PHASE ──
-  if (clientSecret && bookingToken) {
+  // ── Boot the Cal.com embed once we enter the booking phase ──
+  // When the customer finishes booking (and paying) inside the widget, send
+  // them to the booking-complete thank-you screen.
+  useEffect(() => {
+    if (!calSlug) return;
+
+    getCalApi().then((cal) => {
+      cal("ui", {
+        theme: "dark",
+        styles: { branding: { brandColor: "#D4AF6A" } },
+        hideEventTypeDetails: false,
+      });
+
+      cal("on", {
+        action: "bookingSuccessful",
+        callback: () => {
+          window.location.href = `/${locale}/koszyk?bookingComplete=true`;
+        },
+      });
+    });
+  }, [calSlug, locale]);
+
+  // ── BOOKING PHASE: consent saved, show the calendar (payment is inside it) ──
+  if (calSlug) {
     return (
-      <main className="legal-page">
-        <p className="legal-label">
-          <span className="legal-label-line" />
-          {t("label")}
+      <main className="body-page">
+        <p className="shop-label">
+          <span />
+          {tBooking("label")}
         </p>
 
-        <section className="legal-header">
-          <h1 className="legal-title">
-            {t("titleMain")} <span>{t("titleGold")}</span>
+        <section className="body-header">
+          <h1 className="body-title">
+            {tBooking("titleMain")} <span>{tBooking("titleGold")}</span>
           </h1>
+
+          <p className="body-intro">{tBooking("intro")}</p>
 
           <p className="legal-effective-date">
             {t("serviceLabel")}: {confirmedServiceName}
           </p>
         </section>
 
-        <div style={{ maxWidth: "560px", margin: "0 auto" }}>
-          <div
-            style={{
-              background: "rgba(0,0,0,0.3)",
-              border: "1px solid rgba(184,148,42,0.2)",
-              padding: "2.5rem",
-              marginBottom: "1rem",
+        <section className="booking-panel">
+          <Cal
+            calLink={`${CAL_USERNAME}/${calSlug}`}
+            className="booking-cal-embed"
+            config={{
+              layout: "month_view",
+              name: bookerName,
+              email: bookerEmail,
             }}
-          >
-            <p
-              style={{
-                fontFamily: "var(--font-cinzel)",
-                fontSize: "0.7rem",
-                letterSpacing: "0.3em",
-                color: "var(--gold)",
-                marginBottom: "1.5rem",
-              }}
-            >
-              {tCart("payment.title").toUpperCase()} ·{" "}
-              {formatPrice(confirmedPrice)}
-            </p>
-
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                borderBottom: "1px solid rgba(184,148,42,0.15)",
-                marginBottom: "1.5rem",
-                paddingBottom: "1.5rem",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "var(--font-raleway)",
-                  fontSize: "0.85rem",
-                  color: "var(--cream)",
-                  opacity: 0.8,
-                }}
-              >
-                {confirmedServiceName}
-              </span>
-
-              <span
-                style={{
-                  fontFamily: "var(--font-cinzel)",
-                  fontSize: "0.85rem",
-                  color: "var(--gold-lt)",
-                }}
-              >
-                {formatPrice(confirmedPrice)}
-              </span>
-            </div>
-
-            <Elements
-              stripe={stripePromise}
-              options={{ clientSecret, appearance: stripeAppearance }}
-            >
-              <BookingPaymentForm
-                token={bookingToken}
-                priceGBP={confirmedPrice}
-                locale={locale}
-                onBack={() => {
-                  setClientSecret(null);
-                  setBookingToken(null);
-                }}
-              />
-            </Elements>
-          </div>
-        </div>
+          />
+        </section>
       </main>
     );
   }
