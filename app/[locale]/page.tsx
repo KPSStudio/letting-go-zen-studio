@@ -15,7 +15,7 @@ export default function Home() {
                         description: 'Holistic therapy sessions — Body, Mind & Soul',
                         url: 'https://www.lettinggozenstudio.com',
                         telephone: '+447590572043',
-                        email: 'joanna@lettinggozenstudio.com',
+                        email: 'lettinggozenstudio@gmail.com',
                         address: {
                             '@type': 'PostalAddress',
                             streetAddress: '42 Leslie Road',

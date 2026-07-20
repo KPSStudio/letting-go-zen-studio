@@ -67,7 +67,7 @@ export default function BodyClient({ products, locale }: Props) {
 
     return (
         <main className="body-page">
-            <Link href="/" className="body-back-link">
+            <Link href={`/${locale}`} className="body-back-link">
                 {t('back')}
             </Link>
 

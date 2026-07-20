@@ -1,6 +1,6 @@
 'use client'
 
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -8,6 +8,9 @@ export default function Hero() {
     // t() looks up text from messages/pl.json or messages/en.json
     // depending on which language is active
     const t = useTranslations('hero')
+    // Internal links must carry the active locale (e.g. /pl/o-mnie), otherwise
+    // middleware has to redirect them on every click.
+    const locale = useLocale()
 
     return (
         <section className="hero-section">
@@ -65,7 +68,7 @@ export default function Hero() {
                 <h2 className="hero-subtitle">{t('title2')}</h2>
 
                 {/* Button */}
-                <Link href="/o-mnie" className="hero-button">
+                <Link href={`/${locale}/o-mnie`} className="hero-button">
                     {t('button')}
                 </Link>
 

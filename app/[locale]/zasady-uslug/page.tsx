@@ -85,7 +85,7 @@ export default async function ZasadyUslugPage({ params }: Props) {
                 <div className="legal-section-card">
                     <h2 className="legal-section-title">8. Kontakt</h2>
                     <p className="legal-section-text">
-                        W przypadku pytań dotyczących niniejszych zasad prosimy o kontakt pod adresem: joanna@lettinggozenstudio.com lub poprzez formularz kontaktowy dostępny na stronie.
+                        W przypadku pytań dotyczących niniejszych zasad prosimy o kontakt pod adresem: lettinggozenstudio@gmail.com lub poprzez formularz kontaktowy dostępny na stronie.
                     </p>
                 </div>
 

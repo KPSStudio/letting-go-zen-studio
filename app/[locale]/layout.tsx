@@ -2,7 +2,6 @@
 // Wraps every page with language, currency and cart providers
 
 import type { Metadata } from 'next'
-import { Cinzel, Raleway } from 'next/font/google'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import '../globals.css'
@@ -14,17 +13,10 @@ import { CartProvider } from '@/lib/CartContext'
 import { getServicesByCategory, getSklepProducts } from '@/sanity/lib/sanity'
 import type { SearchItem } from '@/components/layout/NavSearch'
 
-const cinzel = Cinzel({
-    variable: '--font-cinzel',
-    subsets: ['latin'],
-    weight: ['400', '500', '600'],
-})
-
-const raleway = Raleway({
-    variable: '--font-raleway',
-    subsets: ['latin'],
-    weight: ['200', '300', '400'],
-})
+// Fonts (Marcellus for headings, Montserrat for body) are loaded in
+// globals.css and assigned to --font-cinzel / --font-raleway there. We used to
+// also pull Cinzel/Raleway through next/font, but the CSS overrode them, so
+// they downloaded for nothing — removed.
 
 export async function generateMetadata({
                                                    params,
@@ -165,7 +157,7 @@ export default async function LocaleLayout({
     }
 
     return (
-        <html lang={locale} className={`${cinzel.variable} ${raleway.variable} h-full`}>
+        <html lang={locale} className="h-full">
         <body className="min-h-full flex flex-col">
         {/* Fixed full-screen background layer — styled by .site-background in globals.css.
             A real fixed element renders correctly on mobile, unlike background-attachment: fixed. */}

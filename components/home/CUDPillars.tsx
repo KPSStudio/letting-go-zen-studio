@@ -1,15 +1,18 @@
 'use client'
 
 import Link from 'next/link'
-import { useTranslations } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 
 export default function CUDPillars() {
     const t = useTranslations('pillars')
+    // The hrefs in the messages are bare (e.g. "/body"); prefix them with the
+    // active locale so the links point straight at /pl/body, /en/body, etc.
+    const locale = useLocale()
 
     const pillars = [
-        { letter: t('bodyLetter'), name: t('bodyName'), href: t('bodyHref') },
-        { letter: t('mindLetter'), name: t('mindName'), href: t('mindHref') },
-        { letter: t('soulLetter'), name: t('soulName'), href: t('soulHref') },
+        { letter: t('bodyLetter'), name: t('bodyName'), href: `/${locale}${t('bodyHref')}` },
+        { letter: t('mindLetter'), name: t('mindName'), href: `/${locale}${t('mindHref')}` },
+        { letter: t('soulLetter'), name: t('soulName'), href: `/${locale}${t('soulHref')}` },
     ]
 
     return (
