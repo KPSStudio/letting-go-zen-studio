@@ -1,80 +1,247 @@
 // lib/email.ts
-// Sends transactional emails via Resend.
-// Used for Sklep download links and order notifications.
+// Sends every transactional email via Resend.
+//
+// There are four:
+//   1. sendDownloadEmail            — digital shop purchase (download link)
+//   2. sendBookingConfirmationEmail — session booking (payment confirmed)
+//   3. sendOrderConfirmationEmail   — cart purchase (Joanna delivers manually)
+//   4. sendOrderNotificationToJoanna— internal alert so Joanna can fulfil
+//
+// All four share the branded shell in lib/emailTemplates.ts and are bilingual:
+// the locale travels through Stripe metadata from the original checkout.
 
 import { Resend } from 'resend'
+import {
+    renderEmailShell,
+    renderDetailRow,
+    formatMoney,
+    resolveEmailLocale,
+    EMAIL_FROM,
+    EMAIL_REPLY_TO,
+    SITE_URL,
+    type EmailLocale,
+} from '@/lib/emailTemplates'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
+
+// Where Joanna's internal notifications land.
+const JOANNA_INBOX =
+    process.env.CONTACT_EMAIL ?? 'lettinggozenstudio@gmail.com'
+
+// Wraps a details table so order info lines up neatly.
+function renderDetailsTable(rows: string): string {
+    return `
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+             style="margin: 18px 0; border-top: 1px solid #5A4522; border-bottom: 1px solid #5A4522;">
+        ${rows}
+      </table>`
+}
+
+// ─────────────────────────────────────────────────────────────
+// 1. DIGITAL SHOP PURCHASE — download link
+// ─────────────────────────────────────────────────────────────
 
 interface DownloadEmailProps {
     to: string
     productName: string
     downloadUrl: string
+    locale?: EmailLocale
 }
 
 export async function sendDownloadEmail({
                                             to,
                                             productName,
                                             downloadUrl,
+                                            locale = 'pl',
                                         }: DownloadEmailProps) {
+    // Language actually used — currently forced to English by the switch
+    // in emailTemplates.ts, regardless of which site language they browsed.
+    const activeLocale = resolveEmailLocale(locale)
+    const isPolish = activeLocale === 'pl'
+
+    const subject = isPolish
+        ? `Twój zakup: ${productName}`
+        : `Your purchase: ${productName}`
+
+    const bodyHtml = isPolish
+        ? `<p style="margin: 0 0 14px;">Dziękujemy za zakup — Twój plik jest gotowy.</p>
+           <p style="margin: 0;"><strong style="color: #D4AF6A;">${productName}</strong></p>`
+        : `<p style="margin: 0 0 14px;">Thank you for your purchase — your file is ready.</p>
+           <p style="margin: 0;"><strong style="color: #D4AF6A;">${productName}</strong></p>`
+
+    const html = renderEmailShell({
+        locale: activeLocale,
+        preheader: isPolish
+            ? 'Twój plik jest gotowy do pobrania.'
+            : 'Your file is ready to download.',
+        heading: isPolish ? 'Dziękujemy za zakup' : 'Thank you for your purchase',
+        bodyHtml,
+        buttonLabel: isPolish ? 'POBIERZ PLIK PDF' : 'DOWNLOAD YOUR PDF',
+        buttonUrl: downloadUrl,
+        footerNote: isPolish
+            ? 'Link jest aktywny przez 30 dni. Zapisz plik na swoim urządzeniu.'
+            : 'This link stays active for 30 days. Please save the file to your device.',
+    })
+
     const { error } = await resend.emails.send({
-        from: 'Letting Go Zen Studio <onboarding@resend.dev>',
+        from: EMAIL_FROM,
+        replyTo: EMAIL_REPLY_TO,
         to,
-        subject: `Twój zakup: ${productName}`,
-        html: `
-      <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 20px; background: #1a0020; color: #E8D7B8;">
-        
-        <h1 style="color: #D4AF6A; font-size: 24px; margin-bottom: 8px;">
-          Letting Go Zen Studio
-        </h1>
-        
-        <div style="height: 1px; background: rgba(184,148,42,0.3); margin-bottom: 24px;"></div>
-        
-        <h2 style="color: #E8D7B8; font-size: 18px; margin-bottom: 16px;">
-          Dziękujemy za zakup!
-        </h2>
-        
-        <p style="color: #E8D7B8; font-size: 15px; line-height: 1.8; margin-bottom: 16px;">
-          Twój produkt <strong style="color: #D4AF6A;">${productName}</strong> jest gotowy do pobrania.
-        </p>
-        
-        <p style="color: rgba(232,215,184,0.7); font-size: 14px; line-height: 1.6; margin-bottom: 24px;">
-          Link wygasa po <strong>24 godzinach</strong>. Pobierz plik jak najszybciej.
-        </p>
-        
-        <a href="${downloadUrl}"
-           style="display: inline-block; background: linear-gradient(135deg, #D4AF6A, #8A6A1A); color: #3D0845; padding: 14px 32px; text-decoration: none; font-size: 15px; font-weight: bold; margin-bottom: 24px;">
-          ⬇ Pobierz plik PDF
-        </a>
-        
-        <div style="height: 1px; background: rgba(184,148,42,0.3); margin-bottom: 24px;"></div>
-        
-        <p style="color: rgba(232,215,184,0.5); font-size: 12px; line-height: 1.6;">
-          W razie problemów napisz na: 
-          <a href="mailto:lettinggozenstudio@gmail.com" style="color: #D4AF6A;">
-            lettinggozenstudio@gmail.com
-          </a>
-        </p>
-        
-        <p style="color: #D4AF6A; font-size: 14px; margin-top: 16px;">
-          Z miłością, Joanna
-        </p>
-        
-      </div>
-    `,
+        subject,
+        html,
     })
 
     if (error) {
-        console.error('Resend email error:', error)
+        console.error('Resend download email error:', error)
         throw new Error('Failed to send download email')
     }
 }
+
+// ─────────────────────────────────────────────────────────────
+// 2. BOOKING — payment confirmed, choose your time slot
+// ─────────────────────────────────────────────────────────────
+
+interface BookingEmailProps {
+    to: string
+    serviceName: string
+    amount: number
+    currency: string
+    bookingToken: string
+    locale?: EmailLocale
+}
+
+export async function sendBookingConfirmationEmail({
+                                                       to,
+                                                       serviceName,
+                                                       amount,
+                                                       currency,
+                                                       bookingToken,
+                                                       locale = 'pl',
+                                                   }: BookingEmailProps) {
+    const activeLocale = resolveEmailLocale(locale)
+    const isPolish = activeLocale === 'pl'
+
+    // Link straight back into the booking gate. This is the safety net for a
+    // customer who paid and then closed the tab before choosing a slot.
+    const bookingUrl = `${SITE_URL}/${locale}/rezerwacja?token=${bookingToken}`
+
+    const details = renderDetailsTable(
+        renderDetailRow(isPolish ? 'Usługa' : 'Service', serviceName) +
+        renderDetailRow(isPolish ? 'Zapłacono' : 'Paid', formatMoney(amount, currency))
+    )
+
+    const bodyHtml = isPolish
+        ? `<p style="margin: 0 0 4px;">Twoja płatność została potwierdzona.</p>
+           ${details}
+           <p style="margin: 0;">Pozostał ostatni krok — wybierz dogodny termin swojej sesji w kalendarzu.</p>`
+        : `<p style="margin: 0 0 4px;">Your payment has been confirmed.</p>
+           ${details}
+           <p style="margin: 0;">One last step — choose a time that suits you in the calendar.</p>`
+
+    const html = renderEmailShell({
+        locale: activeLocale,
+        preheader: isPolish
+            ? 'Płatność potwierdzona — wybierz termin sesji.'
+            : 'Payment confirmed — choose your session time.',
+        heading: isPolish ? 'Płatność potwierdzona' : 'Payment confirmed',
+        bodyHtml,
+        buttonLabel: isPolish ? 'WYBIERZ TERMIN' : 'CHOOSE YOUR TIME',
+        buttonUrl: bookingUrl,
+        footerNote: isPolish
+            ? 'Jeśli termin został już wybrany, potwierdzenie otrzymasz osobno z kalendarza.'
+            : 'If you have already picked a slot, your calendar confirmation arrives separately.',
+    })
+
+    const { error } = await resend.emails.send({
+        from: EMAIL_FROM,
+        replyTo: EMAIL_REPLY_TO,
+        to,
+        subject: isPolish
+            ? `Płatność potwierdzona — ${serviceName}`
+            : `Payment confirmed — ${serviceName}`,
+        html,
+    })
+
+    if (error) {
+        console.error('Resend booking email error:', error)
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 3. CART ORDER — Joanna fulfils manually within 48h
+// ─────────────────────────────────────────────────────────────
+
+interface OrderConfirmationProps {
+    to: string
+    itemNames: string[]
+    amount: number
+    currency: string
+    locale?: EmailLocale
+}
+
+export async function sendOrderConfirmationEmail({
+                                                     to,
+                                                     itemNames,
+                                                     amount,
+                                                     currency,
+                                                     locale = 'pl',
+                                                 }: OrderConfirmationProps) {
+    const activeLocale = resolveEmailLocale(locale)
+    const isPolish = activeLocale === 'pl'
+
+    const itemRows = itemNames
+        .map((name) => renderDetailRow('•', name))
+        .join('')
+
+    const details = renderDetailsTable(
+        itemRows +
+        renderDetailRow(isPolish ? 'Razem' : 'Total', formatMoney(amount, currency))
+    )
+
+    const bodyHtml = isPolish
+        ? `<p style="margin: 0 0 4px;">Dziękujemy za zamówienie — płatność została potwierdzona.</p>
+           ${details}
+           <p style="margin: 0;">Joanna przygotuje Twój materiał osobiście i wyśle go na ten adres email w ciągu <strong style="color: #D4AF6A;">48 godzin</strong>.</p>`
+        : `<p style="margin: 0 0 4px;">Thank you for your order — your payment has been confirmed.</p>
+           ${details}
+           <p style="margin: 0;">Joanna prepares each piece personally and will send it to this email address within <strong style="color: #D4AF6A;">48 hours</strong>.</p>`
+
+    const html = renderEmailShell({
+        locale: activeLocale,
+        preheader: isPolish
+            ? 'Zamówienie przyjęte — materiał wyślemy w ciągu 48 godzin.'
+            : 'Order received — we will send your materials within 48 hours.',
+        heading: isPolish ? 'Zamówienie przyjęte' : 'Order received',
+        bodyHtml,
+        footerNote: isPolish
+            ? 'Prosimy sprawdzić folder spam, jeśli wiadomość nie dotrze na czas.'
+            : 'Please check your spam folder if it does not arrive in time.',
+    })
+
+    const { error } = await resend.emails.send({
+        from: EMAIL_FROM,
+        replyTo: EMAIL_REPLY_TO,
+        to,
+        subject: isPolish ? 'Potwierdzenie zamówienia' : 'Order confirmation',
+        html,
+    })
+
+    if (error) {
+        console.error('Resend order confirmation error:', error)
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 4. INTERNAL — notify Joanna of a sale
+// ─────────────────────────────────────────────────────────────
 
 interface OrderNotificationProps {
     productName: string
     customerEmail: string
     amount: number
     currency: string
+    // What kind of sale this was, so Joanna knows what to do next.
+    orderKind?: 'sklep' | 'booking' | 'cart'
 }
 
 export async function sendOrderNotificationToJoanna({
@@ -82,20 +249,34 @@ export async function sendOrderNotificationToJoanna({
                                                         customerEmail,
                                                         amount,
                                                         currency,
+                                                        orderKind = 'sklep',
                                                     }: OrderNotificationProps) {
+    // Always Polish — this one is for Joanna, not the customer.
+    const actionByKind: Record<string, string> = {
+        sklep: 'Link do pobrania został wysłany automatycznie. Nie musisz nic robić.',
+        booking: 'Klient wybiera teraz termin w kalendarzu. Potwierdzenie z Cal.com dotrze osobno.',
+        cart: '⚠️ WYMAGA DZIAŁANIA — przygotuj i wyślij materiał do klienta w ciągu 48 godzin.',
+    }
+
+    const details = renderDetailsTable(
+        renderDetailRow('Produkt', productName) +
+        renderDetailRow('Klient', customerEmail) +
+        renderDetailRow('Kwota', formatMoney(amount, currency))
+    )
+
+    const html = renderEmailShell({
+        locale: 'pl',
+        preheader: `Nowa sprzedaż: ${productName}`,
+        heading: 'Nowa sprzedaż',
+        bodyHtml: `${details}<p style="margin: 0;">${actionByKind[orderKind]}</p>`,
+    })
+
     const { error } = await resend.emails.send({
-        from: 'Letting Go Zen Studio <onboarding@resend.dev>',
-        to: process.env.CONTACT_EMAIL ?? 'lettinggozenstudio@gmail.com',
+        from: EMAIL_FROM,
+        replyTo: customerEmail, // replying goes straight to the customer
+        to: JOANNA_INBOX,
         subject: `Nowa sprzedaż: ${productName}`,
-        html: `
-      <div style="font-family: Georgia, serif; max-width: 560px; margin: 0 auto; padding: 40px 20px;">
-        <h2 style="color: #B8942A;">Nowa sprzedaż w Sklepie!</h2>
-        <p><strong>Produkt:</strong> ${productName}</p>
-        <p><strong>Klient:</strong> ${customerEmail}</p>
-        <p><strong>Kwota:</strong> ${currency} ${(amount / 100).toFixed(2)}</p>
-        <p style="color: #666; font-size: 12px;">Link do pobrania został automatycznie wysłany do klienta.</p>
-      </div>
-    `,
+        html,
     })
 
     if (error) {

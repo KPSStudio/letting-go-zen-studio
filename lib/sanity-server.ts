@@ -17,6 +17,11 @@ type ServicePrice = {
     pricePLN?: number
 }
 
+type BookableService = ServicePrice & {
+    namePl: string
+    calComSlug?: string
+}
+
 // Look up the REAL price of a service by its Polish name.
 // Returns null if the service doesn't exist or is inactive —
 // in that case the checkout must be rejected.
@@ -25,6 +30,18 @@ export async function getServicePriceByName(
 ): Promise<ServicePrice | null> {
     const result = await sanityServerClient.fetch<ServicePrice | null>(
         `*[_type == "service" && namePl == $namePl && isActive == true][0]{ priceGBP, pricePLN }`,
+        { namePl }
+    )
+    return result ?? null
+}
+
+// Look up the priced service and its booking slug together. Booking routes
+// use this so the paid service and the Cal.com event come from one Sanity row.
+export async function getBookableServiceByName(
+    namePl: string
+): Promise<BookableService | null> {
+    const result = await sanityServerClient.fetch<BookableService | null>(
+        `*[_type == "service" && namePl == $namePl && isActive == true && requiresBooking == true][0]{ namePl, priceGBP, pricePLN, calComSlug }`,
         { namePl }
     )
     return result ?? null

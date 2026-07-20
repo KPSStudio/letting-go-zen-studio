@@ -167,6 +167,9 @@ export default async function LocaleLayout({
     return (
         <html lang={locale} className={`${cinzel.variable} ${raleway.variable} h-full`}>
         <body className="min-h-full flex flex-col">
+        {/* Fixed full-screen background layer — styled by .site-background in globals.css.
+            A real fixed element renders correctly on mobile, unlike background-attachment: fixed. */}
+        <div className="site-background" aria-hidden="true" />
         <NextIntlClientProvider messages={messages}>
             <CurrencyProvider>
                 <CartProvider>

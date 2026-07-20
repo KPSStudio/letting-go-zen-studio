@@ -278,6 +278,7 @@ export default function BookingConsentPage() {
   const [confirmedPrice, setConfirmedPrice] = useState<number>(
     parseFloat(searchParams.get("price") ?? "0"),
   );
+  const [confirmedServiceName, setConfirmedServiceName] = useState(serviceName);
 
   const allConsentsAccepted =
     consent.participatesVoluntarily &&
@@ -369,12 +370,13 @@ export default function BookingConsentPage() {
       const data = (await response.json()) as BookingConsentResponse;
 
       if (!response.ok || !data.success || !data.token) {
-        setError(t("errors.saveFailed"));
+        setError(data.error ?? t("errors.saveFailed"));
         setSubmitting(false);
         return;
       }
 
       const token = data.token;
+      const canonicalServiceName = data.serviceName ?? serviceName;
       const priceGBP =
         typeof data.priceGBP === "number" ? data.priceGBP : confirmedPrice;
 
@@ -386,7 +388,7 @@ export default function BookingConsentPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          items: [{ name: serviceName }],
+          items: [{ name: canonicalServiceName }],
           currency,
           locale,
           token,
@@ -404,6 +406,7 @@ export default function BookingConsentPage() {
 
       // 3) Reveal the payment form on this same page.
       setBookingToken(token);
+      setConfirmedServiceName(canonicalServiceName);
       setConfirmedPrice(priceGBP);
       setClientSecret(checkoutData.clientSecret);
       setSubmitting(false);
@@ -428,7 +431,7 @@ export default function BookingConsentPage() {
           </h1>
 
           <p className="legal-effective-date">
-            {t("serviceLabel")}: {serviceName}
+            {t("serviceLabel")}: {confirmedServiceName}
           </p>
         </section>
 
@@ -471,7 +474,7 @@ export default function BookingConsentPage() {
                   opacity: 0.8,
                 }}
               >
-                {serviceName}
+                {confirmedServiceName}
               </span>
 
               <span

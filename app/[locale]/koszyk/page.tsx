@@ -109,11 +109,20 @@ function PaymentForm({
   const t = useTranslations("cartPage");
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Required: without an email address we cannot send the order confirmation,
+  // and Joanna has no way to deliver the purchased materials.
+  const [email, setEmail] = useState("");
 
   async function handlePay(e: React.FormEvent) {
     e.preventDefault();
 
     if (!stripe || !elements) {
+      return;
+    }
+
+    // Stop before charging if there is no address to deliver to.
+    if (!email) {
+      setError(t("payment.emailRequired"));
       return;
     }
 
@@ -134,6 +143,13 @@ function PaymentForm({
       elements,
       confirmParams: {
         return_url: returnUrl.toString(),
+        // Attaches the email to the Stripe charge so the webhook can read it
+        // back as billing_details.email and send the confirmation.
+        payment_method_data: {
+          billing_details: {
+            email,
+          },
+        },
       },
     });
 
@@ -145,6 +161,55 @@ function PaymentForm({
 
   return (
     <form onSubmit={handlePay}>
+      {/* Email is required — the order confirmation and Joanna's delivery
+          both depend on it. Mirrors the field used in the shop checkout. */}
+      <div style={{ marginBottom: "1rem" }}>
+        <label
+          htmlFor="cart-email"
+          style={{
+            display: "block",
+            fontFamily: "var(--font-cinzel)",
+            fontSize: "0.7rem",
+            letterSpacing: "0.15em",
+            color: "var(--gold)",
+            marginBottom: "0.5rem",
+          }}
+        >
+          {t("payment.emailLabel")}
+        </label>
+
+        <input
+          id="cart-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={t("payment.emailPlaceholder")}
+          required
+          style={{
+            width: "100%",
+            padding: "0.75rem 1rem",
+            background: "rgba(0,0,0,0.3)",
+            border: "1px solid rgba(184,148,42,0.3)",
+            color: "var(--cream)",
+            fontFamily: "var(--font-raleway)",
+            fontSize: "0.9rem",
+            outline: "none",
+            boxSizing: "border-box",
+          }}
+        />
+
+        <p
+          style={{
+            marginTop: "0.4rem",
+            fontFamily: "var(--font-raleway)",
+            fontSize: "0.75rem",
+            color: "rgba(245,237,216,0.5)",
+          }}
+        >
+          {t("payment.emailHint")}
+        </p>
+      </div>
+
       <div style={{ marginBottom: "2rem" }}>
         <PaymentElement />
       </div>
@@ -164,11 +229,11 @@ function PaymentForm({
 
       <button
         type="submit"
-        disabled={!stripe || paying}
+        disabled={!stripe || paying || !email}
         className="cart-pay-button"
         style={{
-          opacity: !stripe || paying ? 0.6 : 1,
-          cursor: !stripe || paying ? "not-allowed" : "pointer",
+          opacity: !stripe || paying || !email ? 0.6 : 1,
+          cursor: !stripe || paying || !email ? "not-allowed" : "pointer",
           marginBottom: "1rem",
         }}
       >

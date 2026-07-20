@@ -7,7 +7,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { Resend } from "resend";
 import { randomBytes } from "crypto";
-import { getServicePriceByName } from "@/lib/sanity-server";
+import { getBookableServiceByName } from "@/lib/sanity-server";
+import { getCalSlug } from "@/lib/calcom";
 
 type BookingConsentRequestBody = {
   serviceId: string;
@@ -37,19 +38,25 @@ const contactEmailValue = process.env.CONTACT_EMAIL;
 if (!supabaseUrl) throw new Error("Missing NEXT_PUBLIC_SUPABASE_URL");
 if (!supabaseServiceRoleKey)
   throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY");
-if (!resendApiKey) throw new Error("Missing RESEND_API_KEY");
-if (!contactEmailValue) throw new Error("Missing CONTACT_EMAIL");
 
-const contactEmail: string = contactEmailValue;
 const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-const resend = new Resend(resendApiKey);
+const resend = resendApiKey ? new Resend(resendApiKey) : null;
 
 function isValidEmail(email: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function normalizeText(value: string) {
-  return value.trim();
+function normalizeText(value: unknown) {
+  return typeof value === "string" ? value.trim() : "";
+}
+
+function escapeHtml(value: string) {
+  return value
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 function getClientIp(request: NextRequest) {
@@ -64,7 +71,8 @@ export async function POST(request: NextRequest) {
 
     const serviceId = normalizeText(body.serviceId);
     const serviceName = normalizeText(body.serviceName);
-    const locale = normalizeText(body.locale || "pl");
+    const requestedLocale = normalizeText(body.locale || "pl");
+    const locale = requestedLocale === "en" ? "en" : "pl";
 
     const customerFullName = normalizeText(body.customerFullName);
     const customerEmail = normalizeText(body.customerEmail);
@@ -122,15 +130,23 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // ── SERVER-SIDE PRICE LOOKUP ──
-    // We do NOT trust the price from the URL. We look up the real
-    // price in Sanity by the service's Polish name. If the service
-    // doesn't exist or is inactive, we refuse to continue.
-    const realPrice = await getServicePriceByName(serviceName);
+    // ── SERVER-SIDE SERVICE LOOKUP ──
+    // We do NOT trust the price or Cal.com slug from the URL. We look up
+    // the bookable service in Sanity, then derive both from that one row.
+    const service = await getBookableServiceByName(serviceName);
 
-    if (!realPrice) {
+    if (!service) {
       return NextResponse.json(
-        { error: "Service not found or inactive." },
+        { error: "Service not found, inactive, or not bookable." },
+        { status: 400 },
+      );
+    }
+
+    const trustedServiceId = service.calComSlug ?? getCalSlug(service.namePl) ?? "";
+
+    if (!trustedServiceId) {
+      return NextResponse.json(
+        { error: "This service is missing its Cal.com booking slug." },
         { status: 400 },
       );
     }
@@ -146,9 +162,9 @@ export async function POST(request: NextRequest) {
 
     const { error: tokenError } = await supabase.from("booking_tokens").insert({
       token,
-      service_id: serviceId,
-      service_name: serviceName,
-      price_gbp: realPrice.priceGBP,
+      service_id: trustedServiceId,
+      service_name: service.namePl,
+      price_gbp: service.priceGBP,
       customer_email: customerEmail,
       locale,
       status: "pending",
@@ -163,16 +179,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const bookingUrl = `/${locale}/rezerwacja?service=${encodeURIComponent(serviceId)}&serviceName=${encodeURIComponent(serviceName)}&price=${encodeURIComponent(realPrice.priceGBP)}&locale=${locale}`;
+    const bookingUrl = `/${locale}/rezerwacja?service=${encodeURIComponent(trustedServiceId)}&serviceName=${encodeURIComponent(service.namePl)}&price=${encodeURIComponent(service.priceGBP)}&locale=${locale}`;
 
     // Redirect to Koszyk carries the token + the REAL price from Sanity
-    const redirectUrl = `/${locale}/koszyk?booked=true&serviceId=${encodeURIComponent(serviceId)}&serviceName=${encodeURIComponent(serviceName)}&price=${encodeURIComponent(realPrice.priceGBP)}&token=${token}&locale=${locale}`;
+    const redirectUrl = `/${locale}/koszyk?booked=true&serviceId=${encodeURIComponent(trustedServiceId)}&serviceName=${encodeURIComponent(service.namePl)}&price=${encodeURIComponent(service.priceGBP)}&token=${token}&locale=${locale}`;
 
     const { error: supabaseError } = await supabase
       .from("booking_consents")
       .insert({
-        service_id: serviceId,
-        service_name: serviceName,
+        service_id: trustedServiceId,
+        service_name: service.namePl,
         cal_com_url: bookingUrl,
         customer_full_name: customerFullName,
         customer_email: customerEmail,
@@ -199,20 +215,28 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    await resend.emails.send({
-      from: "Letting Go Zen Studio <onboarding@resend.dev>",
-      to: contactEmail,
-      subject: `Nowa zgoda na rezerwację: ${serviceName}`,
-      html: `
+    if (resend && contactEmailValue) {
+      const safeServiceName = escapeHtml(service.namePl);
+      const safeCustomerFullName = escapeHtml(customerFullName);
+      const safeCustomerEmail = escapeHtml(customerEmail);
+      const safeCustomerPhone = escapeHtml(customerPhone);
+      const safeTypedSignature = escapeHtml(typedSignature);
+
+      try {
+        const { error: emailError } = await resend.emails.send({
+          from: "Letting Go Zen Studio <onboarding@resend.dev>",
+          to: contactEmailValue,
+          subject: `Nowa zgoda na rezerwację: ${service.namePl}`,
+          html: `
                 <div style="font-family: Arial, sans-serif; max-width: 680px; margin: 0 auto; padding: 24px;">
                     <h1 style="color: #B8942A;">Nowa zgoda na rezerwację</h1>
 
-                    <p><strong>Usługa:</strong> ${serviceName}</p>
-                    <p><strong>Cena:</strong> £${realPrice.priceGBP}</p>
-                    <p><strong>Imię i nazwisko:</strong> ${customerFullName}</p>
-                    <p><strong>Email:</strong> ${customerEmail}</p>
-                    <p><strong>Telefon:</strong> ${customerPhone}</p>
-                    <p><strong>Podpis wpisany:</strong> ${typedSignature}</p>
+                    <p><strong>Usługa:</strong> ${safeServiceName}</p>
+                    <p><strong>Cena:</strong> £${service.priceGBP}</p>
+                    <p><strong>Imię i nazwisko:</strong> ${safeCustomerFullName}</p>
+                    <p><strong>Email:</strong> ${safeCustomerEmail}</p>
+                    <p><strong>Telefon:</strong> ${safeCustomerPhone}</p>
+                    <p><strong>Podpis wpisany:</strong> ${safeTypedSignature}</p>
                     <p><strong>Data akceptacji:</strong> ${acceptedAt}</p>
 
                     <hr />
@@ -234,13 +258,23 @@ export async function POST(request: NextRequest) {
                     </p>
                 </div>
             `,
-    });
+        });
+
+        if (emailError) {
+          console.error("Booking consent email error:", emailError);
+        }
+      } catch (emailError) {
+        console.error("Booking consent email error:", emailError);
+      }
+    } else {
+      console.warn("Booking consent email skipped: missing Resend API key or contact email.");
+    }
 
     return NextResponse.json({
       success: true,
       token,
-      serviceName,
-      priceGBP: realPrice.priceGBP,
+      serviceName: service.namePl,
+      priceGBP: service.priceGBP,
       redirectUrl,
     });
   } catch (error) {

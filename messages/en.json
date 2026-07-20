@@ -713,6 +713,10 @@
     },
     "payment": {
       "title": "Payment",
+      "emailLabel": "EMAIL ADDRESS",
+      "emailPlaceholder": "anna@example.com",
+      "emailHint": "We will send your confirmation and materials to this address.",
+      "emailRequired": "Please enter your email address so we can send your order.",
       "loading": "Loading...",
       "processing": "Processing...",
       "pay": "Pay",

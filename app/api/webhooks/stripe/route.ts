@@ -4,7 +4,8 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { generateDownloadUrl } from '@/lib/supabase-storage'
-import { sendDownloadEmail, sendOrderNotificationToJoanna } from '@/lib/email'
+import { sendDownloadEmail, sendOrderNotificationToJoanna, sendBookingConfirmationEmail, sendOrderConfirmationEmail } from '@/lib/email'
+import type { EmailLocale } from '@/lib/emailTemplates'
 
 export async function POST(req: NextRequest) {
     const body = await req.text()
@@ -93,10 +94,15 @@ export async function POST(req: NextRequest) {
             try {
                 const downloadUrl = await generateDownloadUrl(fileName)
 
+                // Locale travelled here from the original checkout request.
+                const emailLocale: EmailLocale =
+                    metadata?.locale === 'en' ? 'en' : 'pl'
+
                 await sendDownloadEmail({
                     to: customerEmail,
                     productName,
                     downloadUrl,
+                    locale: emailLocale,
                 })
 
                 await sendOrderNotificationToJoanna({
@@ -104,6 +110,7 @@ export async function POST(req: NextRequest) {
                     customerEmail,
                     amount,
                     currency: currency.toUpperCase(),
+                    orderKind: 'sklep',
                 })
 
                 await supabaseAdmin
@@ -156,13 +163,25 @@ export async function POST(req: NextRequest) {
 
             console.log(`Session order saved: ${paymentIntentId}`)
 
+            // Locale chosen by the customer at checkout, used for their emails.
+            const emailLocale: EmailLocale = metadata?.locale === 'en' ? 'en' : 'pl'
+
+            // Item names validated server-side at checkout.
+            const itemNames: string[] = metadata?.items
+                ? JSON.parse(metadata.items)
+                : []
+
             // ── BOOKING TOKEN CONFIRMATION ──
             // This is the ONLY place a token advances to payment_confirmed.
             // Stripe signs this webhook, so it cannot be faked from a browser.
             const bookingToken = metadata?.bookingToken
 
             if (bookingToken) {
-                const { error: tokenError } = await supabaseAdmin
+                // .select() returns the rows that were actually updated.
+                // Because the filter requires status 'pending', a Stripe retry
+                // matches zero rows the second time — so the confirmation email
+                // is sent exactly once, never duplicated.
+                const { data: confirmedTokens, error: tokenError } = await supabaseAdmin
                     .from('booking_tokens')
                     .update({
                         status: 'payment_confirmed',
@@ -170,12 +189,76 @@ export async function POST(req: NextRequest) {
                     })
                     .eq('token', bookingToken)
                     .eq('status', 'pending')
+                    .select()
 
                 if (tokenError) {
                     console.error('Booking token confirm error:', tokenError)
-                } else {
+                } else if (confirmedTokens && confirmedTokens.length > 0) {
                     console.log(`Booking token confirmed: ${bookingToken.slice(0, 8)}...`)
+
+                    // The consent form captured a verified email and the real
+                    // service name, so prefer those over Stripe's receipt_email.
+                    const tokenRow = confirmedTokens[0]
+                    const bookingEmail: string | null =
+                        tokenRow.customer_email ?? customerEmail
+                    const serviceName: string =
+                        tokenRow.service_name ?? itemNames[0] ?? 'Sesja'
+                    const bookingLocale: EmailLocale =
+                        tokenRow.locale === 'en' ? 'en' : emailLocale
+
+                    if (bookingEmail) {
+                        try {
+                            await sendBookingConfirmationEmail({
+                                to: bookingEmail,
+                                serviceName,
+                                amount,
+                                currency: currency.toUpperCase(),
+                                bookingToken,
+                                locale: bookingLocale,
+                            })
+
+                            await sendOrderNotificationToJoanna({
+                                productName: serviceName,
+                                customerEmail: bookingEmail,
+                                amount,
+                                currency: currency.toUpperCase(),
+                                orderKind: 'booking',
+                            })
+                        } catch (emailError) {
+                            // Never fail the webhook because of email trouble —
+                            // the payment and token state are what matter most.
+                            console.error('Booking email error:', emailError)
+                        }
+                    } else {
+                        console.error('No email address for booking confirmation')
+                    }
                 }
+            }
+
+            // ── CART ORDER (no booking token) ──
+            // Joanna fulfils these manually, so both sides need telling.
+            else if (customerEmail) {
+                try {
+                    await sendOrderConfirmationEmail({
+                        to: customerEmail,
+                        itemNames,
+                        amount,
+                        currency: currency.toUpperCase(),
+                        locale: emailLocale,
+                    })
+
+                    await sendOrderNotificationToJoanna({
+                        productName: itemNames.join(', ') || 'Zamówienie',
+                        customerEmail,
+                        amount,
+                        currency: currency.toUpperCase(),
+                        orderKind: 'cart',
+                    })
+                } catch (emailError) {
+                    console.error('Cart order email error:', emailError)
+                }
+            } else {
+                console.error('Cart order has no customer email — no confirmation sent')
             }
         }
     }

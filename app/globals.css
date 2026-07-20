@@ -34,6 +34,24 @@ body {
 body {
     position: relative;
     min-height: 100vh;
+    /* Fallback colour only — the actual image lives on the fixed
+       .site-background layer below (works correctly on mobile). */
+    background-color: #24042d;
+    color: var(--cream);
+    font-family: var(--font-raleway);
+}
+
+/* Full-screen fixed background layer.
+   A real position:fixed element works on ALL browsers including mobile,
+   where background-attachment:fixed is broken — this replaces the old
+   body background image and fixes the mobile flat-purple band bug.
+   z-index -4 keeps it beneath the animated gradient (::before, -3)
+   and sparkle (::after, -1) layers. */
+.site-background {
+    position: fixed;
+    inset: 0;
+    z-index: -4;
+    pointer-events: none;
     background-color: #24042d;
     background-image:
             linear-gradient(
@@ -42,13 +60,10 @@ body {
                     rgba(36, 4, 45, 0.12) 38%,
                     rgba(18, 2, 24, 0.42) 100%
             ),
-            url('/images/bg-texture.jpg');
+            url('/images/website_background.jpg');
     background-size: cover;
-    background-position: center top;
-    background-attachment: fixed;
+    background-position: center;
     background-repeat: no-repeat;
-    color: var(--cream);
-    font-family: var(--font-raleway);
 }
 
 body::before {
@@ -95,15 +110,6 @@ body::after {
     background-position: 0 0, 60px 90px, 120px 180px;
     opacity: 0.13;
     animation: sparkleDrift 34s linear infinite;
-}
-
-/* Mobile fix: background-attachment:fixed is unreliable on mobile browsers and
-   leaves a flat-purple gap below the first screen. Switching to 'scroll' makes
-   the velvet texture cover the full page height. Desktop keeps 'fixed'. */
-@media (max-width: 720px) {
-    body {
-        background-attachment: scroll;
-    }
 }
 
 /* HERO */
@@ -233,53 +239,53 @@ body::after {
             heroMysticFloat 6s ease-in-out infinite alternate;
 }
 
-/* Eye symbol — left side */
+/* Spiral eye — left side */
 .hero-mystic-eye {
     width: 92px;
     height: 92px;
     left: 16%;
     top: 28%;
-    background-image: url('/images/Eye.png');
+    background-image: url('/images/hero-Spiral_Eye_Energetic_Perception.png');
     animation-delay: 0s, 0s;
 }
 
-/* Eye in circle — right side */
+/* Brainwave biofeedback — right side */
 .hero-mystic-circle {
     width: 122px;
     height: 122px;
     right: 15%;
     top: 30%;
-    background-image: url('/images/EYE-IN-CIRCLE.png');
+    background-image: url('/images/hero-Brainwave_Biofeedback.png');
     animation-delay: 1.4s, 0.8s;
 }
 
-/* Pyramid eye — low left */
+/* Aura & heart energy — low left */
 .hero-mystic-pyramid {
     width: 126px;
     height: 126px;
     left: 22%;
     bottom: 18%;
-    background-image: url('/images/Eye-in-pyramid.png');
+    background-image: url('/images/hero-Aura_and_Heart_Energy.png');
     animation-delay: 2.8s, 1.4s;
 }
 
-/* Second eye — upper right */
+/* Pendulum energy scan — upper right */
 .hero-mystic-eye-two {
     width: 78px;
     height: 78px;
     right: 27%;
     top: 17%;
-    background-image: url('/images/Eye.png');
+    background-image: url('/images/hero-Pendulum_Energy_Scan.png');
     animation-delay: 4.2s, 0.6s;
 }
 
-/* Second circle — lower right */
+/* Frequency / sound healing — lower right */
 .hero-mystic-circle-two {
     width: 96px;
     height: 96px;
     right: 24%;
     bottom: 16%;
-    background-image: url('/images/EYE-IN-CIRCLE.png');
+    background-image: url('/images/hero-Frequency_Therapy_Sound_Healing.png');
     animation-delay: 5.6s, 1.8s;
 }
 
@@ -4008,9 +4014,6 @@ body::after {
     .about-photo-orbit {
         width: 122%;
         height: 82%;
-    }
-    body {
-        background-attachment: scroll;
     }
 
     .hero-section {
