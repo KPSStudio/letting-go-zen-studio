@@ -67,11 +67,28 @@ export async function POST(req: NextRequest) {
     const paymentIntent = event.data.object as Stripe.PaymentIntent
     const metadata = paymentIntent.metadata ?? {}
     const orderType = metadata.orderType
-    const customerEmail = paymentIntent.receipt_email
     const paymentIntentId = paymentIntent.id
     const amount = paymentIntent.amount
     const currency = paymentIntent.currency.toUpperCase()
     const emailLocale: EmailLocale = metadata.locale === 'en' ? 'en' : 'pl'
+
+    // The buyer's email. Ideally it's on the PaymentIntent as receipt_email, but
+    // our checkout forms also attach it to the charge's billing details, so we
+    // fall back to that — this is what makes the download/confirmation email
+    // reliably send even if receipt_email wasn't set.
+    let customerEmail = paymentIntent.receipt_email
+    if (!customerEmail && paymentIntent.latest_charge) {
+        try {
+            const chargeId =
+                typeof paymentIntent.latest_charge === 'string'
+                    ? paymentIntent.latest_charge
+                    : paymentIntent.latest_charge.id
+            const charge = await stripe.charges.retrieve(chargeId)
+            customerEmail = charge.billing_details?.email ?? null
+        } catch (err) {
+            console.error('Could not read charge for email fallback:', err)
+        }
+    }
 
     // Rule 2: ignore anything that isn't one of our own shop/cart orders
     // (e.g. a Cal.com booking payment on the same Stripe account).

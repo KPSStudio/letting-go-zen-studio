@@ -98,12 +98,11 @@ export async function generateMetadata({
 
 export default async function LocaleLayout({
                                                children,
-                                               params,
                                            }: {
     children: React.ReactNode
-    params: Promise<{ locale: string }>
 }) {
-    const { locale } = await params
+    // The active locale is resolved by next-intl from the request; getMessages()
+    // and the root <html lang> both rely on that, so we don't need it here.
     const messages = await getMessages()
 
     // Build the site-wide search index (bookable services + shop products).
@@ -156,25 +155,25 @@ export default async function LocaleLayout({
         searchItems = []
     }
 
+    // No <html>/<body> here — the root layout owns those. We only provide the
+    // site chrome and providers, which render inside the root's <body>.
     return (
-        <html lang={locale} className="h-full">
-        <body className="min-h-full flex flex-col">
-        {/* Fixed full-screen background layer — styled by .site-background in globals.css.
-            A real fixed element renders correctly on mobile, unlike background-attachment: fixed. */}
-        <div className="site-background" aria-hidden="true" />
-        <NextIntlClientProvider messages={messages}>
-            <CurrencyProvider>
-                <CartProvider>
-                    <UtilityBar />
-                    <Nav searchItems={searchItems} />
-                    <main className="flex-1">
-                        {children}
-                    </main>
-                    <Footer />
-                </CartProvider>
-            </CurrencyProvider>
-        </NextIntlClientProvider>
-        </body>
-        </html>
+        <>
+            {/* Fixed full-screen background layer — styled by .site-background in globals.css.
+                A real fixed element renders correctly on mobile, unlike background-attachment: fixed. */}
+            <div className="site-background" aria-hidden="true" />
+            <NextIntlClientProvider messages={messages}>
+                <CurrencyProvider>
+                    <CartProvider>
+                        <UtilityBar />
+                        <Nav searchItems={searchItems} />
+                        <main className="flex-1">
+                            {children}
+                        </main>
+                        <Footer />
+                    </CartProvider>
+                </CurrencyProvider>
+            </NextIntlClientProvider>
+        </>
     )
 }
