@@ -282,14 +282,16 @@ export default function KoszykPage() {
   const [pendingBooking, setPendingBooking] =
     useState<PendingBookingDetails | null>(null);
 
-  const currentSearchParams =
-    typeof window !== "undefined"
-      ? new URLSearchParams(window.location.search)
-      : null;
-
-  const isPaymentSuccess = currentSearchParams?.get("success") === "true";
-  const isBookingComplete =
-    currentSearchParams?.get("bookingComplete") === "true";
+  // Read the post-payment flags AFTER mount so the server render and the first
+  // client render agree. Reading window.location during render would make the
+  // server (no window) and client disagree and break hydration.
+  const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
+  const [isBookingComplete, setIsBookingComplete] = useState(false);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setIsPaymentSuccess(params.get("success") === "true");
+    setIsBookingComplete(params.get("bookingComplete") === "true");
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

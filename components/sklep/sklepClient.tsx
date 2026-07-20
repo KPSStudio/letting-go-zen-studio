@@ -252,9 +252,16 @@ export default function SklepClient({ products }: Props) {
         return () => clearTimeout(timer)
     }, [])
 
-    const isSuccess =
-        typeof window !== 'undefined' &&
-        new URLSearchParams(window.location.search).get('success') === 'true'
+    // Whether the customer has just returned from a successful payment
+    // (?success=true). We read the URL AFTER mount rather than during render:
+    // the server has no `window`, so reading it while rendering would make the
+    // server and first client render disagree and break hydration.
+    const [isSuccess, setIsSuccess] = useState(false)
+    useEffect(() => {
+        setIsSuccess(
+            new URLSearchParams(window.location.search).get('success') === 'true'
+        )
+    }, [])
 
     function getProductName(product: SanitySklepProduct) {
         return locale === 'en' && product.nameEn ? product.nameEn : product.namePl
