@@ -220,8 +220,13 @@ export default function BookingConsentPage() {
   }
 
   // ── Boot the Cal.com embed once we enter the booking phase ──
-  // When the customer finishes booking (and paying) inside the widget, send
-  // them to the booking-complete thank-you screen.
+  //
+  // IMPORTANT: we deliberately do NOT listen for `bookingSuccessful` to redirect
+  // away. For PAID events Cal.com fires that event when the booking is first
+  // CREATED — before the customer has paid. Redirecting there navigated the page
+  // away mid-payment, so the payment was abandoned and Cal.com emailed a
+  // "please pay" reminder. Instead we let Cal.com run its own payment step and
+  // show its own confirmation right here in the embed.
   useEffect(() => {
     if (!calSlug) return;
 
@@ -231,15 +236,8 @@ export default function BookingConsentPage() {
         styles: { branding: { brandColor: "#D4AF6A" } },
         hideEventTypeDetails: false,
       });
-
-      cal("on", {
-        action: "bookingSuccessful",
-        callback: () => {
-          window.location.href = `/${locale}/koszyk?bookingComplete=true`;
-        },
-      });
     });
-  }, [calSlug, locale]);
+  }, [calSlug]);
 
   // ── BOOKING PHASE: consent saved, show the calendar (payment is inside it) ──
   if (calSlug) {

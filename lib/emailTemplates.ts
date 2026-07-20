@@ -18,9 +18,12 @@ export const SITE_URL =
 
 // Who emails come FROM, and where replies should land.
 // NOTE: Resend lets us SEND from any address on the verified domain, but that
-// does not create an inbox. noreply@ is send-only, so replyTo must point at a
-// mailbox that genuinely receives mail.
-export const EMAIL_FROM = 'Letting Go Zen Studio <noreply@lettinggozenstudio.com>'
+// does not create an inbox. We deliberately avoid a "noreply@" sender — inbox
+// providers (and Resend's own checks) treat it as a deliverability/engagement
+// risk — and use a friendly address instead. replyTo points at the Gmail inbox
+// that genuinely receives mail. (You can change "hello" to studio/contact/etc;
+// any name works because the whole lettinggozenstudio.com domain is verified.)
+export const EMAIL_FROM = 'Letting Go Zen Studio <hello@lettinggozenstudio.com>'
 export const EMAIL_REPLY_TO = 'lettinggozenstudio@gmail.com'
 
 // LANGUAGE SWITCH FOR ALL CUSTOMER EMAILS.
