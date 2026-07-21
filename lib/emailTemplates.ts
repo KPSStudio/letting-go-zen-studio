@@ -6,7 +6,7 @@
 // no grid, no CSS variables, no external stylesheets. So none of the styling
 // in globals.css applies here. Every email must be built from <table> elements
 // with styles written inline. This file holds that boilerplate in ONE place so
-// the four emails stay visually consistent and we only fix bugs once.
+// the three emails stay visually consistent and we only fix bugs once.
 
 // The two languages the site supports.
 export type EmailLocale = 'pl' | 'en'
@@ -50,6 +50,7 @@ export function resolveEmailLocale(requestedLocale: EmailLocale): EmailLocale {
 const COLOR = {
     outerBackground: '#24042d',
     panelBackground: '#3D0845',
+    panelSoft: '#320a3d',
     gold: '#B8942A',
     goldLight: '#D4AF6A',
     cream: '#E8D7B8',
@@ -89,9 +90,9 @@ export function renderButton(label: string, url: string): string {
     return `
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
         <tr>
-          <td bgcolor="${COLOR.gold}" style="padding: 0;">
+          <td bgcolor="${COLOR.gold}" style="border-radius: 4px;">
             <a href="${url}"
-               style="display: inline-block; padding: 15px 34px; font-family: ${FONT_STACK}; font-size: 15px; font-weight: bold; letter-spacing: 0.06em; color: ${COLOR.panelBackground}; text-decoration: none;">
+               style="display: inline-block; padding: 16px 44px; font-family: ${FONT_STACK}; font-size: 13px; font-weight: bold; letter-spacing: 0.16em; text-transform: uppercase; color: ${COLOR.panelBackground}; text-decoration: none; border-radius: 4px;">
               ${label}
             </a>
           </td>
@@ -100,15 +101,31 @@ export function renderButton(label: string, url: string): string {
 }
 
 /**
+ * A centred ornamental divider — a small gold star flanked by thin rules.
+ * Separates sections with a little more grace than a plain hairline.
+ */
+function renderOrnamentDivider(): string {
+    return `
+      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="padding: 0;"><div style="height: 1px; background-color: ${COLOR.hairline}; font-size: 0; line-height: 0;">&nbsp;</div></td>
+          <td width="28" align="center" style="padding: 0 12px; font-family: ${FONT_STACK}; font-size: 13px; color: ${COLOR.gold};">&#10022;</td>
+          <td style="padding: 0;"><div style="height: 1px; background-color: ${COLOR.hairline}; font-size: 0; line-height: 0;">&nbsp;</div></td>
+        </tr>
+      </table>`
+}
+
+/**
  * Renders a labelled row of order details (e.g. "Service: Biorezonans").
+ * Sits inside a rounded panel so the order summary reads as its own block.
  */
 export function renderDetailRow(label: string, value: string): string {
     return `
       <tr>
-        <td style="padding: 6px 0; font-family: ${FONT_STACK}; font-size: 14px; color: ${COLOR.creamDim};">
+        <td style="padding: 7px 0; font-family: ${FONT_STACK}; font-size: 14px; color: ${COLOR.creamDim};">
           ${label}
         </td>
-        <td align="right" style="padding: 6px 0; font-family: ${FONT_STACK}; font-size: 14px; color: ${COLOR.cream};">
+        <td align="right" style="padding: 7px 0; font-family: ${FONT_STACK}; font-size: 14px; color: ${COLOR.cream};">
           ${value}
         </td>
       </tr>`
@@ -129,8 +146,8 @@ type EmailShellOptions = {
 }
 
 /**
- * Wraps content in the branded shell: logo, purple panel, gold rules,
- * signature and footer. Every customer-facing email uses this.
+ * Wraps content in the branded shell: gold crown, logo, wordmark, ornamental
+ * rules, signature and footer. Every customer-facing email uses this.
  */
 export function renderEmailShell({
                                      locale,
@@ -144,6 +161,9 @@ export function renderEmailShell({
     const isPolish = locale === 'pl'
 
     const signature = isPolish ? 'Z miłością, Joanna' : 'With love, Joanna'
+    const tagline = isPolish
+        ? 'TERAPIA HOLISTYCZNA · ABERDEEN'
+        : 'HOLISTIC THERAPY · ABERDEEN'
     const helpText = isPolish
         ? 'Masz pytanie? Odpowiedz na tę wiadomość — napiszesz bezpośrednio do Joanny.'
         : 'Have a question? Just reply to this email — it goes straight to Joanna.'
@@ -169,35 +189,39 @@ export function renderEmailShell({
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
          bgcolor="${COLOR.outerBackground}" style="background-color: ${COLOR.outerBackground};">
     <tr>
-      <td align="center" style="padding: 32px 16px;">
+      <td align="center" style="padding: 44px 16px;">
 
-        <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0"
+        <table role="presentation" width="580" cellpadding="0" cellspacing="0" border="0"
                bgcolor="${COLOR.panelBackground}"
-               style="width: 560px; max-width: 100%; background-color: ${COLOR.panelBackground}; border: 1px solid ${COLOR.hairline};">
+               style="width: 580px; max-width: 100%; background-color: ${COLOR.panelBackground}; border: 1px solid ${COLOR.hairline}; border-radius: 8px;">
 
-          <!-- Logo and studio name -->
+          <!-- Gold crown: a thin accent band across the very top of the card. -->
           <tr>
-            <td align="center" style="padding: 36px 32px 20px;">
+            <td style="height: 4px; background-color: ${COLOR.gold}; font-size: 0; line-height: 0; border-radius: 8px 8px 0 0;">&nbsp;</td>
+          </tr>
+
+          <!-- Logo, wordmark and tagline -->
+          <tr>
+            <td align="center" style="padding: 44px 44px 24px;">
               <img src="${SITE_URL}/images/logo.png"
-                   width="54" height="54" alt="Letting Go Zen Studio"
-                   style="display: block; border: 0; margin: 0 auto 14px;">
-              <div style="font-family: ${FONT_STACK}; font-size: 13px; letter-spacing: 0.28em; color: ${COLOR.goldLight}; text-transform: uppercase;">
+                   width="60" height="60" alt="Letting Go Zen Studio"
+                   style="display: block; border: 0; margin: 0 auto 18px;">
+              <div style="font-family: ${FONT_STACK}; font-size: 15px; letter-spacing: 0.32em; color: ${COLOR.goldLight}; text-transform: uppercase;">
                 Letting Go Zen Studio
+              </div>
+              <div style="font-family: ${FONT_STACK}; font-size: 10px; letter-spacing: 0.24em; color: ${COLOR.creamDim}; text-transform: uppercase; padding-top: 10px;">
+                ${tagline}
               </div>
             </td>
           </tr>
 
-          <!-- Gold divider -->
-          <tr>
-            <td style="padding: 0 32px;">
-              <div style="height: 1px; background-color: ${COLOR.hairline}; font-size: 0; line-height: 0;">&nbsp;</div>
-            </td>
-          </tr>
+          <!-- Ornamental divider -->
+          <tr><td style="padding: 0 44px;">${renderOrnamentDivider()}</td></tr>
 
           <!-- Heading -->
           <tr>
-            <td align="center" style="padding: 28px 32px 0;">
-              <h1 style="margin: 0; font-family: ${FONT_STACK}; font-size: 23px; font-weight: normal; letter-spacing: 0.04em; color: ${COLOR.goldLight};">
+            <td align="center" style="padding: 32px 44px 0;">
+              <h1 style="margin: 0; font-family: ${FONT_STACK}; font-size: 26px; font-weight: normal; letter-spacing: 0.02em; color: ${COLOR.goldLight};">
                 ${heading}
               </h1>
             </td>
@@ -205,44 +229,40 @@ export function renderEmailShell({
 
           <!-- Main content -->
           <tr>
-            <td style="padding: 20px 32px 0; font-family: ${FONT_STACK}; font-size: 15px; line-height: 1.75; color: ${COLOR.cream};">
+            <td style="padding: 22px 44px 0; font-family: ${FONT_STACK}; font-size: 15px; line-height: 1.85; color: ${COLOR.cream};">
               ${bodyHtml}
             </td>
           </tr>
 
           ${
         buttonHtml
-            ? `<tr><td align="center" style="padding: 30px 32px 6px;">${buttonHtml}</td></tr>`
+            ? `<tr><td align="center" style="padding: 36px 44px 8px;">${buttonHtml}</td></tr>`
             : ''
     }
 
           ${
         footerNote
             ? `<tr>
-                   <td align="center" style="padding: 18px 32px 0; font-family: ${FONT_STACK}; font-size: 13px; line-height: 1.6; color: ${COLOR.creamDim};">
+                   <td align="center" style="padding: 20px 48px 0; font-family: ${FONT_STACK}; font-size: 13px; font-style: italic; line-height: 1.65; color: ${COLOR.creamDim};">
                      ${footerNote}
                    </td>
                  </tr>`
             : ''
     }
 
+          <!-- Ornamental divider -->
+          <tr><td style="padding: 34px 44px 0;">${renderOrnamentDivider()}</td></tr>
+
           <!-- Signature -->
           <tr>
-            <td style="padding: 30px 32px 0; font-family: ${FONT_STACK}; font-size: 15px; color: ${COLOR.goldLight};">
+            <td align="center" style="padding: 26px 44px 0; font-family: ${FONT_STACK}; font-size: 18px; font-style: italic; color: ${COLOR.goldLight};">
               ${signature}
-            </td>
-          </tr>
-
-          <!-- Bottom divider -->
-          <tr>
-            <td style="padding: 26px 32px 0;">
-              <div style="height: 1px; background-color: ${COLOR.hairline}; font-size: 0; line-height: 0;">&nbsp;</div>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td align="center" style="padding: 18px 32px 34px; font-family: ${FONT_STACK}; font-size: 12px; line-height: 1.7; color: ${COLOR.creamDim};">
+            <td align="center" style="padding: 28px 44px 40px; font-family: ${FONT_STACK}; font-size: 12px; line-height: 1.8; color: ${COLOR.creamDim};">
               ${helpText}
               <br><br>
               <a href="${SITE_URL}/${locale}" style="color: ${COLOR.goldLight}; text-decoration: none;">
