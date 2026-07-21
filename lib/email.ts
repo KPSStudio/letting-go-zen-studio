@@ -30,7 +30,7 @@ const JOANNA_INBOX =
 function renderDetailsTable(rows: string): string {
     return `
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
-             style="margin: 18px 0; border-top: 1px solid #5A4522; border-bottom: 1px solid #5A4522;">
+             style="margin: 18px 0; border-top: 1px solid #E7DECC; border-bottom: 1px solid #E7DECC;">
         ${rows}
       </table>`
 }
@@ -63,9 +63,9 @@ export async function sendDownloadEmail({
 
     const bodyHtml = isPolish
         ? `<p style="margin: 0 0 14px;">Dziękujemy za zakup — Twój plik jest gotowy.</p>
-           <p style="margin: 0;"><strong style="color: #D4AF6A;">${productName}</strong></p>`
+           <p style="margin: 0;"><strong style="color: #B8942A;">${productName}</strong></p>`
         : `<p style="margin: 0 0 14px;">Thank you for your purchase — your file is ready.</p>
-           <p style="margin: 0;"><strong style="color: #D4AF6A;">${productName}</strong></p>`
+           <p style="margin: 0;"><strong style="color: #B8942A;">${productName}</strong></p>`
 
     const html = renderEmailShell({
         locale: activeLocale,
@@ -129,10 +129,10 @@ export async function sendOrderConfirmationEmail({
     const bodyHtml = isPolish
         ? `<p style="margin: 0 0 4px;">Dziękujemy za zamówienie — płatność została potwierdzona.</p>
            ${details}
-           <p style="margin: 0;">Joanna przygotuje Twój materiał osobiście i wyśle go na ten adres email w ciągu <strong style="color: #D4AF6A;">48 godzin</strong>.</p>`
+           <p style="margin: 0;">Joanna przygotuje Twój materiał osobiście i wyśle go na ten adres email w ciągu <strong style="color: #B8942A;">48 godzin</strong>.</p>`
         : `<p style="margin: 0 0 4px;">Thank you for your order — your payment has been confirmed.</p>
            ${details}
-           <p style="margin: 0;">Joanna prepares each piece personally and will send it to this email address within <strong style="color: #D4AF6A;">48 hours</strong>.</p>`
+           <p style="margin: 0;">Joanna prepares each piece personally and will send it to this email address within <strong style="color: #B8942A;">48 hours</strong>.</p>`
 
     const html = renderEmailShell({
         locale: activeLocale,
