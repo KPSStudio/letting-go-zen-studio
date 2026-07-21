@@ -258,6 +258,15 @@ export default function BookingConsentPage() {
           <p className="legal-effective-date">
             {t("serviceLabel")}: {confirmedServiceName}
           </p>
+
+          {/* Cal.com always charges in GBP, so we say so here — this matters on
+              the Polish site, where prices are otherwise shown in złoty. */}
+          <p
+            className="legal-effective-date"
+            style={{ fontSize: "0.8rem", opacity: 0.7 }}
+          >
+            {tBooking("paidInGbp")}
+          </p>
         </section>
 
         <section className="booking-panel">

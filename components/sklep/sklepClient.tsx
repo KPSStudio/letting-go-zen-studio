@@ -12,6 +12,7 @@ import { loadStripe } from '@stripe/stripe-js'
 import {
     Elements,
     PaymentElement,
+    AddressElement,
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js'
@@ -170,6 +171,45 @@ function SklepPaymentForm({
                     }}
                 />
             </div>
+
+            {/* Shipping address — physical and bundle products only. Stripe
+                attaches this to the payment automatically when confirmed. */}
+            {(product.productType === 'physical' ||
+                product.productType === 'bundle') && (
+                <div style={{ marginBottom: '1.5rem' }}>
+                    <p
+                        style={{
+                            fontFamily: 'var(--font-cinzel)',
+                            fontSize: '0.7rem',
+                            letterSpacing: '0.15em',
+                            textTransform: 'uppercase',
+                            color: 'var(--gold)',
+                            marginBottom: '0.5rem',
+                        }}
+                    >
+                        {t('payment.shippingHeading')}
+                    </p>
+
+                    <AddressElement
+                        options={{
+                            mode: 'shipping',
+                            allowedCountries: ['GB', 'PL'],
+                            fields: { phone: 'always' },
+                        }}
+                    />
+
+                    <p
+                        style={{
+                            fontFamily: 'var(--font-raleway)',
+                            fontSize: '0.75rem',
+                            color: 'rgba(245,237,216,0.55)',
+                            marginTop: '0.5rem',
+                        }}
+                    >
+                        {t('payment.shippingNote')}
+                    </p>
+                </div>
+            )}
 
             {/* Stripe-controlled payment methods */}
             <div style={{ marginBottom: '1.5rem' }}>
@@ -541,7 +581,11 @@ export default function SklepClient({ products }: Props) {
                             />
 
                             <span>
-                                {t('legalStep.deliveryConsent')}
+                                {legalProduct.productType === 'physical'
+                                    ? t('legalStep.shippingConsent')
+                                    : legalProduct.productType === 'bundle'
+                                    ? t('legalStep.bundleConsent')
+                                    : t('legalStep.deliveryConsent')}
                             </span>
                         </label>
 

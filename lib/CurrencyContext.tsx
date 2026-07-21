@@ -1,10 +1,12 @@
 // lib/CurrencyContext.tsx
-// Stores the selected currency globally across all pages
-// Any component can read or change the currency using useCurrency()
+// Stores the selected currency globally across all pages.
+// Currency FOLLOWS the site language: Polish pages show złoty, English pages GBP.
+// Any component can read it (and still override it) via useCurrency().
 
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { useLocale } from 'next-intl'
 
 // The two currencies we support
 export type Currency = 'GBP' | 'PLN'
@@ -21,6 +23,11 @@ export const SYMBOLS: Record<Currency, string> = {
     PLN: 'zł',
 }
 
+// Which currency a given site language defaults to.
+function currencyForLocale(locale: string): Currency {
+    return locale === 'pl' ? 'PLN' : 'GBP'
+}
+
 // What the context provides to every component
 interface CurrencyContextType {
     currency: Currency
@@ -33,7 +40,15 @@ const CurrencyContext = createContext<CurrencyContextType | null>(null)
 
 // Provider — wraps the whole app so every component can access currency
 export function CurrencyProvider({ children }: { children: ReactNode }) {
-    const [currency, setCurrency] = useState<Currency>('GBP')
+    const locale = useLocale()
+
+    // Start in the currency that matches the current language…
+    const [currency, setCurrency] = useState<Currency>(() => currencyForLocale(locale))
+
+    // …and keep it in step if the visitor switches language mid-session.
+    useEffect(() => {
+        setCurrency(currencyForLocale(locale))
+    }, [locale])
 
     // Converts a GBP price to selected currency and formats it
     const formatPrice = (gbp: number): string => {

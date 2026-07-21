@@ -57,6 +57,7 @@ export interface SanitySklepProduct {
   images?: SanitySklepImage[];
   priceGBP: number;
   pricePLN?: number;
+  shippingFeeGBP?: number;
   fileName?: string;
   deliveryNote?: string;
   includes?: string[];

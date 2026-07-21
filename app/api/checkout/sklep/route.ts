@@ -34,9 +34,20 @@ export async function POST(req: NextRequest) {
             )
         }
 
-        const amount = currency === 'PLN'
-            ? Math.round((product.pricePLN ?? gbpToPln(product.priceGBP)) * 100)
-            : Math.round(product.priceGBP * 100)
+        // Physical and bundle products are shipped, so they carry a flat postage
+        // fee (set in Sanity, in GBP) on top of the price.
+        const productType = product.productType ?? 'digital'
+        const isShipped = productType === 'physical' || productType === 'bundle'
+        const isPln = currency === 'PLN'
+
+        const basePrice = isPln
+            ? product.pricePLN ?? gbpToPln(product.priceGBP)
+            : product.priceGBP
+
+        const shippingFeeGbp = isShipped ? product.shippingFeeGBP ?? 0 : 0
+        const shippingFee = isPln ? gbpToPln(shippingFeeGbp) : shippingFeeGbp
+
+        const amount = Math.round((basePrice + shippingFee) * 100)
 
         if (amount <= 0) {
             return NextResponse.json(
@@ -45,6 +56,16 @@ export async function POST(req: NextRequest) {
             )
         }
 
+        // Stripe metadata values must be strings; only include fileName for
+        // products that actually deliver a PDF (digital / bundle).
+        const metadata: Record<string, string> = {
+            orderType: 'sklep',
+            productType,
+            productName: product.namePl,
+            locale: locale ?? 'pl',
+        }
+        if (product.fileName) metadata.fileName = product.fileName
+
         const paymentIntent = await stripe.paymentIntents.create({
             amount,
             currency: currency?.toLowerCase() ?? 'gbp',
@@ -52,12 +73,7 @@ export async function POST(req: NextRequest) {
                 enabled: true,
                 allow_redirects: 'never',
             },
-            metadata: {
-                orderType: 'sklep',
-                productName: product.namePl,
-                fileName: product.fileName,
-                locale: locale ?? 'pl',
-            },
+            metadata,
         })
 
         return NextResponse.json({ clientSecret: paymentIntent.client_secret })

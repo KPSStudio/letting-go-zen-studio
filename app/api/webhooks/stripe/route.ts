@@ -21,6 +21,7 @@ import { supabaseAdmin } from '@/lib/supabase-admin'
 import { generateDownloadUrl } from '@/lib/supabase-storage'
 import {
     sendDownloadEmail,
+    sendPhysicalOrderEmail,
     sendOrderNotificationToJoanna,
     sendOrderConfirmationEmail,
 } from '@/lib/email'
@@ -31,6 +32,25 @@ import type { EmailLocale } from '@/lib/emailTemplates'
 // insert the same stripe_session_id, hits the unique constraint, and we stop
 // before sending any email a second time.
 const UNIQUE_VIOLATION = '23505'
+
+// Turns Stripe's shipping object into a readable multi-line address for Joanna.
+function formatShippingAddress(
+    shipping: Stripe.PaymentIntent.Shipping | null
+): string {
+    if (!shipping) return ''
+    const a = shipping.address
+    return [
+        shipping.name,
+        a?.line1,
+        a?.line2,
+        [a?.postal_code, a?.city].filter(Boolean).join(' '),
+        a?.state,
+        a?.country,
+        shipping.phone ? `Tel: ${shipping.phone}` : '',
+    ]
+        .filter(Boolean)
+        .join('\n')
+}
 
 export async function POST(req: NextRequest) {
     const body = await req.text()
@@ -99,28 +119,44 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ received: true })
     }
 
-    // ── SKLEP ORDER — digital product, delivered automatically ──
+    // ── SKLEP ORDER — digital (PDF) / physical (shipped) / bundle (both) ──
     if (orderType === 'sklep') {
-        const fileName = metadata.fileName
+        const productType = metadata.productType ?? 'digital'
         const productName = metadata.productName
+        const fileName = metadata.fileName
 
-        if (!fileName || !productName || !customerEmail) {
+        const hasPdf = productType === 'digital' || productType === 'bundle'
+        const ships = productType === 'physical' || productType === 'bundle'
+
+        // PDF products must have a file; shipped products must have an address.
+        if (!productName || !customerEmail || (hasPdf && !fileName)) {
             console.error('Missing sklep metadata or email — skipping')
             return NextResponse.json({ received: true })
         }
 
+        // The Address Element attaches the shipping details to the PaymentIntent
+        // for physical/bundle orders.
+        const shipping = paymentIntent.shipping ?? null
+        if (ships && !shipping) {
+            console.error(`Physical order ${paymentIntentId} arrived without a shipping address`)
+        }
+
         // Record the order FIRST. If this same payment is delivered again by
         // Stripe, the unique constraint on stripe_session_id rejects the insert
-        // and we return before emailing a second download link.
+        // and we return before fulfilling twice.
         const { error: insertError } = await supabaseAdmin
             .from('sklep_orders')
             .insert({
                 stripe_session_id: paymentIntentId,
                 customer_email: customerEmail,
                 product_name: productName,
-                file_name: fileName,
+                product_type: productType,
+                file_name: fileName ?? null,
                 amount_total: amount,
                 currency,
+                shipping_name: shipping?.name ?? null,
+                shipping_address: shipping ?? null,
+                fulfilment_status: ships ? 'to_ship' : 'delivered',
                 download_url_created_at: new Date().toISOString(),
             })
 
@@ -136,27 +172,44 @@ export async function POST(req: NextRequest) {
             )
         }
 
+        // What kind of sale it is, for Joanna's notification.
+        const orderKind =
+            ships && hasPdf ? 'bundle' : ships ? 'physical' : 'sklep'
+
         // The order is saved; email trouble must never fail the webhook (that
         // would make Stripe retry and we'd duplicate work).
         try {
-            const downloadUrl = await generateDownloadUrl(fileName)
+            // PDF products (digital + bundle): send the download link.
+            if (hasPdf && fileName) {
+                const downloadUrl = await generateDownloadUrl(fileName)
+                await sendDownloadEmail({
+                    to: customerEmail,
+                    productName,
+                    downloadUrl,
+                    locale: emailLocale,
+                })
+            }
 
-            await sendDownloadEmail({
-                to: customerEmail,
-                productName,
-                downloadUrl,
-                locale: emailLocale,
-            })
+            // Shipped products (physical + bundle): confirm the dispatch window.
+            if (ships) {
+                await sendPhysicalOrderEmail({
+                    to: customerEmail,
+                    productName,
+                    locale: emailLocale,
+                })
+            }
 
+            // Notify Joanna, including the shipping address when there is one.
             await sendOrderNotificationToJoanna({
                 productName,
                 customerEmail,
                 amount,
                 currency,
-                orderKind: 'sklep',
+                orderKind,
+                shippingText: ships ? formatShippingAddress(shipping) : undefined,
             })
 
-            console.log(`Sklep order processed: ${productName} → ${customerEmail}`)
+            console.log(`Sklep order processed (${productType}): ${productName} → ${customerEmail}`)
         } catch (emailError) {
             console.error('Sklep email error:', emailError)
         }

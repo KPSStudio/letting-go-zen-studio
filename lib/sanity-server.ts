@@ -47,12 +47,22 @@ export async function getBookableServiceByName(
     return result ?? null
 }
 
-// Look up the REAL price of a Sklep product by its Sanity document ID.
+export type SklepProductType = 'digital' | 'physical' | 'bundle' | 'course'
+
+// Look up the REAL price, type and (for shipped items) shipping fee of a Sklep
+// product by its Sanity document ID. fileName is only present for PDF products.
 export async function getSklepProductById(
     productId: string
-): Promise<{ priceGBP: number; pricePLN?: number; fileName: string; namePl: string } | null> {
+): Promise<{
+    priceGBP: number
+    pricePLN?: number
+    fileName?: string
+    namePl: string
+    productType: SklepProductType
+    shippingFeeGBP?: number
+} | null> {
     const result = await sanityServerClient.fetch(
-        `*[_type == "sklepProduct" && _id == $productId && isActive == true][0]{ priceGBP, pricePLN, fileName, namePl }`,
+        `*[_type == "sklepProduct" && _id == $productId && isActive == true][0]{ priceGBP, pricePLN, fileName, namePl, productType, shippingFeeGBP }`,
         { productId }
     )
     return result ?? null

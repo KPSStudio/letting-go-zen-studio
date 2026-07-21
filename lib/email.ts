@@ -96,6 +96,59 @@ export async function sendDownloadEmail({
 }
 
 // ─────────────────────────────────────────────────────────────
+// 1b. PHYSICAL / BUNDLE SHOP ORDER — shipped within a week
+// ─────────────────────────────────────────────────────────────
+
+interface PhysicalOrderEmailProps {
+    to: string
+    productName: string
+    locale?: EmailLocale
+}
+
+export async function sendPhysicalOrderEmail({
+                                                 to,
+                                                 productName,
+                                                 locale = 'pl',
+                                             }: PhysicalOrderEmailProps) {
+    const activeLocale = resolveEmailLocale(locale)
+    const isPolish = activeLocale === 'pl'
+
+    const bodyHtml = isPolish
+        ? `<p style="margin: 0 0 14px;">Dziękujemy za zamówienie — płatność została potwierdzona.</p>
+           <p style="margin: 0 0 14px;"><strong style="color: #B8942A;">${productName}</strong></p>
+           <p style="margin: 0;">Twoja przesyłka zostanie nadana na podany adres w ciągu <strong style="color: #B8942A;">7 dni</strong>.</p>`
+        : `<p style="margin: 0 0 14px;">Thank you for your order — your payment has been confirmed.</p>
+           <p style="margin: 0 0 14px;"><strong style="color: #B8942A;">${productName}</strong></p>
+           <p style="margin: 0;">Your parcel will be posted to the address you provided within <strong style="color: #B8942A;">7 days</strong>.</p>`
+
+    const html = renderEmailShell({
+        locale: activeLocale,
+        preheader: isPolish
+            ? 'Zamówienie przyjęte — wysyłka w ciągu 7 dni.'
+            : 'Order received — shipping within 7 days.',
+        heading: isPolish ? 'Zamówienie przyjęte' : 'Order received',
+        bodyHtml,
+        footerNote: isPolish
+            ? 'Otrzymasz osobną wiadomość, gdy paczka zostanie nadana.'
+            : 'You will get a separate note once your parcel is on its way.',
+    })
+
+    const { error } = await resend.emails.send({
+        from: EMAIL_FROM,
+        replyTo: EMAIL_REPLY_TO,
+        to,
+        subject: isPolish
+            ? `Zamówienie przyjęte: ${productName}`
+            : `Order received: ${productName}`,
+        html,
+    })
+
+    if (error) {
+        console.error('Resend physical order email error:', error)
+    }
+}
+
+// ─────────────────────────────────────────────────────────────
 // 2. CART ORDER — Joanna fulfils manually within 48h
 // ─────────────────────────────────────────────────────────────
 
@@ -169,7 +222,9 @@ interface OrderNotificationProps {
     amount: number
     currency: string
     // What kind of sale this was, so Joanna knows what to do next.
-    orderKind?: 'sklep' | 'booking' | 'cart'
+    orderKind?: 'sklep' | 'booking' | 'cart' | 'physical' | 'bundle'
+    // Multi-line shipping address for physical / bundle orders.
+    shippingText?: string
 }
 
 export async function sendOrderNotificationToJoanna({
@@ -178,12 +233,15 @@ export async function sendOrderNotificationToJoanna({
                                                         amount,
                                                         currency,
                                                         orderKind = 'sklep',
+                                                        shippingText,
                                                     }: OrderNotificationProps) {
     // Always Polish — this one is for Joanna, not the customer.
     const actionByKind: Record<string, string> = {
         sklep: 'Link do pobrania został wysłany automatycznie. Nie musisz nic robić.',
         booking: 'Klient wybiera teraz termin w kalendarzu. Potwierdzenie z Cal.com dotrze osobno.',
         cart: '⚠️ WYMAGA DZIAŁANIA — przygotuj i wyślij materiał do klienta w ciągu 48 godzin.',
+        physical: '⚠️ WYMAGA WYSYŁKI — wyślij produkt na adres poniżej w ciągu 7 dni.',
+        bundle: '⚠️ WYMAGA WYSYŁKI — link do PDF wysłany automatycznie; wyślij produkt fizyczny na adres poniżej w ciągu 7 dni.',
     }
 
     const details = renderDetailsTable(
@@ -192,11 +250,17 @@ export async function sendOrderNotificationToJoanna({
         renderDetailRow('Kwota', formatMoney(amount, currency))
     )
 
+    // Shipping address block (physical / bundle only). Escaped and shown with
+    // line breaks preserved so Joanna can copy it straight onto a parcel.
+    const addressBlock = shippingText
+        ? `<p style="margin: 12px 0 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.7; color: #4A3F33; white-space: pre-line;"><strong style="color: #3D0845;">Adres wysyłki:</strong><br>${shippingText.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</p>`
+        : ''
+
     const html = renderEmailShell({
         locale: 'pl',
         preheader: `Nowa sprzedaż: ${productName}`,
         heading: 'Nowa sprzedaż',
-        bodyHtml: `${details}<p style="margin: 0;">${actionByKind[orderKind]}</p>`,
+        bodyHtml: `${details}<p style="margin: 0 0 4px;">${actionByKind[orderKind]}</p>${addressBlock}`,
     })
 
     const { error } = await resend.emails.send({

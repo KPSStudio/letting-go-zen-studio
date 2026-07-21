@@ -1,8 +1,8 @@
 // sanity/schemas/sklepProduct.ts
 // Products for the Sklep page.
 // productType is the "spine": every product is one of digital / physical / bundle / course.
-// IMPORTANT (current state): ONLY 'digital' is fully wired end-to-end right now.
-// physical / bundle / course are placeholders for upcoming phases — do not sell them yet.
+// WIRED END-TO-END: digital (PDF download), physical (shipped, address collected at
+// checkout) and bundle (PDF download + shipped). 'course' is still a placeholder.
 
 import { defineField, defineType } from "sanity";
 
@@ -16,15 +16,16 @@ export default defineType({
       name: "productType",
       title: "Typ produktu",
       description:
-        'UWAGA: na razie działa tylko „Cyfrowy (PDF)". Pozostałe typy będą dodane wkrótce — nie publikuj ich jeszcze.',
+        'Cyfrowy = PDF do pobrania. Fizyczny = wysyłka pocztą (klient podaje adres przy zakupie). ' +
+        'Zestaw = PDF + wysyłka. „Kurs" jeszcze nie działa — nie publikuj.',
       type: "string",
       options: {
         layout: "radio",
         list: [
           { title: "Cyfrowy — PDF do pobrania", value: "digital" },
-          { title: "Fizyczny — wysyłka pocztą (wkrótce)", value: "physical" },
+          { title: "Fizyczny — wysyłka pocztą", value: "physical" },
           {
-            title: "Zestaw — produkt fizyczny + PDF (wkrótce)",
+            title: "Zestaw — produkt fizyczny + PDF",
             value: "bundle",
           },
           { title: "Kurs (wkrótce)", value: "course" },
@@ -107,6 +108,21 @@ export default defineType({
       name: "pricePLN",
       title: "Cena zł PLN",
       type: "number",
+    }),
+
+    // Flat postage added at checkout for physical / bundle products (in GBP;
+    // converted to PLN automatically for Polish orders). Empty = free shipping.
+    defineField({
+      name: "shippingFeeGBP",
+      title: "Koszt wysyłki £ GBP (produkty fizyczne)",
+      description:
+        "Stała opłata za wysyłkę, doliczana przy zakupie produktów fizycznych i zestawów. " +
+        "Zostaw puste = darmowa wysyłka.",
+      type: "number",
+      hidden: ({ document }) =>
+        document?.productType === "digital" ||
+        document?.productType === "course",
+      validation: (Rule) => Rule.min(0),
     }),
 
     // fileName is only needed for products that deliver a PDF (digital or bundle).
