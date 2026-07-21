@@ -5,7 +5,8 @@ studio in Aberdeen, Scotland. Clients can browse services across three themes, b
 products with instant delivery, and book paid one-to-one sessions after giving informed consent.
 
 **Live site:** https://www.lettinggozenstudio.com
-**CMS (Sanity Studio):** https://www.lettinggozenstudio.com/studio
+
+Content is managed through an embedded Sanity Studio (admin-only).
 
 ---
 
@@ -137,9 +138,9 @@ and use the printed signing secret as `STRIPE_WEBHOOK_SECRET`.
 
 ## Content management
 
-The site's content — services, shop products, testimonials and site settings — is edited in the
-embedded Sanity Studio at [`/studio`](https://www.lettinggozenstudio.com/studio). Changes publish
-straight to the live site (public pages read published content).
+The site's content — services, shop products, testimonials and site settings — is edited in an
+embedded Sanity Studio (admin-only). Changes publish straight to the live site, which reads
+published content.
 
 ---
 
