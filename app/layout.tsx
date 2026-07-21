@@ -14,7 +14,16 @@ export default async function RootLayout({
 }: {
     children: React.ReactNode
 }) {
-    const locale = await getLocale()
+    // getLocale() reads next-intl's request config, which calls notFound() for
+    // routes OUTSIDE the locale system (e.g. /studio). We only need a value for
+    // the <html lang> attribute, so fall back to the default locale there rather
+    // than letting those routes 404. (This is what broke the Sanity Studio.)
+    let locale = 'pl'
+    try {
+        locale = await getLocale()
+    } catch {
+        locale = 'pl'
+    }
 
     return (
         <html lang={locale} className="h-full">
