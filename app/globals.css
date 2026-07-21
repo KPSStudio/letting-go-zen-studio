@@ -1126,13 +1126,19 @@ body::after {
 
 .body-modal-close {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 0.6rem;
+    right: 0.6rem;
     background: transparent;
     border: 0;
     color: var(--gold-lt);
-    font-size: 1.2rem;
+    font-size: 2.1rem;
+    line-height: 1;
+    padding: 0.15rem 0.55rem;
     cursor: pointer;
+}
+
+.body-modal-close:hover {
+    color: var(--gold-sh);
 }
 
 .body-modal-title {
@@ -2971,7 +2977,8 @@ body::after {
 /* NAV */
 
 .site-nav {
-    position: relative;
+    position: sticky;
+    top: 0;
     width: 100%;
     min-height: 60px;
     padding: 0 2rem;
@@ -4109,9 +4116,18 @@ body::after {
         font-size: clamp(7rem, 28vw, 9rem);
     }
 
+    /* On mobile the bar itself scrolls away — only the menu button (below)
+       stays fixed and follows the scroll. */
     .site-nav {
+        position: static;
         min-height: 64px;
         padding: 0.75rem 1rem;
+    }
+
+    /* When open, anchor the dropdown to the fixed button, not the scrolled bar. */
+    .site-mobile-menu {
+        position: fixed;
+        top: 5.6rem;
     }
 
     .site-nav-brand {
@@ -4150,6 +4166,13 @@ body::after {
     }
 
     .site-nav-mobile-button {
+        /* Fixed so it follows the scroll; top ~3rem lines it up snugly with the
+           bar at the top of the page (utility bar + nav padding). */
+        position: fixed;
+        top: 3rem;
+        right: 1rem;
+        z-index: 10000;
+        background: rgba(18, 3, 24, 0.92);
         min-width: 2.7rem;
         min-height: 2.4rem;
         display: inline-flex;

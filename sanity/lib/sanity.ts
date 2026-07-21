@@ -32,9 +32,13 @@ export interface SanityService {
   requiresBooking?: boolean;
   calComSlug?: string;
   freeConsultation?: string;
+  freeConsultationEn?: string;
   includes?: string[];
+  includesEn?: string[];
   whoFor?: string[];
+  whoForEn?: string[];
   warning?: string;
+  warningEn?: string;
   order?: number;
   isActive?: boolean;
 }

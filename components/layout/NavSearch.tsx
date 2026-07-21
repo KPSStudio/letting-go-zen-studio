@@ -29,9 +29,11 @@ export type SearchItem = {
 type Props = {
     items: SearchItem[]
     mode?: 'icon' | 'inline'
+    // Called after a result is chosen — lets the mobile drawer close itself.
+    onNavigate?: () => void
 }
 
-export default function NavSearch({ items, mode = 'icon' }: Props) {
+export default function NavSearch({ items, mode = 'icon', onNavigate }: Props) {
     const router = useRouter()
     const locale = useLocale()
     const isInline = mode === 'inline'
@@ -132,6 +134,9 @@ export default function NavSearch({ items, mode = 'icon' }: Props) {
         setQuery('')
         if (!isInline) setOpen(false)
         router.push(`/${locale}${item.href}?item=${encodeURIComponent(item.id)}`)
+        // On mobile this closes the whole drawer so the destination card is
+        // visible immediately instead of hidden behind the open menu.
+        onNavigate?.()
     }
 
     const showPanel = isInline || open

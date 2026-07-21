@@ -53,6 +53,26 @@ export default function SoulClient({ products }: Props) {
         return locale === 'en' && product.descEn ? product.descEn : product.descPl
     }
 
+    // Bilingual "more info" modal content: English fields on /en when filled,
+    // otherwise fall back to the Polish ones.
+    function getIncludes(product: SanityService) {
+        return locale === 'en' && product.includesEn?.length
+            ? product.includesEn
+            : product.includes ?? []
+    }
+
+    function getWhoFor(product: SanityService) {
+        return locale === 'en' && product.whoForEn?.length
+            ? product.whoForEn
+            : product.whoFor ?? []
+    }
+
+    function getWarning(product: SanityService) {
+        return locale === 'en' && product.warningEn
+            ? product.warningEn
+            : product.warning
+    }
+
     function getConsentHref(product: SanityService) {
         const serviceSlug = product.calComSlug ?? getCalSlug(product.namePl) ?? ''
         const serviceName = product.namePl
@@ -162,8 +182,8 @@ export default function SoulClient({ products }: Props) {
                                             }`}
                                         >
                                             {inCart
-                                                ? t('buttons.inCart')
-                                                : t('buttons.addToCart')}
+                                                ? t('button.inCart')
+                                                : t('button.addToCart')}
                                         </button>
                                     )}
 
@@ -222,45 +242,43 @@ export default function SoulClient({ products }: Props) {
                             </div>
                         )}
 
-                        {selectedProduct.includes &&
-                            selectedProduct.includes.length > 0 && (
-                                <div className="body-modal-section">
-                                    <p className="body-modal-label">
-                                        {t('modal.includes')}
-                                    </p>
-                                    <ul className="body-modal-list">
-                                        {selectedProduct.includes.map(
-                                            (item: string, i: number) => (
-                                                <li key={i}>{item}</li>
-                                            )
-                                        )}
-                                    </ul>
-                                </div>
-                            )}
+                        {getIncludes(selectedProduct).length > 0 && (
+                            <div className="body-modal-section">
+                                <p className="body-modal-label">
+                                    {t('modal.includes')}
+                                </p>
+                                <ul className="body-modal-list">
+                                    {getIncludes(selectedProduct).map(
+                                        (item: string, i: number) => (
+                                            <li key={i}>{item}</li>
+                                        )
+                                    )}
+                                </ul>
+                            </div>
+                        )}
 
-                        {selectedProduct.whoFor &&
-                            selectedProduct.whoFor.length > 0 && (
-                                <div className="body-modal-section">
-                                    <p className="body-modal-label">
-                                        {t('modal.whoFor')}
-                                    </p>
-                                    <ul className="body-modal-list">
-                                        {selectedProduct.whoFor.map(
-                                            (item: string, i: number) => (
-                                                <li key={i}>{item}</li>
-                                            )
-                                        )}
-                                    </ul>
-                                </div>
-                            )}
+                        {getWhoFor(selectedProduct).length > 0 && (
+                            <div className="body-modal-section">
+                                <p className="body-modal-label">
+                                    {t('modal.whoFor')}
+                                </p>
+                                <ul className="body-modal-list">
+                                    {getWhoFor(selectedProduct).map(
+                                        (item: string, i: number) => (
+                                            <li key={i}>{item}</li>
+                                        )
+                                    )}
+                                </ul>
+                            </div>
+                        )}
 
-                        {selectedProduct.warning && (
+                        {getWarning(selectedProduct) && (
                             <div className="body-warning-box">
                                 <p className="body-modal-label">
                                     ⚠️ {t('modal.warning')}
                                 </p>
                                 <p className="body-warning-text">
-                                    {selectedProduct.warning}
+                                    {getWarning(selectedProduct)}
                                 </p>
                             </div>
                         )}

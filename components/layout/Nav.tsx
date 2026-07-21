@@ -133,7 +133,7 @@ export default function Nav({ searchItems }: { searchItems: SearchItem[] }) {
             {/* Mobile dropdown */}
             {isMobileMenuOpen && (
                 <div className="site-mobile-menu">
-                    <NavSearch items={searchItems} mode="inline" />
+                    <NavSearch items={searchItems} mode="inline" onNavigate={closeMobileMenu} />
 
                     {/* Mobile language switcher */}
                     <div className="site-mobile-language-row">

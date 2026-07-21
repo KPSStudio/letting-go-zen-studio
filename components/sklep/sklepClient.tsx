@@ -80,6 +80,15 @@ type DigitalLegalAcceptance = {
     acceptedAt: string
 }
 
+// The price the customer actually pays: the product price plus the flat shipping
+// fee on physical / bundle orders. Matches what the checkout route charges, so
+// the totals shown at checkout include postage.
+function productTotalGBP(product: SanitySklepProduct): number {
+    const ships =
+        product.productType === 'physical' || product.productType === 'bundle'
+    return product.priceGBP + (ships ? product.shippingFeeGBP ?? 0 : 0)
+}
+
 function SklepPaymentForm({
                               product,
                               onBack,
@@ -240,7 +249,7 @@ function SklepPaymentForm({
             >
                 {paying
                     ? t('payment.processing')
-                    : t('payment.pay', { price: formatPrice(product.priceGBP) })}
+                    : t('payment.pay', { price: formatPrice(productTotalGBP(product)) })}
             </button>
 
             <button
@@ -628,7 +637,7 @@ export default function SklepClient({ products }: Props) {
                         >
                             {loading === legalProduct._id
                                 ? t('loading')
-                                : t('legalStep.continueToPayment', { price: formatPrice(legalProduct.priceGBP) })}
+                                : t('legalStep.continueToPayment', { price: formatPrice(productTotalGBP(legalProduct)) })}
                         </button>
 
                         <button
@@ -684,7 +693,7 @@ export default function SklepClient({ products }: Props) {
                                 marginBottom: '1.5rem',
                             }}
                         >
-                            {formatPrice(checkoutProduct.priceGBP)}
+                            {formatPrice(productTotalGBP(checkoutProduct))}
                         </p>
 
                         <Elements
