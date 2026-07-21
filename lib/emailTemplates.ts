@@ -39,7 +39,11 @@ export const EMAIL_REPLY_TO = 'lettinggozenstudio@gmail.com'
 //
 // The bilingual copy below is complete either way, so changing this one line
 // switches the whole system — no other edits needed.
-export const FORCED_EMAIL_LANGUAGE: EmailLocale | null = 'en'
+//
+// null = follow the customer's site language (PL on /pl, EN on /en). That
+// locale rides through Stripe metadata: the shop/cart page sends it, the
+// checkout route stores it on the PaymentIntent, and the webhook reads it back.
+export const FORCED_EMAIL_LANGUAGE: EmailLocale | null = null
 
 /**
  * Decides which language an email should actually use.
@@ -218,13 +222,13 @@ export function renderEmailShell({
 
                 <!-- Header: logo, wordmark, tagline -->
                 <tr>
-                  <td align="center" style="padding: 38px 40px 22px;">
-                    <img src="${LOGO_URL}" width="54" height="54" alt="Letting Go Zen Studio"
-                         style="display: block; border: 0; margin: 0 auto 16px;">
+                  <td align="center" style="padding: 18px 40px 10px;">
+                    <img src="${LOGO_URL}" width="150" height="150" alt="Letting Go Zen Studio"
+                         style="display: block; border: 0; margin: 0 auto;">
                     <div style="font-family: ${SERIF}; font-size: 15px; letter-spacing: 0.3em; color: ${COLOR.heading}; text-transform: uppercase;">
                       Letting Go Zen Studio
                     </div>
-                    <div style="font-family: ${SANS}; font-size: 10px; letter-spacing: 0.22em; color: ${COLOR.gold}; text-transform: uppercase; padding-top: 9px;">
+                    <div style="font-family: ${SANS}; font-size: 10px; letter-spacing: 0.22em; color: ${COLOR.gold}; text-transform: uppercase; padding-top: 6px;">
                       ${tagline}
                     </div>
                   </td>
