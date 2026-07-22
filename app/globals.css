@@ -28,7 +28,9 @@
 html,
 body {
     max-width: 100%;
-    overflow-x: hidden;
+    /* `clip` (not `hidden`) contains horizontal overflow WITHOUT creating a
+       scroll container — otherwise it would break `position: sticky` on the nav. */
+    overflow-x: clip;
 }
 
 body {
