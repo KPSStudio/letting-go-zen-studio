@@ -1,5 +1,5 @@
 // app/[locale]/kontakt/page.tsx
-// Kontakt page — contact form, WhatsApp/email cards, and social links.
+// Kontakt page — contact form beside the WhatsApp/email cards and social links.
 
 'use client'
 
@@ -115,202 +115,205 @@ export default function KontaktPage() {
                 <p className="contact-intro">
                     {t('heroSubtitle')}
                 </p>
+
+                <div className="contact-ornament" aria-hidden="true">✦</div>
             </section>
 
-            <section className="contact-card-grid">
-                <article className="contact-card">
-                    <div className="contact-card-icon">
-                        📱
-                    </div>
+            {/* Two columns: contact details + socials on the left, form on the right. */}
+            <div className="contact-body">
+                <aside className="contact-info-col">
+                    <section className="contact-card-grid">
+                        <article className="contact-card">
+                            <div className="contact-card-icon">📱</div>
 
-                    <h2 className="contact-card-title">
-                        {t('whatsappTitle')}
+                            <h2 className="contact-card-title">
+                                {t('whatsappTitle')}
+                            </h2>
+
+                            <p className="contact-card-text">
+                                {t('whatsappText')}
+                            </p>
+
+                            <a
+                                href="https://wa.me/447590572043"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="contact-card-link"
+                            >
+                                📱 07590 572 043
+                            </a>
+                        </article>
+
+                        <article className="contact-card">
+                            <div className="contact-card-icon">📧</div>
+
+                            <h2 className="contact-card-title">
+                                {t('emailTitle')}
+                            </h2>
+
+                            <p className="contact-card-text">
+                                {t('emailText')}
+                            </p>
+
+                            <a
+                                href="mailto:lettinggozenstudio@gmail.com"
+                                className="contact-card-link"
+                            >
+                                📧 lettinggozenstudio@gmail.com
+                            </a>
+                        </article>
+                    </section>
+
+                    <section className="contact-social-section">
+                        <h2 className="contact-section-title">
+                            {t('socialTitle')}
+                        </h2>
+
+                        <div className="contact-social-list">
+                            {socialLinks.map((social) => (
+                                <a
+                                    key={social.label}
+                                    href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="contact-social-link"
+                                >
+                                    <span className="contact-social-icon">
+                                        {social.icon}
+                                    </span>
+
+                                    <span className="contact-social-name">
+                                        {social.label}
+                                    </span>
+
+                                    <span className="contact-social-handle">
+                                        · {social.handle}
+                                    </span>
+                                </a>
+                            ))}
+                        </div>
+                    </section>
+                </aside>
+
+                <section className="contact-form-card">
+                    {submitted && (
+                        <div className="contact-success-box">
+                            <span>✉️</span>
+
+                            <p>
+                                {t('successMessage')}
+                            </p>
+                        </div>
+                    )}
+
+                    {errorShown && (
+                        <div className="contact-error-box">
+                            <span>⚠️</span>
+
+                            <p>
+                                {t('errorMessage')}
+                            </p>
+                        </div>
+                    )}
+
+                    <h2 className="contact-section-title">
+                        {t('formTitle')}
                     </h2>
 
-                    <p className="contact-card-text">
-                        {t('whatsappText')}
-                    </p>
+                    <form onSubmit={handleSubmit}>
+                        <div className="contact-form-field">
+                            <label htmlFor="name">
+                                {t('nameLabel')}
+                            </label>
 
-                    <a
-                        href="https://wa.me/447590572043"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="contact-card-link"
-                    >
-                        📱 07590 572 043
-                    </a>
-                </article>
+                            <input
+                                id="name"
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                placeholder={t('namePlaceholder')}
+                                required
+                            />
+                        </div>
 
-                <article className="contact-card">
-                    <div className="contact-card-icon">
-                        📧
-                    </div>
+                        <div className="contact-form-field">
+                            <label htmlFor="email">
+                                {t('emailLabel')}
+                            </label>
 
-                    <h2 className="contact-card-title">
-                        {t('emailTitle')}
-                    </h2>
+                            <input
+                                id="email"
+                                type="email"
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
+                                placeholder={t('emailPlaceholder')}
+                                required
+                            />
+                        </div>
 
-                    <p className="contact-card-text">
-                        {t('emailText')}
-                    </p>
+                        <div className="contact-form-field">
+                            <label htmlFor="phone">
+                                {t('phoneLabel')}
+                            </label>
 
-                    <a
-                        href="mailto:lettinggozenstudio@gmail.com"
-                        className="contact-card-link"
-                    >
-                        📧 lettinggozenstudio@gmail.com
-                    </a>
-                </article>
-            </section>
+                            <input
+                                id="phone"
+                                type="tel"
+                                name="phone"
+                                value={formData.phone}
+                                onChange={handleChange}
+                                placeholder={t('phonePlaceholder')}
+                            />
+                        </div>
 
-            <section className="contact-form-card">
-                {submitted && (
-                    <div className="contact-success-box">
-                        <span>✉️</span>
+                        <div className="contact-form-field">
+                            <label htmlFor="subject">
+                                {t('subjectLabel')}
+                            </label>
 
-                        <p>
-                            {t('successMessage')}
-                        </p>
-                    </div>
-                )}
+                            <select
+                                id="subject"
+                                name="subject"
+                                value={formData.subject}
+                                onChange={handleChange}
+                                required
+                            >
+                                <option value="" disabled>
+                                    {t('subjectPlaceholder')}
+                                </option>
+                                <option value="biorezonans">Biorezonans</option>
+                                <option value="hipnoterapia">Hipnoterapia</option>
+                                <option value="presoterapia">Presoterapia</option>
+                                <option value="przeznaczenie">Przeznaczenie</option>
+                                <option value="alchemik">Alchemik</option>
+                                <option value="inne">{t('subjectOther')}</option>
+                            </select>
+                        </div>
 
-                {errorShown && (
-                    <div className="contact-error-box">
-                        <span>⚠️</span>
+                        <div className="contact-form-field">
+                            <label htmlFor="message">
+                                {t('messageLabel')}
+                            </label>
 
-                        <p>
-                            {t('errorMessage')}
-                        </p>
-                    </div>
-                )}
+                            <textarea
+                                id="message"
+                                name="message"
+                                value={formData.message}
+                                onChange={handleChange}
+                                placeholder={t('messagePlaceholder')}
+                                required
+                                rows={6}
+                            />
+                        </div>
 
-                <h2 className="contact-section-title">
-                    {t('formTitle')}
-                </h2>
-
-                <form onSubmit={handleSubmit}>
-                    <div className="contact-form-field">
-                        <label htmlFor="name">
-                            {t('nameLabel')}
-                        </label>
-
-                        <input
-                            id="name"
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            placeholder={t('namePlaceholder')}
-                            required
-                        />
-                    </div>
-
-                    <div className="contact-form-field">
-                        <label htmlFor="email">
-                            {t('emailLabel')}
-                        </label>
-
-                        <input
-                            id="email"
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            placeholder={t('emailPlaceholder')}
-                            required
-                        />
-                    </div>
-
-                    <div className="contact-form-field">
-                        <label htmlFor="phone">
-                            {t('phoneLabel')}
-                        </label>
-
-                        <input
-                            id="phone"
-                            type="tel"
-                            name="phone"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            placeholder={t('phonePlaceholder')}
-                        />
-                    </div>
-
-                    <div className="contact-form-field">
-                        <label htmlFor="subject">
-                            {t('subjectLabel')}
-                        </label>
-
-                        <select
-                            id="subject"
-                            name="subject"
-                            value={formData.subject}
-                            onChange={handleChange}
-                            required
-                        >
-                            <option value="" disabled>
-                                {t('subjectPlaceholder')}
-                            </option>
-                            <option value="biorezonans">Biorezonans</option>
-                            <option value="hipnoterapia">Hipnoterapia</option>
-                            <option value="presoterapia">Presoterapia</option>
-                            <option value="przeznaczenie">Przeznaczenie</option>
-                            <option value="alchemik">Alchemik</option>
-                            <option value="inne">{t('subjectOther')}</option>
-                        </select>
-                    </div>
-
-                    <div className="contact-form-field">
-                        <label htmlFor="message">
-                            {t('messageLabel')}
-                        </label>
-
-                        <textarea
-                            id="message"
-                            name="message"
-                            value={formData.message}
-                            onChange={handleChange}
-                            placeholder={t('messagePlaceholder')}
-                            required
-                            rows={5}
-                        />
-                    </div>
-
-                    <button type="submit" className="contact-submit-button">
-                        ✉️ {t('submitButton')}
-                    </button>
-                </form>
-            </section>
-
-            <section className="contact-social-section">
-                <h2 className="contact-section-title">
-                    {t('socialTitle')}
-                </h2>
-
-                <div className="contact-social-list">
-                    {socialLinks.map((social) => (
-                        <a
-                            key={social.label}
-                            href={social.href}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="contact-social-link"
-                        >
-                            <span className="contact-social-icon">
-                                {social.icon}
-                            </span>
-
-                            <span className="contact-social-name">
-                                {social.label}
-                            </span>
-
-                            <span className="contact-social-handle">
-                                · {social.handle}
-                            </span>
-                        </a>
-                    ))}
-                </div>
-            </section>
+                        <button type="submit" className="contact-submit-button">
+                            ✉️ {t('submitButton')}
+                        </button>
+                    </form>
+                </section>
+            </div>
         </main>
     )
 }

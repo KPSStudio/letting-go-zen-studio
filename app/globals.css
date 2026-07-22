@@ -2083,9 +2083,9 @@ body::after {
 .contact-page {
     position: relative;
     z-index: 2;
-    width: min(100%, 960px);
+    width: min(100%, 1120px);
     margin: 0 auto;
-    padding: 4rem 2rem 8rem;
+    padding: 4rem 2rem 6rem;
 }
 
 /* Floating aura behind the whole page */
@@ -2129,8 +2129,18 @@ body::after {
 }
 
 .contact-header {
-    margin-bottom: 5rem;
+    margin-bottom: 2.5rem;
     text-align: center;
+}
+
+/* Small gold flourish under the intro, tying the page to the site's aesthetic. */
+.contact-ornament {
+    margin-top: 1.4rem;
+    font-family: var(--font-cinzel);
+    font-size: 1.1rem;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-shadow: 0 0 16px rgba(212, 175, 106, 0.5);
 }
 
 .contact-title {
@@ -2176,12 +2186,33 @@ body::after {
     opacity: 0.78;
 }
 
-/* Contact cards — WhatsApp + Email */
+/* Two-column body: contact details / socials on the left, form on the right. */
+.contact-body {
+    display: grid;
+    grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.contact-info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+@media (max-width: 900px) {
+    .contact-body {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}
+
+/* Contact cards — WhatsApp + Email (stacked within the info column) */
 .contact-card-grid {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 4rem;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-bottom: 0;
 }
 
 .contact-card {
@@ -2327,8 +2358,8 @@ body::after {
 .contact-form-card {
     position: relative;
     overflow: hidden;
-    margin-bottom: 4rem;
-    padding: 3rem;
+    margin-bottom: 0;
+    padding: 2.75rem;
     background: linear-gradient(
             180deg,
             rgba(61, 8, 69, 0.42) 0%,
@@ -2682,7 +2713,7 @@ body::after {
     .contact-card-grid {
         grid-template-columns: 1fr;
         gap: 1.25rem;
-        margin-bottom: 3rem;
+        margin-bottom: 0;
     }
 
     .cart-layout {
@@ -2691,12 +2722,16 @@ body::after {
 
     .contact-form-card {
         padding: 1.75rem 1.25rem;
-        margin-bottom: 3rem;
+        margin-bottom: 0;
     }
 
     .contact-header {
         text-align: left;
-        margin-bottom: 3.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .contact-ornament {
+        display: none;
     }
 }
 
