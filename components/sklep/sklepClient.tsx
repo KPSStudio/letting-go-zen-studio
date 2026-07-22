@@ -320,6 +320,20 @@ export default function SklepClient({ products }: Props) {
         return locale === 'en' && product.descEn ? product.descEn : product.descPl
     }
 
+    // Bilingual content: use the English fields on /en when filled, otherwise
+    // fall back to the Polish ones (so existing products keep working).
+    function getDeliveryNote(product: SanitySklepProduct) {
+        return locale === 'en' && product.deliveryNoteEn
+            ? product.deliveryNoteEn
+            : product.deliveryNote
+    }
+
+    function getIncludes(product: SanitySklepProduct) {
+        return locale === 'en' && product.includesEn?.length
+            ? product.includesEn
+            : product.includes ?? []
+    }
+
     // ── SEARCH: filter + rank the products we already have in memory ──
     // We match against name, keywords, "includes" and description (both languages),
     // and weight matches so the most relevant product floats to the top.
@@ -855,7 +869,7 @@ export default function SklepClient({ products }: Props) {
 
                             <p className="shop-delivery-badge">
                                 <span>📄</span>
-                                {product.deliveryNote?.toUpperCase() ?? t('modalBadge')}
+                                {getDeliveryNote(product)?.toUpperCase() ?? t('modalBadge')}
                             </p>
 
                             <h2 className="body-product-name">
@@ -867,7 +881,7 @@ export default function SklepClient({ products }: Props) {
                             </p>
 
                             <p className="body-product-pdf">
-                                📄 {product.deliveryNote}
+                                📄 {getDeliveryNote(product)}
                             </p>
 
                             <div className="body-product-bottom">
@@ -938,14 +952,14 @@ export default function SklepClient({ products }: Props) {
                             {getProductName(selectedProduct)}
                         </h2>
 
-                        {selectedProduct.includes && selectedProduct.includes.length > 0 && (
+                        {getIncludes(selectedProduct).length > 0 && (
                             <div className="body-modal-section">
                                 <p className="body-modal-label">
                                     {t('includesLabel')}
                                 </p>
 
                                 <ul className="body-modal-list">
-                                    {selectedProduct.includes.map((item, i) => (
+                                    {getIncludes(selectedProduct).map((item, i) => (
                                         <li key={i}>
                                             {item}
                                         </li>

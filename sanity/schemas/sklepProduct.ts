@@ -144,13 +144,24 @@ export default defineType({
 
     defineField({
       name: "deliveryNote",
-      title: "Informacja o dostawie",
+      title: "Informacja o dostawie (Polski)",
       type: "string",
       initialValue: "PDF · Natychmiastowe pobranie po zakupie",
     }),
     defineField({
+      name: "deliveryNoteEn",
+      title: "Delivery note (English) — leave empty to reuse Polish",
+      type: "string",
+    }),
+    defineField({
       name: "includes",
-      title: "Co zawiera (lista)",
+      title: "Co zawiera — lista (Polski)",
+      type: "array",
+      of: [{ type: "string" }],
+    }),
+    defineField({
+      name: "includesEn",
+      title: "What's included — list (English), leave empty to reuse Polish",
       type: "array",
       of: [{ type: "string" }],
     }),

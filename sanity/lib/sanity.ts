@@ -64,7 +64,9 @@ export interface SanitySklepProduct {
   shippingFeeGBP?: number;
   fileName?: string;
   deliveryNote?: string;
+  deliveryNoteEn?: string;
   includes?: string[];
+  includesEn?: string[];
   isActive?: boolean;
   order?: number;
 }
