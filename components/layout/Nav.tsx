@@ -5,7 +5,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -37,6 +37,19 @@ export default function Nav({ searchItems }: { searchItems: SearchItem[] }) {
     const t = useTranslations('nav')
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+    // Tracks whether the page has been scrolled, so the fixed nav can pick up a
+    // frosted background + soft shadow once it sits over the page content.
+    const [scrolled, setScrolled] = useState(false)
+
+    useEffect(() => {
+        function onScroll() {
+            setScrolled(window.scrollY > 8)
+        }
+        onScroll()
+        window.addEventListener('scroll', onScroll, { passive: true })
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
 
     // Removes /pl or /en from current URL so active-link checking works.
     // Example: /pl/body becomes /body.
@@ -75,7 +88,7 @@ export default function Nav({ searchItems }: { searchItems: SearchItem[] }) {
     }
 
     return (
-        <nav className="site-nav">
+        <nav className={scrolled ? 'site-nav site-nav-scrolled' : 'site-nav'}>
             <Link
                 href={`/${locale}`}
                 className="site-nav-brand"

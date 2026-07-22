@@ -2989,6 +2989,20 @@ body::after {
     background: rgba(0, 0, 0, 0.82);
     border-bottom: 1px solid rgba(184, 148, 42, 0.16);
     z-index: 1000;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    transition: background 0.35s ease, box-shadow 0.35s ease,
+        backdrop-filter 0.35s ease, border-color 0.35s ease;
+}
+
+/* Once the page is scrolled, the fixed bar sits over the content — deepen the
+   background, blur harder and lift it with a soft shadow so it reads clearly. */
+.site-nav-scrolled {
+    background: rgba(8, 2, 12, 0.9);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-bottom-color: rgba(184, 148, 42, 0.34);
 }
 
 .site-nav::after {
@@ -4116,18 +4130,9 @@ body::after {
         font-size: clamp(7rem, 28vw, 9rem);
     }
 
-    /* On mobile the bar itself scrolls away — only the menu button (below)
-       stays fixed and follows the scroll. */
     .site-nav {
-        position: static;
         min-height: 64px;
         padding: 0.75rem 1rem;
-    }
-
-    /* When open, anchor the dropdown to the fixed button, not the scrolled bar. */
-    .site-mobile-menu {
-        position: fixed;
-        top: 5.6rem;
     }
 
     .site-nav-brand {
@@ -4166,13 +4171,6 @@ body::after {
     }
 
     .site-nav-mobile-button {
-        /* Fixed so it follows the scroll; top ~3rem lines it up snugly with the
-           bar at the top of the page (utility bar + nav padding). */
-        position: fixed;
-        top: 3rem;
-        right: 1rem;
-        z-index: 10000;
-        background: rgba(18, 3, 24, 0.92);
         min-width: 2.7rem;
         min-height: 2.4rem;
         display: inline-flex;
