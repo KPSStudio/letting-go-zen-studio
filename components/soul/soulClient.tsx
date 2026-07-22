@@ -171,7 +171,7 @@ export default function SoulClient({ products }: Props) {
                                                 textDecoration: 'none',
                                             }}
                                         >
-                                            ZAREZERWUJ
+                                            {t('button.book')}
                                         </Link>
                                     ) : (
                                         <button
@@ -290,7 +290,7 @@ export default function SoulClient({ products }: Props) {
                                     className="body-modal-cart-button"
                                     onClick={() => setSelectedProduct(null)}
                                 >
-                                    ZAREZERWUJ · {formatPrice(selectedProduct.priceGBP)}
+                                    {t('button.book')} · {formatPrice(selectedProduct.priceGBP)}
                                 </Link>
                             ) : (
                                 <button

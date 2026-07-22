@@ -169,7 +169,7 @@ export default function MindClient({ products }: Props) {
                                                 textDecoration: 'none',
                                             }}
                                         >
-                                            ZAREZERWUJ
+                                            {t('buttons.book')}
                                         </Link>
                                     ) : (
                                         <button
@@ -294,7 +294,7 @@ export default function MindClient({ products }: Props) {
                                     className="body-modal-cart-button"
                                     onClick={() => setSelectedProduct(null)}
                                 >
-                                    ZAREZERWUJ · {formatPrice(selectedProduct.priceGBP)}
+                                    {t('buttons.book')} · {formatPrice(selectedProduct.priceGBP)}
                                 </Link>
                             ) : (
                                 <button

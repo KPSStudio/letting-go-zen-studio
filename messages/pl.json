@@ -38,6 +38,7 @@
     "inCart": "✓ W KOSZYKU",
     "addToCartShort": "+ KOSZYK",
     "addToCartFull": "+ Dodaj do Koszyka",
+    "book": "ZAREZERWUJ",
     "moreInfo": "WIĘCEJ INFO",
     "close": "Zamknij",
     "session": "Sesja",
@@ -377,6 +378,7 @@
       "inCart": "✓ W KOSZYKU",
       "moreInfo": "WIĘCEJ INFO",
       "addToCartLong": "+ Dodaj do Koszyka · {price}",
+      "book": "ZAREZERWUJ",
       "close": "Zamknij"
     },
     "modal": {
@@ -582,6 +584,7 @@
       "inCart": "✓ W KOSZYKU",
       "moreInfo": "WIĘCEJ INFO",
       "addToCartFull": "+ Dodaj do Koszyka",
+      "book": "ZAREZERWUJ",
       "close": "Zamknij"
     },
     "modal": {
@@ -701,7 +704,7 @@
     "studioLabel": "MOJE STUDIO",
     "studioText": "W moim studiu pomagam zachować balans w sferze Umysł · Ciało · Dusza. Nie diagnozuję ani nie leczę — analizuję potencjalne obciążenia i oddziaływanie stresu na całe ciało i umysł. Wykorzystuję możliwości techniki kwantowej, wodorowej i hipnoterapii. Każdy klient jest traktowany indywidualnie, na podstawie wstępnej rozmowy i ankiety.",
     "importantLabel": "WAŻNE INFORMACJE",
-    "importantTextOne": "Nie zalecam leczenia ani odstawiania leków czy rezygnowania z tradycyjnej medycyny. Wszystkie podejmowane działania klient powinien zawsze konsultować z lekarzem.",
+    "importantTextOne": "Nie udzielam porad medycznych ani nie zalecam zmian w przepisanym leczeniu lub przyjmowanych lekach. Wszelkie decyzje dotyczące zdrowia należy skonsultować z wykwalifikowanym specjalistą medycznym.",
     "importantTextTwo": "Dbam o dobro klienta zgodnie z Art. 13 RODO i Art. 14 RODO.",
     "bookingLabel": "PLACEHOLDER CALENDLY",
     "bookingText": "Tutaj później podłączymy prawdziwy link lub osadzony kalendarz Calendly.",

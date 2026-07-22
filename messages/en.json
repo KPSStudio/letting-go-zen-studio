@@ -38,6 +38,7 @@
     "inCart": "✓ IN CART",
     "addToCartShort": "+ CART",
     "addToCartFull": "+ Add to Cart",
+    "book": "BOOK",
     "moreInfo": "MORE INFO",
     "close": "Close",
     "session": "Session",
@@ -377,6 +378,7 @@
       "inCart": "✓ IN CART",
       "moreInfo": "MORE INFO",
       "addToCartLong": "+ Add to Cart · {price}",
+      "book": "BOOK",
       "close": "Close"
     },
     "modal": {
@@ -582,6 +584,7 @@
       "inCart": "✓ IN CART",
       "moreInfo": "MORE INFO",
       "addToCartFull": "+ Add to Cart",
+      "book": "BOOK",
       "close": "Close"
     },
     "modal": {
@@ -701,7 +704,7 @@
     "studioLabel": "MY STUDIO",
     "studioText": "In my studio, I help support balance across Mind · Body · Soul. I do not diagnose or treat medical conditions — I analyse potential energetic burdens and the impact of stress on the body and mind. I work with quantum, hydrogen and hypnotherapy-based techniques. Every client is treated individually, based on an initial conversation and questionnaire.",
     "importantLabel": "IMPORTANT INFORMATION",
-    "importantTextOne": "I do not recommend medical treatment, stopping medication, or replacing traditional medicine. Any health-related decisions should always be discussed with a qualified doctor.",
+    "importantTextOne": "I do not provide medical advice or recommend changes to prescribed treatment or medication. Any health-related decisions should be discussed with a qualified medical professional.",
     "importantTextTwo": "I care for the client's wellbeing in accordance with GDPR Article 13 and GDPR Article 14.",
     "bookingLabel": "CALENDLY PLACEHOLDER",
     "bookingText": "Later, we will connect the real Calendly link or embedded booking calendar here.",

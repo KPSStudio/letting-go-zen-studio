@@ -173,7 +173,7 @@ export default function BodyClient({ products, locale }: Props) {
                                                 textDecoration: 'none',
                                             }}
                                         >
-                                            ZAREZERWUJ
+                                            {t('book')}
                                         </Link>
                                     ) : (
                                         <button
@@ -300,7 +300,7 @@ export default function BodyClient({ products, locale }: Props) {
                                     className="body-modal-cart-button"
                                     onClick={() => setSelectedProduct(null)}
                                 >
-                                    ZAREZERWUJ · {formatPrice(selectedProduct.priceGBP)}
+                                    {t('book')} · {formatPrice(selectedProduct.priceGBP)}
                                 </Link>
                             ) : (
                                 <button
