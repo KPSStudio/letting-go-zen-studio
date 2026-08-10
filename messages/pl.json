@@ -4,29 +4,7 @@
     "titleMain": "Zarezerwuj",
     "titleGold": "Sesję",
     "intro": "Wybierz dogodny termin. Otrzymasz potwierdzenie na email.",
-    "paidInGbp": "Płatność pobierana jest bezpiecznie w GBP (£) przy zakupie.",
-    "verifying": "Weryfikacja płatności...",
-    "loadingCalendar": "Ładowanie kalendarza...",
-    "blockedTitle": "Rezerwacja wymaga wyboru usługi i opłacenia sesji",
-    "blockedText": "Aby zarezerwować termin, wybierz usługę na stronie Ciało, Umysł lub Dusza, wypełnij formularz zgody i opłać sesję. Kalendarz otworzy się automatycznie po płatności.",
-    "bodyButton": "Ciało",
-    "mindButton": "Umysł",
-    "soulButton": "Dusza"
-  },
-  "bookingPending": {
-    "label": "Bezpieczna Rezerwacja",
-    "confirmingMain": "Potwierdzanie",
-    "confirmingGold": "Płatności",
-    "waitText": "Przetwarzamy Twoją płatność. Za chwilę zostaniesz przekierowany do kalendarza, aby wybrać termin sesji. Nie zamykaj tej strony.",
-    "waitSubtext": "To zwykle trwa tylko kilka sekund.",
-    "usedMain": "Rezerwacja",
-    "usedGold": "Zakończona",
-    "usedText": "Ta płatność została już wykorzystana do rezerwacji terminu. Sprawdź swoją skrzynkę email — potwierdzenie zostało wysłane.",
-    "usedSubtext": "Aby zarezerwować kolejną sesję, wróć na stronę usług i rozpocznij nową rezerwację.",
-    "failedMain": "Coś poszło",
-    "failedGold": "nie tak",
-    "failedText": "Nie udało się potwierdzić płatności w ciągu minuty. Jeśli środki zostały pobrane, Twoja rezerwacja jest bezpieczna — skontaktuj się z nami, a prześlemy link do wyboru terminu: joanna@lettinggozenstudio.com",
-    "failedSubtext": "Twoja płatność jest bezpieczna — odpowiemy najszybciej, jak to możliwe."
+    "paidInGbp": "Płatność pobierana jest bezpiecznie w GBP (£) przy zakupie."
   },
   "body": {
     "emptyState": "Wkrótce — usługi pojawią się tutaj po dodaniu ich w panelu administracyjnym.",
@@ -284,7 +262,8 @@
         ],
         "warning": "Zastrzeżenie: Woda wodorowa nie zmienia odczynu pH organizmu, a zalecane dzienne spożycie wynosi zazwyczaj od 1 do 3 litrów, którą możesz u nas zamówić. Skonsultuj się z lekarzem jeśli masz poważne schorzenia."
       }
-    ]
+    ],
+    "closeModal": "Zamknij okno"
   },
   "nav": {
     "home": "Strona Główna",
@@ -294,7 +273,9 @@
     "sklep": "Sklep",
     "wspolpraca": "Współpraca",
     "omnie": "O Mnie",
-    "kontakt": "Kontakt"
+    "kontakt": "Kontakt",
+    "openMenu": "Otwórz menu nawigacji",
+    "closeMenu": "Zamknij menu nawigacji"
   },
   "utility": {
     "phone": "07590 572 043",
@@ -360,7 +341,8 @@
     "messageLabel": "WIADOMOŚĆ",
     "messagePlaceholder": "Napisz swoją wiadomość...",
     "submitButton": "WYŚLIJ WIADOMOŚĆ",
-    "socialTitle": "Znajdź nas w mediach społecznościowych"
+    "socialTitle": "Znajdź nas w mediach społecznościowych",
+    "sendingButton": "Wysyłanie..."
   },
   "mindPage": {
     "back": "← POWRÓT",
@@ -464,7 +446,8 @@
         ],
         "warning": null
       }
-    }
+    },
+    "closeModal": "Zamknij okno"
   },
   "aboutPage": {
     "label": "O MNIE",
@@ -550,7 +533,7 @@
     "success": {
       "title": "Dziękujemy",
       "text": "Link do pobrania został wysłany na Twój email.",
-      "subtext": "PDF · Dostawa Natychmiastowa · 24h Link",
+      "subtext": "PDF · Dostawa natychmiastowa · Link ważny 30 dni",
       "button": "Wróć na Stronę Główną"
     },
     "products": {
@@ -564,7 +547,9 @@
           "instantPdf": "Format PDF — dostęp natychmiastowy po zakupie"
         }
       }
-    }
+    },
+    "unavailable": "Wkrótce dostępne",
+    "closeModal": "Zamknij okno"
   },
   "soul": {
     "back": "← POWRÓT",
@@ -654,7 +639,8 @@
           "Wsparcie energetyczne"
         ]
       }
-    }
+    },
+    "closeModal": "Zamknij okno"
   },
   "bookingConsent": {
     "back": "Wróć",
@@ -706,15 +692,14 @@
     "importantLabel": "WAŻNE INFORMACJE",
     "importantTextOne": "Nie udzielam porad medycznych ani nie zalecam zmian w przepisanym leczeniu lub przyjmowanych lekach. Wszelkie decyzje dotyczące zdrowia należy skonsultować z wykwalifikowanym specjalistą medycznym.",
     "importantTextTwo": "Dbam o dobro klienta zgodnie z Art. 13 RODO i Art. 14 RODO.",
-    "bookingLabel": "PLACEHOLDER CALENDLY",
-    "bookingText": "Tutaj później podłączymy prawdziwy link lub osadzony kalendarz Calendly.",
+    "bookingLabel": "REZERWACJA SESJI",
+    "bookingText": "Rezerwacje prowadzimy przez kalendarz online. Wybierz usługę na stronie Ciało, Umysł lub Dusza — po wypełnieniu formularza zgody otworzy się kalendarz z wolnymi terminami. Jeśli nie wiesz, którą sesję wybrać, napisz do mnie.",
     "bookingButton": "ZAREZERWUJ SESJĘ"
   },
   "cartPage": {
     "thankYou": {
       "label": "Letting Go Zen Studio",
       "title": "Dziękujemy",
-      "bookingText": "Płatność została przyjęta, a rezerwacja została potwierdzona.",
       "paymentText": "Joanna skontaktuje się z Tobą w ciągu 24 godzin na WhatsApp lub email.",
       "subtext": "Ciało · Umysł · Dusza",
       "homeButton": "Wróć na Stronę Główną"
@@ -946,9 +931,13 @@
         },
         "cookies": {
           "title": "9. Pliki Cookies",
-          "content": "Strona wykorzystuje pliki cookies w celu prawidłowego działania strony, analizy ruchu oraz poprawy jakości usług. Użytkownik może zmienić ustawienia cookies w swojej przeglądarce."
+          "content": "Strona wykorzystuje wyłącznie pliki cookies niezbędne do jej prawidłowego działania — zapamiętanie wybranego języka (NEXT_LOCALE). Nie stosujemy plików cookies analitycznych ani marketingowych i nie prowadzimy analizy ruchu użytkowników. Podczas płatności lub rezerwacji nasi dostawcy (Stripe, Cal.com) mogą ustawić własne pliki cookies niezbędne do bezpiecznego przeprowadzenia transakcji. Ustawienia plików cookies można zmienić w przeglądarce."
         }
       }
     }
+  },
+  "disclaimer": {
+    "label": "WAŻNA INFORMACJA",
+    "text": "Usługi Letting Go Zen Studio nie mają na celu diagnozy ani analizy medycznej i nie zastępują porady, diagnozy ani leczenia prowadzonego przez wykwalifikowanego specjalistę medycznego."
   }
 }

@@ -80,6 +80,27 @@ const SERIF = "Georgia, 'Times New Roman', serif"
 const SANS = "'Helvetica Neue', Helvetica, Arial, sans-serif"
 
 /**
+ * Escapes text before it is interpolated into email HTML.
+ *
+ * Every dynamic value in these templates — product names and "includes" lists
+ * from Sanity, cart item names, the customer's own email address, a shipping
+ * address typed into Stripe — reaches the markup through a template literal.
+ * Without escaping, an apostrophe in a Polish product name renders wrong and a
+ * stray `<` silently swallows the rest of the email; a deliberate `<a>` or
+ * `<style>` in a CMS field would be rendered as live markup in Joanna's inbox.
+ *
+ * Use this on EVERY interpolated value that did not originate as our own HTML.
+ */
+export function escapeHtml(value: unknown): string {
+    return String(value ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+}
+
+/**
  * Formats a Stripe amount for display.
  * Stripe stores money in the smallest unit (pence / grosze), so 6000 = £60.00.
  */
@@ -102,13 +123,16 @@ export function formatMoney(amountInMinorUnits: number, currency: string): strin
  * gradient at all.
  */
 export function renderButton(label: string, url: string): string {
+    const safeLabel = escapeHtml(label)
+    const safeUrl = escapeHtml(url)
+
     return `
       <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto;">
         <tr>
           <td bgcolor="${COLOR.frame}" style="border-radius: 6px;">
-            <a href="${url}"
+            <a href="${safeUrl}"
                style="display: inline-block; padding: 15px 40px; font-family: ${SANS}; font-size: 13px; font-weight: bold; letter-spacing: 0.12em; text-transform: uppercase; color: ${COLOR.buttonText}; text-decoration: none; border-radius: 6px;">
-              ${label}
+              ${safeLabel}
             </a>
           </td>
         </tr>
@@ -194,13 +218,13 @@ export function renderEmailShell({
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
-  <title>${heading}</title>
+  <title>${escapeHtml(heading)}</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: ${COLOR.pageBackground};">
 
   <!-- Preheader: shown in the inbox preview but hidden inside the email. -->
   <div style="display: none; max-height: 0; overflow: hidden; opacity: 0;">
-    ${preheader}
+    ${escapeHtml(preheader)}
   </div>
 
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
@@ -240,7 +264,7 @@ export function renderEmailShell({
                 <tr>
                   <td style="padding: 30px 40px 0;">
                     <h1 style="margin: 0; font-family: ${SERIF}; font-size: 25px; font-weight: normal; letter-spacing: 0.01em; color: ${COLOR.heading};">
-                      ${heading}
+                      ${escapeHtml(heading)}
                     </h1>
                   </td>
                 </tr>
@@ -262,7 +286,7 @@ export function renderEmailShell({
         footerNote
             ? `<tr>
                        <td align="center" style="padding: 18px 44px 0; font-family: ${SANS}; font-size: 13px; line-height: 1.6; color: ${COLOR.inkSoft};">
-                         ${footerNote}
+                         ${escapeHtml(footerNote)}
                        </td>
                      </tr>`
             : ''

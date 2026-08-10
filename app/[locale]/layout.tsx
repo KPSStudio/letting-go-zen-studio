@@ -12,88 +12,29 @@ import { CurrencyProvider } from '@/lib/CurrencyContext'
 import { CartProvider } from '@/lib/CartContext'
 import { getServicesByCategory, getSklepProducts } from '@/sanity/lib/sanity'
 import type { SearchItem } from '@/components/layout/NavSearch'
+import { SITE_BASE_URL, SITE_NAME } from '@/lib/pageMetadata'
 
 // Fonts (Marcellus for headings, Montserrat for body) are loaded in
 // globals.css and assigned to --font-cinzel / --font-raleway there. We used to
 // also pull Cinzel/Raleway through next/font, but the CSS overrode them, so
 // they downloaded for nothing — removed.
 
-export async function generateMetadata({
-                                                   params,
-                                               }: {
-    params: Promise<{ locale: string }>
-}): Promise<Metadata> {
-    const { locale } = await params
-    const baseUrl = 'https://www.lettinggozenstudio.com'
-    const activeLocale = locale === 'en' ? 'en' : 'pl'
-    const canonicalUrl = `${baseUrl}/${activeLocale}`
-
-    const metadataByLocale = {
-        pl: {
-            title: 'Letting Go Zen Studio | Holistyczne sesje terapeutyczne w UK',
-            description: 'Letting Go Zen Studio oferuje holistyczne sesje Ciało, Umysł i Dusza dla osób szukających wsparcia, równowagi i pracy ze stresem w UK.',
-            keywords: [
-                'Letting Go Zen Studio',
-                'holistyczne sesje UK',
-                'terapia holistyczna Aberdeen',
-                'hipnoterapia UK',
-                'EFT UK',
-                'biorezonans UK',
-                'biofeedback UK',
-                'wellbeing UK',
-            ],
-            openGraphLocale: 'pl_PL',
-        },
-        en: {
-            title: 'Letting Go Zen Studio | Holistic Wellness Sessions in the UK',
-            description: 'Letting Go Zen Studio offers holistic Body, Mind and Soul sessions for people seeking support, balance and stress relief in the UK.',
-            keywords: [
-                'Letting Go Zen Studio',
-                'holistic wellness UK',
-                'holistic therapy Aberdeen',
-                'hypnotherapy UK',
-                'EFT UK',
-                'bioresonance UK',
-                'biofeedback UK',
-                'stress relief UK',
-            ],
-            openGraphLocale: 'en_GB',
-        },
-    }
-
-    const metadata = metadataByLocale[activeLocale]
-
-    return {
-        metadataBase: new URL(baseUrl),
-        title: metadata.title,
-        description: metadata.description,
-        keywords: metadata.keywords,
-        openGraph: {
-            title: metadata.title,
-            description: metadata.description,
-            url: canonicalUrl,
-            siteName: 'Letting Go Zen Studio',
-            locale: metadata.openGraphLocale,
-            type: 'website',
-        },
-        twitter: {
-            card: 'summary_large_image',
-            title: metadata.title,
-            description: metadata.description,
-        },
-        robots: {
-            index: true,
-            follow: true,
-        },
-        alternates: {
-            canonical: canonicalUrl,
-            languages: {
-                pl: `${baseUrl}/pl`,
-                en: `${baseUrl}/en`,
-                'x-default': `${baseUrl}/pl`,
-            },
-        },
-    }
+// Only site-wide defaults live here now.
+//
+// This layout used to declare the full homepage metadata — title, description
+// AND a canonical of `${baseUrl}/${locale}`. Because Next.js inherits layout
+// metadata into any child route that does not declare its own, every page on
+// the site served the homepage title and a canonical pointing at the homepage.
+// Each route now owns its metadata via lib/pageMetadata.ts, and this layout
+// keeps only what genuinely is site-wide.
+export const metadata: Metadata = {
+    metadataBase: new URL(SITE_BASE_URL),
+    title: {
+        // Used only if a route somehow declares no title of its own.
+        default: SITE_NAME,
+        template: `%s`,
+    },
+    applicationName: SITE_NAME,
 }
 
 export default async function LocaleLayout({

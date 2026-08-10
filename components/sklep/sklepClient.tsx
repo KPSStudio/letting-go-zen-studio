@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState, type FormEvent } from 'react'
+import { useEffect, useMemo, useState, type FormEvent, useCallback } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { SanitySklepProduct } from '@/sanity/lib/sanity'
@@ -16,6 +16,7 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js'
+import { useDialogBehaviour } from '@/components/common/useDialogBehaviour'
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
@@ -72,12 +73,26 @@ const stripeAppearance = {
     },
 }
 
-type DigitalLegalAcceptance = {
+// What the customer actually agreed to, split by meaning rather than sent as
+// one undifferentiated "yes". A physical order keeps its statutory withdrawal
+// right, so `withdrawalAcknowledged` must only be true for products that are
+// delivered immediately as a file.
+type ShopLegalAcceptance = {
     termsAccepted: boolean
     privacyAccepted: boolean
     immediateDeliveryConsent: boolean
     withdrawalAcknowledged: boolean
+    shippingConsent: boolean
     acceptedAt: string
+}
+
+// Product types the checkout and webhook can actually fulfil end to end.
+// Mirrors FULFILLABLE_PRODUCT_TYPES in app/api/checkout/sklep/route.ts — the
+// server is the enforcing side; this is so the UI never offers a dead button.
+const SELLABLE_PRODUCT_TYPES = ['digital', 'physical', 'bundle']
+
+function isSellable(product: SanitySklepProduct): boolean {
+    return SELLABLE_PRODUCT_TYPES.includes(product.productType ?? 'digital')
 }
 
 // The price the customer actually pays: the product price plus the flat shipping
@@ -273,6 +288,15 @@ export default function SklepClient({ products }: Props) {
     const { currency, formatPrice } = useCurrency()
 
     const [selectedProduct, setSelectedProduct] = useState<SanitySklepProduct | null>(null)
+
+
+    // Modal dialog behaviour: Escape to close, focus moved in and returned
+
+    // to the trigger, Tab trapped inside, page behind locked.
+
+    const closeProductModal = useCallback(() => setSelectedProduct(null), [])
+
+    const modalPanelRef = useDialogBehaviour(Boolean(selectedProduct), closeProductModal)
     const [legalProduct, setLegalProduct] = useState<SanitySklepProduct | null>(null)
     const [checkoutProduct, setCheckoutProduct] = useState<SanitySklepProduct | null>(null)
     const [clientSecret, setClientSecret] = useState<string | null>(null)
@@ -377,7 +401,7 @@ export default function SklepClient({ products }: Props) {
 
     async function handleBuyNow(
         product: SanitySklepProduct,
-        legalAcceptance: DigitalLegalAcceptance
+        legalAcceptance: ShopLegalAcceptance
     ) {
         setLoading(product._id)
 
@@ -387,12 +411,12 @@ export default function SklepClient({ products }: Props) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                // Only the product id, the currency and the acceptance record
+                // are sent. Price, name, type and fileName are all resolved
+                // server-side from Sanity — sending them from here achieved
+                // nothing except implying they were trusted.
                 body: JSON.stringify({
                     productId: product._id,
-                    productName: product.namePl,
-                    fileName: product.fileName,
-                    priceGBP: product.priceGBP,
-                    pricePLN: product.pricePLN,
                     currency,
                     locale,
 
@@ -400,6 +424,7 @@ export default function SklepClient({ products }: Props) {
                     privacyAccepted: legalAcceptance.privacyAccepted,
                     immediateDeliveryConsent: legalAcceptance.immediateDeliveryConsent,
                     withdrawalAcknowledged: legalAcceptance.withdrawalAcknowledged,
+                    shippingConsent: legalAcceptance.shippingConsent,
                     acceptedAt: legalAcceptance.acceptedAt,
                 }),
             })
@@ -434,11 +459,20 @@ export default function SklepClient({ products }: Props) {
             return
         }
 
+        // The second checkbox means different things per product type: for a
+        // digital file it is consent to immediate delivery (and the withdrawal
+        // consequence); for a shipped item it is delivery/address consent. A
+        // bundle is both. Record it as what it actually was.
+        const productType = legalProduct.productType ?? 'digital'
+        const hasPdf = productType === 'digital' || productType === 'bundle'
+        const ships = productType === 'physical' || productType === 'bundle'
+
         void handleBuyNow(legalProduct, {
             termsAccepted: true,
             privacyAccepted: true,
-            immediateDeliveryConsent: true,
-            withdrawalAcknowledged: true,
+            immediateDeliveryConsent: hasPdf,
+            withdrawalAcknowledged: hasPdf,
+            shippingConsent: ships,
             acceptedAt: new Date().toISOString(),
         })
     }
@@ -891,19 +925,29 @@ export default function SklepClient({ products }: Props) {
                                     </span>
                                 </div>
 
+                                {/* Product types with no fulfilment path (course)
+                                    must not be purchasable. The server rejects
+                                    them too — this just avoids offering a
+                                    button that can only fail. */}
                                 <button
                                     type="button"
                                     onClick={() => openLegalStep(product)}
-                                    disabled={loading === product._id}
+                                    disabled={loading === product._id || !isSellable(product)}
                                     className="shop-buy-button"
                                     style={{
-                                        opacity: loading === product._id ? 0.6 : 1,
-                                        cursor: loading === product._id ? 'not-allowed' : 'pointer',
+                                        opacity:
+                                            loading === product._id || !isSellable(product) ? 0.6 : 1,
+                                        cursor:
+                                            loading === product._id || !isSellable(product)
+                                                ? 'not-allowed'
+                                                : 'pointer',
                                     }}
                                 >
-                                    {loading === product._id
-                                        ? t('loading')
-                                        : `🔒 ${t('buyNow')} — ${formatPrice(product.priceGBP)}`}
+                                    {!isSellable(product)
+                                        ? t('unavailable')
+                                        : loading === product._id
+                                            ? t('loading')
+                                            : `🔒 ${t('buyNow')} — ${formatPrice(product.priceGBP)}`}
                                 </button>
 
                                 <button
@@ -923,17 +967,24 @@ export default function SklepClient({ products }: Props) {
                 <div
                     onClick={() => setSelectedProduct(null)}
                     className="body-modal-backdrop"
+                    role="presentation"
                 >
                     <div
                         onClick={e => e.stopPropagation()}
                         className="body-modal-panel"
+                        ref={modalPanelRef}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="product-modal-title"
+                        tabIndex={-1}
                     >
                         <button
                             type="button"
                             onClick={() => setSelectedProduct(null)}
                             className="body-modal-close"
+                            aria-label={t('closeModal')}
                         >
-                            ×
+                            <span aria-hidden="true">×</span>
                         </button>
 
                         <p
@@ -948,7 +999,7 @@ export default function SklepClient({ products }: Props) {
                             📄 {t('modalBadge')}
                         </p>
 
-                        <h2 className="body-modal-title">
+                        <h2 id="product-modal-title" className="body-modal-title">
                             {getProductName(selectedProduct)}
                         </h2>
 
@@ -972,9 +1023,18 @@ export default function SklepClient({ products }: Props) {
                             <button
                                 type="button"
                                 onClick={() => openLegalStep(selectedProduct)}
+                                disabled={!isSellable(selectedProduct)}
                                 className="shop-modal-buy-button"
+                                style={{
+                                    opacity: isSellable(selectedProduct) ? 1 : 0.6,
+                                    cursor: isSellable(selectedProduct)
+                                        ? 'pointer'
+                                        : 'not-allowed',
+                                }}
                             >
-                                🔒 {t('buyNow')} — {formatPrice(selectedProduct.priceGBP)}
+                                {isSellable(selectedProduct)
+                                    ? `🔒 ${t('buyNow')} — ${formatPrice(selectedProduct.priceGBP)}`
+                                    : t('unavailable')}
                             </button>
 
                             <button

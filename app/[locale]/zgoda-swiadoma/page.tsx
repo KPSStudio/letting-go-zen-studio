@@ -4,6 +4,8 @@
 // All visible text comes from next-intl translation files.
 
 import { getTranslations } from 'next-intl/server'
+import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/pageMetadata'
 
 type ConsentPoint = {
     text: string
@@ -104,4 +106,24 @@ export default async function ZgodaSwiadomaPage() {
             </section>
         </main>
     )
+}
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale } = await params
+
+    return buildPageMetadata({
+        locale,
+        path: "/zgoda-swiadoma",
+        pl: {
+            title: "Zgoda świadoma | Letting Go Zen Studio",
+            description: "Treść świadomej zgody na udział w sesjach Letting Go Zen Studio — czym są usługi, czym nie są, i na co wyrażasz zgodę.",
+        },
+        en: {
+            title: "Informed Consent | Letting Go Zen Studio",
+            description: "The informed consent for taking part in Letting Go Zen Studio sessions — what the services are, what they are not, and what you are agreeing to.",
+        },
+    })
 }

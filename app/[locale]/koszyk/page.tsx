@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCart } from "@/lib/CartContext";
-import { useCurrency } from "@/lib/CurrencyContext";
+import { useCurrency, SYMBOLS } from "@/lib/CurrencyContext";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -65,43 +65,22 @@ const stripeAppearance = {
   },
 };
 
-type PendingBookingDetails = {
-  serviceId: string;
-  serviceName: string;
-  price: number;
-  token: string;
-};
-
-function getPendingBookingFromSearchParams(
-  params: URLSearchParams,
-): PendingBookingDetails | null {
-  const serviceId = params.get("serviceId") ?? params.get("service") ?? "";
-  const serviceName = params.get("serviceName") ?? params.get("service") ?? "";
-  const price = parseFloat(params.get("price") ?? "0");
-  const token = params.get("token") ?? "";
-
-  if (!serviceId || !serviceName || price <= 0 || !token) {
-    return null;
-  }
-
-  return {
-    serviceId,
-    serviceName,
-    price,
-    token,
-  };
-}
+// NOTE: this file used to carry a second, booking-shaped checkout — details
+// parsed out of the query string, a branch that re-added a service to the cart,
+// and a return_url pointing at the old payment-gate page. That whole flow was
+// replaced by the Cal.com embed on the consent page, and the gate page no
+// longer exists, so every one of those paths was dead code pointing at a 404.
+// The cart is now only a cart.
 
 function PaymentForm({
   onBack,
-  total,
+  totalGbpBase,
   formatPrice,
-  pendingBooking,
 }: {
   onBack: () => void;
-  total: number;
+  /** Always the GBP base amount — formatPrice() does the conversion. */
+  totalGbpBase: number;
   formatPrice: (n: number) => string;
-  pendingBooking: PendingBookingDetails | null;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -129,15 +108,8 @@ function PaymentForm({
     setPaying(true);
     setError(null);
 
-    let returnUrl: URL;
-
-    if (pendingBooking) {
-      returnUrl = new URL(`${window.location.origin}/${locale}/rezerwacja`);
-      returnUrl.searchParams.set("token", pendingBooking.token);
-    } else {
-      returnUrl = new URL(`${window.location.origin}/${locale}/koszyk`);
-      returnUrl.searchParams.set("success", "true");
-    }
+    const returnUrl = new URL(`${window.location.origin}/${locale}/koszyk`);
+    returnUrl.searchParams.set("success", "true");
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -216,18 +188,20 @@ function PaymentForm({
         <PaymentElement />
       </div>
 
-      {error && (
-        <p
-          style={{
-            fontFamily: "var(--font-raleway)",
-            fontSize: "0.85rem",
-            color: "#ff6b6b",
-            marginBottom: "1rem",
-          }}
-        >
-          {error}
-        </p>
-      )}
+      {/* Payment errors appear after an async round trip, so they must be
+          announced rather than only drawn. */}
+      <p
+        role="status"
+        aria-live="polite"
+        style={{
+          fontFamily: "var(--font-raleway)",
+          fontSize: "0.85rem",
+          color: "#ff6b6b",
+          marginBottom: error ? "1rem" : 0,
+        }}
+      >
+        {error}
+      </p>
 
       <button
         type="submit"
@@ -241,7 +215,7 @@ function PaymentForm({
       >
         {paying
           ? t("payment.processing")
-          : `🔒 ${t("payment.pay")} ${formatPrice(total)}`}
+          : `🔒 ${t("payment.pay")} ${formatPrice(totalGbpBase)}`}
       </button>
 
       <button
@@ -273,52 +247,31 @@ function PaymentForm({
 export default function KoszykPage() {
   const t = useTranslations("cartPage");
   const locale = useLocale();
-  const { items, addItem, removeItem, clearCart, count, totalGBP, totalPLN } =
-    useCart();
+  // addItem is deliberately not pulled in: the only caller was the removed
+  // `booked=true` branch that re-added a booked service to the cart.
+  const { items, removeItem, clearCart, count, totalGBP } = useCart();
   const { currency, formatPrice } = useCurrency();
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [pendingBooking, setPendingBooking] =
-    useState<PendingBookingDetails | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
-  // Read the post-payment flags AFTER mount so the server render and the first
+  // Read the post-payment flag AFTER mount so the server render and the first
   // client render agree. Reading window.location during render would make the
   // server (no window) and client disagree and break hydration.
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(false);
-  const [isBookingComplete, setIsBookingComplete] = useState(false);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     setIsPaymentSuccess(params.get("success") === "true");
-    setIsBookingComplete(params.get("bookingComplete") === "true");
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const bookingDetails = getPendingBookingFromSearchParams(params);
-    setPendingBooking(bookingDetails);
+  // formatPrice() takes a GBP amount and converts it to the active currency,
+  // so it must always be handed the GBP base. This used to pass totalPLN when
+  // PLN was selected, which multiplied by the 5.2 rate a SECOND time and showed
+  // roughly 27x the real price — while the PaymentIntent was charged correctly.
+  const totalGbpBase = totalGBP;
 
-    if (params.get("booked") === "true" && bookingDetails) {
-      addItem({
-        id: bookingDetails.serviceId,
-        name: bookingDetails.serviceName,
-        type: "sesja",
-        gbp: bookingDetails.price,
-        pln: Math.round(bookingDetails.price * 5.2),
-      });
-    }
-  }, [addItem, locale]);
-
-  const total = currency === "PLN" ? totalPLN : totalGBP;
-
-  const currencySymbol =
-    currency === "GBP"
-      ? "£"
-      : currency === "PLN"
-        ? "zł"
-        : currency === "EUR"
-          ? "€"
-          : "$";
+  const currencySymbol = SYMBOLS[currency];
 
   const typeLabels: Record<string, string> = {
     sesja: t("types.session"),
@@ -333,21 +286,26 @@ export default function KoszykPage() {
 
   async function handleCheckout() {
     if (!termsAccepted) {
-      alert(t("errors.acceptTerms"));
+      setCheckoutError(t("errors.acceptTerms"));
       return;
     }
 
+    // Guard against a second click landing while the first request is still in
+    // flight, which would create a second PaymentIntent.
+    if (loading) return;
+
     setLoading(true);
+    setCheckoutError(null);
 
     try {
       const res = await fetch("/api/checkout/session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        // Only names go up; every price is re-read from Sanity server-side.
         body: JSON.stringify({
-          items,
+          items: items.map((item) => ({ name: item.name })),
           currency,
           locale,
-          token: pendingBooking?.token ?? "",
         }),
       });
 
@@ -356,57 +314,13 @@ export default function KoszykPage() {
       if (data.clientSecret) {
         setClientSecret(data.clientSecret);
       } else {
-        alert(data.error ?? t("errors.generic"));
+        setCheckoutError(data.error ?? t("errors.generic"));
       }
     } catch {
-      alert(t("errors.generic"));
+      setCheckoutError(t("errors.generic"));
     } finally {
       setLoading(false);
     }
-  }
-
-  if (isBookingComplete) {
-    return (
-      <div className="thankyou-page">
-        <div className="thankyou-orbit">
-          <div className="thankyou-orbit-dot" />
-          <div className="thankyou-orbit-dot" />
-          <div className="thankyou-orbit-dot" />
-        </div>
-
-        <div className="thankyou-aura" />
-
-        <div className="thankyou-rising-dots">
-          <span />
-          <span />
-          <span />
-          <span />
-          <span />
-        </div>
-
-        <div className="thankyou-content">
-          <div className="thankyou-symbol">✦</div>
-
-          <p className="thankyou-label">
-            <span />
-            {t("thankYou.label")}
-            <span />
-          </p>
-
-          <h1 className="thankyou-title">{t("thankYou.title")}</h1>
-
-          <div className="thankyou-divider" />
-
-          <p className="thankyou-text">{t("thankYou.bookingText")}</p>
-
-          <p className="thankyou-subtext">{t("thankYou.subtext")}</p>
-
-          <Link href={`/${locale}`} className="thankyou-button">
-            {t("thankYou.homeButton")}
-          </Link>
-        </div>
-      </div>
-    );
   }
 
   if (isPaymentSuccess) {
@@ -535,7 +449,7 @@ export default function KoszykPage() {
 
             <div className="cart-total-row">
               <span>{t("totalLabel")}</span>
-              <strong>{formatPrice(total)}</strong>
+              <strong>{formatPrice(totalGbpBase)}</strong>
             </div>
 
             <label className="cart-terms-row">
@@ -586,6 +500,21 @@ export default function KoszykPage() {
               {loading ? t("payment.loading") : `🔒 ${t("payButton")}`}
             </button>
 
+            {/* Replaces a blocking alert(): announced to screen readers and
+                dismissible by simply fixing the problem. */}
+            <p
+              role="status"
+              aria-live="polite"
+              style={{
+                margin: checkoutError ? "0.75rem 0 0" : 0,
+                fontFamily: "var(--font-raleway)",
+                fontSize: "0.85rem",
+                color: "#ff6b6b",
+              }}
+            >
+              {checkoutError}
+            </p>
+
             <p className="cart-security-text">
               🔐 {t("security.ssl")} · Stripe · 🛡️ {t("security.safePayment")}
             </p>
@@ -612,7 +541,7 @@ export default function KoszykPage() {
                 marginBottom: "1.5rem",
               }}
             >
-              {t("payment.title").toUpperCase()} · {formatPrice(total)}
+              {t("payment.title").toUpperCase()} · {formatPrice(totalGbpBase)}
             </p>
 
             <div
@@ -661,9 +590,8 @@ export default function KoszykPage() {
             >
               <PaymentForm
                 onBack={() => setClientSecret(null)}
-                total={total}
+                totalGbpBase={totalGbpBase}
                 formatPrice={formatPrice}
-                pendingBooking={pendingBooking}
               />
             </Elements>
           </div>

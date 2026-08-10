@@ -1,13 +1,30 @@
 // lib/email.ts
 // Sends every transactional email via Resend.
 //
-// There are three (bookings are confirmed by Cal.com directly, not here):
+// There are five (bookings are confirmed by Cal.com directly, not here):
 //   1. sendDownloadEmail            — digital shop purchase (download link)
-//   2. sendOrderConfirmationEmail   — cart purchase (Joanna delivers manually)
-//   3. sendOrderNotificationToJoanna— internal alert so Joanna can fulfil
+//   2. sendPhysicalOrderEmail       — shipped shop purchase (dispatch window)
+//   3. sendOrderConfirmationEmail   — cart purchase (Joanna delivers manually)
+//   4. sendOrderNotificationToJoanna— internal alert so Joanna can fulfil
 //
-// All three share the branded shell in lib/emailTemplates.ts and are bilingual:
-// the locale travels through Stripe metadata from the original checkout.
+// The customer-facing messages share the branded shell and follow the checkout
+// locale. Joanna's order/contact notifications are deliberately Polish.
+// the locale travels through Stripe metadata from the original checkout, and
+// FORCED_EMAIL_LANGUAGE is null, so each customer gets the language they were
+// browsing in.
+//
+// TWO RULES THIS FILE ENFORCES
+//
+// 1. EVERY SENDER THROWS AND RETURNS THE RESEND EMAIL ID. The durable outbox
+//    decides whether a failed customer/internal email blocks the current
+//    request and records the provider id for delivery/bounce webhooks. No sender
+//    is allowed to swallow a provider failure.
+//
+// 2. EVERY SEND CARRIES AN IDEMPOTENCY KEY. The Stripe webhook is retried on
+//    failure, so the same email can legitimately be attempted more than once.
+//    Resend deduplicates on the `Idempotency-Key` header for 24 hours, so normal
+//    webhook/outbox retries do not send a second copy. The database dedupe key
+//    is permanent; provider idempotency is an additional bounded safeguard.
 
 import { Resend } from 'resend'
 import {
@@ -15,6 +32,7 @@ import {
     renderDetailRow,
     formatMoney,
     resolveEmailLocale,
+    escapeHtml,
     EMAIL_FROM,
     EMAIL_REPLY_TO,
     type EmailLocale,
@@ -26,6 +44,29 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 const JOANNA_INBOX =
     process.env.CONTACT_EMAIL ?? 'lettinggozenstudio@gmail.com'
 
+function safeHeaderText(value: string): string {
+    return value.replace(/[\r\n]+/g, ' ').trim().slice(0, 180)
+}
+
+function safeReplyTo(value: string): string {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)
+        ? value
+        : EMAIL_REPLY_TO
+}
+
+function requireEmailId(
+    data: { id: string } | null,
+    error: { message: string } | null,
+    label: string
+): string {
+    if (error || !data?.id) {
+        console.error(`${label}:`, error?.message ?? 'Resend returned no email id')
+        throw new Error(label)
+    }
+
+    return data.id
+}
+
 // Wraps a details table so order info lines up neatly.
 function renderDetailsTable(rows: string): string {
     return `
@@ -35,8 +76,17 @@ function renderDetailsTable(rows: string): string {
       </table>`
 }
 
+/**
+ * Builds the Resend idempotency key for one (payment, purpose) pair.
+ * Returns undefined when there is no stable id to key on, so the send still
+ * goes out rather than being skipped.
+ */
+function idempotencyOptions(idempotencyKey?: string) {
+    return idempotencyKey ? { idempotencyKey } : undefined
+}
+
 // ─────────────────────────────────────────────────────────────
-// 1. DIGITAL SHOP PURCHASE — download link
+// 1. DIGITAL SHOP PURCHASE — download link  (CUSTOMER-CRITICAL)
 // ─────────────────────────────────────────────────────────────
 
 interface DownloadEmailProps {
@@ -44,6 +94,7 @@ interface DownloadEmailProps {
     productName: string
     downloadUrl: string
     locale?: EmailLocale
+    idempotencyKey?: string
 }
 
 export async function sendDownloadEmail({
@@ -51,21 +102,23 @@ export async function sendDownloadEmail({
                                             productName,
                                             downloadUrl,
                                             locale = 'pl',
+                                            idempotencyKey,
                                         }: DownloadEmailProps) {
-    // Language actually used — currently forced to English by the switch
-    // in emailTemplates.ts, regardless of which site language they browsed.
     const activeLocale = resolveEmailLocale(locale)
     const isPolish = activeLocale === 'pl'
+    const safeProductName = escapeHtml(productName)
 
-    const subject = isPolish
-        ? `Twój zakup: ${productName}`
-        : `Your purchase: ${productName}`
+    const subject = safeHeaderText(
+        isPolish
+            ? `Twój zakup: ${productName}`
+            : `Your purchase: ${productName}`
+    )
 
     const bodyHtml = isPolish
         ? `<p style="margin: 0 0 14px;">Dziękujemy za zakup — Twój plik jest gotowy.</p>
-           <p style="margin: 0;"><strong style="color: #B8942A;">${productName}</strong></p>`
+           <p style="margin: 0;"><strong style="color: #B8942A;">${safeProductName}</strong></p>`
         : `<p style="margin: 0 0 14px;">Thank you for your purchase — your file is ready.</p>
-           <p style="margin: 0;"><strong style="color: #B8942A;">${productName}</strong></p>`
+           <p style="margin: 0;"><strong style="color: #B8942A;">${safeProductName}</strong></p>`
 
     const html = renderEmailShell({
         locale: activeLocale,
@@ -75,50 +128,58 @@ export async function sendDownloadEmail({
         heading: isPolish ? 'Dziękujemy za zakup' : 'Thank you for your purchase',
         bodyHtml,
         buttonLabel: isPolish ? 'POBIERZ PLIK PDF' : 'DOWNLOAD YOUR PDF',
+        // This is a signed Supabase URL generated server-side. The shared
+        // button renderer safely escapes it for an HTML attribute; mail clients
+        // decode `&amp;` back to `&` when the link is followed.
         buttonUrl: downloadUrl,
         footerNote: isPolish
             ? 'Link jest aktywny przez 30 dni. Zapisz plik na swoim urządzeniu.'
             : 'This link stays active for 30 days. Please save the file to your device.',
     })
 
-    const { error } = await resend.emails.send({
-        from: EMAIL_FROM,
-        replyTo: EMAIL_REPLY_TO,
-        to,
-        subject,
-        html,
-    })
+    const { data, error } = await resend.emails.send(
+        {
+            from: EMAIL_FROM,
+            replyTo: EMAIL_REPLY_TO,
+            to,
+            subject,
+            html,
+        },
+        idempotencyOptions(idempotencyKey)
+    )
 
-    if (error) {
-        console.error('Resend download email error:', error)
-        throw new Error('Failed to send download email')
-    }
+    // Deliberately does NOT log the download URL — it is a signed, 30-day
+    // credential for a paid file.
+    return requireEmailId(data, error, 'Failed to send download email')
 }
 
 // ─────────────────────────────────────────────────────────────
-// 1b. PHYSICAL / BUNDLE SHOP ORDER — shipped within a week
+// 2. PHYSICAL / BUNDLE SHOP ORDER — shipped within a week  (CUSTOMER-CRITICAL)
 // ─────────────────────────────────────────────────────────────
 
 interface PhysicalOrderEmailProps {
     to: string
     productName: string
     locale?: EmailLocale
+    idempotencyKey?: string
 }
 
 export async function sendPhysicalOrderEmail({
                                                  to,
                                                  productName,
                                                  locale = 'pl',
+                                                 idempotencyKey,
                                              }: PhysicalOrderEmailProps) {
     const activeLocale = resolveEmailLocale(locale)
     const isPolish = activeLocale === 'pl'
+    const safeProductName = escapeHtml(productName)
 
     const bodyHtml = isPolish
         ? `<p style="margin: 0 0 14px;">Dziękujemy za zamówienie — płatność została potwierdzona.</p>
-           <p style="margin: 0 0 14px;"><strong style="color: #B8942A;">${productName}</strong></p>
+           <p style="margin: 0 0 14px;"><strong style="color: #B8942A;">${safeProductName}</strong></p>
            <p style="margin: 0;">Twoja przesyłka zostanie nadana na podany adres w ciągu <strong style="color: #B8942A;">7 dni</strong>.</p>`
         : `<p style="margin: 0 0 14px;">Thank you for your order — your payment has been confirmed.</p>
-           <p style="margin: 0 0 14px;"><strong style="color: #B8942A;">${productName}</strong></p>
+           <p style="margin: 0 0 14px;"><strong style="color: #B8942A;">${safeProductName}</strong></p>
            <p style="margin: 0;">Your parcel will be posted to the address you provided within <strong style="color: #B8942A;">7 days</strong>.</p>`
 
     const html = renderEmailShell({
@@ -133,23 +194,26 @@ export async function sendPhysicalOrderEmail({
             : 'You will get a separate note once your parcel is on its way.',
     })
 
-    const { error } = await resend.emails.send({
-        from: EMAIL_FROM,
-        replyTo: EMAIL_REPLY_TO,
-        to,
-        subject: isPolish
-            ? `Zamówienie przyjęte: ${productName}`
-            : `Order received: ${productName}`,
-        html,
-    })
+    const { data, error } = await resend.emails.send(
+        {
+            from: EMAIL_FROM,
+            replyTo: EMAIL_REPLY_TO,
+            to,
+            subject: safeHeaderText(
+                isPolish
+                    ? `Zamówienie przyjęte: ${productName}`
+                    : `Order received: ${productName}`
+            ),
+            html,
+        },
+        idempotencyOptions(idempotencyKey)
+    )
 
-    if (error) {
-        console.error('Resend physical order email error:', error)
-    }
+    return requireEmailId(data, error, 'Failed to send physical order email')
 }
 
 // ─────────────────────────────────────────────────────────────
-// 2. CART ORDER — Joanna fulfils manually within 48h
+// 3. CART ORDER — Joanna fulfils manually within 48h  (CUSTOMER-CRITICAL)
 // ─────────────────────────────────────────────────────────────
 
 interface OrderConfirmationProps {
@@ -158,6 +222,7 @@ interface OrderConfirmationProps {
     amount: number
     currency: string
     locale?: EmailLocale
+    idempotencyKey?: string
 }
 
 export async function sendOrderConfirmationEmail({
@@ -166,12 +231,13 @@ export async function sendOrderConfirmationEmail({
                                                      amount,
                                                      currency,
                                                      locale = 'pl',
+                                                     idempotencyKey,
                                                  }: OrderConfirmationProps) {
     const activeLocale = resolveEmailLocale(locale)
     const isPolish = activeLocale === 'pl'
 
     const itemRows = itemNames
-        .map((name) => renderDetailRow('•', name))
+        .map((name) => renderDetailRow('•', escapeHtml(name)))
         .join('')
 
     const details = renderDetailsTable(
@@ -199,21 +265,22 @@ export async function sendOrderConfirmationEmail({
             : 'Please check your spam folder if it does not arrive in time.',
     })
 
-    const { error } = await resend.emails.send({
-        from: EMAIL_FROM,
-        replyTo: EMAIL_REPLY_TO,
-        to,
-        subject: isPolish ? 'Potwierdzenie zamówienia' : 'Order confirmation',
-        html,
-    })
+    const { data, error } = await resend.emails.send(
+        {
+            from: EMAIL_FROM,
+            replyTo: EMAIL_REPLY_TO,
+            to,
+            subject: isPolish ? 'Potwierdzenie zamówienia' : 'Order confirmation',
+            html,
+        },
+        idempotencyOptions(idempotencyKey)
+    )
 
-    if (error) {
-        console.error('Resend order confirmation error:', error)
-    }
+    return requireEmailId(data, error, 'Failed to send order confirmation email')
 }
 
 // ─────────────────────────────────────────────────────────────
-// 3. INTERNAL — notify Joanna of a sale
+// 4. INTERNAL — notify Joanna of a sale  (NOT customer-critical)
 // ─────────────────────────────────────────────────────────────
 
 interface OrderNotificationProps {
@@ -225,8 +292,13 @@ interface OrderNotificationProps {
     orderKind?: 'sklep' | 'booking' | 'cart' | 'physical' | 'bundle'
     // Multi-line shipping address for physical / bundle orders.
     shippingText?: string
+    idempotencyKey?: string
 }
 
+/**
+ * Returns the provider email id. Internal notifications are durable outbox
+ * jobs too, so a failure must throw and be retried independently.
+ */
 export async function sendOrderNotificationToJoanna({
                                                         productName,
                                                         customerEmail,
@@ -234,7 +306,8 @@ export async function sendOrderNotificationToJoanna({
                                                         currency,
                                                         orderKind = 'sklep',
                                                         shippingText,
-                                                    }: OrderNotificationProps) {
+                                                        idempotencyKey,
+                                                    }: OrderNotificationProps): Promise<string> {
     // Always Polish — this one is for Joanna, not the customer.
     const actionByKind: Record<string, string> = {
         sklep: 'Link do pobrania został wysłany automatycznie. Nie musisz nic robić.',
@@ -245,33 +318,89 @@ export async function sendOrderNotificationToJoanna({
     }
 
     const details = renderDetailsTable(
-        renderDetailRow('Produkt', productName) +
-        renderDetailRow('Klient', customerEmail) +
+        renderDetailRow('Produkt', escapeHtml(productName)) +
+        renderDetailRow('Klient', escapeHtml(customerEmail)) +
         renderDetailRow('Kwota', formatMoney(amount, currency))
     )
 
-    // Shipping address block (physical / bundle only). Escaped and shown with
-    // line breaks preserved so Joanna can copy it straight onto a parcel.
+    // Shipping address block (physical / bundle only). Fully escaped and shown
+    // with line breaks preserved so Joanna can copy it straight onto a parcel.
     const addressBlock = shippingText
-        ? `<p style="margin: 12px 0 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.7; color: #4A3F33; white-space: pre-line;"><strong style="color: #3D0845;">Adres wysyłki:</strong><br>${shippingText.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</p>`
+        ? `<p style="margin: 12px 0 18px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.7; color: #4A3F33; white-space: pre-line;"><strong style="color: #3D0845;">Adres wysyłki:</strong><br>${escapeHtml(shippingText)}</p>`
         : ''
 
     const html = renderEmailShell({
         locale: 'pl',
         preheader: `Nowa sprzedaż: ${productName}`,
         heading: 'Nowa sprzedaż',
-        bodyHtml: `${details}<p style="margin: 0 0 4px;">${actionByKind[orderKind]}</p>${addressBlock}`,
+        bodyHtml: `${details}<p style="margin: 0 0 4px;">${escapeHtml(actionByKind[orderKind] ?? '')}</p>${addressBlock}`,
     })
 
-    const { error } = await resend.emails.send({
-        from: EMAIL_FROM,
-        replyTo: customerEmail, // replying goes straight to the customer
-        to: JOANNA_INBOX,
-        subject: `Nowa sprzedaż: ${productName}`,
-        html,
+    const { data, error } = await resend.emails.send(
+        {
+            from: EMAIL_FROM,
+            replyTo: safeReplyTo(customerEmail),
+            to: JOANNA_INBOX,
+            subject: safeHeaderText(`Nowa sprzedaż: ${productName}`),
+            html,
+        },
+        idempotencyOptions(idempotencyKey)
+    )
+
+    return requireEmailId(data, error, 'Failed to send Joanna order notification')
+}
+
+// ─────────────────────────────────────────────────────────────
+// 5. INTERNAL — contact-form notification
+// ─────────────────────────────────────────────────────────────
+
+interface ContactNotificationProps {
+    name: string
+    email: string
+    phone?: string | null
+    subject?: string | null
+    message: string
+    locale: EmailLocale
+    idempotencyKey: string
+}
+
+export async function sendContactNotificationEmail({
+    name,
+    email,
+    phone,
+    subject,
+    message,
+    locale,
+    idempotencyKey,
+}: ContactNotificationProps): Promise<string> {
+    const details = renderDetailsTable(
+        renderDetailRow('Imię', escapeHtml(name)) +
+        renderDetailRow('Email', escapeHtml(email)) +
+        (phone ? renderDetailRow('Telefon', escapeHtml(phone)) : '') +
+        (subject ? renderDetailRow('Temat', escapeHtml(subject)) : '') +
+        renderDetailRow('Język', locale.toUpperCase())
+    )
+
+    const html = renderEmailShell({
+        locale: 'pl',
+        preheader: `Nowa wiadomość od ${name}`,
+        heading: 'Nowa wiadomość z formularza',
+        bodyHtml: `
+          ${details}
+          <p style="margin: 0 0 8px; color: #8C7C66;">Treść wiadomości:</p>
+          <p style="margin: 0; white-space: pre-line;">${escapeHtml(message)}</p>`,
     })
 
-    if (error) {
-        console.error('Joanna notification error:', error)
-    }
+    const { data, error } = await resend.emails.send(
+        {
+            from: EMAIL_FROM,
+            replyTo: safeReplyTo(email),
+            to: JOANNA_INBOX,
+            subject: safeHeaderText(`Nowa wiadomość: ${subject || name}`),
+            html,
+        },
+        idempotencyOptions(idempotencyKey)
+    )
+
+    return requireEmailId(data, error, 'Failed to send contact notification')
 }

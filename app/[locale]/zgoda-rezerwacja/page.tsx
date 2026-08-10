@@ -138,20 +138,6 @@ export default function BookingConsentPage() {
     setError(null);
   }
 
-  function acceptAllConsent(value: boolean) {
-    setConsent({
-      participatesVoluntarily: value,
-      understandsServiceNature: value,
-      understandsNotMedicalTreatment: value,
-      truthfulHealthInformation: value,
-      mayStopAnyTime: value,
-      dataProcessingConsent: value,
-      termsAndPrivacyAccepted: value,
-    });
-
-    setError(null);
-  }
-
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
@@ -326,11 +312,19 @@ export default function BookingConsentPage() {
               </label>
             ))}
 
+            {/* This box accepts the terms and the privacy policy and NOTHING
+                else. It used to call a bulk-accept helper that set all seven
+                declarations at once, so ticking it silently signed the
+                voluntary-participation, non-medical, truthful-health-info,
+                stop-any-time and data-processing consents on the customer's
+                behalf. Each declaration must be its own affirmative act. */}
             <label className="cart-terms-row">
               <input
                 type="checkbox"
                 checked={consent.termsAndPrivacyAccepted}
-                onChange={(event) => acceptAllConsent(event.target.checked)}
+                onChange={(event) =>
+                  updateConsent("termsAndPrivacyAccepted", event.target.checked)
+                }
               />
               <span>
                 {t("checks.acceptPrefix")}{" "}

@@ -1,12 +1,14 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { useCart } from '@/lib/CartContext'
 import { SanityService } from '@/sanity/lib/sanity'
 import { getCalSlug } from '@/lib/calcom'
+import MedicalDisclaimer from '@/components/common/MedicalDisclaimer'
+import { useDialogBehaviour } from '@/components/common/useDialogBehaviour'
 
 interface Props {
     products: SanityService[]
@@ -18,6 +20,11 @@ export default function SoulClient({ products }: Props) {
     const { formatPrice } = useCurrency()
     const { addItem, items } = useCart()
     const [selectedProduct, setSelectedProduct] = useState<SanityService | null>(null)
+
+    // Modal dialog behaviour: Escape to close, focus moved in and returned
+    // to the trigger, Tab trapped inside, page behind locked.
+    const closeProductModal = useCallback(() => setSelectedProduct(null), [])
+    const modalPanelRef = useDialogBehaviour(Boolean(selectedProduct), closeProductModal)
 
     // If arrived from search (?item=<id>), scroll to that card and flash it.
     useEffect(() => {
@@ -76,9 +83,13 @@ export default function SoulClient({ products }: Props) {
     function getConsentHref(product: SanityService) {
         const serviceSlug = product.calComSlug ?? getCalSlug(product.namePl) ?? ''
         const serviceName = product.namePl
-        const price = product.priceGBP.toString()
 
-        return `/${locale}/zgoda-rezerwacja?service=${encodeURIComponent(serviceSlug)}&serviceName=${encodeURIComponent(serviceName)}&price=${price}&locale=${locale}`
+        // Only the slug and the name travel in the URL. The old link also
+        // carried &price= and &locale=: the consent page reads neither (the
+        // locale comes from the route segment, and the price is re-read from
+        // Sanity server-side), so they were dead parameters that merely looked
+        // like the client could influence what is charged.
+        return `/${locale}/zgoda-rezerwacja?service=${encodeURIComponent(serviceSlug)}&serviceName=${encodeURIComponent(serviceName)}`
     }
 
     return (
@@ -98,6 +109,8 @@ export default function SoulClient({ products }: Props) {
                     {products.length} {t('serviceCount')}
                 </p>
             </section>
+
+            <MedicalDisclaimer />
 
             <div className="body-info-banner">
                 <span className="body-info-banner-icon">📄</span>
@@ -205,20 +218,27 @@ export default function SoulClient({ products }: Props) {
                 <div
                     onClick={() => setSelectedProduct(null)}
                     className="body-modal-backdrop"
+                    role="presentation"
                 >
                     <div
                         onClick={(e) => e.stopPropagation()}
                         className="body-modal-panel"
+                        ref={modalPanelRef}
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="product-modal-title"
+                        tabIndex={-1}
                     >
                         <button
                             type="button"
                             onClick={() => setSelectedProduct(null)}
                             className="body-modal-close"
+                            aria-label={t('closeModal')}
                         >
-                            ×
+                            <span aria-hidden="true">×</span>
                         </button>
 
-                        <h2 className="body-modal-title">
+                        <h2 id="product-modal-title" className="body-modal-title">
                             {getProductName(selectedProduct)}
                         </h2>
 

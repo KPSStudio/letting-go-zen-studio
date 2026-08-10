@@ -97,12 +97,15 @@ export default function Nav({ searchItems }: { searchItems: SearchItem[] }) {
             >
                 <span className="site-nav-brand-word">LETTING GO</span>
 
+                {/* No `priority`: the homepage already preloads the large hero
+                    logo, and marking this 38px copy high-priority too made the
+                    browser preload the same source image twice at competing
+                    sizes. This one is tiny and decodes instantly. */}
                 <Image
                     src="/images/logo.png"
                     alt="Letting Go Zen Studio logo"
                     width={38}
                     height={38}
-                    priority
                     className="site-nav-logo"
                 />
 
@@ -136,11 +139,14 @@ export default function Nav({ searchItems }: { searchItems: SearchItem[] }) {
             <button
                 type="button"
                 className="site-nav-mobile-button"
-                aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                aria-label={isMobileMenuOpen ? t('closeMenu') : t('openMenu')}
                 aria-expanded={isMobileMenuOpen}
                 onClick={() => setIsMobileMenuOpen((value) => !value)}
             >
-                {isMobileMenuOpen ? '×' : '☰'}
+                {/* The glyph is the visual affordance; the accessible name is
+                    the localised aria-label above, so the icon itself must not
+                    be announced as "times" / "trigram for heaven". */}
+                <span aria-hidden="true">{isMobileMenuOpen ? '×' : '☰'}</span>
             </button>
 
             {/* Mobile dropdown */}

@@ -25,11 +25,22 @@
     --font-raleway: var(--font-raleway);
 }
 
+/* Explicit border-box reset. Tailwind's preflight already does this, but
+   stating it here means a layout never silently depends on preflight load
+   order — padding and borders always count inside a declared width. */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html,
 body {
     max-width: 100%;
     /* `clip` (not `hidden`) contains horizontal overflow WITHOUT creating a
-       scroll container — otherwise it would break `position: sticky` on the nav. */
+       scroll container — otherwise it would break `position: sticky` on the nav.
+       This is a backstop only: the layout below is sized so nothing overflows in
+       the first place, rather than relying on this to hide a broken width. */
     overflow-x: clip;
 }
 
@@ -217,6 +228,11 @@ body::after {
 }
 
 .hero-mystic-symbol {
+    /* How bright each ornament gets at the peak of its fade. Declared as a
+       custom property so the mobile breakpoint can raise legibility with a
+       single line instead of duplicating the whole keyframe. */
+    --hero-ornament-peak: 0.46;
+
     position: absolute;
     display: block;
     background-repeat: no-repeat;
@@ -224,7 +240,25 @@ body::after {
     background-size: contain;
     opacity: 0;
 
-    /* Stronger gold presence and glow */
+    /* Glow only. The two SVG ornaments are already drawn in the brand golds,
+       so they must NOT get the sepia pass the PNGs need. */
+    filter:
+            drop-shadow(0 0 14px rgba(212, 175, 106, 0.42))
+            drop-shadow(0 0 34px rgba(184, 148, 42, 0.26))
+            drop-shadow(0 0 54px rgba(240, 208, 128, 0.14));
+
+    mix-blend-mode: screen;
+
+    animation:
+            heroMysticFade 8s ease-in-out infinite,
+            heroMysticFloat 6s ease-in-out infinite alternate;
+}
+
+/* The three remaining PNG ornaments are not gold in the source file, so they
+   still need the sepia/saturate pass to sit in the palette. */
+.hero-mystic-biofeedback,
+.hero-mystic-aura,
+.hero-mystic-pendulum {
     filter:
             sepia(1)
             saturate(1.55)
@@ -232,27 +266,20 @@ body::after {
             drop-shadow(0 0 14px rgba(212, 175, 106, 0.42))
             drop-shadow(0 0 34px rgba(184, 148, 42, 0.26))
             drop-shadow(0 0 54px rgba(240, 208, 128, 0.14));
-
-    mix-blend-mode: screen;
-
-    /* Faster and more frequent */
-    animation:
-            heroMysticFade 8s ease-in-out infinite,
-            heroMysticFloat 6s ease-in-out infinite alternate;
 }
 
-/* Spiral eye — left side */
-.hero-mystic-eye {
-    width: 92px;
-    height: 92px;
-    left: 16%;
-    top: 28%;
-    background-image: url('/images/hero-Spiral_Eye_Energetic_Perception.png');
+/* Fibonacci / golden-ratio spiral — upper left. Original SVG line art. */
+.hero-mystic-fibonacci {
+    width: 132px;
+    height: 88px;
+    left: 13%;
+    top: 26%;
+    background-image: url('/images/hero-fibonacci-spiral.svg');
     animation-delay: 0s, 0s;
 }
 
 /* Brainwave biofeedback — right side */
-.hero-mystic-circle {
+.hero-mystic-biofeedback {
     width: 122px;
     height: 122px;
     right: 15%;
@@ -262,7 +289,7 @@ body::after {
 }
 
 /* Aura & heart energy — low left */
-.hero-mystic-pyramid {
+.hero-mystic-aura {
     width: 126px;
     height: 126px;
     left: 22%;
@@ -272,7 +299,7 @@ body::after {
 }
 
 /* Pendulum energy scan — upper right */
-.hero-mystic-eye-two {
+.hero-mystic-pendulum {
     width: 78px;
     height: 78px;
     right: 27%;
@@ -281,13 +308,13 @@ body::after {
     animation-delay: 4.2s, 0.6s;
 }
 
-/* Frequency / sound healing — lower right */
-.hero-mystic-circle-two {
-    width: 96px;
-    height: 96px;
-    right: 24%;
-    bottom: 16%;
-    background-image: url('/images/hero-Frequency_Therapy_Sound_Healing.png');
+/* Quantum orbital motif — lower right. Original SVG line art. */
+.hero-mystic-quantum {
+    width: 112px;
+    height: 112px;
+    right: 22%;
+    bottom: 15%;
+    background-image: url('/images/hero-quantum-orbit.svg');
     animation-delay: 5.6s, 1.8s;
 }
 
@@ -298,23 +325,23 @@ body::after {
     }
 
     10% {
-        opacity: 0.08;
+        opacity: calc(var(--hero-ornament-peak) * 0.24);
     }
 
     22% {
-        opacity: 0.26;
+        opacity: calc(var(--hero-ornament-peak) * 0.76);
     }
 
     36% {
-        opacity: 0.34;
+        opacity: var(--hero-ornament-peak);
     }
 
     52% {
-        opacity: 0.18;
+        opacity: calc(var(--hero-ornament-peak) * 0.53);
     }
 
     68% {
-        opacity: 0.08;
+        opacity: calc(var(--hero-ornament-peak) * 0.24);
         transform: scale(1.06);
     }
 
@@ -3194,10 +3221,13 @@ body::after {
     position: relative;
     width: 100%;
     min-height: 2.2rem;
-    padding: 0.32rem 2.5rem;
+    /* clamp() so the 2.5rem desktop gutter shrinks on narrow screens instead of
+       pushing the cart out of the bar and getting clipped by overflow: hidden. */
+    padding: 0.32rem clamp(0.6rem, 4vw, 2.5rem);
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0.75rem;
     background:
             linear-gradient(
                     90deg,
@@ -3264,12 +3294,21 @@ body::after {
     gap: 1.5rem;
     position: relative;
     z-index: 1;
+    /* The phone number is the one thing here that may truncate. Letting this
+       column shrink (min-width: 0 defeats the flex auto-minimum) keeps the cart
+       on the right fully visible instead of clipped off the edge. */
+    min-width: 0;
+    flex: 0 1 auto;
 }
 
 .utility-phone {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     color: var(--cream-soft);
     text-decoration: none;
     font-size: 0.78rem;
@@ -3290,6 +3329,8 @@ body::after {
     gap: 0.3rem;
     position: relative;
     z-index: 1;
+    /* Never shrink: these are the actionable controls (language, currency, cart). */
+    flex: 0 0 auto;
 }
 
 /* Language + currency pills */
@@ -4098,15 +4139,24 @@ body::after {
         width: 24px;
     }
 
+    /* Sized so the full word pair fits inside the viewport rather than being
+       clipped by overflow-x. At 320px this resolves to ~36px, which keeps
+       "LETTING GO" on one readable line inside the 288px content box. */
     .hero-title {
-        font-size: clamp(2.7rem, 13vw, 4.2rem);
-        letter-spacing: 0.06em;
+        max-width: 100%;
+        font-size: clamp(2.2rem, 11.2vw, 4.2rem);
+        letter-spacing: 0.05em;
+        /* Trailing letter-spacing is added after the last glyph too; trimming it
+           back stops the last letter sitting against the right edge. */
+        margin-right: -0.05em;
     }
 
     .hero-subtitle {
+        max-width: 100%;
         margin-bottom: 2.5rem;
-        font-size: clamp(1.35rem, 6.8vw, 2.1rem);
-        letter-spacing: 0.2em;
+        font-size: clamp(1.15rem, 6.1vw, 2.1rem);
+        letter-spacing: 0.18em;
+        margin-right: -0.18em;
     }
 
     .hero-button {
@@ -5000,39 +5050,133 @@ body::after {
         height: 88%;
     }
 
-    .hero-mystic-eye {
-        width: 66px;
-        height: 66px;
-        left: 6%;
-        top: 24%;
+    /* Tablet ornament sizing. Roughly 25% larger than the old values, which
+       were small enough that the artwork read as a smudge rather than a shape. */
+    .hero-mystic-symbol {
+        --hero-ornament-peak: 0.54;
     }
 
-    .hero-mystic-circle {
-        width: 82px;
-        height: 82px;
-        right: 7%;
+    .hero-mystic-fibonacci {
+        width: 96px;
+        height: 64px;
+        left: 5%;
+        top: 23%;
+    }
+
+    .hero-mystic-biofeedback {
+        width: 102px;
+        height: 102px;
+        right: 6%;
         top: 31%;
     }
 
-    .hero-mystic-pyramid {
-        width: 86px;
-        height: 86px;
-        left: 9%;
+    .hero-mystic-aura {
+        width: 108px;
+        height: 108px;
+        left: 7%;
         bottom: 19%;
     }
 
-    .hero-mystic-eye-two {
-        width: 54px;
-        height: 54px;
-        right: 16%;
-        top: 15%;
+    .hero-mystic-pendulum {
+        width: 68px;
+        height: 68px;
+        right: 15%;
+        top: 14%;
     }
 
-    .hero-mystic-circle-two {
-        width: 64px;
-        height: 64px;
-        right: 12%;
-        bottom: 14%;
+    .hero-mystic-quantum {
+        width: 80px;
+        height: 80px;
+        right: 10%;
+        bottom: 13%;
+    }
+}
+
+/* PHONES — the size/contrast complaint this release addresses.
+   Below 600px the centred content column (a 210-290px logo plus the two gold
+   headings) leaves no usable space beside it, so the ornaments move into the
+   hero's four corners and the top/bottom gutters, where they sit clear of the
+   logo artwork, the tagline, both headings and the About button. They stay on
+   the z-index 2 layer, always beneath the z-index 5 content. */
+@media (max-width: 600px) {
+    /* A little more vertical room so the top and bottom gutters can actually
+       hold an ornament clear of the content column. */
+    .hero-section {
+        min-height: 84vh;
+    }
+
+    /* Trimmed from clamp(210px, 56vw, 290px). At 375px the old value rendered
+       a 210px logo, leaving 82px side columns — too narrow for an ornament to
+       sit beside it. 180px opens ~97px columns and eases the vertical crowding
+       too, without the logo losing presence. */
+    .hero-logo {
+        width: clamp(170px, 48vw, 240px);
+        height: clamp(170px, 48vw, 240px);
+    }
+
+    .hero-mystic-symbol {
+        /* Legible against the velvet texture without becoming a flat overlay —
+           the fade still breathes, it just peaks higher. */
+        --hero-ornament-peak: 0.66;
+
+        /* CRITICAL: neutralise the wider breakpoint's offsets before setting
+           new ones. The tablet rules above position some ornaments with
+           left/bottom; if only `right`/`top` were set here, the element would
+           have BOTH sides specified and — with a definite width — `left` and
+           `top` win, silently placing the ornament on the wrong side. That is
+           exactly how these ended up sitting on top of the logo. */
+        left: auto;
+        right: auto;
+        top: auto;
+        bottom: auto;
+    }
+
+    /* ── Top gutter: above the logo, clear of everything ──
+       Measured at 320–430px, the band between the hero's top edge and the top
+       of the logo is 93–143px tall, so a 72px ornament at top: 1% always
+       finishes above the logo. */
+    .hero-mystic-fibonacci {
+        width: 108px;
+        height: 72px;
+        left: 1%;
+        top: 1%;
+    }
+
+    .hero-mystic-pendulum {
+        width: 68px;
+        height: 68px;
+        right: 2%;
+        top: 1%;
+    }
+
+    /* ── Side column, level with the logo ──
+       The logo is clamp(170px, 48vw, 240px) wide and centred, so the free
+       column beside it is (100vw - logoWidth) / 2 — only 75px at 320px. The
+       width is therefore derived from that same expression rather than fixed,
+       so this ornament grows with the screen and can never reach the logo.
+       It is the one ornament the narrowest phones cannot enlarge; see the
+       release audit. */
+    .hero-mystic-biofeedback {
+        width: min(96px, calc((100vw - clamp(170px, 48vw, 240px)) / 2 - 4px));
+        height: auto;
+        aspect-ratio: 1;
+        left: 0;
+        top: 20%;
+    }
+
+    /* ── Bottom gutter: below the About button ── */
+    .hero-mystic-aura {
+        width: 100px;
+        height: 100px;
+        left: 1%;
+        bottom: 3%;
+    }
+
+    .hero-mystic-quantum {
+        width: 92px;
+        height: 92px;
+        right: 1%;
+        bottom: 3%;
     }
 }
 /* PREMIUM CONTENT PAGES */
@@ -5798,3 +5942,193 @@ body::after {
 .shop-card-image img {
     object-fit: cover;
 }
+
+/* ────────────────────────────────────────────────────────────────
+   REDUCED MOTION
+
+   Everything decorative on this site moves: the background gradient
+   floats, sparkles drift, the hero ornaments fade and bob, both gold
+   headings shimmer, dots rise and orbit. For a visitor who has asked
+   their OS for reduced motion that is a lot of unwanted movement, and
+   some of it (the ornament fade) also controls visibility.
+
+   So this block does two things:
+     1. stops the non-essential motion, and
+     2. leaves the composition VISIBLE and settled rather than stuck at
+        opacity 0 — the ornaments hold at their peak, the gold gradients
+        hold at a mid position, and the rising dots simply disappear.
+   ──────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    /* Blanket brake for anything not handled explicitly below. */
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    /* Background layers: keep the artwork, drop the drift. */
+    body::before,
+    body::after {
+        animation: none !important;
+    }
+
+    /* Hero ornaments settle at their peak instead of animating to nothing. */
+    .hero-mystic-symbol {
+        animation: none !important;
+        opacity: var(--hero-ornament-peak);
+        transform: none !important;
+    }
+
+    /* The gold headings are gradient-filled text; without the shimmer the
+       gradient must be parked somewhere flattering rather than at 0%. */
+    .hero-title,
+    .hero-subtitle {
+        animation: none !important;
+        background-position: 50% 50% !important;
+    }
+
+    .hero-logo,
+    .hero-vertical-line,
+    .hero-tagline-line,
+    .hero-bottom-line,
+    .hero-orbit,
+    .hero-orbit-dot,
+    .hero-section::before,
+    .utility-bar::after,
+    .thankyou-orbit,
+    .thankyou-orbit-dot,
+    .thankyou-aura {
+        animation: none !important;
+        transform: none !important;
+    }
+
+    /* Purely kinetic decoration — nothing is lost by removing it. */
+    .hero-rising-dots,
+    .thankyou-rising-dots {
+        display: none !important;
+    }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   NON-MEDICAL DISCLAIMER
+
+   Rendered near the top of Ciało / Umysł / Dusza by
+   components/common/MedicalDisclaimer.tsx. It has to be noticed —
+   it is the limitation the whole catalogue depends on — but it must
+   not shout over Joanna's service copy, so it reads as a calm bordered
+   note with a gold rule rather than a warning banner.
+   ──────────────────────────────────────────────────────────────── */
+.medical-disclaimer {
+    position: relative;
+    width: min(100%, 860px);
+    margin: 0 auto 3rem;
+    padding: 1.35rem 1.6rem 1.4rem 1.9rem;
+    background:
+            linear-gradient(
+                    100deg,
+                    rgba(184, 148, 42, 0.09) 0%,
+                    rgba(0, 0, 0, 0.28) 46%,
+                    rgba(0, 0, 0, 0.3) 100%
+            );
+    border: 1px solid rgba(184, 148, 42, 0.32);
+    box-shadow:
+            inset 0 0 34px rgba(184, 148, 42, 0.05),
+            0 0 26px rgba(0, 0, 0, 0.25);
+}
+
+/* Gold spine down the leading edge — the "look at me" cue. */
+.medical-disclaimer::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(
+            180deg,
+            rgba(240, 208, 128, 0.25),
+            rgba(212, 175, 106, 0.95),
+            rgba(240, 208, 128, 0.25)
+    );
+    box-shadow: 0 0 14px rgba(212, 175, 106, 0.4);
+}
+
+.medical-disclaimer-label {
+    margin: 0 0 0.55rem;
+    font-family: var(--font-cinzel);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--gold-lt);
+    text-shadow: 0 0 12px rgba(212, 175, 106, 0.32);
+}
+
+.medical-disclaimer-text {
+    margin: 0;
+    font-family: var(--font-raleway);
+    font-size: 0.92rem;
+    font-weight: 400;
+    line-height: 1.75;
+    color: var(--cream);
+}
+
+@media (max-width: 720px) {
+    .medical-disclaimer {
+        margin-bottom: 2.25rem;
+        padding: 1.15rem 1.1rem 1.2rem 1.35rem;
+    }
+
+    .medical-disclaimer-label {
+        font-size: 0.64rem;
+        letter-spacing: 0.22em;
+    }
+
+    .medical-disclaimer-text {
+        font-size: 0.87rem;
+        line-height: 1.7;
+    }
+}
+
+/* ────────────────────────────────────────────────────────────────
+   FOCUS VISIBILITY
+
+   Keyboard users need to see where they are. Several inputs across
+   this stylesheet set `outline: none` and replace it with a :focus
+   border/glow — which works for those inputs but leaves every link,
+   button, checkbox and select with only the browser default, and on
+   a deep-plum background the default ring is close to invisible.
+
+   :focus-visible (not :focus) means a mouse click does not draw a
+   ring, but Tab always does. This block is appended last so it wins
+   over the earlier `outline: none` declarations without having to
+   edit each one.
+   ──────────────────────────────────────────────────────────────── */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--gold-sh);
+    outline-offset: 3px;
+    /* Second ring in a dark tone so the gold stays legible even when the
+       element sits on a gold-ish surface. */
+    box-shadow: 0 0 0 4px rgba(24, 2, 31, 0.85);
+    border-radius: 2px;
+}
+
+/* Inputs already carry their own border treatment, so the offset is pulled
+   in to sit tight against the field rather than floating away from it. */
+:where(input, select, textarea):focus-visible {
+    outline-offset: 1px;
+}
+
+/* The dialog panel itself receives focus when a product modal opens (see
+   components/common/useDialogBehaviour.ts). That is a programmatic focus for
+   orientation, not a control the user targeted, so it should not draw a ring. */
+.body-modal-panel:focus-visible {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Skip-to-content affordance is not present on this site; if one is added
+   later it belongs here so it shares the same visual language. */

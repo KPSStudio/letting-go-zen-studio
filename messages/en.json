@@ -4,29 +4,7 @@
     "titleMain": "Book a",
     "titleGold": "Session",
     "intro": "Choose a convenient time. You will receive an email confirmation.",
-    "paidInGbp": "Payment is taken securely in GBP (£) at checkout.",
-    "verifying": "Verifying payment...",
-    "loadingCalendar": "Loading calendar...",
-    "blockedTitle": "Booking requires choosing and paying for a session",
-    "blockedText": "To book an appointment, choose a service on the Body, Mind or Soul page, complete the consent form and pay for your session. The calendar opens automatically after payment.",
-    "bodyButton": "Body",
-    "mindButton": "Mind",
-    "soulButton": "Soul"
-  },
-  "bookingPending": {
-    "label": "Secure Booking",
-    "confirmingMain": "Confirming",
-    "confirmingGold": "Payment",
-    "waitText": "We are processing your payment. In a moment you will be redirected to the calendar to choose your session time. Please do not close this page.",
-    "waitSubtext": "This usually takes only a few seconds.",
-    "usedMain": "Booking",
-    "usedGold": "Complete",
-    "usedText": "This payment has already been used to book an appointment. Check your email — a confirmation has been sent.",
-    "usedSubtext": "To book another session, return to the services page and start a new booking.",
-    "failedMain": "Something went",
-    "failedGold": "wrong",
-    "failedText": "We could not confirm your payment within a minute. If the funds were taken, your booking is safe — contact us and we will send you a link to choose your time: joanna@lettinggozenstudio.com",
-    "failedSubtext": "Your payment is safe — we will respond as soon as possible."
+    "paidInGbp": "Payment is taken securely in GBP (£) at checkout."
   },
   "body": {
     "emptyState": "Coming soon — services will appear here after they are added in the admin panel.",
@@ -284,7 +262,8 @@
         ],
         "warning": "Disclaimer: Hydrogen water does not change the body’s pH, and the recommended daily intake is usually from 1 to 3 litres, which you can order from us. Consult a doctor if you have serious medical conditions."
       }
-    ]
+    ],
+    "closeModal": "Close dialog"
   },
   "nav": {
     "home": "Home",
@@ -294,7 +273,9 @@
     "sklep": "Shop",
     "wspolpraca": "Collaborate",
     "omnie": "About Me",
-    "kontakt": "Contact"
+    "kontakt": "Contact",
+    "openMenu": "Open navigation menu",
+    "closeMenu": "Close navigation menu"
   },
   "utility": {
     "phone": "07590 572 043",
@@ -360,7 +341,8 @@
     "messageLabel": "MESSAGE",
     "messagePlaceholder": "Write your message...",
     "submitButton": "SEND MESSAGE",
-    "socialTitle": "Find us on social media"
+    "socialTitle": "Find us on social media",
+    "sendingButton": "Sending..."
   },
   "mindPage": {
     "back": "← BACK",
@@ -464,7 +446,8 @@
         ],
         "warning": null
       }
-    }
+    },
+    "closeModal": "Close dialog"
   },
   "aboutPage": {
     "label": "ABOUT ME",
@@ -550,7 +533,7 @@
     "success": {
       "title": "Thank You",
       "text": "A download link has been sent to your email.",
-      "subtext": "PDF · Instant Delivery · 24h Link",
+      "subtext": "PDF · Instant delivery · Link valid for 30 days",
       "button": "Return to Homepage"
     },
     "products": {
@@ -564,7 +547,9 @@
           "instantPdf": "PDF format — instant access after purchase"
         }
       }
-    }
+    },
+    "unavailable": "Coming soon",
+    "closeModal": "Close dialog"
   },
   "soul": {
     "back": "← BACK",
@@ -654,7 +639,8 @@
           "Energetic support"
         ]
       }
-    }
+    },
+    "closeModal": "Close dialog"
   },
   "bookingConsent": {
     "back": "Back",
@@ -706,15 +692,14 @@
     "importantLabel": "IMPORTANT INFORMATION",
     "importantTextOne": "I do not provide medical advice or recommend changes to prescribed treatment or medication. Any health-related decisions should be discussed with a qualified medical professional.",
     "importantTextTwo": "I care for the client's wellbeing in accordance with GDPR Article 13 and GDPR Article 14.",
-    "bookingLabel": "CALENDLY PLACEHOLDER",
-    "bookingText": "Later, we will connect the real Calendly link or embedded booking calendar here.",
+    "bookingLabel": "BOOK A SESSION",
+    "bookingText": "Bookings are made through the online calendar. Choose a service on the Body, Mind or Soul page — once you have completed the consent form, the calendar opens with the available times. If you are not sure which session to choose, get in touch.",
     "bookingButton": "BOOK A SESSION"
   },
   "cartPage": {
     "thankYou": {
       "label": "Letting Go Zen Studio",
       "title": "Thank You",
-      "bookingText": "Your payment has been accepted and your booking has been confirmed.",
       "paymentText": "Joanna will contact you within 24 hours by WhatsApp or email.",
       "subtext": "Body · Mind · Soul",
       "homeButton": "Return to Homepage"
@@ -905,7 +890,7 @@
         },
         "cookies": {
           "title": "9. Cookies",
-          "content": "The website uses cookies to ensure proper website operation, analyse traffic and improve service quality. Users can change cookie settings in their browser."
+          "content": "This website uses only cookies that are strictly necessary for it to work — remembering your chosen language (NEXT_LOCALE). We do not use analytics or marketing cookies, and we do not analyse visitor traffic. When you pay or book, our providers (Stripe and Cal.com) may set their own cookies that are necessary to complete the transaction securely. You can change cookie settings in your browser."
         }
       }
     },
@@ -950,5 +935,9 @@
         }
       }
     }
+  },
+  "disclaimer": {
+    "label": "IMPORTANT INFORMATION",
+    "text": "Letting Go Zen Studio services are not intended to provide medical diagnosis or medical analysis, and do not replace advice, diagnosis or treatment from a qualified medical professional."
   }
 }

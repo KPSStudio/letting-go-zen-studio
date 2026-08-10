@@ -4,6 +4,8 @@
 // Legal content — should still be reviewed by a solicitor before launch.
 
 import Link from 'next/link'
+import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/pageMetadata'
 
 type Props = {
     params: Promise<{ locale: string }>
@@ -158,4 +160,25 @@ export default async function ZasadyUslugPage({ params }: Props) {
 
         </main>
     )
+}
+
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale } = await params
+
+    return buildPageMetadata({
+        locale,
+        path: "/zasady-uslug",
+        pl: {
+            title: "Zasady świadczenia usług | Letting Go Zen Studio",
+            description: "Zasady korzystania z sesji w Letting Go Zen Studio: rezerwacje, odwoływanie wizyt, przeciwwskazania i przebieg spotkania.",
+        },
+        en: {
+            title: "Service Terms | Letting Go Zen Studio",
+            description: "How sessions at Letting Go Zen Studio work: booking, cancellations, contraindications, and what to expect on the day.",
+        },
+    })
 }

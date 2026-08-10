@@ -1,6 +1,8 @@
 // app/[locale]/page.tsx
 import Hero from '@/components/home/Hero'
 import CUDPillars from '@/components/home/CUDPillars'
+import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/pageMetadata'
 
 export default function Home() {
     return (
@@ -48,4 +50,33 @@ export default function Home() {
             <CUDPillars />
         </>
     )
+}
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale } = await params
+
+    return buildPageMetadata({
+        locale,
+        path: "",
+        pl: {
+            title: "Letting Go Zen Studio | Holistyczne sesje Ciało, Umysł, Dusza w Aberdeen",
+            description: "Holistyczne sesje Ciało, Umysł i Dusza w Aberdeen — biorezonans, biofeedback, hipnoterapia i praca ze stresem. Rezerwacja online, obsługa po polsku i angielsku.",
+        },
+        en: {
+            title: "Letting Go Zen Studio | Holistic Body, Mind and Soul Sessions in Aberdeen",
+            description: "Holistic Body, Mind and Soul sessions in Aberdeen — bioresonance, biofeedback, hypnotherapy and stress support. Book online in English or Polish.",
+        },
+    keywords: [
+            "Letting Go Zen Studio",
+            "holistyczne sesje UK",
+            "terapia holistyczna Aberdeen",
+            "hipnoterapia UK",
+            "biorezonans UK",
+            "biofeedback UK",
+            "wellbeing UK"
+    ],
+    })
 }

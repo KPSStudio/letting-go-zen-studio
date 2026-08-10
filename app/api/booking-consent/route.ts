@@ -52,6 +52,32 @@ function normalizeText(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
 }
 
+// Field length ceilings. These are generous for real people and tight enough
+// that a script cannot push megabytes of text into the consent table. They are
+// enforced AFTER trimming so trailing whitespace never costs a customer their
+// last character.
+const FIELD_LIMITS = {
+  serviceId: 200,
+  serviceName: 200,
+  customerFullName: 120,
+  customerEmail: 254, // RFC 5321 maximum
+  customerPhone: 40,
+  typedSignature: 120,
+} as const;
+
+// Every consent declaration the customer must make. Each one is checked as a
+// strict boolean `true`: a truthy value such as the string "no", 1, or {} must
+// NOT be able to stand in for a real affirmative act.
+const REQUIRED_CONSENT_FIELDS = [
+  "participatesVoluntarily",
+  "understandsServiceNature",
+  "understandsNotMedicalTreatment",
+  "truthfulHealthInformation",
+  "mayStopAnyTime",
+  "dataProcessingConsent",
+  "termsAndPrivacyAccepted",
+] as const;
+
 function getClientIp(request: NextRequest) {
   const forwardedFor = request.headers.get("x-forwarded-for");
   if (!forwardedFor) return null;
@@ -60,7 +86,17 @@ function getClientIp(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = (await request.json()) as BookingConsentRequestBody;
+    // Malformed JSON is a client mistake (400), not a server fault (500).
+    let body: BookingConsentRequestBody;
+    try {
+      const parsed: unknown = await request.json();
+      if (typeof parsed !== "object" || parsed === null || Array.isArray(parsed)) {
+        throw new Error("Body must be a JSON object");
+      }
+      body = parsed as BookingConsentRequestBody;
+    } catch {
+      return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
+    }
 
     const serviceId = normalizeText(body.serviceId);
     const serviceName = normalizeText(body.serviceName);
@@ -107,14 +143,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const allRequiredConsentAccepted =
-      body.participatesVoluntarily &&
-      body.understandsServiceNature &&
-      body.understandsNotMedicalTreatment &&
-      body.truthfulHealthInformation &&
-      body.mayStopAnyTime &&
-      body.dataProcessingConsent &&
-      body.termsAndPrivacyAccepted;
+    // Length ceilings, checked after trimming. Deliberately generic in the
+    // response: we say which field was too long, never echo its value back.
+    const lengthChecks: Array<[keyof typeof FIELD_LIMITS, string]> = [
+      ["serviceId", serviceId],
+      ["serviceName", serviceName],
+      ["customerFullName", customerFullName],
+      ["customerEmail", customerEmail],
+      ["customerPhone", customerPhone],
+      ["typedSignature", typedSignature],
+    ];
+
+    for (const [field, value] of lengthChecks) {
+      if (value.length > FIELD_LIMITS[field]) {
+        return NextResponse.json(
+          { error: `The ${field} field is too long.` },
+          { status: 400 },
+        );
+      }
+    }
+
+    // Strict boolean check — see REQUIRED_CONSENT_FIELDS. `=== true` means a
+    // truthy stand-in cannot satisfy a legal declaration.
+    const allRequiredConsentAccepted = REQUIRED_CONSENT_FIELDS.every(
+      (field) => body[field] === true,
+    );
 
     if (!allRequiredConsentAccepted) {
       return NextResponse.json(

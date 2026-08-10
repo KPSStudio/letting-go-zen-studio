@@ -4,6 +4,8 @@
 // All visible text comes from next-intl translation files.
 
 import { getTranslations } from 'next-intl/server'
+import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/pageMetadata'
 
 type LegalSection = {
     title: string
@@ -91,4 +93,24 @@ export default async function PolitykaPrywatnosciPage() {
             </div>
         </main>
     )
+}
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale } = await params
+
+    return buildPageMetadata({
+        locale,
+        path: "/polityka-prywatnosci",
+        pl: {
+            title: "Polityka prywatności | Letting Go Zen Studio",
+            description: "Jak Letting Go Zen Studio przetwarza dane osobowe: jakie dane zbieramy, w jakim celu, jak długo je przechowujemy i jakie masz prawa.",
+        },
+        en: {
+            title: "Privacy Policy | Letting Go Zen Studio",
+            description: "How Letting Go Zen Studio handles personal data: what we collect, why, how long we keep it, and the rights you have over it.",
+        },
+    })
 }

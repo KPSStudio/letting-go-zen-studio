@@ -4,6 +4,8 @@
 // All visible text comes from next-intl translation files.
 
 import { getTranslations } from 'next-intl/server'
+import type { Metadata } from 'next'
+import { buildPageMetadata } from '@/lib/pageMetadata'
 
 type LegalSection = {
     title: string
@@ -124,4 +126,24 @@ export default async function RegulaminPage() {
             </section>
         </main>
     )
+}
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+    const { locale } = await params
+
+    return buildPageMetadata({
+        locale,
+        path: "/regulamin",
+        pl: {
+            title: "Regulamin | Letting Go Zen Studio",
+            description: "Regulamin świadczenia usług i sprzedaży Letting Go Zen Studio — zamówienia, płatności, dostawa i reklamacje.",
+        },
+        en: {
+            title: "Terms and Conditions | Letting Go Zen Studio",
+            description: "The terms and conditions for services and sales at Letting Go Zen Studio — orders, payment, delivery and complaints.",
+        },
+    })
 }

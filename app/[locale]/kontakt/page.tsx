@@ -56,6 +56,12 @@ export default function KontaktPage() {
 
     const [submitted, setSubmitted] = useState(false)
     const [errorShown, setErrorShown] = useState(false)
+    const [sending, setSending] = useState(false)
+
+    // Honeypot. Hidden from sighted users AND from screen readers, and skipped
+    // by keyboard tabbing — so no real person can fill it in, but a form-filling
+    // bot will. The server discards any submission that has it set.
+    const [website, setWebsite] = useState('')
 
     function handleChange(
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -70,8 +76,14 @@ export default function KontaktPage() {
 
     async function handleSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault()
+
+        // Stop a second submit while the first is still in flight — otherwise
+        // an impatient double-click files the same enquiry twice.
+        if (sending) return
+
         setSubmitted(false)
         setErrorShown(false)
+        setSending(true)
 
         try {
             const response = await fetch('/api/contact', {
@@ -79,6 +91,7 @@ export default function KontaktPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     ...formData,
+                    website,
                     locale: document.documentElement.lang || 'pl',
                 }),
             })
@@ -97,6 +110,8 @@ export default function KontaktPage() {
             }
         } catch {
             setErrorShown(true)
+        } finally {
+            setSending(false)
         }
     }
 
@@ -196,25 +211,33 @@ export default function KontaktPage() {
                 </aside>
 
                 <section className="contact-form-card">
-                    {submitted && (
-                        <div className="contact-success-box">
-                            <span>✉️</span>
+                    {/* One always-present live region, so the outcome of an
+                        async submit is announced rather than only drawn. It has
+                        to exist in the DOM before the result arrives — a region
+                        that appears at the same moment as its text is often not
+                        announced at all. The emoji are decorative next to real
+                        text, so they are hidden from assistive tech. */}
+                    <div role="status" aria-live="polite">
+                        {submitted && (
+                            <div className="contact-success-box">
+                                <span aria-hidden="true">✉️</span>
 
-                            <p>
-                                {t('successMessage')}
-                            </p>
-                        </div>
-                    )}
+                                <p>
+                                    {t('successMessage')}
+                                </p>
+                            </div>
+                        )}
 
-                    {errorShown && (
-                        <div className="contact-error-box">
-                            <span>⚠️</span>
+                        {errorShown && (
+                            <div className="contact-error-box">
+                                <span aria-hidden="true">⚠️</span>
 
-                            <p>
-                                {t('errorMessage')}
-                            </p>
-                        </div>
-                    )}
+                                <p>
+                                    {t('errorMessage')}
+                                </p>
+                            </div>
+                        )}
+                    </div>
 
                     <h2 className="contact-section-title">
                         {t('formTitle')}
@@ -308,8 +331,43 @@ export default function KontaktPage() {
                             />
                         </div>
 
-                        <button type="submit" className="contact-submit-button">
-                            ✉️ {t('submitButton')}
+                        {/* Honeypot — see the `website` state above. Not
+                            `display: none`: some bots skip hidden inputs, but
+                            almost none read an off-screen one. aria-hidden +
+                            tabIndex -1 keep it away from real users. */}
+                        <div
+                            aria-hidden="true"
+                            style={{
+                                position: 'absolute',
+                                left: '-9999px',
+                                width: '1px',
+                                height: '1px',
+                                overflow: 'hidden',
+                            }}
+                        >
+                            <label htmlFor="website">Website</label>
+                            <input
+                                id="website"
+                                type="text"
+                                name="website"
+                                value={website}
+                                onChange={(event) => setWebsite(event.target.value)}
+                                tabIndex={-1}
+                                autoComplete="off"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="contact-submit-button"
+                            disabled={sending}
+                            style={{
+                                opacity: sending ? 0.6 : 1,
+                                cursor: sending ? 'not-allowed' : 'pointer',
+                            }}
+                        >
+                            <span aria-hidden="true">✉️</span>{' '}
+                            {sending ? t('sendingButton') : t('submitButton')}
                         </button>
                     </form>
                 </section>
