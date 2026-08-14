@@ -299,14 +299,6 @@ export default function SoulClient({ products }: Props) {
                             </div>
                         )}
 
-                        {/* Shown only when this service is a home visit, so a
-                            studio or online session is never quoted a travel
-                            fee it does not have. Appears here, before any
-                            booking or payment step. */}
-                        {involvesHomeVisit(selectedProduct.availability) && (
-                            <TravelFeeNotice />
-                        )}
-
                         {getIncludes(selectedProduct).length > 0 && (
                             <div className="body-modal-section">
                                 <p className="body-modal-label">
@@ -337,14 +329,27 @@ export default function SoulClient({ products }: Props) {
                             </div>
                         )}
 
-                        {getWarning(selectedProduct) && (
+                        {/* Important information. The box now appears when the
+                            service carries a Sanity warning OR when it is a
+                            home visit, so the travel-fee disclosure is never
+                            lost on a service that happens to have no warning. */}
+                        {(getWarning(selectedProduct) ||
+                            involvesHomeVisit(selectedProduct.availability)) && (
                             <div className="body-warning-box">
                                 <p className="body-modal-label">
                                     ⚠️ {t('modal.warning')}
                                 </p>
-                                <p className="body-warning-text">
-                                    {getWarning(selectedProduct)}
-                                </p>
+                                {getWarning(selectedProduct) && (
+                                    <p className="body-warning-text">
+                                        {getWarning(selectedProduct)}
+                                    </p>
+                                )}
+
+                                {/* The travel fee is stated here, among the
+                                    service's other cautions. Home visits only. */}
+                                {involvesHomeVisit(selectedProduct.availability) && (
+                                    <TravelFeeNotice />
+                                )}
                             </div>
                         )}
 
