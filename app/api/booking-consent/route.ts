@@ -237,10 +237,15 @@ export async function POST(request: NextRequest) {
     }
 
     // The page uses calSlug to load the correct Cal.com calendar inline.
+    // `availability` rides along so the page can decide whether to show the
+    // travel-fee disclosure above the calendar. It is returned from the
+    // server-side Sanity lookup, never from the client's URL, so the customer
+    // cannot suppress the notice by editing a query parameter.
     return NextResponse.json({
       success: true,
       calSlug,
       serviceName: service.namePl,
+      availability: service.availability ?? null,
     });
   } catch (error) {
     console.error("Booking consent route error:", error);

@@ -20,6 +20,8 @@ type ServicePrice = {
 type BookableService = ServicePrice & {
     namePl: string
     calComSlug?: string
+    /** Studio / Online / Dojazd — drives the travel-fee disclosure. */
+    availability?: string
 }
 
 // Look up the REAL price of a service by its Polish name.
@@ -41,7 +43,7 @@ export async function getBookableServiceByName(
     namePl: string
 ): Promise<BookableService | null> {
     const result = await sanityServerClient.fetch<BookableService | null>(
-        `*[_type == "service" && namePl == $namePl && isActive == true && requiresBooking == true][0]{ namePl, priceGBP, pricePLN, calComSlug }`,
+        `*[_type == "service" && namePl == $namePl && isActive == true && requiresBooking == true][0]{ namePl, priceGBP, pricePLN, calComSlug, availability }`,
         { namePl }
     )
     return result ?? null

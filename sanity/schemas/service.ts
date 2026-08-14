@@ -80,12 +80,22 @@ export default defineType({
         defineField({
             name: 'availability',
             title: 'Dostępność',
+            // The three "Dojazd" options are what switch on the travel-fee
+            // notice shown to the customer before they book — see
+            // lib/serviceAvailability.ts. Choosing any option WITHOUT "Dojazd"
+            // deliberately hides that notice, so a studio or online session is
+            // never quoted a travel fee it does not have.
+            description:
+                'Wybór z „Dojazd” automatycznie pokazuje klientowi informację o dodatkowej opłacie za dojazd — przed rezerwacją i nad kalendarzem.',
             type: 'string',
             options: {
                 list: [
                     { title: 'Studio', value: 'Studio' },
                     { title: 'Online', value: 'Online' },
                     { title: 'Studio | Online', value: 'Studio | Online' },
+                    { title: 'Dojazd do klienta', value: 'Dojazd' },
+                    { title: 'Studio | Dojazd', value: 'Studio | Dojazd' },
+                    { title: 'Studio | Online | Dojazd', value: 'Studio | Online | Dojazd' },
                 ],
                 layout: 'radio',
             },
