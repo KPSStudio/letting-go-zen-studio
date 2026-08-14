@@ -17,7 +17,7 @@
 import { useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import {
-    HeartIcon,
+    SessionIcon,
     PreparationIcon,
     MindIcon,
     StarIcon,
@@ -27,8 +27,10 @@ import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 type SupportItem = { title: string; text: string }
 
-// Heart, leaf, lotus, star, energy flow — in the order the copy is written.
-const ICONS = [HeartIcon, PreparationIcon, MindIcon, StarIcon, InfinityIcon] as const
+// Session, leaf, lotus, star, energy flow — in the order the copy is written.
+// The first slot pairs with "Sesje terapeutyczne & NLP", so SessionIcon is the
+// literal match; it replaced a heart, which is no longer used anywhere.
+const ICONS = [SessionIcon, PreparationIcon, MindIcon, StarIcon, InfinityIcon] as const
 
 const REVEAL_STEPS = ['.support-item']
 const DRAW_SELECTOR =

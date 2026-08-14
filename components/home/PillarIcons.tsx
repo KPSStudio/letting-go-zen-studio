@@ -89,15 +89,10 @@ export function SoulIcon({ className }: IconProps) {
    Same 48x48 grid, same stroke language and the same currentColor contract as
    the three pillar icons above, so the two sets read as one family. */
 
-/** An individual approach — an open heart. */
-export function HeartIcon({ className }: IconProps) {
-    return (
-        <svg {...shared} className={className}>
-            <path d="M24 38.5c-1 0-1.9-.35-2.6-1L10.8 27a9.6 9.6 0 0 1 0-13.7 9.9 9.9 0 0 1 13.2.5 9.9 9.9 0 0 1 13.2-.5 9.6 9.6 0 0 1 0 13.7L26.6 37.5c-.7.65-1.6 1-2.6 1Z" />
-            <path d="M24 13.8v23.9" opacity="0.35" />
-        </svg>
-    )
-}
+/* HeartIcon was removed at the client's request: no heart motif appears
+   anywhere on the site. Its four call sites now use SessionIcon, PersonIcon,
+   ConversationIcon and QuillIcon respectively. Deleted rather than left unused
+   so it cannot quietly return via an import. */
 
 /** A holistic view — a figure held within a circle. */
 export function HolisticIcon({ className }: IconProps) {

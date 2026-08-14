@@ -31,7 +31,7 @@ import { involvesHomeVisit } from "@/lib/serviceAvailability";
 import BackControl from "@/components/common/BackControl";
 import BotanicalOrnament from "@/components/common/BotanicalOrnament";
 import {
-  HeartIcon,
+  ConversationIcon,
   PreparationIcon,
   ShieldIcon,
   PersonIcon,
@@ -84,7 +84,7 @@ const declarationItems: ConsentItem[] = [
   {
     key: "participatesVoluntarily",
     translationKey: "checks.participatesVoluntarily",
-    Icon: HeartIcon,
+    Icon: ConversationIcon,
   },
   {
     key: "understandsServiceNature",
