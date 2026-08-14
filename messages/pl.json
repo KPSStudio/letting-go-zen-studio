@@ -8,7 +8,8 @@
   },
   "body": {
     "emptyState": "Wkrótce — usługi pojawią się tutaj po dodaniu ich w panelu administracyjnym.",
-    "back": "← POWRÓT",
+    "back": "POWRÓT",
+    "backAria": "Wróć",
     "titleMain": "Ciało —",
     "titleGold": "Body",
     "intro": "Terapie fizyczne wspierające zdrowie, regenerację i witalność ciała.",
@@ -283,22 +284,22 @@
   },
   "hero": {
     "tagline": "Ciało · Umysł · Dusza",
-    "title1": "Letting Go",
-    "title2": "Zen Studio",
+    "brandLine1": "Letting Go",
+    "brandLine2": "Zen Studio",
+    "description": "Przestrzeń harmonii, równowagi i świadomego oddechu.",
     "button": "O Mnie"
   },
   "pillars": {
-    "heading": "Wybierz swoją ścieżkę",
-    "subtitle": "C · U · D",
-    "explore": "ODKRYJ →",
-    "bodyLetter": "C",
+    "heading": "Czym się zajmujemy?",
+    "intro": "Łączymy pracę z ciałem, umysłem i duszą, aby pomóc Ci odnaleźć równowagę w codziennym życiu. Sesje prowadzone są w Aberdeen i online, po polsku i angielsku.",
     "bodyName": "CIAŁO",
+    "bodyText": "Sesje skupione na ciele i jego regeneracji, wspierające odprężenie i poczucie komfortu na co dzień.",
     "bodyHref": "/body",
-    "mindLetter": "U",
     "mindName": "UMYSŁ",
+    "mindText": "Praca z podświadomością i emocjami — hipnoterapia oraz konsultacje wspierające spokój i jasność myślenia.",
     "mindHref": "/mind",
-    "soulLetter": "D",
     "soulName": "DUSZA",
+    "soulText": "Analizy i sesje indywidualne, które pomagają lepiej poznać siebie i odnaleźć własny kierunek.",
     "soulHref": "/soul"
   },
   "footer": {
@@ -342,10 +343,18 @@
     "messagePlaceholder": "Napisz swoją wiadomość...",
     "submitButton": "WYŚLIJ WIADOMOŚĆ",
     "socialTitle": "Znajdź nas w mediach społecznościowych",
-    "sendingButton": "Wysyłanie..."
+    "sendingButton": "Wysyłanie...",
+    "subjects": {
+      "biorezonans": "Biorezonans",
+      "hipnoterapia": "Hipnoterapia",
+      "presoterapia": "Presoterapia",
+      "przeznaczenie": "Przeznaczenie",
+      "alchemik": "Alchemik"
+    }
   },
   "mindPage": {
-    "back": "← POWRÓT",
+    "back": "POWRÓT",
+    "backAria": "Wróć",
     "titleBefore": "Umysł —",
     "titleGold": "Mind",
     "intro": "Analiza energetyczna i praca z podświadomością dla jasności umysłu, transformacji emocjonalnej i wewnętrznej równowagi.",
@@ -456,33 +465,55 @@
     "logoAlt": "Letting Go Zen Studio",
     "photoPlaceholder": "ZDJĘCIE JOANNY",
     "photoName": "JOANNA WITKOWSKA",
-    "bioParagraphs": [
-      "Witaj w moim świecie — Letting Go Zen Studio. Nazywam się Joanna Witkowska i jestem szczęśliwą mamą oraz spełnioną kobietą, która doświadczyła w przeszłości traumy i straty.",
-      "Porównam się do Alchemika, który doświadcza i podąża za swoimi marzeniami, uczy się na błędach i wierzy w siłę przeznaczenia. Kogoś, kto jest otwarty na nowe doświadczenia, by znaleźć swoją formułę mocy. I wiem, że każdego z nas ciekawi odkrycie własnego skarbu.",
-      "Mogłabym w tym miejscu wyliczać ukończone szkoły, studia i szkolenia, karmiąc swoje Ego i chwaląc się dyplomami na ścianie. Mój wewnętrzny głos mówi mi jednak wyraźnie: Jestem tutaj Tu i Teraz po to, aby dzielić się z Tobą wiedzą i wspierać Cię najlepiej, jak potrafię — od serca dla serca.",
-      "Moje perspektywy ukształtowała m.in. praca w opiece paliatywnej oraz z osobami dotkniętymi demencją. To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń.",
-      "Letting Go Zen Studio to Akademia Alchemii Energii — most między nauką a energią, która czeka na Ciebie. Pomagam Ci wydobyć siłę i uwolnić negatywne emocje przez różnorodne warsztaty, zajęcia i terapie. To przestrzeń, w której łączę naukę, duchowość i pracę z ciałem."
-    ],
     "supportTitle": "W CZYM MOGĘ CIĘ WESPRZEĆ?",
     "supportItems": [
-      "Sesje terapeutyczne & NLP — transformacja blokujących schematów myślowych.",
-      "Hipnoterapia & Praca z Podświadomością — docieranie do źródła Twojej wewnętrznej siły.",
-      "Mindfulness — powrót do obecności i spokoju w tu i teraz.",
-      "Fizyka Kwantowa, Metafizyka i Ezoteryka — odkrywanie głębszych praw wszechświata i energii.",
-      "Alchemia Energii, Medycyna Chińska, Wellness — biofeedback i holistyczne zadbanie o dobrostan Twojego ciała."
+      {
+        "title": "Sesje terapeutyczne & NLP",
+        "text": "Transformacja blokujących schematów myślowych."
+      },
+      {
+        "title": "Hipnoterapia & Praca z Podświadomością",
+        "text": "Docieranie do źródła Twojej wewnętrznej siły."
+      },
+      {
+        "title": "Mindfulness",
+        "text": "Powrót do obecności i spokoju w tu i teraz."
+      },
+      {
+        "title": "Fizyka Kwantowa, Metafizyka i Ezoteryka",
+        "text": "Odkrywanie głębszych praw wszechświata i energii."
+      },
+      {
+        "title": "Alchemia Energii, Medycyna Chińska, Wellness",
+        "text": "Biofeedback i holistyczne zadbanie o dobrostan Twojego ciała."
+      }
     ],
     "methodParagraph": "Każda z tych metod opiera się na sprawdzonych technikach oraz moim osobistym, życiowym doświadczeniu. Nie dzielę ludzi ze względu na religię czy poglądy — szanuję nasz wspólny początek i koniec, a z życia chcę po prostu wydobywać najczystszą esencję.",
     "alchemikTitle": "ALCHEMIK",
     "alchemikDescription": "Sesje łączące analizę z określeniem emocji, celów i drogi do odkrycia potencjałów. 1:1 lub online.",
-    "alchemikSession": "1 sesja · 30 min · £30",
-    "alchemikPackage": "Pakiet 5 sesji · £120",
     "alchemikButton": "ZAREZERWUJ ALCHEMIK",
     "closingParagraphs": [
       "Wierzę, że każdy z nas ma w sobie potencjał Alchemika — moc do uzdrowienia samego siebie i odnalezienia prawdziwego szczęścia.",
       "Skoro tutaj jesteś, to znaczy, że nic nie dzieje się bez powodu.",
       "Zapraszam Cię do wspólnej, niezwykłej podróży w głąb siebie."
     ],
-    "signature": "Z miłością, Joanna"
+    "signature": "Z miłością, Joanna",
+    "openingStatement": "Jestem tutaj Tu i Teraz po to, aby dzielić się z Tobą wiedzą i wspierać Cię najlepiej, jak potrafię —",
+    "quote": "Pozwól odejść temu, co Cię obciąża, i otwórz przestrzeń na to, co Cię rozwija.",
+    "journeyTitle": "Moja droga",
+    "journeyParagraphs": [
+      "Witaj w moim świecie. Nazywam się Joanna Witkowska i jestem szczęśliwą mamą oraz spełnioną kobietą, która doświadczyła w przeszłości traumy i straty.",
+      "Porównam się do Alchemika, który doświadcza i podąża za swoimi marzeniami, uczy się na błędach i wierzy w siłę przeznaczenia. Kogoś, kto jest otwarty na nowe doświadczenia, by znaleźć swoją formułę mocy. I wiem, że każdego z nas ciekawi odkrycie własnego skarbu.",
+      "Mogłabym w tym miejscu wyliczać ukończone szkoły, studia i szkolenia, karmiąc swoje Ego i chwaląc się dyplomami na ścianie.",
+      "Moje perspektywy ukształtowała m.in. praca w opiece paliatywnej oraz z osobami dotkniętymi demencją. To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń."
+    ],
+    "studioTitle": "Letting Go Zen Studio",
+    "studioParagraphs": [
+      "Letting Go Zen Studio to Akademia Alchemii Energii — most między nauką a energią, która czeka na Ciebie. Pomagam Ci wydobyć siłę i uwolnić negatywne emocje przez różnorodne warsztaty, zajęcia i terapie. To przestrzeń, w której łączę naukę, duchowość i pracę z ciałem."
+    ],
+    "bannerReflection": "To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń.",
+    "openingHighlight": "od serca dla serca.",
+    "alchemikOffersLabel": "Dostępne sesje"
   },
   "sklep": {
     "label": "PRODUKTY CYFROWE",
@@ -552,7 +583,8 @@
     "closeModal": "Zamknij okno"
   },
   "soul": {
-    "back": "← POWRÓT",
+    "back": "POWRÓT",
+    "backAria": "Wróć",
     "titleStart": "Dusza —",
     "titleGold": "Soul",
     "intro": "Raporty PDF, sesje Ajurwedy i analiza matrycy losu. Odkryj swoją duchową misję i talenty.",
@@ -644,6 +676,7 @@
   },
   "bookingConsent": {
     "back": "Wróć",
+    "backAria": "Wróć",
     "label": "ZGODA PRZED REZERWACJĄ",
     "titleMain": "Potwierdzenie",
     "titleGold": "Klienta",
@@ -665,7 +698,8 @@
       "acceptPrefix": "Akceptuję",
       "terms": "Regulamin",
       "and": "oraz",
-      "privacy": "Politykę Prywatności"
+      "privacy": "Politykę Prywatności",
+      "confirmAllPrefix": "Potwierdzam wszystkie powyższe oświadczenia oraz akceptuję"
     },
     "fields": {
       "fullName": "Imię i nazwisko",
@@ -680,7 +714,11 @@
       "incompleteForm": "Uzupełnij wszystkie pola i zaznacz wszystkie wymagane zgody.",
       "saveFailed": "Nie udało się zapisać zgody. Spróbuj ponownie.",
       "connectionFailed": "Wystąpił błąd połączenia. Spróbuj ponownie."
-    }
+    },
+    "completion": "Potwierdzenia: {done} z {total}",
+    "completionDone": "Wszystkie potwierdzenia zaznaczone ({total} z {total})",
+    "detailsTitle": "Twoje dane",
+    "declarationsLabel": "Oświadczenia"
   },
   "wspolpraca": {
     "label": "WSPÓŁPRACA I PROTOKÓŁ",
@@ -694,7 +732,21 @@
     "importantTextTwo": "Dbam o dobro klienta zgodnie z Art. 13 RODO i Art. 14 RODO.",
     "bookingLabel": "REZERWACJA SESJI",
     "bookingText": "Rezerwacje prowadzimy przez kalendarz online. Wybierz usługę na stronie Ciało, Umysł lub Dusza — po wypełnieniu formularza zgody otworzy się kalendarz z wolnymi terminami. Jeśli nie wiesz, którą sesję wybrać, napisz do mnie.",
-    "bookingButton": "ZAREZERWUJ SESJĘ"
+    "bookingButton": "ZAREZERWUJ SESJĘ",
+    "journey": {
+      "heading": "Jak przebiega współpraca",
+      "intro": "Pięć kroków — od wyboru usługi po potwierdzoną rezerwację.",
+      "s1Title": "Wybór usługi",
+      "s1Text": "Wybierasz sesję na stronie Ciało, Umysł lub Dusza i klikasz „Zarezerwuj”.",
+      "s2Title": "Zgoda przed rezerwacją",
+      "s2Text": "Czytasz i potwierdzasz wymagane oświadczenia, podajesz swoje dane i wpisujesz podpis.",
+      "s3Title": "Wybór terminu",
+      "s3Text": "Po zapisaniu zgody otwiera się kalendarz online z wolnymi terminami. Wybierasz dogodną godzinę.",
+      "s4Title": "Płatność",
+      "s4Text": "Tam, gdzie usługa jest płatna, płatność odbywa się bezpiecznie w kalendarzu, w GBP (£). Rezerwacja jest potwierdzona dopiero po udanej płatności.",
+      "s5Title": "Potwierdzenie i przygotowanie",
+      "s5Text": "Otrzymujesz potwierdzenie rezerwacji na e-mail. Przed sesją warto zadbać o spokojny czas dla siebie."
+    }
   },
   "cartPage": {
     "thankYou": {
@@ -894,44 +946,117 @@
       "label": "POLITYKA PRYWATNOŚCI",
       "titleStart": "Polityka",
       "titleGold": "Prywatności",
-      "intro": "Polityka Prywatności wyjaśnia, jakie dane osobowe mogą być przetwarzane przez Letting Go Zen Studio, w jakim celu są wykorzystywane oraz jakie prawa przysługują użytkownikowi zgodnie z UK GDPR i RODO.",
-      "effectiveDate": "Data obowiązywania: 5 czerwca 2026",
+      "intro": "Polityka Prywatności wyjaśnia, jakie dane osobowe przetwarza Letting Go Zen Studio, w jakim celu i na jakiej podstawie prawnej, komu je powierzamy, jak długo je przechowujemy oraz jakie prawa przysługują użytkownikowi zgodnie z UK GDPR i RODO.",
+      "effectiveDate": "Data obowiązywania: 14 sierpnia 2026",
       "sections": {
         "controller": {
-          "title": "1. Administrator danych",
-          "content": "Administratorem danych osobowych jest Letting Go Zen Studio, 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom. Kontakt: lettinggozenstudio@gmail.com."
+          "title": "1. Administrator danych i kontakt",
+          "content": "Administratorem Twoich danych osobowych jest Letting Go Zen Studio (działalność jednoosobowa, Joanna Witkowska), 42 Leslie Road, Aberdeen AB24 4EF, Scotland, United Kingdom.",
+          "points": [
+            "Kontakt we wszystkich sprawach dotyczących danych osobowych: lettinggozenstudio@gmail.com",
+            "Ze względu na skalę i charakter działalności nie mamy obowiązku powołania inspektora ochrony danych (IOD). Wszystkie zapytania obsługuje bezpośrednio administrator.",
+            "Odpowiadamy na wnioski dotyczące praw wynikających z UK GDPR i RODO w terminie jednego miesiąca od ich otrzymania."
+          ]
         },
         "collectedData": {
-          "title": "2. Jakie dane zbieramy",
-          "content": "Możemy przetwarzać imię i nazwisko, adres e-mail, numer telefonu, dane do płatności, informacje podane w formularzach kontaktowych oraz informacje zawarte w ankietach przed sesją."
+          "title": "2. Jakie dane zbieramy i skąd",
+          "content": "Zbieramy wyłącznie dane, które sam(a) nam podajesz w jednym z trzech miejsc na stronie. Poniżej podajemy dokładnie, co zapisujemy w każdym z tych przypadków.",
+          "points": [
+            "Formularz zgody na rezerwację — imię i nazwisko, adres e-mail, numer telefonu, wpisany podpis, nazwa wybranej usługi, siedem potwierdzeń zgody, wersja językowa strony, data i godzina złożenia podpisu oraz — jako dowód złożenia zgody — Twój adres IP i identyfikator przeglądarki (user agent).",
+            "Formularz kontaktowy — imię, adres e-mail, opcjonalnie numer telefonu i temat, treść wiadomości oraz wersja językowa strony.",
+            "Zakup w sklepie lub w koszyku — adres e-mail, nazwa i typ kupionego produktu, kwota i waluta, identyfikator płatności Stripe, potwierdzenia zaakceptowanych warunków wraz z datą, a przy produktach wysyłkowych również imię i nazwisko oraz adres wysyłki.",
+            "Rezerwacja terminu — imię i nazwisko, adres e-mail oraz odpowiedź na pytanie o zgodę podajesz bezpośrednio w widżecie Cal.com. Te dane trafiają do Cal.com, a nie do naszej bazy; my widzimy je w potwierdzeniu rezerwacji.",
+            "Dane techniczne — nasz dostawca hostingu (Vercel) rejestruje standardowe logi serwera, w tym adres IP i typ przeglądarki, w celu zapewnienia bezpieczeństwa i działania strony."
+          ],
+          "footnote": "Nie prowadzimy newslettera, nie kupujemy baz danych i nie zbieramy danych z innych źródeł niż podane wyżej. Nie stosujemy profilowania ani zautomatyzowanego podejmowania decyzji wywołujących skutki prawne."
         },
         "specialCategoryData": {
-          "title": "3. Dane szczególnej kategorii",
-          "content": "W przypadku hipnoterapii, EFT oraz biorezonansu mogą być przetwarzane informacje dotyczące zdrowia i samopoczucia klienta. Dane te są przetwarzane wyłącznie za wyraźną zgodą klienta."
-        },
-        "purposes": {
-          "title": "4. Cele przetwarzania",
-          "content": "Dane są przetwarzane w celu realizacji usług, kontaktu z klientem, prowadzenia dokumentacji sesji, realizacji obowiązków podatkowych i księgowych oraz ochrony prawnej działalności."
+          "title": "3. Dane dotyczące zdrowia (dane szczególnej kategorii)",
+          "content": "Formularz zgody na rezerwację zawiera oświadczenie, że podane przez Ciebie informacje o stanie zdrowia są prawdziwe, a podczas samej sesji możesz przekazać informacje o swoim zdrowiu i samopoczuciu. Są to dane szczególnej kategorii w rozumieniu art. 9 UK GDPR i RODO. Przetwarzamy je wyłącznie na podstawie Twojej wyraźnej zgody (art. 9 ust. 2 lit. a), którą możesz w każdej chwili wycofać, a w zakresie niezbędnym do ustalenia, dochodzenia lub obrony roszczeń — na podstawie art. 9 ust. 2 lit. f. Nie wpisuj informacji o zdrowiu do formularza kontaktowego ani do pola podpisu — przekaż je bezpośrednio podczas sesji."
         },
         "legalBasis": {
-          "title": "5. Podstawy prawne",
-          "content": "Przetwarzanie odbywa się na podstawie zgody osoby, której dane dotyczą, wykonania umowy, prawnie uzasadnionego interesu administratora oraz obowiązków prawnych wynikających z przepisów podatkowych."
+          "title": "4. Cele i podstawy prawne przetwarzania",
+          "content": "Każdy cel ma przypisaną własną podstawę prawną. Poniżej wskazujemy je wprost.",
+          "points": [
+            "Realizacja zamówionej usługi lub zakupu (rezerwacja sesji, dostarczenie pliku PDF, wysyłka produktu) — niezbędność do wykonania umowy, art. 6 ust. 1 lit. b.",
+            "Przechowywanie podpisanego formularza zgody wraz z adresem IP i identyfikatorem przeglądarki — nasz prawnie uzasadniony interes polegający na wykazaniu, że zgoda została udzielona, oraz na ustaleniu i obronie ewentualnych roszczeń, art. 6 ust. 1 lit. f.",
+            "Przetwarzanie informacji o zdrowiu — Twoja wyraźna zgoda, art. 9 ust. 2 lit. a.",
+            "Odpowiedź na wiadomość z formularza kontaktowego — nasz prawnie uzasadniony interes polegający na obsłudze zapytania, art. 6 ust. 1 lit. f.",
+            "Przechowywanie dokumentacji sprzedaży i rozliczeń podatkowych — obowiązek prawny ciążący na administratorze, art. 6 ust. 1 lit. c, w związku z przepisami HMRC.",
+            "Zapewnienie bezpieczeństwa strony i zapobieganie nadużyciom (logi serwera, ochrona formularzy przed spamem) — nasz prawnie uzasadniony interes, art. 6 ust. 1 lit. f."
+          ]
         },
         "retention": {
-          "title": "6. Przechowywanie danych",
-          "content": "Dane przechowywane są tylko przez okres niezbędny do realizacji celu, dla którego zostały zebrane. Dokumentacja księgowa przechowywana jest zgodnie z obowiązującymi przepisami prawa brytyjskiego."
+          "title": "5. Jak długo przechowujemy dane",
+          "content": "Nie przechowujemy danych bezterminowo. Dla każdego rodzaju zapisu obowiązuje konkretny okres, po którym rekord jest usuwany.",
+          "points": [
+            "Formularze zgody na rezerwację (imię i nazwisko, kontakt, podpis, adres IP) — 6 lat od daty sesji, ze względu na okres przedawnienia roszczeń, po czym rekord jest usuwany.",
+            "Wiadomości z formularza kontaktowego — 12 miesięcy od udzielenia odpowiedzi, chyba że korespondencja przekształci się w rezerwację lub zamówienie.",
+            "Zamówienia ze sklepu i koszyka (w tym adresy wysyłki) — 6 lat od zakończenia roku podatkowego, w którym doszło do sprzedaży, zgodnie z wymogami HMRC dotyczącymi dokumentacji finansowej.",
+            "Rejestry techniczne wysyłki e-maili (kolejka wiadomości i zdarzenia od dostawcy poczty) — 90 dni, wyłącznie do celów diagnostycznych.",
+            "Zapisy nieprawidłowości płatności wymagających ręcznej weryfikacji — 12 miesięcy od wyjaśnienia sprawy. Nie zawierają danych osobowych, a jedynie identyfikator płatności.",
+            "Linki do pobrania zakupionych plików PDF — wygasają automatycznie po 30 dniach od zakupu.",
+            "Logi serwera u dostawcy hostingu — zgodnie ze standardowym okresem retencji Vercel, około 30 dni."
+          ],
+          "footnote": "Dane związane z płatnościami przechowuje również Stripe, a dane rezerwacji — Cal.com, każdy zgodnie z własną polityką przechowywania i własnymi obowiązkami prawnymi. Możesz w każdej chwili poprosić nas o wcześniejsze usunięcie swoich danych; zrealizujemy taki wniosek, o ile nie stoi mu na przeszkodzie obowiązek prawny (np. dokumentacja podatkowa)."
         },
         "sharing": {
-          "title": "7. Udostępnianie danych",
-          "content": "Dane mogą być przekazywane podmiotom wspierającym działalność, takim jak operatorzy płatności, dostawcy hostingu, dostawcy poczty elektronicznej oraz biuro księgowe. Dane nie są sprzedawane osobom trzecim."
+          "title": "6. Komu powierzamy dane",
+          "content": "Nie sprzedajemy danych i nie udostępniamy ich w celach marketingowych. Korzystamy z wymienionych niżej dostawców, którzy przetwarzają dane wyłącznie na nasze udokumentowane polecenie, na podstawie zawartych z nimi umów powierzenia przetwarzania.",
+          "points": [
+            "Supabase, Inc. — baza danych i przechowywanie plików. Zapisywane są w niej formularze zgody, wiadomości kontaktowe i zamówienia.",
+            "Stripe Payments Europe, Ltd. oraz Stripe, Inc. — obsługa płatności za produkty w sklepie i w koszyku.",
+            "Cal.com, Inc. — kalendarz rezerwacji oraz płatność za sesję dokonywana wewnątrz widżetu rezerwacji.",
+            "Resend, Inc. — wysyłka automatycznych wiadomości e-mail: linków do pobrania, potwierdzeń zamówień i powiadomień dla administratora.",
+            "Vercel, Inc. — hosting strony i logi serwera.",
+            "Sanity AS (Norwegia) — system zarządzania treścią. Przechowuje wyłącznie treść strony (opisy usług, ceny), nie przechowuje danych klientów.",
+            "Google Ireland Limited — firmowa skrzynka pocztowa, na którą trafiają powiadomienia o zamówieniach i korespondencja z klientami."
+          ],
+          "footnote": "Dane możemy ponadto ujawnić księgowemu lub doradcy prawnemu w zakresie niezbędnym do rozliczeń i obrony roszczeń, a także organom publicznym, jeżeli wymagają tego przepisy prawa."
+        },
+        "transfers": {
+          "title": "7. Przekazywanie danych poza Wielką Brytanię i EOG",
+          "content": "Część wymienionych wyżej dostawców (Supabase, Stripe, Cal.com, Resend, Vercel) ma siedzibę w Stanach Zjednoczonych, co oznacza, że Twoje dane mogą być przetwarzane poza Wielką Brytanią i Europejskim Obszarem Gospodarczym. Takie przekazanie odbywa się na podstawie zabezpieczeń wymaganych przez art. 46 UK GDPR i RODO: umowy o międzynarodowym przekazywaniu danych (UK IDTA) lub standardowych klauzul umownych Komisji Europejskiej wraz z brytyjskim aneksem, a w przypadku dostawców uczestniczących w programie Data Privacy Framework — również na podstawie decyzji o odpowiednim stopniu ochrony wraz z brytyjskim rozszerzeniem. Kopię zastosowanych zabezpieczeń udostępnimy na żądanie wysłane na adres podany w punkcie 1."
+        },
+        "payments": {
+          "title": "8. Płatności i dane karty",
+          "content": "Nie widzimy i nie przechowujemy numeru Twojej karty płatniczej. Pola płatności są wyświetlane bezpośrednio przez Stripe (w sklepie i koszyku) albo przez Cal.com wraz ze Stripe (przy rezerwacji sesji), a dane karty trafiają prosto do operatora płatności. W naszej bazie zapisujemy wyłącznie identyfikator transakcji, kwotę, walutę i adres e-mail kupującego — te informacje są nam potrzebne, aby zrealizować zamówienie i rozliczyć sprzedaż."
+        },
+        "security": {
+          "title": "9. Bezpieczeństwo danych",
+          "content": "Stosujemy środki techniczne i organizacyjne odpowiednie do ryzyka związanego z przetwarzanymi danymi.",
+          "points": [
+            "Cała komunikacja ze stroną odbywa się przez szyfrowane połączenie HTTPS.",
+            "Tabele z danymi osobowymi objęte są mechanizmem Row Level Security i nie są dostępne publicznie ani z poziomu przeglądarki — odczytać je może wyłącznie serwer przy użyciu klucza serwisowego.",
+            "Pliki PDF przechowujemy w prywatnym zasobniku; każdy link do pobrania jest podpisany i wygasa po 30 dniach.",
+            "Płatności potwierdzamy wyłącznie na podstawie podpisanego kryptograficznie powiadomienia od Stripe, co uniemożliwia sfałszowanie zamówienia.",
+            "Dostęp do panelu administracyjnego, bazy danych i konta płatności jest chroniony indywidualnymi kontami z uwierzytelnianiem dostawcy tożsamości."
+          ]
         },
         "rights": {
-          "title": "8. Prawa użytkownika",
-          "content": "Użytkownik ma prawo do dostępu do danych, sprostowania danych, usunięcia danych, ograniczenia przetwarzania, przeniesienia danych, wycofania zgody oraz wniesienia skargi do organu nadzorczego. W Wielkiej Brytanii organem nadzorczym jest Information Commissioner's Office (ICO)."
+          "title": "10. Twoje prawa",
+          "content": "W odniesieniu do swoich danych osobowych przysługują Ci następujące prawa, z których możesz skorzystać bezpłatnie, pisząc na adres lettinggozenstudio@gmail.com.",
+          "points": [
+            "Prawo dostępu do danych oraz otrzymania ich kopii.",
+            "Prawo do sprostowania danych nieprawidłowych lub niekompletnych.",
+            "Prawo do usunięcia danych, jeżeli nie są już potrzebne do celów, dla których je zebrano.",
+            "Prawo do ograniczenia przetwarzania oraz prawo do sprzeciwu wobec przetwarzania opartego na prawnie uzasadnionym interesie.",
+            "Prawo do przenoszenia danych przetwarzanych na podstawie umowy lub zgody.",
+            "Prawo do wycofania zgody w dowolnym momencie, bez wpływu na zgodność z prawem przetwarzania dokonanego przed jej wycofaniem."
+          ],
+          "footnote": "Aby zweryfikować tożsamość wnioskodawcy, możemy poprosić o potwierdzenie danych podanych przy rezerwacji lub zamówieniu. Nie pobieramy opłat za realizację wniosku, chyba że jest on w sposób oczywisty nieuzasadniony lub nadmierny."
+        },
+        "complaints": {
+          "title": "11. Skargi do organu nadzorczego",
+          "content": "Jeżeli uważasz, że przetwarzamy Twoje dane niezgodnie z prawem, prosimy o kontakt — postaramy się wyjaśnić sprawę. Niezależnie od tego masz prawo wnieść skargę do organu nadzorczego. W Wielkiej Brytanii jest nim Information Commissioner's Office, Wycliffe House, Water Lane, Wilmslow, Cheshire SK9 5AF, tel. 0303 123 1113, ico.org.uk. Jeżeli mieszkasz w Polsce lub w innym państwie EOG, skargę możesz złożyć również do organu właściwego dla swojego miejsca zamieszkania — w Polsce jest to Prezes Urzędu Ochrony Danych Osobowych, ul. Stawki 2, 00-193 Warszawa, uodo.gov.pl."
         },
         "cookies": {
-          "title": "9. Pliki Cookies",
-          "content": "Strona wykorzystuje wyłącznie pliki cookies niezbędne do jej prawidłowego działania — zapamiętanie wybranego języka (NEXT_LOCALE). Nie stosujemy plików cookies analitycznych ani marketingowych i nie prowadzimy analizy ruchu użytkowników. Podczas płatności lub rezerwacji nasi dostawcy (Stripe, Cal.com) mogą ustawić własne pliki cookies niezbędne do bezpiecznego przeprowadzenia transakcji. Ustawienia plików cookies można zmienić w przeglądarce."
+          "title": "12. Pliki cookies",
+          "content": "Strona wykorzystuje wyłącznie pliki cookies niezbędne do jej prawidłowego działania — zapamiętanie wybranego języka (NEXT_LOCALE). Zapisujemy go wyłącznie wtedy, gdy świadomie przełączysz język, i przechowujemy przez 180 dni; samo przeglądanie strony nie tworzy tego pliku, ponieważ adresy /pl i /en same wskazują język. Nie stosujemy plików cookies analitycznych ani marketingowych i nie prowadzimy analizy ruchu użytkowników, dlatego strona nie wyświetla banera zgody na cookies. Podczas płatności lub rezerwacji nasi dostawcy (Stripe, Cal.com) mogą ustawić własne pliki cookies niezbędne do bezpiecznego przeprowadzenia transakcji i zapobiegania oszustwom. Ustawienia plików cookies możesz zmienić w przeglądarce."
+        },
+        "changes": {
+          "title": "13. Zmiany polityki",
+          "content": "Politykę aktualizujemy, gdy zmienia się sposób działania strony lub lista dostawców, którym powierzamy dane. Aktualna wersja jest zawsze dostępna pod tym adresem, a datę jej obowiązywania podajemy na początku strony. O istotnych zmianach dotyczących osób, z którymi pozostajemy w kontakcie, poinformujemy dodatkowo pocztą elektroniczną."
         }
       }
     }
@@ -939,5 +1064,27 @@
   "disclaimer": {
     "label": "WAŻNA INFORMACJA",
     "text": "Usługi Letting Go Zen Studio nie mają na celu diagnozy ani analizy medycznej i nie zastępują porady, diagnozy ani leczenia prowadzonego przez wykwalifikowanego specjalistę medycznego."
+  },
+  "home": {
+    "quote": "Pozwól odejść temu, co Cię obciąża, i otwórz przestrzeń na to, co Cię rozwija.",
+    "whyHeading": "Dlaczego warto?",
+    "why1Title": "Indywidualne podejście",
+    "why1Text": "Każde spotkanie zaczyna się od rozmowy i uważnej obecności, a nie od gotowego schematu.",
+    "why2Title": "Holistyczne spojrzenie",
+    "why2Text": "Patrzymy na całego człowieka — ciało, umysł i emocje traktujemy jako jedną całość.",
+    "why3Title": "Starannie dobrane metody",
+    "why3Text": "Metody wybierane są świadomie i oparte na wieloletnim doświadczeniu Joanny.",
+    "why4Title": "Spokojna przestrzeń",
+    "why4Text": "Miejsce bez ocen i pośpiechu, w którym możesz być sobą i zatrzymać się na chwilę.",
+    "shopCta": {
+      "label": "SKLEP ONLINE",
+      "title": "Materiały do pracy własnej",
+      "text": "Analizy i raporty PDF, które otrzymujesz od razu po zakupie — do przeczytania i przemyślenia we własnym tempie.",
+      "button": "ZOBACZ SKLEP"
+    }
+  },
+  "travelFee": {
+    "label": "Opłata za dojazd",
+    "text": "Wizyty z dojazdem do klienta podlegają dodatkowej opłacie za dojazd. Jej wysokość zależy od lokalizacji i zostanie potwierdzona po dokonaniu rezerwacji. Opłata za dojazd nie zostanie pobrana bez Twojej zgody."
   }
 }

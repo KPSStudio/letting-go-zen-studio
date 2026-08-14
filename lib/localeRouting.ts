@@ -32,6 +32,12 @@ export function buildLocaleHref(
         params.set('locale', newLocale)
     }
 
+    // Marks this navigation as a DELIBERATE language choice. The middleware
+    // writes the NEXT_LOCALE cookie only when it sees this, so ordinary
+    // browsing never creates or refreshes a persistent preference — the /pl
+    // and /en prefixes already carry the language on their own.
+    params.set('setLang', newLocale)
+
     const query = params.toString()
     return query ? `${nextPathname}?${query}` : nextPathname
 }

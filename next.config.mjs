@@ -84,6 +84,37 @@ const nextConfig = {
                 source: '/:path*',
                 headers: securityHeaders,
             },
+            {
+                /*
+                 * API responses can carry personal data — a contact message, a
+                 * consent record, a PaymentIntent client secret — and must
+                 * never sit in a shared or browser cache. Next does not mark
+                 * route handlers no-store by default, so an intermediary could
+                 * otherwise retain them.
+                 *
+                 * Applied to /api/* only: pages stay cacheable, and this does
+                 * not affect webhook or cron correctness (they are POSTed and
+                 * signature-checked regardless).
+                 */
+                source: '/api/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'no-store, no-cache, must-revalidate, private',
+                    },
+                ],
+            },
+            {
+                // Self-hosted fonts are immutable and content-addressed by
+                // filename; a year is safe and avoids refetching them.
+                source: '/fonts/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
         ]
     },
 }

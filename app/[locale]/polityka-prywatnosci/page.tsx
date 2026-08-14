@@ -10,49 +10,47 @@ import { buildPageMetadata } from '@/lib/pageMetadata'
 type LegalSection = {
     title: string
     content: string
+    /** Optional detail lines rendered as a list under the section paragraph. */
+    points?: string[]
+    /** Optional closing paragraph, shown after the list. */
+    footnote?: string
 }
+
+// Section keys in the order they appear on the page. Keeping the order in one
+// array means adding or reordering a section is a one-line change here, and the
+// messages files stay the single source of the wording.
+//
+// `hasPoints` / `hasFootnote` say which sections carry the extra blocks. They
+// are read with t.raw() because next-intl returns arrays as-is only that way.
+const SECTION_KEYS = [
+    { key: 'controller', hasPoints: true, hasFootnote: false },
+    { key: 'collectedData', hasPoints: true, hasFootnote: true },
+    { key: 'specialCategoryData', hasPoints: false, hasFootnote: false },
+    { key: 'legalBasis', hasPoints: true, hasFootnote: false },
+    { key: 'retention', hasPoints: true, hasFootnote: true },
+    { key: 'sharing', hasPoints: true, hasFootnote: true },
+    { key: 'transfers', hasPoints: false, hasFootnote: false },
+    { key: 'payments', hasPoints: false, hasFootnote: false },
+    { key: 'security', hasPoints: true, hasFootnote: false },
+    { key: 'rights', hasPoints: true, hasFootnote: true },
+    { key: 'complaints', hasPoints: false, hasFootnote: false },
+    { key: 'cookies', hasPoints: false, hasFootnote: false },
+    { key: 'changes', hasPoints: false, hasFootnote: false },
+] as const
 
 export default async function PolitykaPrywatnosciPage() {
     const t = await getTranslations('legal.privacy')
 
-    const sections: LegalSection[] = [
-        {
-            title: t('sections.controller.title'),
-            content: t('sections.controller.content'),
-        },
-        {
-            title: t('sections.collectedData.title'),
-            content: t('sections.collectedData.content'),
-        },
-        {
-            title: t('sections.specialCategoryData.title'),
-            content: t('sections.specialCategoryData.content'),
-        },
-        {
-            title: t('sections.purposes.title'),
-            content: t('sections.purposes.content'),
-        },
-        {
-            title: t('sections.legalBasis.title'),
-            content: t('sections.legalBasis.content'),
-        },
-        {
-            title: t('sections.retention.title'),
-            content: t('sections.retention.content'),
-        },
-        {
-            title: t('sections.sharing.title'),
-            content: t('sections.sharing.content'),
-        },
-        {
-            title: t('sections.rights.title'),
-            content: t('sections.rights.content'),
-        },
-        {
-            title: t('sections.cookies.title'),
-            content: t('sections.cookies.content'),
-        },
-    ]
+    const sections: LegalSection[] = SECTION_KEYS.map(
+        ({ key, hasPoints, hasFootnote }) => ({
+            title: t(`sections.${key}.title`),
+            content: t(`sections.${key}.content`),
+            points: hasPoints
+                ? (t.raw(`sections.${key}.points`) as string[])
+                : undefined,
+            footnote: hasFootnote ? t(`sections.${key}.footnote`) : undefined,
+        })
+    )
 
     return (
         <main className="legal-page">
@@ -88,6 +86,22 @@ export default async function PolitykaPrywatnosciPage() {
                         <p className="legal-section-text">
                             {section.content}
                         </p>
+
+                        {/* Detail lines: named processors, retention periods,
+                            legal bases — the specifics the ICO asks for. */}
+                        {section.points && section.points.length > 0 && (
+                            <ul className="legal-section-points">
+                                {section.points.map((point) => (
+                                    <li key={point}>{point}</li>
+                                ))}
+                            </ul>
+                        )}
+
+                        {section.footnote && (
+                            <p className="legal-section-text legal-section-footnote">
+                                {section.footnote}
+                            </p>
+                        )}
                     </section>
                 ))}
             </div>
