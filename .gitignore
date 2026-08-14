@@ -58,6 +58,7 @@ RELEASE_AUDIT.md
 # rule above, so they are matched explicitly here.
 docs/RELEASE_AUDIT*.md
 docs/IMAGE_CREDITS.md
+docs/CHANGE-TRACKER.md
 
 # Unused 2.4 MB source PNG. Only the 157 KB .webp is referenced (QuoteBanner,
 # o-mnie). Kept locally as the master; excluded so it never enters git history.
