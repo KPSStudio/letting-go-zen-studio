@@ -13,7 +13,7 @@ const QUOTE_REVEAL = ['.home-quote-inner']
  * The full-width atmospheric quotation band that sits between the three
  * category columns and the "Why choose us?" section.
  *
- * The backdrop is the twilight forest photograph. It is loaded through
+ * The backdrop is the warm candlelight photograph. It is loaded through
  * next/image with `fill`, so Next serves a width-appropriate, format-negotiated
  * file rather than pushing the full 1672px original at a phone. `sizes="100vw"`
  * tells it the band is always full-bleed.
@@ -38,7 +38,7 @@ export default function QuoteBanner() {
                 carries no information the quotation does not. */}
             <span className="home-quote-media" aria-hidden="true">
                 <Image
-                    src="/images/twilight-glow-enchanted-forest.webp"
+                    src="/images/many-candles-glow.webp"
                     alt=""
                     fill
                     sizes="100vw"
