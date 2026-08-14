@@ -1,14 +1,29 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" width="240" height="160" role="img" aria-hidden="true">
   <title>Golden ratio spiral</title>
   <!--
-    Original line art built from the Fibonacci square subdivision of a 34x21
-    golden rectangle (squares 21, 13, 8, 5, 3, 2, 1, 1) with the quarter-arc
-    spiral running through them. Every arc centre is derived so consecutive
-    arcs share a tangent, which is what makes the curve read as one smooth
-    spiral rather than eight separate bumps.
+    Original line art: the golden spiral, drawn as eight quarter arcs whose
+    radii follow the Fibonacci sequence (21, 13, 8, 5, 3, 2, 1, 1).
 
-    Drawn in 34x21 units and scaled into the 240x160 viewBox, so all stroke
-    widths below are in the small unit space (0.3 unit ~= 1.9px on screen).
+    The construction scaffolding this was originally drawn over (the eight
+    Fibonacci squares and the outer golden rectangle) has been removed at the
+    client's request, so only the curve itself remains.
+
+    GEOMETRY, and why it is easy to get wrong: each arc is centred on the
+    corner of its square nearest the point the spiral accumulates around, and
+    every arc sweeps the same way (all sweep flags are 1). Tangent continuity
+    alone is NOT enough. If consecutive arcs meet tangentially but their
+    centres sit on OPPOSITE sides of the curve, the curvature flips sign and
+    the join becomes a cusp, so the figure reads as a pointed star instead of
+    a spiral. The centres below are chosen so the radius vector at each
+    junction points the same way on both sides of the join, which is what
+    makes this wind continuously inward.
+
+    The curve spans exactly the 34x21 box the outer rectangle used to trace,
+    so removing the scaffolding did not move it and no viewBox change was
+    needed.
+
+    Drawn in 34x21 units and scaled into the 240x160 viewBox, so the stroke
+    width below is in the small unit space (0.42 unit is about 2.7px here).
     Palette matches the site's gold tokens: #B8942A, #D4AF6A, #F0D080.
     (Written as plain hex on purpose: the CSS custom-property names contain a
     double hyphen, which is illegal inside an XML comment and silently makes
@@ -21,49 +36,23 @@
       <stop offset="62%" stop-color="#F0D080" />
       <stop offset="100%" stop-color="#D4AF6A" />
     </linearGradient>
-    <linearGradient id="fib-grid" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#D4AF6A" stop-opacity="0.42" />
-      <stop offset="100%" stop-color="#B8942A" stop-opacity="0.16" />
-    </linearGradient>
   </defs>
 
   <g transform="translate(11 13) scale(6.4)" fill="none" stroke-linecap="round" stroke-linejoin="round">
-
-    <!-- The golden-ratio squares, kept faint so the spiral stays the subject. -->
-    <g stroke="url(#fib-grid)" stroke-width="0.16">
-      <rect x="0"  y="0"  width="21" height="21" />
-      <rect x="21" y="0"  width="13" height="13" />
-      <rect x="26" y="13" width="8"  height="8"  />
-      <rect x="21" y="16" width="5"  height="5"  />
-      <rect x="21" y="13" width="3"  height="3"  />
-      <rect x="24" y="13" width="2"  height="2"  />
-      <rect x="24" y="15" width="1"  height="1"  />
-      <rect x="25" y="15" width="1"  height="1"  />
-    </g>
-
-    <!-- Outer golden rectangle. -->
-    <rect x="0" y="0" width="34" height="21" stroke="url(#fib-grid)" stroke-width="0.22" />
-
-    <!-- The spiral itself: eight tangent-continuous quarter arcs. -->
+    <!-- Arc centres, in order: (21,21) (21,13) (26,13) (26,16) (24,16)
+         (24,15) (25,15) (25,15). All sweep flags are 1 - see the note above. -->
     <path
       d="M 0 21
-         A 21 21 0 0 0 21 0
-         A 13 13 0 0 0 34 13
-         A 8 8 0 0 0 26 21
-         A 5 5 0 0 0 21 16
-         A 3 3 0 0 0 24 13
-         A 2 2 0 0 0 26 15
-         A 1 1 0 0 0 25 16
-         A 1 1 0 0 0 24 15"
+         A 21 21 0 0 1 21 0
+         A 13 13 0 0 1 34 13
+         A 8 8 0 0 1 26 21
+         A 5 5 0 0 1 21 16
+         A 3 3 0 0 1 24 13
+         A 2 2 0 0 1 26 15
+         A 1 1 0 0 1 25 16
+         A 1 1 0 0 1 24 15"
       stroke="url(#fib-stroke)"
-      stroke-width="0.34"
+      stroke-width="0.42"
     />
-
-    <!-- Three quiet markers on the curve, echoing the site's dot motifs. -->
-    <g fill="#F0D080" stroke="none">
-      <circle cx="0"  cy="21" r="0.34" />
-      <circle cx="34" cy="13" r="0.26" />
-      <circle cx="24" cy="15" r="0.2"  />
-    </g>
   </g>
 </svg>

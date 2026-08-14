@@ -1,56 +1,86 @@
 'use client'
 
 import Link from 'next/link'
+import { useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
+import { BodyIcon, MindIcon, SoulIcon } from './PillarIcons'
+import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
+// Module-level so the identities are stable across renders and the reveal
+// effect does not re-run. Order = icon, then heading, then description.
+const REVEAL_STEPS = ['.cud-card-icon', '.cud-card-title', '.cud-card-text']
+// Only the geometry inside the three pillar icons, never any other SVG.
+const DRAW_SELECTOR = '.cud-card-icon svg path, .cud-card-icon svg circle, .cud-card-icon svg rect'
+
+/**
+ * "Czym się zajmujemy?" — the introduction, then the three Body / Mind / Soul
+ * cards in one centred row divided by thin gold rules.
+ *
+ * Each card is a single link wrapping its icon, title and description, so the
+ * whole tile is one keyboard stop with a meaningful accessible name rather than
+ * a tile containing a separate "explore" link. The C / U / D letter row and the
+ * per-card "ODKRYJ →" button that used to sit here were removed: the row
+ * duplicated the card titles, and the button duplicated the card's own link.
+ */
 export default function CUDPillars() {
     const t = useTranslations('pillars')
     // The hrefs in the messages are bare (e.g. "/body"); prefix them with the
     // active locale so the links point straight at /pl/body, /en/body, etc.
     const locale = useLocale()
 
+    // The entrance animation is scoped to this section only.
+    const sectionRef = useRef<HTMLElement | null>(null)
+    useEntranceReveal(sectionRef, {
+        steps: REVEAL_STEPS,
+        drawSelector: DRAW_SELECTOR,
+    })
+
     const pillars = [
-        { letter: t('bodyLetter'), name: t('bodyName'), href: `/${locale}${t('bodyHref')}` },
-        { letter: t('mindLetter'), name: t('mindName'), href: `/${locale}${t('mindHref')}` },
-        { letter: t('soulLetter'), name: t('soulName'), href: `/${locale}${t('soulHref')}` },
+        {
+            key: 'body',
+            name: t('bodyName'),
+            text: t('bodyText'),
+            href: `/${locale}${t('bodyHref')}`,
+            Icon: BodyIcon,
+        },
+        {
+            key: 'mind',
+            name: t('mindName'),
+            text: t('mindText'),
+            href: `/${locale}${t('mindHref')}`,
+            Icon: MindIcon,
+        },
+        {
+            key: 'soul',
+            name: t('soulName'),
+            text: t('soulText'),
+            href: `/${locale}${t('soulHref')}`,
+            Icon: SoulIcon,
+        },
     ]
 
     return (
-        <section className="cud-section">
+        // `services` is a stable, language-neutral scroll target so the same
+        // anchor works on /pl and /en; scroll-margin-top in globals.css keeps
+        // the sticky nav from covering the heading on arrival.
+        <section id="services" className="cud-section" ref={sectionRef}>
 
-            {/* Section heading */}
-            <p className="cud-heading">{t('heading')}</p>
+            <h2 className="cud-heading">{t('heading')}</h2>
 
-            {/* Small clickable letter row */}
-            <div className="cud-mini-row">
-                {pillars.map((pillar, index) => (
-                    <span key={pillar.letter} className="cud-mini-item">
-            <Link
-                href={pillar.href}
-                aria-label={pillar.name}
-                className="cud-mini-letter"
-            >
-              {pillar.letter}
-            </Link>
-                        {index < pillars.length - 1 && (
-                            <span className="cud-mini-dot" aria-hidden="true">·</span>
-                        )}
-          </span>
-                ))}
-            </div>
+            <p className="cud-intro">{t('intro')}</p>
 
-            {/* Main card grid */}
             <div className="cud-grid">
-                {pillars.map((pillar, index) => (
-                    <Link
-                        key={pillar.letter}
-                        href={pillar.href}
-                        className={['cud-card', index < pillars.length - 1 ? 'cud-card-border' : ''].join(' ')}
-                    >
+                {pillars.map(({ key, name, text, href, Icon }) => (
+                    <Link key={key} href={href} className="cud-card">
                         <span className="cud-card-glow" aria-hidden="true" />
-                        <span className="cud-card-letter">{pillar.letter}</span>
-                        <p className="cud-card-title">{pillar.name}</p>
-                        <span className="cud-card-button">{t('explore')}</span>
+
+                        <span className="cud-card-icon">
+                            <Icon />
+                        </span>
+
+                        <h3 className="cud-card-title">{name}</h3>
+
+                        <p className="cud-card-text">{text}</p>
                     </Link>
                 ))}
             </div>

@@ -8,6 +8,7 @@ import '../globals.css'
 import UtilityBar from '@/components/layout/UtilityBar'
 import Nav from '@/components/layout/Nav'
 import Footer from '@/components/layout/Footer'
+import SiteLightRay from '@/components/layout/SiteLightRay'
 import { CurrencyProvider } from '@/lib/CurrencyContext'
 import { CartProvider } from '@/lib/CartContext'
 import { getServicesByCategory, getSklepProducts } from '@/sanity/lib/sanity'
@@ -103,6 +104,18 @@ export default async function LocaleLayout({
             {/* Fixed full-screen background layer — styled by .site-background in globals.css.
                 A real fixed element renders correctly on mobile, unlike background-attachment: fixed. */}
             <div className="site-background" aria-hidden="true" />
+
+            {/* Site-wide ray of warm light, drawn purely with CSS gradients on
+                .site-light-ray::before. It sits between the background gradient
+                (z-index -3) and the sparkle layer (-1), so it is always beneath
+                every piece of content. Decorative only, so it is hidden from
+                assistive tech. Rendered here rather than in the root layout so
+                that /studio — which has its own layout — is untouched.
+
+                The component adds a desktop-only scroll parallax; on phones and
+                under reduced motion it renders the same inert div as before. */}
+            <SiteLightRay />
+
             <NextIntlClientProvider messages={messages}>
                 <CurrencyProvider>
                     <CartProvider>

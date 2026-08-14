@@ -5,17 +5,14 @@ import { useState, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCart } from "@/lib/CartContext";
 import { useCurrency, SYMBOLS } from "@/lib/CurrencyContext";
-import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
   PaymentElement,
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
+import { getStripe } from "@/lib/stripeClient";
 
-const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!,
-);
 
 const stripeAppearance = {
   theme: "night" as const,
@@ -585,7 +582,7 @@ export default function KoszykPage() {
             </div>
 
             <Elements
-              stripe={stripePromise}
+              stripe={getStripe()}
               options={{ clientSecret, appearance: stripeAppearance }}
             >
               <PaymentForm

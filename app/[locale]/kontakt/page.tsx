@@ -4,8 +4,12 @@
 'use client'
 
 import type { ChangeEvent, FormEvent } from 'react'
-import { useState } from 'react'
+import { useRef, useState, type ComponentType } from 'react'
 import { useTranslations } from 'next-intl'
+import { MailIcon, PhoneIcon, HolisticIcon } from '@/components/home/PillarIcons'
+import { FacebookIcon, InstagramIcon, TikTokIcon } from '@/components/common/SocialIcons'
+import BotanicalOrnament from '@/components/common/BotanicalOrnament'
+import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 type ContactFormData = {
     name: string
@@ -16,7 +20,7 @@ type ContactFormData = {
 }
 
 type SocialLink = {
-    icon: string
+    Icon: ComponentType<{ className?: string }>
     label: string
     handle: string
     href: string
@@ -24,27 +28,42 @@ type SocialLink = {
 
 const socialLinks: SocialLink[] = [
     {
-        icon: 'f',
+        Icon: FacebookIcon,
         label: 'Facebook',
         handle: '@lettinggozenstudio',
         href: 'https://www.facebook.com/lettinggostudiozen/',
     },
     {
-        icon: '📷',
+        Icon: InstagramIcon,
         label: 'Instagram',
         handle: '@lettinggozenstudio',
         href: 'https://www.instagram.com/lettinggozenstudio',
     },
     {
-        icon: '♪',
+        Icon: TikTokIcon,
         label: 'TikTok',
         handle: '@lettinggozenstudio',
         href: 'https://www.tiktok.com/@lettinggozenstudi',
     },
 ]
 
+// Contact methods and the form heading reveal once; the inputs themselves are
+// never animated, so nothing moves while somebody is typing or reading an
+// error. Module-level for a stable identity.
+const REVEAL_STEPS = ['.contact-card', '.contact-social-link', '.contact-section-title']
+const DRAW_SELECTOR =
+    '.contact-card-icon svg path, .contact-card-icon svg circle, .contact-card-icon svg rect'
+
 export default function KontaktPage() {
     const t = useTranslations('kontakt')
+
+    const pageRef = useRef<HTMLElement | null>(null)
+    useEntranceReveal(pageRef, {
+        steps: REVEAL_STEPS,
+        drawSelector: DRAW_SELECTOR,
+        stagger: 70,
+        shift: 10,
+    })
 
     const [formData, setFormData] = useState<ContactFormData>({
         name: '',
@@ -116,13 +135,26 @@ export default function KontaktPage() {
     }
 
     return (
-        <main className="contact-page">
-            <p className="contact-label">
-                <span />
-                {t('label')}
-            </p>
+        <main className="contact-page" ref={pageRef}>
+            {/* The same botanical motif that sits behind the About portrait,
+                here as a low-contrast page accent. Clipped by .contact-page so
+                it can never widen the layout. */}
+            <BotanicalOrnament className="contact-ornament-art" />
 
             <section className="contact-header">
+                {/* The eyebrow sits with the title, centred — not floating
+                    above an unrelated panel. */}
+                <p className="contact-label">
+                    <span />
+                    {t('label')}
+                </p>
+
+                {/* One restrained line-art glyph, decorative: the <h1> below
+                    already names the page. */}
+                <span className="contact-header-icon" aria-hidden="true">
+                    <HolisticIcon />
+                </span>
+
                 <h1 className="contact-title">
                     {t('heroTitle')} <span>{t('heroTitleGold')}</span>
                 </h1>
@@ -139,7 +171,9 @@ export default function KontaktPage() {
                 <aside className="contact-info-col">
                     <section className="contact-card-grid">
                         <article className="contact-card">
-                            <div className="contact-card-icon">📱</div>
+                            <div className="contact-card-icon">
+                                <PhoneIcon />
+                            </div>
 
                             <h2 className="contact-card-title">
                                 {t('whatsappTitle')}
@@ -155,12 +189,14 @@ export default function KontaktPage() {
                                 rel="noopener noreferrer"
                                 className="contact-card-link"
                             >
-                                📱 07590 572 043
+                                07590 572 043
                             </a>
                         </article>
 
                         <article className="contact-card">
-                            <div className="contact-card-icon">📧</div>
+                            <div className="contact-card-icon">
+                                <MailIcon />
+                            </div>
 
                             <h2 className="contact-card-title">
                                 {t('emailTitle')}
@@ -174,7 +210,7 @@ export default function KontaktPage() {
                                 href="mailto:lettinggozenstudio@gmail.com"
                                 className="contact-card-link"
                             >
-                                📧 lettinggozenstudio@gmail.com
+                                lettinggozenstudio@gmail.com
                             </a>
                         </article>
                     </section>
@@ -193,8 +229,8 @@ export default function KontaktPage() {
                                     rel="noopener noreferrer"
                                     className="contact-social-link"
                                 >
-                                    <span className="contact-social-icon">
-                                        {social.icon}
+                                    <span className="contact-social-icon" aria-hidden="true">
+                                        <social.Icon />
                                     </span>
 
                                     <span className="contact-social-name">
@@ -220,7 +256,9 @@ export default function KontaktPage() {
                     <div role="status" aria-live="polite">
                         {submitted && (
                             <div className="contact-success-box">
-                                <span aria-hidden="true">✉️</span>
+                                <span className="contact-status-icon" aria-hidden="true">
+                                    <MailIcon />
+                                </span>
 
                                 <p>
                                     {t('successMessage')}
@@ -306,11 +344,11 @@ export default function KontaktPage() {
                                 <option value="" disabled>
                                     {t('subjectPlaceholder')}
                                 </option>
-                                <option value="biorezonans">Biorezonans</option>
-                                <option value="hipnoterapia">Hipnoterapia</option>
-                                <option value="presoterapia">Presoterapia</option>
-                                <option value="przeznaczenie">Przeznaczenie</option>
-                                <option value="alchemik">Alchemik</option>
+                                <option value="biorezonans">{t('subjects.biorezonans')}</option>
+                                <option value="hipnoterapia">{t('subjects.hipnoterapia')}</option>
+                                <option value="presoterapia">{t('subjects.presoterapia')}</option>
+                                <option value="przeznaczenie">{t('subjects.przeznaczenie')}</option>
+                                <option value="alchemik">{t('subjects.alchemik')}</option>
                                 <option value="inne">{t('subjectOther')}</option>
                             </select>
                         </div>
@@ -366,7 +404,9 @@ export default function KontaktPage() {
                                 cursor: sending ? 'not-allowed' : 'pointer',
                             }}
                         >
-                            <span aria-hidden="true">✉️</span>{' '}
+                            <span className="contact-submit-icon" aria-hidden="true">
+                                <MailIcon />
+                            </span>
                             {sending ? t('sendingButton') : t('submitButton')}
                         </button>
                     </form>

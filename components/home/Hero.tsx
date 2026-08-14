@@ -1,9 +1,27 @@
 'use client'
 
+import { useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useLogoReveal } from '@/lib/useLogoReveal'
 
+/**
+ * The homepage hero.
+ *
+ * One centred column: emblem, the "Ciało · Umysł · Dusza" eyebrow, the gold
+ * "Letting Go / Zen Studio" name, a single line of description, and one
+ * restrained outlined button.
+ *
+ * The brand name is the <h1>: on the homepage it IS the subject of the page,
+ * and it is the visual heading of the composition. "Czym się zajmujemy?" in the
+ * section below is the <h2>, and the three card titles are <h3> — so the
+ * document outline reads in the same order as the page does.
+ *
+ * The practical facts that used to live here (Aberdeen, in person + online,
+ * languages) now read as a sentence in that section's intro instead of a row of
+ * chips, which keeps this first screen as calm as the reference.
+ */
 export default function Hero() {
     // t() looks up text from messages/pl.json or messages/en.json
     // depending on which language is active
@@ -12,26 +30,21 @@ export default function Hero() {
     // middleware has to redirect them on every click.
     const locale = useLocale()
 
+    // The emblem is a raster PNG, so this is a soft mask reveal rather than
+    // true SVG path drawing. See lib/useLogoReveal.ts for why.
+    const logoRef = useRef<HTMLImageElement | null>(null)
+    useLogoReveal(logoRef)
+
     return (
         <section className="hero-section">
 
-            {/* Decorative floating ornaments. Purely atmospheric — they carry no
-                information, so the whole group is hidden from assistive tech.
-                The class names say what each one actually depicts. */}
-            <div className="hero-mystic-symbols" aria-hidden="true">
-                <span className="hero-mystic-symbol hero-mystic-fibonacci" />
-                <span className="hero-mystic-symbol hero-mystic-biofeedback" />
-                <span className="hero-mystic-symbol hero-mystic-aura" />
-                <span className="hero-mystic-symbol hero-mystic-pendulum" />
-                <span className="hero-mystic-symbol hero-mystic-quantum" />
-            </div>
-
-            {/* Large decorative orbit around the hero content */}
-            <div className="hero-orbit" aria-hidden="true">
-                <span className="hero-orbit-dot hero-orbit-dot-one" />
-                <span className="hero-orbit-dot hero-orbit-dot-two" />
-                <span className="hero-orbit-dot hero-orbit-dot-three" />
-            </div>
+            {/* The five independently-fading ornaments that used to sit here
+                (Fibonacci spiral, biofeedback, aura, pendulum, quantum) have
+                been removed. Their staggered fade-ins read as pop-in rather
+                than atmosphere. The site-wide ray of light in
+                app/[locale]/layout.tsx now carries that role, calmly and on
+                every page. The image assets are intentionally left in
+                public/images/ for rollback. */}
 
             {/* Thin animated vertical gold line */}
             <span className="hero-vertical-line" aria-hidden="true" />
@@ -41,52 +54,71 @@ export default function Hero() {
                 <span /><span /><span /><span /><span />
             </div>
 
-            {/* Main hero content */}
             <div className="hero-content">
 
-                {/* Logo */}
-                <div className="hero-logo-wrap">
-                    {/* width/height must describe the size the logo is ACTUALLY
-                        rendered at, not a smaller nominal value. globals.css
-                        sizes .hero-logo with clamp(170px, 48vw, 240px) on phones
-                        and clamp(300px, 22vw, 410px) above that; the old
-                        width={125} made Next preload a 128px file and the
-                        browser upscaled it to as much as 410px, which is why the
-                        logo looked soft on desktop. `sizes` mirrors those same
-                        clamps so Next picks the right file per viewport. */}
+                {/* ── Emblem ── */}
+                <div className="hero-emblem">
+                    <div className="hero-orbit" aria-hidden="true">
+                        <span className="hero-orbit-dot hero-orbit-dot-one" />
+                        <span className="hero-orbit-dot hero-orbit-dot-two" />
+                        <span className="hero-orbit-dot hero-orbit-dot-three" />
+                    </div>
+
+                    {/* alt="" because the wordmark below already names the
+                        business — announcing it twice helps nobody. `sizes`
+                        mirrors the clamps in globals.css so Next serves a file
+                        matched to the rendered size rather than an upscaled one.
+
+                        This uses logo-hero.png rather than logo.png. The
+                        original has asymmetric transparent padding — 237px on
+                        the left against 228px on the right — so its artwork
+                        sits 4.5px right of the canvas centre. The image element
+                        was always perfectly centred; the drawing inside it was
+                        not, which is why the emblem read as slightly right of
+                        the wordmark. logo-hero.png is the same artwork at the
+                        same size on the same 1024x1024 canvas, shifted to be
+                        horizontally centred. logo.png is untouched for the nav,
+                        footer and emails, where the offset is invisible. */}
                     <Image
-                        src="/images/logo.png"
-                        alt="Letting Go Zen Studio"
-                        width={410}
-                        height={410}
-                        sizes="(max-width: 600px) 48vw, (max-width: 768px) 56vw, 22vw"
+                        src="/images/logo-hero.png"
+                        alt=""
+                        width={420}
+                        height={420}
+                        sizes="(max-width: 768px) 285px, (max-width: 1500px) 27vw, 405px"
                         priority
                         className="hero-logo"
+                        ref={logoRef}
                     />
                 </div>
 
-                {/* Tagline */}
-                <div className="hero-tagline-wrap">
-                    <span className="hero-tagline-line" />
-                    <p className="hero-tagline">{t('tagline')}</p>
-                    <span className="hero-tagline-line" />
-                </div>
+                {/* ── Eyebrow ── */}
+                <p className="hero-tagline-wrap">
+                    <span className="hero-tagline-line" aria-hidden="true" />
+                    <span className="hero-tagline">{t('tagline')}</span>
+                    <span className="hero-tagline-line" aria-hidden="true" />
+                </p>
 
-                {/* Main title */}
-                <h1 className="hero-title">{t('title1')}</h1>
+                {/* ── Name ── */}
+                {/* The explicit {' '} matters: the two spans are display:block,
+                    so without it the accessible name concatenates to
+                    "Letting GoZen Studio". It is not rendered visually because
+                    each span is its own block. */}
+                <h1 className="hero-wordmark">
+                    <span className="hero-wordmark-line">{t('brandLine1')}</span>{' '}
+                    <span className="hero-wordmark-line hero-wordmark-sub">
+                        {t('brandLine2')}
+                    </span>
+                </h1>
 
-                {/* Subtitle */}
-                <h2 className="hero-subtitle">{t('title2')}</h2>
+                <p className="hero-description">{t('description')}</p>
 
-                {/* Button */}
                 <Link href={`/${locale}/o-mnie`} className="hero-button">
                     {t('button')}
                 </Link>
-
-                {/* Decorative line */}
-                <span className="hero-bottom-line" aria-hidden="true" />
-
             </div>
+
+            {/* Decorative line */}
+            <span className="hero-bottom-line" aria-hidden="true" />
         </section>
     )
 }

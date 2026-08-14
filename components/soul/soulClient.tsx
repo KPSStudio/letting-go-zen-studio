@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { useCart } from '@/lib/CartContext'
@@ -9,6 +9,18 @@ import { SanityService } from '@/sanity/lib/sanity'
 import { getCalSlug } from '@/lib/calcom'
 import MedicalDisclaimer from '@/components/common/MedicalDisclaimer'
 import { useDialogBehaviour } from '@/components/common/useDialogBehaviour'
+import TravelFeeNotice from '@/components/common/TravelFeeNotice'
+import { involvesHomeVisit } from '@/lib/serviceAvailability'
+import { SoulIcon } from '@/components/home/PillarIcons'
+import { useEntranceReveal, CATEGORY_ICON_DRAW } from '@/lib/useEntranceReveal'
+
+// The service grid reveals as ONE collection when it scrolls into view: each
+// card is a single unit, so prices, buttons and descriptions never animate
+// separately. Module-level so the identity is stable and ordinary rerenders —
+// opening a modal, adding to the cart — cannot restart it.
+const CARD_REVEAL = ['.body-product-card']
+
+import BackControl from '@/components/common/BackControl'
 
 interface Props {
     products: SanityService[]
@@ -25,6 +37,22 @@ export default function SoulClient({ products }: Props) {
     // to the trigger, Tab trapped inside, page behind locked.
     const closeProductModal = useCallback(() => setSelectedProduct(null), [])
     const modalPanelRef = useDialogBehaviour(Boolean(selectedProduct), closeProductModal)
+
+    // The category glyph draws itself in as the page opens. The header sits at
+    // the top of the document, so the observer fires immediately on mount.
+    const headerRef = useRef<HTMLElement | null>(null)
+    useEntranceReveal(headerRef, { drawSelector: CATEGORY_ICON_DRAW })
+
+    // Separate root from the header glyph, so the cards animate when the GRID
+    // reaches the viewport rather than when the page title does.
+    const gridRef = useRef<HTMLElement | null>(null)
+    useEntranceReveal(gridRef, {
+        steps: CARD_REVEAL,
+        stagger: 80,
+        shift: 14,
+        scale: 0.985,
+    })
+
 
     // If arrived from search (?item=<id>), scroll to that card and flash it.
     useEffect(() => {
@@ -94,11 +122,20 @@ export default function SoulClient({ products }: Props) {
 
     return (
         <main className="body-page">
-            <Link href={`/${locale}`} className="body-back-link">
-                {t('back')}
-            </Link>
+            {/* Shared floating control. Falls back to the locale homepage rather
+                than browser history, so a visitor who arrived from a search
+                result still lands somewhere useful. */}
+            <BackControl href={`/${locale}`} label={t('back')} ariaLabel={t('backAria')} />
 
-            <section className="body-header">
+            <section className="body-header" ref={headerRef}>
+                {/* Same header pattern on Ciało, Umysł and Dusza: a bounded
+                    centred panel, gold category icon, title, intro. The icon
+                    is decorative — the <h1> beside it already names the
+                    category. */}
+                <span className="category-header-icon" aria-hidden="true">
+                    <SoulIcon />
+                </span>
+
                 <h1 className="body-title">
                     {t('titleStart')} <span>{t('titleGold')}</span>
                 </h1>
@@ -143,7 +180,7 @@ export default function SoulClient({ products }: Props) {
             )}
 
             {products.length > 0 && (
-                <section className="body-product-grid">
+                <section className="body-product-grid" ref={gridRef}>
                     {products.map((product) => {
                         const inCart = items.some((i) => i.id === product._id)
 
@@ -260,6 +297,14 @@ export default function SoulClient({ products }: Props) {
                                     {selectedProduct.availability}
                                 </p>
                             </div>
+                        )}
+
+                        {/* Shown only when this service is a home visit, so a
+                            studio or online session is never quoted a travel
+                            fee it does not have. Appears here, before any
+                            booking or payment step. */}
+                        {involvesHomeVisit(selectedProduct.availability) && (
+                            <TravelFeeNotice />
                         )}
 
                         {getIncludes(selectedProduct).length > 0 && (

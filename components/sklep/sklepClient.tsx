@@ -1,14 +1,21 @@
 'use client'
 
-import { useEffect, useMemo, useState, type FormEvent, useCallback } from 'react'
+import { useEffect, useMemo, useState, type FormEvent, useCallback, useRef } from 'react'
 import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { SanitySklepProduct } from '@/sanity/lib/sanity'
 import { normalizeText } from '@/lib/normalizeText'
+import { ShopIcon } from '@/components/home/PillarIcons'
+import { useEntranceReveal, CATEGORY_ICON_DRAW } from '@/lib/useEntranceReveal'
+
+// Product cards reveal as one collection, each card a single unit. It runs
+// once: when the search filters the list afterwards, the remaining cards are
+// simply left visible rather than replayed from invisible, so typing never
+// makes the shop flicker. Module-level for a stable identity.
+const PRODUCT_REVEAL = ['.body-product-card']
 import Image from 'next/image'
 import { urlFor } from '@/sanity/lib/image'
 import type { SanityImageSource } from '@sanity/image-url'
-import { loadStripe } from '@stripe/stripe-js'
 import {
     Elements,
     PaymentElement,
@@ -17,8 +24,8 @@ import {
     useElements,
 } from '@stripe/react-stripe-js'
 import { useDialogBehaviour } from '@/components/common/useDialogBehaviour'
+import { getStripe } from '@/lib/stripeClient'
 
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!)
 
 const stripeAppearance = {
     theme: 'night' as const,
@@ -286,6 +293,19 @@ export default function SklepClient({ products }: Props) {
     const t = useTranslations('sklep')
     const locale = useLocale()
     const { currency, formatPrice } = useCurrency()
+
+    // The shop glyph draws itself in as the page opens, exactly as the
+    // category pages do.
+    const headerRef = useRef<HTMLElement | null>(null)
+    useEntranceReveal(headerRef, { drawSelector: CATEGORY_ICON_DRAW })
+
+    const gridRef = useRef<HTMLDivElement | null>(null)
+    useEntranceReveal(gridRef, {
+        steps: PRODUCT_REVEAL,
+        stagger: 80,
+        shift: 14,
+        scale: 0.985,
+    })
 
     const [selectedProduct, setSelectedProduct] = useState<SanitySklepProduct | null>(null)
 
@@ -745,7 +765,7 @@ export default function SklepClient({ products }: Props) {
                         </p>
 
                         <Elements
-                            stripe={stripePromise}
+                            stripe={getStripe()}
                             options={{
                                 clientSecret,
                                 appearance: stripeAppearance,
@@ -773,7 +793,14 @@ export default function SklepClient({ products }: Props) {
                 {t('label')}
             </p>
 
-            <section className="body-header">
+            <section className="body-header" ref={headerRef}>
+                {/* Same header pattern as Ciało / Umysł / Dusza, so the shop
+                    reads as part of the same family. Decorative: the <h1>
+                    below already names the page. */}
+                <span className="category-header-icon" aria-hidden="true">
+                    <ShopIcon />
+                </span>
+
                 <h1 className="body-title">
                     {t('titleMain')} <span>{t('titleGold')}</span>
                 </h1>
@@ -877,7 +904,7 @@ export default function SklepClient({ products }: Props) {
             )}
 
             {filteredProducts.length > 0 && (
-                <div className="body-product-grid">
+                <div className="body-product-grid" ref={gridRef}>
                     {filteredProducts.map(product => (
                         <article
                             key={product._id}

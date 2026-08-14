@@ -1,6 +1,9 @@
 // app/[locale]/page.tsx
 import Hero from '@/components/home/Hero'
 import CUDPillars from '@/components/home/CUDPillars'
+import QuoteBanner from '@/components/home/QuoteBanner'
+import WhyChooseUs from '@/components/home/WhyChooseUs'
+import ShopCta from '@/components/home/ShopCta'
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/pageMetadata'
 
@@ -46,8 +49,19 @@ export default function Home() {
                 }}
             />
 
+            {/* The homepage reads as four bands, in this order:
+                  1. hero          — who this is
+                  2. CUDPillars    — what we do, as three columns
+                  3. QuoteBanner   — a full-bleed atmospheric pause
+                  4. WhyChooseUs   — why work with Joanna
+                Each is a full-width section that changes tone against the one
+                above it, so the page is divided without boxing every paragraph. */}
             <Hero />
             <CUDPillars />
+            {/* Supporting CTA, after the trio — the shop is not a fourth pillar. */}
+            <ShopCta />
+            <QuoteBanner />
+            <WhyChooseUs />
         </>
     )
 }
