@@ -10,8 +10,8 @@ import { useLogoReveal } from '@/lib/useLogoReveal'
  * The homepage hero.
  *
  * One centred column: emblem, the "Ciało · Umysł · Dusza" eyebrow, the gold
- * "Letting Go / Zen Studio" name, a single line of description, and one
- * restrained outlined button.
+ * "Letting Go / Zen Studio" name sized to span the page, and one restrained
+ * outlined button.
  *
  * The brand name is the <h1>: on the homepage it IS the subject of the page,
  * and it is the visual heading of the composition. "Czym się zajmujemy?" in the
@@ -43,13 +43,20 @@ export default function Hero() {
     return (
         <section className="hero-section">
 
-            {/* The five independently-fading ornaments that used to sit here
-                (Fibonacci spiral, biofeedback, aura, pendulum, quantum) have
-                been removed. Their staggered fade-ins read as pop-in rather
-                than atmosphere. The site-wide ray of light in
-                app/[locale]/layout.tsx now carries that role, calmly and on
-                every page. The image assets are intentionally left in
-                public/images/ for rollback. */}
+            {/* Decorative floating ornaments. Purely atmospheric — they carry
+                no meaning, so they are hidden from assistive technology and
+                take no pointer events. Each fades and drifts on its own offset
+                (see the animation-delay pairs in globals.css) so the five never
+                pulse together. They run alongside the site-wide ray of light in
+                app/[locale]/layout.tsx: the ray is the constant wash, these are
+                the slower detail on top. */}
+            <div className="hero-mystic-symbols" aria-hidden="true">
+                <span className="hero-mystic-symbol hero-mystic-spiral" />
+                <span className="hero-mystic-symbol hero-mystic-biofeedback" />
+                <span className="hero-mystic-symbol hero-mystic-aura" />
+                <span className="hero-mystic-symbol hero-mystic-pendulum" />
+                <span className="hero-mystic-symbol hero-mystic-quantum" />
+            </div>
 
             {/* Thin animated vertical gold line */}
             <span className="hero-vertical-line" aria-hidden="true" />
@@ -115,7 +122,12 @@ export default function Hero() {
                     </span>
                 </h1>
 
-                <p className="hero-description">{t('description')}</p>
+                {/* The "Przestrzeń harmonii…" line that sat here has been
+                    removed: the eyebrow and the name already say what this is,
+                    and the sentence pushed the button below the fold on short
+                    screens. The `.hero-description` styles and the `description`
+                    key in messages/*.json are deliberately kept, so restoring it
+                    is a one-line change rather than a rewrite. */}
 
                 <Link href={`/${locale}/o-mnie`} className="hero-button">
                     {t('button')}

@@ -19,7 +19,7 @@ import { getServicesByCategory, type SanityService } from '@/sanity/lib/sanity'
 import { getCalSlug } from '@/lib/calcom'
 import BotanicalOrnament from '@/components/common/BotanicalOrnament'
 import SupportGrid from '@/components/about/SupportGrid'
-import { IntegrationIcon, SoulIcon, HeartIcon } from '@/components/home/PillarIcons'
+import { IntegrationIcon, SoulIcon, QuillIcon } from '@/components/home/PillarIcons'
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/pageMetadata'
 
@@ -145,12 +145,12 @@ export default async function OMniePage({ params }: OMniePageProps) {
 
                     <span className="about-name-rule" aria-hidden="true" />
 
-                    <p className="about-opening">
-                        {t('openingStatement')}{' '}
-                        <span className="about-opening-highlight">
-                            {t('openingHighlight')}
-                        </span>
-                    </p>
+                    {/* The gold "od serca dla serca." / "from heart to heart."
+                        clause that closed this sentence has been removed, along
+                        with the em-dash that introduced it — leaving the dash
+                        would have dangled. `.about-opening-highlight` styles
+                        remain in globals.css for any future highlighted clause. */}
+                    <p className="about-opening">{t('openingStatement')}</p>
                 </div>
 
                 <div className="about-portrait">
@@ -232,14 +232,16 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </article>
             </section>
 
-            {/* ── Nature interlude ──
-                The same photograph as the homepage banner, but treated as a
-                different moment: a much shorter band, a higher crop, a greener
-                and darker wash, and a reflection rather than a quotation. */}
+            {/* ── Candlelight interlude ──
+                A DIFFERENT photograph from the homepage banner: tall pillar
+                candles on steps here, small tea lights there, so the two pages
+                do not repeat the same picture. Treated as a quieter moment —
+                a much shorter band, a deeper wash, and a reflection rather
+                than a quotation. */}
             <section className="about-banner" aria-labelledby="about-banner-text">
                 <span className="about-banner-media" aria-hidden="true">
                     <Image
-                        src="/images/twilight-glow-enchanted-forest.webp"
+                        src="/images/candle-steps-glow.webp"
                         alt=""
                         fill
                         sizes="100vw"
@@ -321,7 +323,8 @@ export default async function OMniePage({ params }: OMniePageProps) {
 
                 <p className="about-signature">
                     <span className="about-signature-icon" aria-hidden="true">
-                        <HeartIcon />
+                        {/* A quill beside the sign-off, replacing a heart. */}
+                        <QuillIcon />
                     </span>
                     {t('signature')}
                 </p>

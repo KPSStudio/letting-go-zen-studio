@@ -484,7 +484,7 @@
         "text": "Odkrywanie głębszych praw wszechświata i energii."
       },
       {
-        "title": "Alchemia Energii, Medycyna Chińska, Wellness",
+        "title": "Alchemia Energii, Wellness",
         "text": "Biofeedback i holistyczne zadbanie o dobrostan Twojego ciała."
       }
     ],
@@ -498,7 +498,7 @@
       "Zapraszam Cię do wspólnej, niezwykłej podróży w głąb siebie."
     ],
     "signature": "Z miłością, Joanna",
-    "openingStatement": "Jestem tutaj Tu i Teraz po to, aby dzielić się z Tobą wiedzą i wspierać Cię najlepiej, jak potrafię —",
+    "openingStatement": "Jestem tutaj Tu i Teraz po to, aby dzielić się z Tobą wiedzą i wspierać Cię najlepiej, jak potrafię.",
     "quote": "Pozwól odejść temu, co Cię obciąża, i otwórz przestrzeń na to, co Cię rozwija.",
     "journeyTitle": "Moja droga",
     "journeyParagraphs": [
@@ -512,7 +512,6 @@
       "Letting Go Zen Studio to Akademia Alchemii Energii — most między nauką a energią, która czeka na Ciebie. Pomagam Ci wydobyć siłę i uwolnić negatywne emocje przez różnorodne warsztaty, zajęcia i terapie. To przestrzeń, w której łączę naukę, duchowość i pracę z ciałem."
     ],
     "bannerReflection": "To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń.",
-    "openingHighlight": "od serca dla serca.",
     "alchemikOffersLabel": "Dostępne sesje"
   },
   "sklep": {
@@ -1085,6 +1084,6 @@
   },
   "travelFee": {
     "label": "Opłata za dojazd",
-    "text": "Wizyty z dojazdem do klienta podlegają dodatkowej opłacie za dojazd. Jej wysokość zależy od lokalizacji i zostanie potwierdzona po dokonaniu rezerwacji. Opłata za dojazd nie zostanie pobrana bez Twojej zgody."
+    "text": "Wizyty z dojazdem do klienta podlegają dodatkowej opłacie za dojazd, doliczanej do ceny usługi. Jej wysokość zależy od tego, jak daleko Joanna musi dojechać na spotkanie, i zostanie potwierdzona po dokonaniu rezerwacji. Opłata za dojazd nie zostanie pobrana bez Twojej zgody."
   }
 }
