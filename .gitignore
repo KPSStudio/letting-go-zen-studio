@@ -51,3 +51,20 @@ AGENTS.md
 CLAUDE.md
 VS_CODE_GO_LIVE_PROMPT.md
 RELEASE_AUDIT.md
+
+# Internal working documents — local reference only, never deployed.
+# The release audits enumerate known weaknesses of a live payments site and
+# must not be published; the dated filenames do not match the RELEASE_AUDIT.md
+# rule above, so they are matched explicitly here.
+docs/RELEASE_AUDIT*.md
+docs/IMAGE_CREDITS.md
+
+# Unused 2.4 MB source PNG. Only the 157 KB .webp is referenced (QuoteBanner,
+# o-mnie). Kept locally as the master; excluded so it never enters git history.
+public/images/twilight-glow-enchanted-forest.png
+
+# Supabase schema migrations. Deliberately NOT published: this repository is
+# public, and the migrations describe the exact table, column and RLS layout of
+# a live payments database. They are applied through the Supabase dashboard and
+# kept locally only.
+supabase/
