@@ -32,8 +32,13 @@ export default function Hero() {
 
     // The emblem is a raster PNG, so this is a soft mask reveal rather than
     // true SVG path drawing. See lib/useLogoReveal.ts for why.
+    //
+    // The content column is passed in as well so the eyebrow and the gold
+    // wordmark arrive on the emblem's own timeline: they are one lockup, and
+    // the name used to sit there fully formed while the mark drew itself in.
     const logoRef = useRef<HTMLImageElement | null>(null)
-    useLogoReveal(logoRef)
+    const contentRef = useRef<HTMLDivElement | null>(null)
+    useLogoReveal(logoRef, contentRef)
 
     return (
         <section className="hero-section">
@@ -54,7 +59,7 @@ export default function Hero() {
                 <span /><span /><span /><span /><span />
             </div>
 
-            <div className="hero-content">
+            <div className="hero-content" ref={contentRef}>
 
                 {/* ── Emblem ── */}
                 <div className="hero-emblem">
