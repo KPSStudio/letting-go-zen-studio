@@ -2,7 +2,7 @@
 
 import { useRef } from 'react'
 import { useTranslations } from 'next-intl'
-import { PersonIcon, HolisticIcon, StarIcon, InfinityIcon } from './PillarIcons'
+import { PersonIcon, HolisticIcon, SpiralFigureIcon, InfinityIcon } from './PillarIcons'
 import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 // The whole item is revealed as one piece, not icon/heading/text separately.
@@ -29,7 +29,7 @@ export default function WhyChooseUs() {
         // "Indywidualne podejście" — a single figure, not a heart.
         { key: 'why1', Icon: PersonIcon },
         { key: 'why2', Icon: HolisticIcon },
-        { key: 'why3', Icon: StarIcon },
+        { key: 'why3', Icon: SpiralFigureIcon },
         { key: 'why4', Icon: InfinityIcon },
     ] as const
 

@@ -98,6 +98,7 @@ export default async function OMniePage({ params }: OMniePageProps) {
     const journeyParagraphs = t.raw('journeyParagraphs') as string[]
     const studioParagraphs = t.raw('studioParagraphs') as string[]
     const closingParagraphs = t.raw('closingParagraphs') as string[]
+    const bannerHaiku = t.raw('bannerHaiku') as string[]
 
     return (
         <main className="about-page">
@@ -233,26 +234,46 @@ export default async function OMniePage({ params }: OMniePageProps) {
             </section>
 
             {/* ── Candlelight interlude ──
-                A DIFFERENT photograph from the homepage banner: tall pillar
-                candles on steps here, small tea lights there, so the two pages
-                do not repeat the same picture. Treated as a quieter moment —
-                a much shorter band, a deeper wash, and a reflection rather
-                than a quotation. */}
+                A DIFFERENT graphic from the homepage banner: the warm gold one
+                here, the purple one there, so the two pages do not repeat the
+                same picture. Treated as a quieter moment — a much shorter band
+                and a deeper wash — and it now carries the studio's own haiku,
+                set as three fixed lines rather than a flowing sentence. */}
             <section className="about-banner" aria-labelledby="about-banner-text">
+                {/* Framed the same way as the homepage band: one full-height
+                    copy per edge, the right one mirrored, haiku in the clear
+                    centre. See the note on .home-quote-image in globals.css. */}
                 <span className="about-banner-media" aria-hidden="true">
                     <Image
-                        src="/images/candle-steps-glow.webp"
+                        src="/images/gold_obj.jpeg"
                         alt=""
                         fill
-                        sizes="100vw"
+                        sizes="(max-width: 600px) 50vw, 30vw"
                         quality={70}
-                        className="about-banner-image"
+                        className="about-banner-image about-banner-image-left"
+                    />
+                    <Image
+                        src="/images/gold_obj.jpeg"
+                        alt=""
+                        fill
+                        sizes="(max-width: 600px) 50vw, 30vw"
+                        quality={70}
+                        className="about-banner-image about-banner-image-right"
                     />
                 </span>
                 <span className="about-banner-veil" aria-hidden="true" />
 
                 <p id="about-banner-text" className="about-banner-text">
-                    {t('bannerReflection')}
+                    {/* Each line is its own block: a haiku's breaks are part of
+                        the writing, so they must not reflow with the viewport
+                        the way a wrapped sentence does. */}
+                    {bannerHaiku.map((line) => (
+                        <span key={line} className="about-banner-line">
+                            {line}
+                        </span>
+                    ))}
+
+                    <cite className="about-banner-author">{t('bannerAuthor')}</cite>
                 </p>
             </section>
 

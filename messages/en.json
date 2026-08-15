@@ -290,8 +290,12 @@
     "button": "About Me"
   },
   "pillars": {
-    "heading": "What do we do?",
-    "intro": "We bring together work with the body, the mind and the soul to help you find balance in everyday life. Sessions take place in Aberdeen and online, in Polish and English.",
+    "heading": "What do I do?",
+    "introParagraphs": [
+      "Do you want to hear the answers your body has been whispering for a long time, and change your energy?",
+      "It is good that you are here. It is time to feel yourself again and find your harmony.",
+      "I offer you space to breathe, to release accumulated tension and to recover deeply. Discover your own alchemy through holotropic breathwork, hypnotherapy, biofeedback, radiesthesia and bioenergetic analysis."
+    ],
     "bodyName": "BODY",
     "bodyText": "Sessions focused on the body and its recovery, supporting relaxation and everyday comfort.",
     "bodyHref": "/body",
@@ -511,7 +515,12 @@
     "studioParagraphs": [
       "Letting Go Zen Studio is an Academy of Energy Alchemy — a bridge between science and energy that is waiting for you. I help you bring out your strength and release negative emotions through various workshops, classes, and therapies. It is a space where I combine science, spirituality, and body work."
     ],
-    "bannerReflection": "That is where I understood how precious time is, and how great a loss it is to suppress emotions and give up on your own dreams.",
+    "bannerHaiku": [
+      "From weight — lightness,",
+      "In the whisper of the body you will find …",
+      "your own alchemy."
+    ],
+    "bannerAuthor": "Letting Go Zen Studio",
     "alchemikOffersLabel": "Available sessions"
   },
   "sklep": {
@@ -1065,14 +1074,15 @@
     "text": "Letting Go Zen Studio services are not intended to provide medical diagnosis or medical analysis, and do not replace advice, diagnosis or treatment from a qualified medical professional."
   },
   "home": {
-    "quote": "Let go of what weighs you down and make space for what helps you grow.",
+    "quote": "True alchemy is the transformation of the human being.",
+    "quoteAuthor": "Carl Gustav Jung",
     "whyHeading": "Why choose us?",
     "why1Title": "An individual approach",
     "why1Text": "Every meeting begins with a conversation and attentive presence, not a ready-made template.",
     "why2Title": "A holistic view",
-    "why2Text": "We look at the whole person — body, mind and emotions treated as one.",
+    "why2Text": "Inner harmony is the balance of body, mind and soul.",
     "why3Title": "Carefully chosen methods",
-    "why3Text": "Methods are selected deliberately and grounded in Joanna’s years of experience.",
+    "why3Text": "Methods are selected deliberately and grounded in years of experience.",
     "why4Title": "A calm space",
     "why4Text": "A place without judgement or hurry, where you can simply be yourself and pause.",
     "shopCta": {

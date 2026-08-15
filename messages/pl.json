@@ -290,8 +290,12 @@
     "button": "O Mnie"
   },
   "pillars": {
-    "heading": "Czym się zajmujemy?",
-    "intro": "Łączymy pracę z ciałem, umysłem i duszą, aby pomóc Ci odnaleźć równowagę w codziennym życiu. Sesje prowadzone są w Aberdeen i online, po polsku i angielsku.",
+    "heading": "Czym się zajmuję?",
+    "introParagraphs": [
+      "Chcesz poznać odpowiedzi, które od dawna Szepta Twoje ciało, i zmienić swój poziom energii?",
+      "Dobrze, że tu jesteś. Czas poczuć siebie i odnaleźć harmonię.",
+      "Oferuję Ci przestrzeń na oddech, uwalnianie skumulowanego napięcia i głęboką regenerację. Odkryj swoją własną alchemię dzięki połączeniu oddechu holotropowego, hipnoterapii, biofeedbacku, radiestezji oraz analiz bioenergetycznych."
+    ],
     "bodyName": "CIAŁO",
     "bodyText": "Sesje skupione na ciele i jego regeneracji, wspierające odprężenie i poczucie komfortu na co dzień.",
     "bodyHref": "/body",
@@ -511,7 +515,12 @@
     "studioParagraphs": [
       "Letting Go Zen Studio to Akademia Alchemii Energii — most między nauką a energią, która czeka na Ciebie. Pomagam Ci wydobyć siłę i uwolnić negatywne emocje przez różnorodne warsztaty, zajęcia i terapie. To przestrzeń, w której łączę naukę, duchowość i pracę z ciałem."
     ],
-    "bannerReflection": "To tam zrozumiałam, jak cenny jest czas i jak wielką stratą jest tłumienie emocji oraz rezygnowanie z własnych marzeń.",
+    "bannerHaiku": [
+      "Z ciężaru – lekkość,",
+      "W szepcie ciała odnajdziesz …",
+      "swoją alchemię."
+    ],
+    "bannerAuthor": "Letting Go Zen Studio",
     "alchemikOffersLabel": "Dostępne sesje"
   },
   "sklep": {
@@ -1065,14 +1074,15 @@
     "text": "Usługi Letting Go Zen Studio nie mają na celu diagnozy ani analizy medycznej i nie zastępują porady, diagnozy ani leczenia prowadzonego przez wykwalifikowanego specjalistę medycznego."
   },
   "home": {
-    "quote": "Pozwól odejść temu, co Cię obciąża, i otwórz przestrzeń na to, co Cię rozwija.",
+    "quote": "Prawdziwa alchemia to przemiana człowieka.",
+    "quoteAuthor": "Carl Gustav Jung",
     "whyHeading": "Dlaczego warto?",
     "why1Title": "Indywidualne podejście",
     "why1Text": "Każde spotkanie zaczyna się od rozmowy i uważnej obecności, a nie od gotowego schematu.",
     "why2Title": "Holistyczne spojrzenie",
-    "why2Text": "Patrzymy na całego człowieka — ciało, umysł i emocje traktujemy jako jedną całość.",
+    "why2Text": "Wewnętrzna harmonia to balans ciała, umysłu i duszy.",
     "why3Title": "Starannie dobrane metody",
-    "why3Text": "Metody wybierane są świadomie i oparte na wieloletnim doświadczeniu Joanny.",
+    "why3Text": "Metody wybierane są świadomie i oparte na wieloletnim doświadczeniu.",
     "why4Title": "Spokojna przestrzeń",
     "why4Text": "Miejsce bez ocen i pośpiechu, w którym możesz być sobą i zatrzymać się na chwilę.",
     "shopCta": {

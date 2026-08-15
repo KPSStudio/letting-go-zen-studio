@@ -20,17 +20,19 @@ import {
     SessionIcon,
     PreparationIcon,
     MindIcon,
-    StarIcon,
+    SpiralFigureIcon,
     InfinityIcon,
 } from '@/components/home/PillarIcons'
 import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 type SupportItem = { title: string; text: string }
 
-// Session, leaf, lotus, star, energy flow — in the order the copy is written.
+// Session, leaf, lotus, spiral, energy flow — in the order the copy is written.
 // The first slot pairs with "Sesje terapeutyczne & NLP", so SessionIcon is the
 // literal match; it replaced a heart, which is no longer used anywhere.
-const ICONS = [SessionIcon, PreparationIcon, MindIcon, StarIcon, InfinityIcon] as const
+// The fourth was a four-point star until the client asked for something
+// holistic; like the heart, the star is now gone from the whole site.
+const ICONS = [SessionIcon, PreparationIcon, MindIcon, SpiralFigureIcon, InfinityIcon] as const
 
 const REVEAL_STEPS = ['.support-item']
 const DRAW_SELECTOR =

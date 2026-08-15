@@ -37,7 +37,7 @@ import {
   PersonIcon,
   CycleIcon,
   LockIcon,
-  StarIcon,
+  SpiralFigureIcon,
   QuillIcon,
   MindIcon,
 } from "@/components/home/PillarIcons";
@@ -467,7 +467,7 @@ export default function BookingConsentPage() {
               />
 
               <span className="consent-row-icon" aria-hidden="true">
-                <StarIcon />
+                <SpiralFigureIcon />
               </span>
 
               <span className="consent-row-text">

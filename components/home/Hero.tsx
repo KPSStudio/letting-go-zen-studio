@@ -46,15 +46,18 @@ export default function Hero() {
             {/* Decorative floating ornaments. Purely atmospheric — they carry
                 no meaning, so they are hidden from assistive technology and
                 take no pointer events. Each fades and drifts on its own offset
-                (see the animation-delay pairs in globals.css) so the five never
-                pulse together. They run alongside the site-wide ray of light in
+                (see the animation-delay pairs in globals.css) so the four never
+                pulse together. A fifth, the pendulum, was removed at the
+                client's request. Every one of them is painted gold by the
+                shared mask in globals.css rather than by the artwork itself, so
+                the two PNGs and the two SVGs are identical in colour. They run
+                alongside the site-wide ray of light in
                 app/[locale]/layout.tsx: the ray is the constant wash, these are
                 the slower detail on top. */}
             <div className="hero-mystic-symbols" aria-hidden="true">
                 <span className="hero-mystic-symbol hero-mystic-spiral" />
                 <span className="hero-mystic-symbol hero-mystic-biofeedback" />
                 <span className="hero-mystic-symbol hero-mystic-aura" />
-                <span className="hero-mystic-symbol hero-mystic-pendulum" />
                 <span className="hero-mystic-symbol hero-mystic-quantum" />
             </div>
 

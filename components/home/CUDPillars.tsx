@@ -28,6 +28,11 @@ export default function CUDPillars() {
     // active locale so the links point straight at /pl/body, /en/body, etc.
     const locale = useLocale()
 
+    // The introduction is three paragraphs rather than one sentence, so it is
+    // stored as an array. t.raw() is the only way next-intl hands an array back
+    // unformatted — same approach as journeyParagraphs on the About page.
+    const introParagraphs = t.raw('introParagraphs') as string[]
+
     // The entrance animation is scoped to this section only.
     const sectionRef = useRef<HTMLElement | null>(null)
     useEntranceReveal(sectionRef, {
@@ -67,7 +72,16 @@ export default function CUDPillars() {
 
             <h2 className="cud-heading">{t('heading')}</h2>
 
-            <p className="cud-intro">{t('intro')}</p>
+            {/* The group owns the gap down to the cards; the paragraphs only
+                space themselves from each other. Putting that margin on every
+                paragraph would open a 4.75rem hole after each one. */}
+            <div className="cud-intro-group">
+                {introParagraphs.map((paragraph) => (
+                    <p key={paragraph} className="cud-intro">
+                        {paragraph}
+                    </p>
+                ))}
+            </div>
 
             <div className="cud-grid">
                 {pillars.map(({ key, name, text, href, Icon }) => (

@@ -108,13 +108,37 @@ export function HolisticIcon({ className }: IconProps) {
     )
 }
 
-/** Carefully chosen methods — a four-point star. */
-export function StarIcon({ className }: IconProps) {
+/**
+ * A person held within a spiral — the holistic mark.
+ *
+ * Replaces the four-point star that used to sit on "Starannie dobrane metody"
+ * and on the About page's metaphysics entry. The star was removed at the
+ * client's request in favour of something holistic, so — as with HeartIcon —
+ * it is deleted rather than left unused, and no star motif remains on the site.
+ *
+ * The curve is a logarithmic spiral, r = rIn * e^(b0), sampled every 30 degrees
+ * over one and a half turns and smoothed into cubics. That is deliberately the
+ * same construction as public/images/hero-snail-spiral.svg, so the icon and the
+ * hero ornament read as the same hand.
+ *
+ * Two numbers matter if this is ever redrawn: the spiral's own bounding box is
+ * translated so it sits centred in the 48 grid (the raw curve is not), and its
+ * inner turn clears the centre by 8.11 units against the figure's 5.41 reach,
+ * leaving 1.6 units of daylight once the 1.1 stroke is painted on both sides.
+ * Shrink that clearance and the figure's shoulders touch the spiral.
+ */
+export function SpiralFigureIcon({ className }: IconProps) {
     return (
         <svg {...shared} className={className}>
-            <path d="M24 8.5c1.4 7 3.9 11.1 8 12.6-4.1 1.5-6.6 5.6-8 12.6-1.4-7-3.9-11.1-8-12.6 4.1-1.5 6.6-5.6 8-12.6Z" />
-            <path d="M35.6 28.4c.7 3 1.9 4.8 3.9 5.5-2 .7-3.2 2.5-3.9 5.5-.7-3-1.9-4.8-3.9-5.5 2-.7 3.2-2.5 3.9-5.5Z" opacity="0.7" />
-            <path d="M13.2 31.6c.5 2.1 1.4 3.4 2.8 3.9-1.4.5-2.3 1.8-2.8 3.9-.5-2.1-1.4-3.4-2.8-3.9 1.4-.5 2.3-1.8 2.8-3.9Z" opacity="0.55" />
+            <path d="M22.54 13.57 C23.3 13.72 25.73 13.79 27.1 14.47 C28.46 15.15 29.85 16.33 30.73 17.64 C31.6 18.96 32.24 20.74 32.34 22.37 C32.44 24.01 32.09 25.93 31.34 27.45 C30.58 28.97 29.27 30.52 27.8 31.49 C26.34 32.46 24.36 33.17 22.54 33.29 C20.72 33.4 18.57 33.01 16.88 32.17 C15.19 31.33 13.46 29.87 12.38 28.24 C11.3 26.6 10.5 24.4 10.38 22.37 C10.25 20.34 10.68 17.96 11.62 16.07 C12.56 14.18 14.19 12.26 16.01 11.06 C17.82 9.85 20.28 8.97 22.54 8.83 C24.8 8.69 27.46 9.17 29.56 10.21 C31.66 11.26 33.8 13.07 35.14 15.1 C36.48 17.12 37.46 19.86 37.62 22.37 C37.78 24.89 37.24 27.85 36.08 30.19 C34.91 32.53 32.9 34.91 30.64 36.41 C28.38 37.9 25.24 38.25 22.54 39.17" />
+
+            {/* The figure at the centre — same anatomy as HolisticIcon, drawn
+                smaller so it sits inside the innermost turn. */}
+            <circle cx="24" cy="20.9" r="1.55" />
+            <path d="M24 22.6v4.2" />
+            <path d="M21.2 24.5c.85.65 1.8 1 2.8 1s1.95-.35 2.8-1" />
+            <path d="M24 26.8 22.2 29.1" />
+            <path d="M24 26.8 25.8 29.1" />
         </svg>
     )
 }
