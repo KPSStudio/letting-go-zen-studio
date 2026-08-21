@@ -191,32 +191,37 @@ export function MailIcon({ className }: IconProps) {
 }
 
 /**
- * SHOP — an open book with a small spark rising from it.
+ * SHOP — a shopping cart.
  *
- * Deliberately NOT a shopping cart or a parcel: the shop sells PDF reports and
- * analyses alongside any physical items, so a parcel would misdescribe most of
- * the catalogue. An open book plus a spark reads as "material to read and work
- * with", which covers both, and the spark ties it to the gold ornaments used
- * everywhere else on the site.
+ * This was an open book with a small spark above it, chosen so the icon would
+ * describe PDF reports as well as any physical stock. In practice the spark sat
+ * directly over the book as a vertical stroke crossed by a horizontal one, and
+ * at the size it renders that reads unmistakably as a crucifix on a bible.
+ * Changed at the client's request: this is a holistic-therapy studio, and a
+ * religious reading of the shop link is worse than a slightly literal one.
  *
- * Drawn with the same 48x48 grid, 1.1 stroke and round caps as the Body / Mind
- * / Soul icons, and it stays legible down to about 24px because the detail is
- * limited to five strokes.
+ * A cart is also the term the site already uses — the nav says KOSZYK — so the
+ * icon and the wording now agree.
+ *
+ * Same 48x48 grid, 1.1 stroke and round caps as the Body / Mind / Soul icons,
+ * and it stays legible down to about 24px: five strokes, no fine detail.
  */
 export function ShopIcon({ className }: IconProps) {
     return (
         <svg {...shared} className={className}>
-            {/* The two facing pages, meeting at the spine */}
-            <path d="M24 18.5c-3.2-2.6-7-3.9-11.4-3.9H8.5v20.6h4.1c4.4 0 8.2 1.3 11.4 3.9" />
-            <path d="M24 18.5c3.2-2.6 7-3.9 11.4-3.9h4.1v20.6h-4.1c-4.4 0-8.2 1.3-11.4 3.9" />
-            {/* The spine */}
-            <path d="M24 18.5v20.6" opacity="0.6" />
-            {/* A spark rising from the open book */}
-            <path d="M24 5.4v6.2" />
-            <path d="M20.1 8.9h7.8" opacity="0.75" />
+            {/* Handle, hooking down into the basket's top-left corner */}
+            <path d="M8 12.5H11.8L13.5 17.1" />
+            {/* Basket: a trapezoid, wider at the rim than at the base */}
+            <path d="M13.5 17.1H40L36 29.1H17.5Z" />
+            {/* One shelf line, the same restrained touch the old spine had */}
+            <path d="M15.6 23.1H37.9" opacity="0.55" />
+            {/* Wheels, close enough under the base to read as attached */}
+            <circle cx="21" cy="32.7" r="2.2" />
+            <circle cx="33" cy="32.7" r="2.2" />
         </svg>
     )
 }
+
 
 /* ── Współpraca journey stages ─────────────────────────────────────
    Five stages, one set, same stroke language as the pillar icons. They

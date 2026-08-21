@@ -11469,3 +11469,43 @@ body {
         letter-spacing: 0.16em;
     }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   ABOUT PORTRAIT — SHOW THE WHOLE PHOTOGRAPH
+
+   Joanna-photo.png is a 1254x1254 SQUARE with a gold ring and cream
+   corners baked into the file. It was being displayed in a 4:5 rounded
+   rectangle with `cover`, which scaled it to the frame's HEIGHT and then
+   cropped 20% off the width — slicing straight through the baked gold
+   ring on both sides — before drawing a SECOND gold border and rounded
+   corners around the result. Two competing frames, and the photograph
+   cropped to fit the wrong one.
+
+   The frame is square and circular now, so `cover` on a square source
+   crops nothing at all. The baked ring becomes the rim, which is what the
+   file was made for, so our own border is dropped rather than doubled up.
+
+   The 1.075 scale is not zoom: the baked ring spans about 93% of the
+   file's width, so scaling by 1/0.93 lands it exactly on the circular
+   clip and pushes the cream corners just outside it. Nothing of Joanna
+   or the ring is lost — only the corner padding that the circle hides.
+
+   Appended last so it wins over the earlier 4:5 declarations.
+   ════════════════════════════════════════════════════════════════ */
+.about-portrait-frame {
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 0;
+    /* The warm aura and the grounding shadow are kept; only the rim goes. */
+    box-shadow:
+            0 0 60px rgba(212, 179, 106, 0.2),
+            0 34px 70px -28px rgba(0, 0, 0, 0.92);
+}
+
+.about-portrait-image {
+    object-fit: cover;
+    /* A square in a square has no overflow to position, so this is simply
+       honest rather than load-bearing. */
+    object-position: 50% 50%;
+    transform: scale(1.075);
+}
