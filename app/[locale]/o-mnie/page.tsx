@@ -240,25 +240,19 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 and a deeper wash — and it now carries the studio's own haiku,
                 set as three fixed lines rather than a flowing sentence. */}
             <section className="about-banner" aria-labelledby="about-banner-text">
-                {/* Framed the same way as the homepage band: one full-height
-                    copy per edge, the right one mirrored, haiku in the clear
-                    centre. See the note on .home-quote-image in globals.css. */}
+                {/* Same bottom-anchored crop as the homepage band, but the
+                    pendulum-and-wands scene rather than the incense one, so the
+                    two pages do not repeat the same picture. The dowsing
+                    pendulum and crystal wands are her actual tools, which is why
+                    this one belongs on the page about her. */}
                 <span className="about-banner-media" aria-hidden="true">
                     <Image
-                        src="/images/gold_obj.jpeg"
+                        src="/images/altar-pendulum-lavender.webp"
                         alt=""
                         fill
-                        sizes="(max-width: 600px) 50vw, 30vw"
+                        sizes="100vw"
                         quality={70}
-                        className="about-banner-image about-banner-image-left"
-                    />
-                    <Image
-                        src="/images/gold_obj.jpeg"
-                        alt=""
-                        fill
-                        sizes="(max-width: 600px) 50vw, 30vw"
-                        quality={70}
-                        className="about-banner-image about-banner-image-right"
+                        className="about-banner-image"
                     />
                 </span>
                 <span className="about-banner-veil" aria-hidden="true" />

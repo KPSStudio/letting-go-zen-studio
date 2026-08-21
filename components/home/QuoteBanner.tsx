@@ -13,10 +13,9 @@ const QUOTE_REVEAL = ['.home-quote-inner']
  * The full-width atmospheric quotation band that sits between the three
  * category columns and the "Why choose us?" section.
  *
- * The backdrop is the purple lantern-and-lavender graphic Joanna chose. It is a
- * tall portrait image in a short, full-bleed band, so `cover` keeps only a
- * horizontal slice through its middle — it works here as colour and texture,
- * not as a picture. See the .home-quote-image note in globals.css. Loaded through
+ * The backdrop is the lantern-and-lavender altar scene Joanna supplied. Its
+ * objects run in a row along the bottom of the frame, so the band anchors to
+ * that edge and crops the empty upper half away. Loaded through
  * next/image with `fill`, so Next serves a width-appropriate, format-negotiated
  * file rather than pushing the full 1672px original at a phone. `sizes="100vw"`
  * tells it the band is always full-bleed.
@@ -36,31 +35,24 @@ export default function QuoteBanner() {
 
     return (
         <section className="home-quote" aria-labelledby="home-quote-text" ref={sectionRef}>
-            {/* Purely atmospheric: the photograph and the overlay that keeps
-                the quotation legible on top of it. alt="" because the image
-                carries no information the quotation does not. */}
-            {/* The graphic is a tall portrait FRAME — lantern, lavender and
-                moon phases around a deliberately empty middle. Cropping it to
-                fill a short wide band threw all of that away and kept only the
-                glow. So it is used as designed instead: one full-height copy
-                down each edge, the right one mirrored, with the quotation
-                sitting in the open centre they create. Nothing is cropped. */}
+            {/* Purely atmospheric, so alt="" — the image carries nothing the
+                quotation does not.
+
+                Bottom-weighted scene: lantern, singing bowls, incense burner,
+                amethyst and stones all sit in a horizontal row along the foot of
+                the frame, with open purple and the gold spiral above. So it is
+                anchored to its BOTTOM edge and cropped — that row is already
+                band-shaped, and no mirroring or stretching is needed. The two
+                earlier graphics were edge-frames and needed the opposite
+                treatment; see the note in globals.css. */}
             <span className="home-quote-media" aria-hidden="true">
                 <Image
-                    src="/images/purple_obj.jpeg"
+                    src="/images/altar-incense-lavender.webp"
                     alt=""
                     fill
-                    sizes="(max-width: 600px) 50vw, 30vw"
+                    sizes="100vw"
                     quality={72}
-                    className="home-quote-image home-quote-image-left"
-                />
-                <Image
-                    src="/images/purple_obj.jpeg"
-                    alt=""
-                    fill
-                    sizes="(max-width: 600px) 50vw, 30vw"
-                    quality={72}
-                    className="home-quote-image home-quote-image-right"
+                    className="home-quote-image"
                 />
             </span>
             <span className="home-quote-veil" aria-hidden="true" />
