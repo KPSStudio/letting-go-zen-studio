@@ -69,10 +69,12 @@ public/images/twilight-glow-enchanted-forest.png
 # a live payments database. They are applied through the Supabase dashboard and
 # kept locally only.
 supabase/
-# Source artwork Joanna sends for reference or processing. These are working
-# files: the icon set arrived with a checkerboard painted into it, and the
-# sheet images have text baked into the pixels. Their processed, usable
-# versions live in public/images/ and ARE committed. public/ is served
-# verbatim, so keeping the raw originals out avoids publishing several MB of
-# unused assets — including mockups with placeholder copy — on the live domain.
-public/images/attachments/
+# Source artwork Joanna sends, kept locally as reference only. These are
+# working files, not assets: the icon set arrived with a checkerboard painted
+# into it, and 1000097968 is a layout mockup with text baked into the pixels.
+# Their processed, usable versions live in public/images/ and ARE committed.
+#
+# Deliberately OUTSIDE public/, because everything under public/ is served
+# verbatim at the live domain — this keeps several MB of unusable originals,
+# and a mockup carrying placeholder English copy, off the website entirely.
+design-reference/
