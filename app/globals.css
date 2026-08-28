@@ -554,176 +554,7 @@ body::after {
             drop-shadow(0 0 16px rgba(212, 179, 106, 0.55))
             drop-shadow(0 0 42px rgba(138, 75, 42, 0.38));
     animation: logoFloat 5.5s ease-in-out infinite alternate;
-}
-
-/* HERO MYSTICAL SYMBOLS
-   Five decorative ornaments that fade in and out over the hero, each on its own
-   offset so they never pulse together. Restored after being removed in favour
-   of the site-wide light ray; both now run, the ray as the constant wash and
-   these as the slower detail on top. Purely atmospheric — aria-hidden, no
-   pointer events, and they carry no meaning a screen reader needs. */
-
-.hero-mystic-symbols {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.hero-mystic-symbol {
-    /* How bright each ornament gets at the peak of its fade. Declared as a
-       custom property so the mobile breakpoint can raise legibility with a
-       single line instead of duplicating the whole keyframe. */
-    --hero-ornament-peak: 0.46;
-
-    position: absolute;
-    display: block;
-    opacity: 0;
-
-    /* Glow. This sits on the SPAN while the gold shape is painted on its
-       ::before, and the order matters: a filter applies to the element's whole
-       rendered subtree, so the shadow is generated from the already-masked
-       artwork and follows its outline. Masking this element directly would
-       clip its own drop-shadow away and leave the ornaments flat. */
-    filter:
-            drop-shadow(0 0 14px rgba(212, 179, 106, 0.42))
-            drop-shadow(0 0 34px rgba(210, 159, 57, 0.26))
-            drop-shadow(0 0 54px rgba(239, 215, 129, 0.14));
-
-    /* mix-blend-mode: screen was here to lift washed-out cream line art off
-       the background. The artwork is now masked gold at full strength, and
-       screen blew the highlights out to near-white — the fade keyframe's
-       --hero-ornament-peak controls presence instead. */
-
-    animation:
-            heroMysticFade 8s ease-in-out infinite,
-            heroMysticFloat 6s ease-in-out infinite alternate;
-}
-
-/* THE GOLD LIVES HERE, not in the artwork.
-   Two of the four ornaments are hand-drawn SVGs carrying the brand golds; the
-   other two are pale cream line-art PNGs that used to be faked into gold with
-   sepia(1) saturate(1.55) brightness(1.22). Sepia over near-white can only ever
-   make a washed tan, which is why those two read dull next to the vectors.
-   Using each file's ALPHA as a mask over one gold gradient makes all four
-   identical in colour, and lets the palette tokens drive them.
-   Adding an ornament means adding a --ornament-src line and nothing else. */
-.hero-mystic-symbol::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background-image:
-            linear-gradient(145deg,
-                    var(--brown-soft) 0%,
-                    var(--gold) 32%,
-                    var(--gold-sh) 58%,
-                    var(--gold-lt) 100%);
-
-    /* The -webkit- prefixes are not optional: without them Safari and every
-       iOS browser ignore the mask entirely and paint a solid gold rectangle. */
-    -webkit-mask-image: var(--ornament-src);
-            mask-image: var(--ornament-src);
-    -webkit-mask-repeat: no-repeat;
-            mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-            mask-position: center;
-    -webkit-mask-size: contain;
-            mask-size: contain;
-}
-
-/* Fibonacci / golden-ratio spiral — upper left. Original SVG line art. */
-.hero-mystic-spiral {
-    /* Square, because a snail shell reads as round. The 3:2 box here previously
-       matched the golden RECTANGLE of the Fibonacci spiral this replaced; left
-       at 3:2 the shell would sit letterboxed inside its own box. */
-    width: 152px;
-    height: 152px;
-    left: 13%;
-    top: 26%;
-    --ornament-src: url('/images/hero-snail-spiral.svg');
-    animation-delay: 0s, 0s;
-}
-
-/* Brainwave biofeedback — right side */
-.hero-mystic-biofeedback {
-    width: 122px;
-    height: 122px;
-    right: 15%;
-    top: 30%;
-    --ornament-src: url('/images/hero-Brainwave_Biofeedback.png');
-    animation-delay: 1.4s, 0.8s;
-}
-
-/* Aura & heart energy — low left */
-.hero-mystic-aura {
-    width: 126px;
-    height: 126px;
-    left: 22%;
-    bottom: 18%;
-    --ornament-src: url('/images/hero-Aura_and_Heart_Energy.png');
-    animation-delay: 2.8s, 1.4s;
-}
-
-/* The pendulum ornament that sat upper-right was removed at the client's
-   request. public/images/hero-Pendulum_Energy_Scan.png is now unreferenced. */
-
-/* Quantum orbital motif — lower right. Original SVG line art. */
-.hero-mystic-quantum {
-    width: 112px;
-    height: 112px;
-    right: 22%;
-    bottom: 15%;
-    --ornament-src: url('/images/hero-quantum-orbit.svg');
-    animation-delay: 5.6s, 1.8s;
-}
-
-@keyframes heroMysticFade {
-    0% {
-        opacity: 0;
-        transform: scale(0.88);
-    }
-
-    10% {
-        opacity: calc(var(--hero-ornament-peak) * 0.24);
-    }
-
-    22% {
-        opacity: calc(var(--hero-ornament-peak) * 0.76);
-    }
-
-    36% {
-        opacity: var(--hero-ornament-peak);
-    }
-
-    52% {
-        opacity: calc(var(--hero-ornament-peak) * 0.53);
-    }
-
-    68% {
-        opacity: calc(var(--hero-ornament-peak) * 0.24);
-        transform: scale(1.06);
-    }
-
-    100% {
-        opacity: 0;
-        transform: scale(0.9);
-    }
-}
-
-@keyframes heroMysticFloat {
-    0% {
-        transform: translate3d(0, 0, 0) rotate(-3deg);
-    }
-
-    100% {
-        transform: translate3d(0, -22px, 0) rotate(3deg);
-    }
-}
-
-
-.hero-description {
+}.hero-description {
     margin: 1.5rem 0 0;
     max-width: 46ch;
     font-family: var(--font-raleway);
@@ -5345,43 +5176,7 @@ body::after {
     .about-photo-card::after {
         width: 124%;
         height: 88%;
-    }
-
-    /* Tablet ornament sizing. Roughly 25% larger than the desktop values, which
-       at this width read as a smudge rather than a shape. */
-    .hero-mystic-symbol {
-        --hero-ornament-peak: 0.54;
-    }
-
-    .hero-mystic-spiral {
-        width: 112px;
-        height: 112px;
-        left: 5%;
-        top: 23%;
-    }
-
-    .hero-mystic-biofeedback {
-        width: 102px;
-        height: 102px;
-        right: 6%;
-        top: 31%;
-    }
-
-    .hero-mystic-aura {
-        width: 108px;
-        height: 108px;
-        left: 7%;
-        bottom: 19%;
-    }
-
-    .hero-mystic-quantum {
-        width: 80px;
-        height: 80px;
-        right: 10%;
-        bottom: 13%;
-    }
-
-}
+    }}
 
 /* PHONES — hero logo proportions.
    The `min-height: 84vh` that used to sit here was added to make vertical room
@@ -5392,70 +5187,7 @@ body::after {
     .hero-logo {
         width: clamp(170px, 48vw, 240px);
         height: clamp(170px, 48vw, 240px);
-    }
-
-    .hero-mystic-symbol {
-        /* Legible against the velvet texture without becoming a flat overlay —
-           the fade still breathes, it just peaks higher. */
-        --hero-ornament-peak: 0.66;
-
-        /* CRITICAL: neutralise the wider breakpoint's offsets before setting
-           new ones. The tablet rules above position some ornaments with
-           left/bottom; if only `right`/`top` were set here, the element would
-           have BOTH sides specified and — with a definite width — `left` and
-           `top` win, silently placing the ornament on the wrong side. That is
-           exactly how these once ended up sitting on top of the logo. */
-        left: auto;
-        right: auto;
-        top: auto;
-        bottom: auto;
-    }
-
-    /* ── Top gutter: above the logo, clear of everything ──
-       Measured at 320–430px, the band between the hero's top edge and the top
-       of the logo is 93–143px tall, so a 72px ornament at top: 1% always
-       finishes above the logo. */
-    /* This one canNOT grow with the others. The measured band between the
-       hero's top edge and the top of the logo is only 93px at 320px wide, and
-       this ornament sits in it at top: 1%. Squaring it from the old 108x72
-       pushed its HEIGHT to 96px, which overflows that band and puts it back on
-       top of the logo — the exact bug the reset above exists to prevent.
-       84px leaves a few pixels of clearance at the narrowest size. */
-    .hero-mystic-spiral {
-        width: 84px;
-        height: 84px;
-        left: 1%;
-        top: 1%;
-    }
-
-    /* ── Side column, level with the logo ──
-       The logo is clamp(170px, 48vw, 240px) wide and centred, so the free
-       column beside it is (100vw - logoWidth) / 2 — only 75px at 320px. The
-       width is therefore derived from that same expression rather than fixed,
-       so this ornament grows with the screen and can never reach the logo. */
-    .hero-mystic-biofeedback {
-        width: min(96px, calc((100vw - clamp(170px, 48vw, 240px)) / 2 - 4px));
-        height: auto;
-        aspect-ratio: 1;
-        left: 0;
-        top: 20%;
-    }
-
-    /* ── Bottom gutter: below the About button ── */
-    .hero-mystic-aura {
-        width: 100px;
-        height: 100px;
-        left: 1%;
-        bottom: 3%;
-    }
-
-    .hero-mystic-quantum {
-        width: 92px;
-        height: 92px;
-        right: 1%;
-        bottom: 3%;
-    }
-}
+    }}
 /* PREMIUM CONTENT PAGES */
 
 .premium-content-page {
@@ -6251,18 +5983,7 @@ body::after {
     body::before,
     body::after {
         animation: none !important;
-    }
-
-    /* Hero ornaments settle at their peak instead of animating to nothing.
-       Without this the blanket rule above freezes them on the 0% keyframe,
-       which is opacity 0 — the artwork would simply never appear. */
-    .hero-mystic-symbol {
-        animation: none !important;
-        opacity: var(--hero-ornament-peak);
-        transform: none !important;
-    }
-
-    /* The ray holds at a steady, clearly visible brightness. Without this the
+    }/* The ray holds at a steady, clearly visible brightness. Without this the
        blanket rule above would freeze it on its 0% keyframe, and any future
        change to that keyframe would silently change what reduced-motion
        visitors see — so the static value is stated explicitly here. */
@@ -11695,4 +11416,126 @@ body {
     .home-why-icon::before { opacity: 0.8; transform: none; }
     /* The shimmer has nowhere to rest that looks deliberate, so it goes. */
     .home-why-icon::after { display: none; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   HERO — THE ALTAR SCENE
+
+   The picture is 843x1264 PORTRAIT. A phone hero is roughly the same
+   shape, so there it simply covers. A desktop hero is wide and short, and
+   `cover` would keep only about a quarter of the image — forcing a choice
+   between showing the objects and leaving clear space for the name, since
+   the composition cannot give both in a 26% slice.
+
+   So desktop does not crop at all. The sharp copy is sized to the hero's
+   HEIGHT and centred, keeping the whole composition intact, and a blurred
+   darkened copy of the same file fills the width behind it. The seam is
+   hidden by the blur itself, not by a mask.
+   ════════════════════════════════════════════════════════════════ */
+.hero-media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+/* NOTHING fills the space either side of the picture, and that is the point.
+   .hero-section has no background of its own, so what shows through is the
+   site's velvet texture on .site-background — the same ground every other
+   section sits on. A blurred duplicate of the picture was tried here first;
+   the real texture ties the hero to the rest of the page instead of competing
+   with it, and costs no extra bytes.
+
+   The frame carries the IMAGE's aspect ratio and the hero's full height, so
+   the picture fits it exactly and percentages in the mask below relate to the
+   picture rather than to the hero. */
+.hero-media-frame {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    aspect-ratio: 843 / 1264;
+    overflow: hidden;
+    /* Feathers both vertical edges into the blurred fill. Without this the
+       join is a visible seam, which is exactly how it looked first time. */
+    -webkit-mask-image: linear-gradient(90deg,
+            transparent 0%, #000 26%, #000 74%, transparent 100%);
+            mask-image: linear-gradient(90deg,
+            transparent 0%, #000 26%, #000 74%, transparent 100%);
+}
+
+.hero-media-sharp {
+    /* `cover` inside a frame of the image's own ratio crops nothing at all —
+       it simply fills it. The composition stays whole. */
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Text legibility. The name sits over lavender and a painted gold spiral,
+   so the middle is darkened; the top and bottom stay clearer so the scene
+   still reads as a photograph rather than a flat wash. */
+.hero-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background:
+            radial-gradient(ellipse 62% 58% at 50% 46%,
+                    rgba(18, 6, 19, 0.78) 0%,
+                    rgba(18, 6, 19, 0.55) 45%,
+                    rgba(18, 6, 19, 0.12) 78%,
+                    transparent 100%),
+            linear-gradient(180deg,
+                    rgba(18, 6, 19, 0.55) 0%,
+                    transparent 22%,
+                    transparent 68%,
+                    rgba(18, 6, 19, 0.72) 100%);
+}
+
+/* The old aura pulsed behind the logo to give an otherwise flat background
+   some depth. The photograph supplies that now, and leaving it on put a
+   soft bright disc over the scene. */
+.hero-section::before {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    /* Portrait image, portrait hero — the proportions already agree, so the
+       picture covers and the blurred filler has nothing to fill. */
+    .hero-media-frame {
+        /* Full width, no feathering: there is no blurred fill beside it to
+           blend into, and masking the edges would only dim the lavender. */
+        position: absolute;
+        inset: 0;
+        left: 0;
+        transform: none;
+        aspect-ratio: auto;
+        -webkit-mask-image: none;
+                mask-image: none;
+    }
+
+    .hero-media-sharp {
+        object-fit: cover;
+        /* Anchored low: the lantern, bowls and lavender sit along the foot of
+           the screen and the lockup takes the open space above them, which is
+           how the scene was composed. */
+        object-position: 50% 100%;
+    }
+
+    .hero-scrim {
+        /* Narrower and softer on a phone: the lockup is a smaller target and
+           the scene is fully visible, so it needs less covering up. */
+        background:
+                radial-gradient(ellipse 78% 44% at 50% 34%,
+                        rgba(18, 6, 19, 0.72) 0%,
+                        rgba(18, 6, 19, 0.4) 52%,
+                        transparent 84%),
+                linear-gradient(180deg,
+                        rgba(18, 6, 19, 0.5) 0%,
+                        transparent 26%,
+                        transparent 74%,
+                        rgba(18, 6, 19, 0.55) 100%);
+    }
 }

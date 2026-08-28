@@ -22,6 +22,10 @@ import { useLogoReveal } from '@/lib/useLogoReveal'
  * languages) now read as a sentence in that section's intro instead of a row of
  * chips, which keeps this first screen as calm as the reference.
  */
+// One file for both layers, and the same one the quotation band uses further
+// down the page — so the browser fetches it once for the whole homepage.
+const HERO_SCENE = '/images/altar-incense-lavender.webp'
+
 export default function Hero() {
     // t() looks up text from messages/pl.json or messages/en.json
     // depending on which language is active
@@ -43,23 +47,49 @@ export default function Hero() {
     return (
         <section className="hero-section">
 
-            {/* Decorative floating ornaments. Purely atmospheric — they carry
-                no meaning, so they are hidden from assistive technology and
-                take no pointer events. Each fades and drifts on its own offset
-                (see the animation-delay pairs in globals.css) so the four never
-                pulse together. A fifth, the pendulum, was removed at the
-                client's request. Every one of them is painted gold by the
-                shared mask in globals.css rather than by the artwork itself, so
-                the two PNGs and the two SVGs are identical in colour. They run
-                alongside the site-wide ray of light in
-                app/[locale]/layout.tsx: the ray is the constant wash, these are
-                the slower detail on top. */}
-            <div className="hero-mystic-symbols" aria-hidden="true">
-                <span className="hero-mystic-symbol hero-mystic-spiral" />
-                <span className="hero-mystic-symbol hero-mystic-biofeedback" />
-                <span className="hero-mystic-symbol hero-mystic-aura" />
-                <span className="hero-mystic-symbol hero-mystic-quantum" />
-            </div>
+            {/* THE ALTAR SCENE. Two copies of one file, and the reason is the
+                shape of the picture: it is 843x1264 portrait, so it fills a
+                phone almost exactly but survives only about a quarter of a wide
+                desktop hero.
+
+                So the copy is never cropped — it is sized to the hero's HEIGHT
+                and centred, keeping the whole composition — and its edges are
+                feathered into the site's own velvet texture, which shows
+                through either side because the hero itself has no background.
+                Stretching to fill was the alternative and is not viable: 0.667
+                to roughly 2.6 would squash the lantern and bowls to a quarter
+                of their height. On phones the picture simply covers, because
+                there the proportions already agree.
+
+                It is the same picture as the quotation band further down the
+                page, deliberately: one file, cached once, and the hero shows a
+                different part of it than the band does.
+
+                The four drifting gold symbols that used to sit here were
+                removed at the client's request; over a photographic scene they
+                read as clutter. */}
+            <span className="hero-media" aria-hidden="true">
+                {/* The copy lives in a frame carrying the image's OWN
+                    aspect ratio, not the hero's. That is what lets its left and
+                    right edges be feathered into the blur: a mask on the image
+                    itself would work across the full hero width, and the image
+                    only occupies the middle third of that. */}
+                <span className="hero-media-frame">
+                    <Image
+                        src={HERO_SCENE}
+                        alt=""
+                        fill
+                        sizes="(max-width: 900px) 100vw, 70vh"
+                        quality={78}
+                        priority
+                        className="hero-media-sharp"
+                    />
+                </span>
+            </span>
+
+            {/* Darkens the middle so the gold name holds its contrast over the
+                lavender and the painted spiral behind it. */}
+            <span className="hero-scrim" aria-hidden="true" />
 
             {/* Thin animated vertical gold line */}
             <span className="hero-vertical-line" aria-hidden="true" />

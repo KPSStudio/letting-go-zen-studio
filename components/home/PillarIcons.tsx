@@ -117,9 +117,10 @@ export function HolisticIcon({ className }: IconProps) {
  * it is deleted rather than left unused, and no star motif remains on the site.
  *
  * The curve is a logarithmic spiral, r = rIn * e^(b0), sampled every 30 degrees
- * over one and a half turns and smoothed into cubics. That is deliberately the
- * same construction as public/images/hero-snail-spiral.svg, so the icon and the
- * hero ornament read as the same hand.
+ * over one and a half turns and smoothed into cubics. It shared that
+ * construction with the hero's snail-spiral ornament, which has since been
+ * removed along with the rest of the drifting symbols — the maths is recorded
+ * here so the curve can be regenerated without it.
  *
  * Two numbers matter if this is ever redrawn: the spiral's own bounding box is
  * translated so it sits centred in the 48 grid (the raw curve is not), and its

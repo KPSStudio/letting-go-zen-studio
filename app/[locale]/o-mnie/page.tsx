@@ -171,7 +171,7 @@ export default async function OMniePage({ params }: OMniePageProps) {
                             the frame: the browser must fetch enough pixels to
                             survive that zoom. */}
                         <Image
-                            src="/images/Joanna-photo.png"
+                            src="/images/joanna-portrait.png"
                             alt={t('photoName')}
                             width={1240}
                             height={1240}

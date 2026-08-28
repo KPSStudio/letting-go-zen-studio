@@ -29,7 +29,8 @@ const REVEAL_STEPS = ['.home-why-item']
  *     needs the same file the <Image> is showing;
  *   • the files as supplied had a checkerboard PAINTED INTO them (they carried
  *     an alpha channel, but it was fully opaque). These are keyed copies; the
- *     originals in public/images/attachments/ cannot be used directly.
+ *     originals live in design-reference/ (git-ignored, outside public/) and
+ *     cannot be used directly.
  */
 export default function WhyChooseUs() {
     const t = useTranslations('home')

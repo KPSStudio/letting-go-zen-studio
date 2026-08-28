@@ -56,7 +56,7 @@ export function resolveEmailLocale(requestedLocale: EmailLocale): EmailLocale {
 // Founder details shown in the signature block.
 const FOUNDER_NAME = 'Joanna Witkowska'
 const FOUNDER_ROLE = 'Letting Go Zen Studio'
-const FOUNDER_PHOTO = `${SITE_URL}/images/Joanna-photo.png`
+const FOUNDER_PHOTO = `${SITE_URL}/images/joanna-portrait.png`
 const LOGO_URL = `${SITE_URL}/images/logo.png`
 
 // Brand colours for the LIGHT email theme. Plain hex — some clients drop rgba().
