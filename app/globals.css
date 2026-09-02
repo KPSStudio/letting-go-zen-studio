@@ -11539,3 +11539,58 @@ body {
                         rgba(18, 6, 19, 0.55) 100%);
     }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   PILLAR EMBLEMS + "DLACZEGO WARTO" TYPE SIZE
+
+   Two changes Joanna asked for together.
+
+   1. The Body / Mind / Soul cards now carry her painted emblems instead of
+      the line icons. They are lifted off white cards, so they are raster and
+      cannot inherit currentColor — the hover warms them with a filter rather
+      than a colour swap.
+
+   2. She compared the two homepage sections side by side: the pillar cards
+      read fine, "Dlaczego warto" was "mniejsza i nie widać". It was: 0.82rem
+      titles against 1.02rem, and 0.14em tracking against 0.26em. Both now
+      match the pillar cards, tracking included — the wider spacing is part
+      of why those titles read as more present, not just the size.
+   ════════════════════════════════════════════════════════════════ */
+.cud-card-icon {
+    /* Larger than the old line icons: these carry real detail — a brain, a
+       tree, wings — that disappears at 74px. */
+    width: clamp(104px, 9vw, 132px);
+    height: clamp(104px, 9vw, 132px);
+    display: block;
+}
+
+.cud-card-emblem {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transition: transform 0.45s ease, filter 0.45s ease;
+    filter: drop-shadow(0 0 18px rgba(210, 159, 57, 0.16));
+}
+
+.cud-card:hover .cud-card-emblem,
+.cud-card:focus-visible .cud-card-emblem {
+    transform: translateY(-3px) scale(1.04);
+    filter:
+            drop-shadow(0 0 26px rgba(239, 215, 129, 0.3))
+            brightness(1.08);
+}
+
+/* ── Type parity with the pillar cards ────────────────────────────── */
+.home-why-title {
+    font-size: clamp(1.02rem, 1.25vw, 1.22rem);
+    letter-spacing: 0.26em;
+    /* Trailing tracking is added after the last letter too; trimming it back
+       keeps the centred title optically centred. */
+    text-indent: 0.26em;
+    line-height: 1.35;
+}
+
+.home-why-text {
+    font-size: clamp(0.85rem, 0.95vw, 0.93rem);
+    line-height: 1.8;
+}

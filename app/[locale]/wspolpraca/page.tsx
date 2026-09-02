@@ -64,7 +64,7 @@ export default function WspolpracaPage() {
                     so the hero never shifts as it arrives. */}
                 <div className="wsp-hero-art" aria-hidden="true">
                     <Image
-                        src="/images/wspolpraca-lotus-light.webp"
+                        src="/images/wspolpraca-emblem.webp"
                         alt=""
                         width={1200}
                         height={1800}

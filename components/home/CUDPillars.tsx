@@ -1,16 +1,16 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
-import { BodyIcon, MindIcon, SoulIcon } from './PillarIcons'
 import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 // Module-level so the identities are stable across renders and the reveal
 // effect does not re-run. Order = icon, then heading, then description.
 const REVEAL_STEPS = ['.cud-card-icon', '.cud-card-title', '.cud-card-text']
-// Only the geometry inside the three pillar icons, never any other SVG.
-const DRAW_SELECTOR = '.cud-card-icon svg path, .cud-card-icon svg circle, .cud-card-icon svg rect'
+// The emblems are raster now, so there is no SVG geometry left to draw on.
+// The cards still fade and rise together; only the stroke-drawing step is gone.
 
 /**
  * "Czym się zajmujemy?" — the introduction, then the three Body / Mind / Soul
@@ -35,10 +35,7 @@ export default function CUDPillars() {
 
     // The entrance animation is scoped to this section only.
     const sectionRef = useRef<HTMLElement | null>(null)
-    useEntranceReveal(sectionRef, {
-        steps: REVEAL_STEPS,
-        drawSelector: DRAW_SELECTOR,
-    })
+    useEntranceReveal(sectionRef, { steps: REVEAL_STEPS })
 
     const pillars = [
         {
@@ -46,21 +43,21 @@ export default function CUDPillars() {
             name: t('bodyName'),
             text: t('bodyText'),
             href: `/${locale}${t('bodyHref')}`,
-            Icon: BodyIcon,
+            src: '/images/pillar-cialo.webp',
         },
         {
             key: 'mind',
             name: t('mindName'),
             text: t('mindText'),
             href: `/${locale}${t('mindHref')}`,
-            Icon: MindIcon,
+            src: '/images/pillar-umysl.webp',
         },
         {
             key: 'soul',
             name: t('soulName'),
             text: t('soulText'),
             href: `/${locale}${t('soulHref')}`,
-            Icon: SoulIcon,
+            src: '/images/pillar-dusza.webp',
         },
     ]
 
@@ -84,12 +81,23 @@ export default function CUDPillars() {
             </div>
 
             <div className="cud-grid">
-                {pillars.map(({ key, name, text, href, Icon }) => (
+                {pillars.map(({ key, name, text, href, src }) => (
                     <Link key={key} href={href} className="cud-card">
                         <span className="cud-card-glow" aria-hidden="true" />
 
+                        {/* alt="" — the card's own title names it, so the
+                            emblem would only repeat the heading. The printed
+                            word on Joanna's source card was cropped off for
+                            the same reason: this text has to translate. */}
                         <span className="cud-card-icon">
-                            <Icon />
+                            <Image
+                                src={src}
+                                alt=""
+                                width={360}
+                                height={360}
+                                sizes="(max-width: 600px) 104px, 132px"
+                                className="cud-card-emblem"
+                            />
                         </span>
 
                         <h3 className="cud-card-title">{name}</h3>
