@@ -4,6 +4,7 @@
 
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { useTranslations } from 'next-intl'
@@ -15,7 +16,6 @@ import MedicalDisclaimer from '@/components/common/MedicalDisclaimer'
 import { useDialogBehaviour } from '@/components/common/useDialogBehaviour'
 import TravelFeeNotice from '@/components/common/TravelFeeNotice'
 import { involvesHomeVisit } from '@/lib/serviceAvailability'
-import { BodyIcon } from '@/components/home/PillarIcons'
 import { useEntranceReveal, CATEGORY_ICON_DRAW } from '@/lib/useEntranceReveal'
 
 // The service grid reveals as ONE collection when it scrolls into view: each
@@ -143,7 +143,14 @@ export default function BodyClient({ products, locale }: Props) {
                     is decorative — the <h1> beside it already names the
                     category. */}
                 <span className="category-header-icon" aria-hidden="true">
-                    <BodyIcon />
+                    <Image
+                        src="/images/pillar-cialo.webp"
+                        alt=""
+                        width={360}
+                        height={360}
+                        sizes="(max-width: 600px) 104px, 132px"
+                        className="category-header-emblem"
+                    />
                 </span>
 
                 <h1 className="body-title">
