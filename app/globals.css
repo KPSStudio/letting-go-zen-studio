@@ -11615,3 +11615,101 @@ body {
        feels continuous with the card that led here. */
     filter: drop-shadow(0 0 20px rgba(210, 159, 57, 0.18));
 }
+
+/* ════════════════════════════════════════════════════════════════
+   MOTION PARITY
+
+   The benefits row floated and shimmered while the pillar cards and the
+   category headers — the same artwork — sat completely still. They now
+   share the float and the warm pool of light, staggered so the three
+   never rise together.
+   ════════════════════════════════════════════════════════════════ */
+.cud-card-icon,
+.category-header-icon {
+    position: relative;
+    animation: whyFloat 7.5s ease-in-out infinite alternate;
+}
+
+.cud-card-icon::before,
+.category-header-icon::before {
+    content: "";
+    position: absolute;
+    inset: -18%;
+    z-index: -1;
+    border-radius: 50%;
+    pointer-events: none;
+    background:
+            radial-gradient(circle at 50% 50%,
+                    rgba(239, 215, 129, 0.16) 0%,
+                    rgba(210, 159, 57, 0.09) 44%,
+                    transparent 72%);
+    animation: whyGlow 7.5s ease-in-out infinite alternate;
+}
+
+.cud-card:nth-child(2) .cud-card-icon,
+.cud-card:nth-child(2) .cud-card-icon::before { animation-delay: 1.3s; }
+.cud-card:nth-child(3) .cud-card-icon,
+.cud-card:nth-child(3) .cud-card-icon::before { animation-delay: 2.6s; }
+
+/* ── Buttons: a little lift on hover ──────────────────────────────
+   The outlined buttons changed colour on hover and nothing else, which on
+   a page with this much motion read as unresponsive. */
+.hero-button,
+.shop-cta-button,
+.alchemik-button {
+    transition:
+            transform 0.35s ease,
+            background 0.45s ease,
+            border-color 0.45s ease,
+            color 0.45s ease,
+            box-shadow 0.45s ease;
+}
+
+.hero-button:hover,
+.shop-cta-button:hover,
+.alchemik-button:hover {
+    transform: translateY(-2px);
+}
+
+/* ── The shop with only a couple of products ──────────────────────
+   `main` is flex-1 so the footer stays at the foot of the window; with two
+   products that left a large empty field below the grid. It cannot be
+   removed without floating the footer up the page on short pages, so the
+   space is made to read as deliberate instead: the section keeps generous
+   room beneath the grid and the ground darkens into the footer. */
+.body-page {
+    position: relative;
+}
+
+/* Targets .body-page rather than the shop alone, because the shop shares this
+   wrapper with Ciało / Umysł / Dusza. No extra padding is added — those pages
+   have plenty of content and would only be pushed apart — just the fade, which
+   makes a short page end deliberately instead of stopping. */
+.body-page::after {
+    content: "";
+    position: absolute;
+    /* FULL-BLEED, not left:0/right:0. .body-page is a centred 1100px column,
+       so anchoring to its own edges drew the fade only across the middle of
+       the screen and left two lighter margins — a visible rectangle behind
+       the content. 100vw centred on the column spans the viewport instead. */
+    left: 50%;
+    width: 100vw;
+    transform: translateX(-50%);
+    bottom: 0;
+    height: clamp(180px, 28vw, 360px);
+    z-index: -1;
+    pointer-events: none;
+    background: linear-gradient(180deg, transparent 0%, rgba(19, 6, 20, 0.6) 100%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cud-card-icon,
+    .category-header-icon,
+    .cud-card-icon::before,
+    .category-header-icon::before {
+        animation: none !important;
+    }
+    .hero-button:hover,
+    .shop-cta-button:hover,
+    .alchemik-button:hover { transform: none; }
+}

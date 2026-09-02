@@ -325,14 +325,14 @@
   "kontakt": {
     "label": "KONTAKT",
     "heroTitle": "Skontaktuj się",
-    "heroTitleGold": "z nami",
-    "heroSubtitle": "Chętnie odpowiemy na Twoje pytania. Napisz do nas lub zadzwoń.",
+    "heroTitleGold": "ze mną",
+    "heroSubtitle": "Chętnie odpowiem na Twoje pytania. Napisz do mnie lub zadzwoń.",
     "whatsappTitle": "WhatsApp / Telefon",
-    "whatsappText": "Napisz lub zadzwoń do Joanny bezpośrednio przez WhatsApp.",
+    "whatsappText": "Napisz lub zadzwoń do mnie bezpośrednio przez WhatsApp.",
     "emailTitle": "Email",
-    "emailText": "Wyślij nam wiadomość email — odpowiemy w ciągu 24 godzin.",
-    "successMessage": "Wiadomość wysłana! Joanna skontaktuje się z Tobą w ciągu 24 godzin.",
-    "errorMessage": "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie lub napisz do nas bezpośrednio na email.",
+    "emailText": "Wyślij mi wiadomość e-mail — odpowiem w ciągu 24 godzin.",
+    "successMessage": "Wiadomość wysłana! Odezwę się do Ciebie w ciągu 24 godzin.",
+    "errorMessage": "Wystąpił błąd podczas wysyłania wiadomości. Spróbuj ponownie lub napisz do mnie bezpośrednio na e-mail.",
     "formTitle": "Wyślij wiadomość",
     "nameLabel": "IMIĘ I NAZWISKO",
     "namePlaceholder": "Anna Kowalska",
@@ -346,7 +346,7 @@
     "messageLabel": "WIADOMOŚĆ",
     "messagePlaceholder": "Napisz swoją wiadomość...",
     "submitButton": "WYŚLIJ WIADOMOŚĆ",
-    "socialTitle": "Znajdź nas w mediach społecznościowych",
+    "socialTitle": "Znajdź mnie w mediach społecznościowych",
     "sendingButton": "Wysyłanie...",
     "subjects": {
       "biorezonans": "Biorezonans",
@@ -717,7 +717,7 @@
       "typedSignature": "Podpis wpisany"
     },
     "errors": {
-      "noBookingConfigured": "Ta usługa nie ma jeszcze skonfigurowanego kalendarza rezerwacji. Skontaktuj się z nami, aby umówić termin.",
+      "noBookingConfigured": "Ta usługa nie ma jeszcze skonfigurowanego kalendarza rezerwacji. Skontaktuj się ze mną, aby umówić termin.",
       "missingService": "Brakuje informacji o wybranej usłudze. Wróć do strony usług i wybierz rezerwację ponownie.",
       "incompleteForm": "Uzupełnij wszystkie pola i zaznacz wszystkie wymagane zgody.",
       "saveFailed": "Nie udało się zapisać zgody. Spróbuj ponownie.",
@@ -739,7 +739,7 @@
     "importantTextOne": "Nie udzielam porad medycznych ani nie zalecam zmian w przepisanym leczeniu lub przyjmowanych lekach. Wszelkie decyzje dotyczące zdrowia należy skonsultować z wykwalifikowanym specjalistą medycznym.",
     "importantTextTwo": "Dbam o dobro klienta zgodnie z Art. 13 RODO i Art. 14 RODO.",
     "bookingLabel": "REZERWACJA SESJI",
-    "bookingText": "Rezerwacje prowadzimy przez kalendarz online. Wybierz usługę na stronie Ciało, Umysł lub Dusza — po wypełnieniu formularza zgody otworzy się kalendarz z wolnymi terminami. Jeśli nie wiesz, którą sesję wybrać, napisz do mnie.",
+    "bookingText": "Rezerwacje prowadzę przez kalendarz online. Wybierz usługę na stronie Ciało, Umysł lub Dusza — po wypełnieniu formularza zgody otworzy się kalendarz z wolnymi terminami. Jeśli nie wiesz, którą sesję wybrać, napisz do mnie.",
     "bookingButton": "ZAREZERWUJ SESJĘ",
     "journey": {
       "heading": "Jak przebiega współpraca",
