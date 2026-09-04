@@ -5,7 +5,6 @@ import { useTranslations, useLocale } from 'next-intl'
 import { useCurrency } from '@/lib/CurrencyContext'
 import { SanitySklepProduct } from '@/sanity/lib/sanity'
 import { normalizeText } from '@/lib/normalizeText'
-import { ShopIcon } from '@/components/home/PillarIcons'
 import { useEntranceReveal, CATEGORY_ICON_DRAW } from '@/lib/useEntranceReveal'
 
 // Product cards reveal as one collection, each card a single unit. It runs
@@ -798,7 +797,14 @@ export default function SklepClient({ products }: Props) {
                     reads as part of the same family. Decorative: the <h1>
                     below already names the page. */}
                 <span className="category-header-icon" aria-hidden="true">
-                    <ShopIcon />
+                    <Image
+                                src="/images/icon-sklep.webp"
+                                alt=""
+                                width={320}
+                                height={320}
+                                sizes="(max-width: 600px) 72px, 92px"
+                                className="shop-emblem"
+                            />
                 </span>
 
                 <h1 className="body-title">

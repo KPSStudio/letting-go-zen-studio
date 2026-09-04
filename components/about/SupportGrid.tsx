@@ -15,40 +15,34 @@
 'use client'
 
 import { useRef } from 'react'
+import Image from 'next/image'
 import { useTranslations } from 'next-intl'
-import {
-    SessionIcon,
-    PreparationIcon,
-    MindIcon,
-    SpiralFigureIcon,
-    InfinityIcon,
-} from '@/components/home/PillarIcons'
 import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 type SupportItem = { title: string; text: string }
 
-// Session, leaf, lotus, spiral, energy flow — in the order the copy is written.
-// The first slot pairs with "Sesje terapeutyczne & NLP", so SessionIcon is the
-// literal match; it replaced a heart, which is no longer used anywhere.
-// The fourth was a four-point star until the client asked for something
-// holistic; like the heart, the star is now gone from the whole site.
-const ICONS = [SessionIcon, PreparationIcon, MindIcon, SpiralFigureIcon, InfinityIcon] as const
+// Joanna's own emblems, in the order the copy is written. She supplied them on
+// a labelled sheet, so each one is HER pairing rather than an interpretation:
+// brain to NLP, spiral head to hypnotherapy, seated figure to mindfulness,
+// atom to quantum physics, ouroboros to energy alchemy.
+const ICONS = [
+    '/images/icon-nlp.webp',
+    '/images/icon-hipnoterapia.webp',
+    '/images/icon-mindfulness.webp',
+    '/images/icon-fizyka.webp',
+    '/images/icon-alchemia.webp',
+] as const
 
 const REVEAL_STEPS = ['.support-item']
-const DRAW_SELECTOR =
-    '.support-icon svg path, .support-icon svg circle, .support-icon svg rect'
 
 export default function SupportGrid() {
     const t = useTranslations('aboutPage')
     const items = t.raw('supportItems') as SupportItem[]
 
     const sectionRef = useRef<HTMLElement | null>(null)
-    useEntranceReveal(sectionRef, {
-        steps: REVEAL_STEPS,
-        drawSelector: DRAW_SELECTOR,
-        stagger: 75,
-        shift: 10,
-    })
+    // No drawSelector any more: these are raster emblems, so there is no SVG
+    // geometry to draw on. The items still fade and rise together.
+    useEntranceReveal(sectionRef, { steps: REVEAL_STEPS, stagger: 75, shift: 10 })
 
     return (
         <section
@@ -62,13 +56,22 @@ export default function SupportGrid() {
 
             <ul className="support-grid">
                 {items.map((item, index) => {
-                    const Icon = ICONS[index] ?? ICONS[ICONS.length - 1]
+                    const src = ICONS[index] ?? ICONS[ICONS.length - 1]
 
                     return (
                         <li key={item.title} className="support-item">
-                            {/* Decorative: the title beside it carries the meaning. */}
+                            {/* Decorative: the title beside it carries the meaning.
+                                The printed word on Joanna's source sheet was
+                                cropped off — this text has to translate. */}
                             <span className="support-icon" aria-hidden="true">
-                                <Icon />
+                                <Image
+                                    src={src}
+                                    alt=""
+                                    width={320}
+                                    height={320}
+                                    sizes="(max-width: 600px) 96px, 120px"
+                                    className="support-emblem"
+                                />
                             </span>
 
                             <h3 className="support-title">{item.title}</h3>

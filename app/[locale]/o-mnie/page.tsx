@@ -19,7 +19,7 @@ import { getServicesByCategory, type SanityService } from '@/sanity/lib/sanity'
 import { getCalSlug } from '@/lib/calcom'
 import BotanicalOrnament from '@/components/common/BotanicalOrnament'
 import SupportGrid from '@/components/about/SupportGrid'
-import { IntegrationIcon, SoulIcon, QuillIcon } from '@/components/home/PillarIcons'
+import { QuillIcon } from '@/components/home/PillarIcons'
 import type { Metadata } from 'next'
 import { buildPageMetadata } from '@/lib/pageMetadata'
 
@@ -204,7 +204,14 @@ export default async function OMniePage({ params }: OMniePageProps) {
             <section className="about-story">
                 <article className="about-story-col">
                     <span className="about-story-icon" aria-hidden="true">
-                        <IntegrationIcon />
+                        <Image
+                            src="/images/icon-moja-droga.webp"
+                            alt=""
+                            width={320}
+                            height={320}
+                            sizes="(max-width: 600px) 84px, 104px"
+                            className="about-story-emblem"
+                        />
                     </span>
 
                     <h2 className="about-story-title">{t('journeyTitle')}</h2>
@@ -217,8 +224,20 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 </article>
 
                 <article className="about-story-col">
+                    {/* The brand mark itself, not a symbol standing in for it —
+                        this column IS the studio, and Joanna asked for the logo
+                        she uses on the homepage. logo-hero.png rather than
+                        logo.png: the original's padding is asymmetric and would
+                        sit the mark off-centre. */}
                     <span className="about-story-icon" aria-hidden="true">
-                        <SoulIcon />
+                        <Image
+                            src="/images/logo-hero.png"
+                            alt=""
+                            width={420}
+                            height={420}
+                            sizes="(max-width: 600px) 84px, 104px"
+                            className="about-story-emblem about-story-logo"
+                        />
                     </span>
 
                     <h2 className="about-story-title">{t('studioTitle')}</h2>

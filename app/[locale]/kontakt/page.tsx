@@ -3,10 +3,11 @@
 
 'use client'
 
+import Image from 'next/image'
 import type { ChangeEvent, FormEvent } from 'react'
 import { useRef, useState, type ComponentType } from 'react'
 import { useTranslations } from 'next-intl'
-import { MailIcon, PhoneIcon, HolisticIcon } from '@/components/home/PillarIcons'
+import { MailIcon, PhoneIcon } from '@/components/home/PillarIcons'
 import { FacebookIcon, InstagramIcon, TikTokIcon } from '@/components/common/SocialIcons'
 import BotanicalOrnament from '@/components/common/BotanicalOrnament'
 import { useEntranceReveal } from '@/lib/useEntranceReveal'
@@ -149,11 +150,18 @@ export default function KontaktPage() {
                     {t('label')}
                 </p>
 
-                {/* One restrained line-art glyph, decorative: the <h1> below
-                    already names the page. */}
-                <span className="contact-header-icon" aria-hidden="true">
-                    <HolisticIcon />
-                </span>
+                {/* Joanna's emblem for this page: two faces, joined hands and
+                    speech bubbles — conversation. Decorative, since the <h1>
+                    below already names the page. */}
+                <Image
+                    src="/images/kontakt-emblem.webp"
+                    alt=""
+                    width={520}
+                    height={520}
+                    sizes="(max-width: 600px) 150px, 230px"
+                    priority
+                    className="kontakt-emblem"
+                />
 
                 <h1 className="contact-title">
                     {t('heroTitle')} <span>{t('heroTitleGold')}</span>

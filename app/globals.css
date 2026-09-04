@@ -11713,3 +11713,159 @@ body {
     .shop-cta-button:hover,
     .alchemik-button:hover { transform: none; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   JOANNA'S LABELLED EMBLEMS, AND ONE TYPE SIZE FOR GOLD TITLES
+
+   She supplied a sheet with each emblem captioned, so the pairings here
+   are hers rather than an interpretation. The captions were cropped off:
+   those words are rendered as real translatable text.
+
+   She also compared the sections side by side — "te złote są mniejsze…
+   na tym zdjęciu gdzie znaczki są to już mikro czcionka… jak się da
+   używaj wszędzie takiej samej". The gold item titles were running at
+   0.76–0.84rem against the pillar cards' 1.02–1.22rem. Every one of them
+   now matches the pillar cards, tracking included.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Emblems ──────────────────────────────────────────────────────── */
+.support-icon {
+    /* Up from 56px: these carry real detail — a brain, an atom, an
+       ouroboros — that is unreadable at the old line-icon size. */
+    width: clamp(96px, 8vw, 120px);
+    height: clamp(96px, 8vw, 120px);
+    display: block;
+}
+
+.about-story-icon {
+    width: clamp(84px, 7vw, 104px);
+    height: clamp(84px, 7vw, 104px);
+    display: block;
+}
+
+.support-emblem,
+.about-story-emblem {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 18px rgba(210, 159, 57, 0.16));
+    transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.support-item:hover .support-emblem {
+    transform: translateY(-3px) scale(1.04);
+    filter: drop-shadow(0 0 26px rgba(239, 215, 129, 0.28)) brightness(1.08);
+}
+
+/* The brand mark sits a little smaller than the drawn emblems beside it:
+   it is a logo, not an illustration, and matching their optical weight
+   means matching the ink rather than the box. */
+.about-story-logo {
+    transform: scale(0.88);
+}
+
+.wsp-studio-emblem {
+    position: relative;
+    z-index: 1;
+    width: clamp(180px, 22vw, 240px);
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 28px rgba(210, 159, 57, 0.2));
+}
+
+/* ── One size for the gold item titles ────────────────────────────── */
+.support-title,
+.contact-card-title {
+    font-size: clamp(1.02rem, 1.25vw, 1.22rem);
+    line-height: 1.35;
+}
+
+/* The pillar cards carry 0.26em because their titles are one short word.
+   These are five columns of long ones — "Fizyka Kwantowa, Metafizyka i
+   Ezoteryka" — and at that tracking the requested size wrapped to four
+   cramped lines. The tracking gives the width back; the SIZE, which is what
+   Joanna actually asked about, is untouched. */
+.support-title {
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+}
+
+.contact-card-title {
+    letter-spacing: 0.26em;
+    text-indent: 0.26em;
+}
+
+.support-text {
+    font-size: clamp(0.85rem, 0.95vw, 0.93rem);
+    line-height: 1.8;
+}
+
+/* ── Contact page emblem ──────────────────────────────────────────── */
+.kontakt-emblem {
+    display: block;
+    width: clamp(150px, 17vw, 230px);
+    height: auto;
+    margin: 0 auto clamp(1rem, 2.5vw, 1.75rem);
+    object-fit: contain;
+    filter: drop-shadow(0 0 30px rgba(210, 159, 57, 0.22));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .support-item:hover .support-emblem { transform: none; }
+}
+
+/* Joanna's shop emblem replaces the cart glyph on the homepage CTA and the
+   /sklep header. Her version is a bag carrying the triskelion, so it does the
+   job the cart was drawn for — say "shop" without the religious read of the
+   old book-and-spark — while being brand artwork rather than a generic icon. */
+.shop-cta-icon,
+.shop-header-icon {
+    width: clamp(72px, 6vw, 92px);
+    height: clamp(72px, 6vw, 92px);
+}
+
+.shop-emblem {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 16px rgba(210, 159, 57, 0.18));
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ONE SIZE FOR ITEM TITLES, EVERYWHERE
+
+   Joanna: "te złote są mniejsze a są tytułem… na tym zdjęciu gdzie
+   znaczki są to już mikro czcionka… jak się da używaj wszędzie takiej
+   samej." The word that matters is TYTUŁEM — she is comparing titles,
+   not every piece of small gold text.
+
+   So this raises the remaining ITEM TITLES to the pillar-card size she
+   pointed at, and deliberately leaves the small-caps EYEBROWS alone —
+   "KONTAKT", "SKLEP ONLINE", "PRODUKTY CYFROWE" and friends run at
+   0.62–0.75rem because they are a label above a heading. Enlarging those
+   would flatten the hierarchy rather than fix it: two things the same
+   size, neither leading.
+   ════════════════════════════════════════════════════════════════ */
+.journey-title,
+.contact-section-title,
+.consent-section-title,
+.contact-social-name,
+.legal-section-title,
+.cart-item-name {
+    font-size: clamp(1.02rem, 1.25vw, 1.22rem);
+    line-height: 1.4;
+}
+
+/* The Współpraca stages sit five across, like the About support grid, so
+   they get the same eased tracking — the size is what was asked for; the
+   tracking is what lets it fit. */
+.journey-title {
+    letter-spacing: 0.12em;
+    text-indent: 0.12em;
+}
+
+/* A cart row is a line of running content, not a centred card, so no
+   tracking indent here — it would push the name off its left edge. */
+.cart-item-name {
+    letter-spacing: 0.04em;
+}

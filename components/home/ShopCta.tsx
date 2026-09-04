@@ -12,10 +12,10 @@
 
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useRef } from 'react'
 import { useLocale, useTranslations } from 'next-intl'
-import { ShopIcon } from './PillarIcons'
 import { useEntranceReveal } from '@/lib/useEntranceReveal'
 
 const REVEAL_STEPS = ['.shop-cta-inner']
@@ -37,7 +37,14 @@ export default function ShopCta() {
             <div className="shop-cta-inner">
                 {/* Decorative: the heading beside it names the shop. */}
                 <span className="shop-cta-icon" aria-hidden="true">
-                    <ShopIcon />
+                    <Image
+                                src="/images/icon-sklep.webp"
+                                alt=""
+                                width={320}
+                                height={320}
+                                sizes="(max-width: 600px) 72px, 92px"
+                                className="shop-emblem"
+                            />
                 </span>
 
                 <div className="shop-cta-body">

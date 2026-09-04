@@ -17,7 +17,6 @@ import Link from 'next/link'
 import { useLocale, useTranslations } from 'next-intl'
 import MedicalDisclaimer from '@/components/common/MedicalDisclaimer'
 import JourneyStages from '@/components/wspolpraca/JourneyStages'
-import BotanicalOrnament from '@/components/common/BotanicalOrnament'
 import BackControl from '@/components/common/BackControl'
 import { ShieldIcon, BookingIcon } from '@/components/home/PillarIcons'
 import type { Metadata } from 'next'
@@ -91,7 +90,14 @@ export default function WspolpracaPage() {
             <section className="wsp-studio" aria-labelledby="wsp-studio-title">
                 <div className="wsp-studio-art" aria-hidden="true">
                     <span className="wsp-studio-glow" />
-                    <BotanicalOrnament className="wsp-studio-ornament" />
+                    <Image
+                        src="/images/icon-moje-studio.webp"
+                        alt=""
+                        width={320}
+                        height={320}
+                        sizes="(max-width: 700px) 180px, 240px"
+                        className="wsp-studio-emblem"
+                    />
                 </div>
 
                 <div className="wsp-studio-copy">
