@@ -226,15 +226,21 @@ export default async function OMniePage({ params }: OMniePageProps) {
                 <article className="about-story-col">
                     {/* The brand mark itself, not a symbol standing in for it —
                         this column IS the studio, and Joanna asked for the logo
-                        she uses on the homepage. logo-hero.png rather than
-                        logo.png: the original's padding is asymmetric and would
-                        sit the mark off-centre. */}
+                        she uses on the homepage.
+
+                        logo-mark.webp, not logo-hero.png: the hero file is 55%
+                        transparent padding, so in this 104px slot it drew a
+                        51px mark next to a 100px compass — half the size of its
+                        neighbour. This is the same artwork trimmed to its own
+                        edges, so it fills the slot the way every other emblem
+                        does. The hero keeps logo-hero.png, whose sizing is
+                        deliberately calculated around that padding. */}
                     <span className="about-story-icon" aria-hidden="true">
                         <Image
-                            src="/images/logo-hero.png"
+                            src="/images/logo-mark.webp"
                             alt=""
-                            width={420}
-                            height={420}
+                            width={320}
+                            height={320}
                             sizes="(max-width: 600px) 84px, 104px"
                             className="about-story-emblem about-story-logo"
                         />

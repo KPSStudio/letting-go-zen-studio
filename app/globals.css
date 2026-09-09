@@ -11757,17 +11757,19 @@ body {
     filter: drop-shadow(0 0 26px rgba(239, 215, 129, 0.28)) brightness(1.08);
 }
 
-/* The brand mark sits a little smaller than the drawn emblems beside it:
-   it is a logo, not an illustration, and matching their optical weight
-   means matching the ink rather than the box. */
-.about-story-logo {
-    transform: scale(0.88);
-}
+/* No compensating scale any more. That 0.88 was fighting the file's own
+   transparent padding rather than the artwork, and the two compounded: the
+   mark ended up at 51px beside a 100px compass. The trimmed logo-mark.webp
+   fills the slot on its own, so the box alone decides the size and the
+   surrounding spacing is untouched. */
 
 .wsp-studio-emblem {
     position: relative;
     z-index: 1;
-    width: clamp(180px, 22vw, 240px);
+    /* "Może ciut zmniejsz" — down from clamp(180px, 22vw, 240px). It sits in a
+       column beside the copy, and at the old size it out-weighed the heading
+       it belongs to. */
+    width: clamp(150px, 18vw, 200px);
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 0 28px rgba(210, 159, 57, 0.2));
@@ -11868,4 +11870,13 @@ body {
    tracking indent here — it would push the name off its left edge. */
 .cart-item-name {
     letter-spacing: 0.04em;
+}
+
+/* The consent page's service glyph is now an emblem rather than line art, so
+   it needs the same contain-and-fill treatment as the others. */
+.consent-service-emblem {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 12px rgba(210, 159, 57, 0.18));
 }

@@ -15,6 +15,7 @@
 
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -39,7 +40,6 @@ import {
   LockIcon,
   SpiralFigureIcon,
   QuillIcon,
-  MindIcon,
 } from "@/components/home/PillarIcons";
 
 type ConsentState = {
@@ -138,6 +138,15 @@ export default function BookingConsentPage() {
 
   const locale = params.locale;
   const serviceId = searchParams.get("service") ?? "";
+
+  // The slug carries its category, so the emblem follows the service being
+  // booked rather than being fixed. Umysł is the fallback because that is what
+  // this glyph used to be unconditionally.
+  const serviceEmblem = serviceId.startsWith("cialo-")
+    ? "/images/pillar-cialo.webp"
+    : serviceId.startsWith("dusza-")
+      ? "/images/pillar-dusza.webp"
+      : "/images/pillar-umysl.webp";
   const serviceName =
     searchParams.get("serviceName") ?? t("fallbackServiceName");
 
@@ -394,10 +403,21 @@ export default function BookingConsentPage() {
 
         <p className="consent-intro">{t("intro")}</p>
 
-        {/* The chosen service, with a small lotus glyph beside it. */}
+        {/* The chosen service, with ITS OWN pillar emblem beside it. This was
+            a fixed lotus, which is the Umysł mark — so a Ciało or Dusza
+            booking showed the wrong symbol. Cal.com slugs are prefixed by
+            category ("cialo-…", "umysl-…", "dusza-…"), so the right emblem is
+            derived from the service already in the URL. */}
         <p className="consent-service">
           <span className="consent-service-icon" aria-hidden="true">
-            <MindIcon />
+            <Image
+              src={serviceEmblem}
+              alt=""
+              width={320}
+              height={320}
+              sizes="48px"
+              className="consent-service-emblem"
+            />
           </span>
 
           <span className="consent-service-copy">
