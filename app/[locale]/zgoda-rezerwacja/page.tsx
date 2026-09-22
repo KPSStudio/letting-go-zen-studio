@@ -491,7 +491,7 @@ export default function BookingConsentPage() {
               />
 
               <span className="consent-row-icon consent-row-art" aria-hidden="true">
-                <Image src="/images/consent-acceptance.png" alt="" width={80} height={80} sizes="(max-width: 600px) 48px, 80px" />
+                <Image src="/images/consent-acceptance.png" alt="" width={80} height={80} sizes="(max-width: 600px) 36px, 52px" />
               </span>
 
               <span className="consent-row-text">
@@ -529,7 +529,7 @@ export default function BookingConsentPage() {
               />
 
               <span className="consent-row-icon consent-row-art" aria-hidden="true">
-                <Image src="/images/consent-privacy.png" alt="" width={80} height={80} sizes="(max-width: 600px) 48px, 80px" />
+                <Image src="/images/consent-privacy.png" alt="" width={80} height={80} sizes="(max-width: 600px) 36px, 52px" />
               </span>
 
               <span className="consent-row-text">

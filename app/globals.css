@@ -9237,19 +9237,24 @@ body::after {
 
 .consent-row-icon.consent-row-art {
     width: 80px;
-    height: 80px;
+    height: 56px;
 }
 
 .consent-row-art img {
-    width: 100%;
-    height: 100%;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
 }
 
 @media (max-width: 600px) {
     .consent-row-icon.consent-row-art {
         width: 48px;
-        height: 48px;
+        height: 40px;
+    }
+
+    .consent-row-art img {
+        width: 36px;
+        height: 36px;
     }
 }
 
