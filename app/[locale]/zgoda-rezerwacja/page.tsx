@@ -32,8 +32,6 @@ import BackControl from "@/components/common/BackControl";
 import BotanicalOrnament from "@/components/common/BotanicalOrnament";
 import {
   ShieldIcon,
-  LockIcon,
-  SpiralFigureIcon,
   QuillIcon,
 } from "@/components/home/PillarIcons";
 
@@ -492,8 +490,8 @@ export default function BookingConsentPage() {
                 onChange={(event) => updateCombinedConsent(event.target.checked)}
               />
 
-              <span className="consent-row-icon" aria-hidden="true">
-                <SpiralFigureIcon />
+              <span className="consent-row-icon consent-row-art" aria-hidden="true">
+                <Image src="/images/consent-acceptance.png" alt="" width={80} height={80} sizes="(max-width: 600px) 48px, 80px" />
               </span>
 
               <span className="consent-row-text">
@@ -530,8 +528,8 @@ export default function BookingConsentPage() {
                 }
               />
 
-              <span className="consent-row-icon" aria-hidden="true">
-                <LockIcon />
+              <span className="consent-row-icon consent-row-art" aria-hidden="true">
+                <Image src="/images/consent-privacy.png" alt="" width={80} height={80} sizes="(max-width: 600px) 48px, 80px" />
               </span>
 
               <span className="consent-row-text">

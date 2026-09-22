@@ -1,0 +1,7 @@
+Generated using the built-in image_gen tool.
+
+1. consent-acceptance.png
+Use case: stylized-concept. Create one standalone decorative website illustration matching the gold engraved illustrations in the visible Signature-icons.png reference: antique warm gold, fine etched contours, restrained metallic highlights and Celtic spiral ornament. Square composition, centered, fills 85% of canvas, strong clear silhouette readable at 80px. Genuinely transparent background, no white backing, no text, no letters, no watermark. Subject: an elegant circular consent seal enclosing a clear sweeping checkmark, with a small quill crossing the lower right edge and subtle spiral engraving on the rim. Represents acceptance of declarations and terms.
+
+2. consent-privacy.png
+Use case: stylized-concept. Create one standalone decorative website illustration matching the gold engraved illustrations in the visible Signature-icons.png reference: antique warm gold, fine etched contours, restrained metallic highlights and Celtic spiral ornament. Square composition, centered, fills 85% of canvas, strong clear silhouette readable at 80px. Genuinely transparent background, no white backing, no text, no letters, no watermark. Subject: an elegant closed privacy padlock with a rounded shackle, a small central keyhole and restrained Celtic spiral engraving on its body. Represents protection of personal information. Match the consent seal's gold engraving style and visual weight.
