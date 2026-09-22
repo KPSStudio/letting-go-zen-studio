@@ -22,7 +22,6 @@ import { useTranslations } from "next-intl";
 import {
   useEffect,
   useState,
-  type ComponentType,
   type FormEvent,
 } from "react";
 import Cal, { getCalApi } from "@calcom/embed-react";
@@ -32,11 +31,7 @@ import { involvesHomeVisit } from "@/lib/serviceAvailability";
 import BackControl from "@/components/common/BackControl";
 import BotanicalOrnament from "@/components/common/BotanicalOrnament";
 import {
-  ConversationIcon,
-  PreparationIcon,
   ShieldIcon,
-  PersonIcon,
-  CycleIcon,
   LockIcon,
   SpiralFigureIcon,
   QuillIcon,
@@ -57,8 +52,8 @@ type ConsentKey = keyof ConsentState;
 type ConsentItem = {
   key: ConsentKey;
   translationKey: string;
-  /** Decorative glyph shown beside the declaration. */
-  Icon: ComponentType<{ className?: string }>;
+  /** Decorative glyph beside the declaration — Joanna's own artwork. */
+  emblem: string;
 };
 
 type BookingConsentResponse = {
@@ -84,27 +79,27 @@ const declarationItems: ConsentItem[] = [
   {
     key: "participatesVoluntarily",
     translationKey: "checks.participatesVoluntarily",
-    Icon: ConversationIcon,
+    emblem: "/images/consent-voluntary.webp",
   },
   {
     key: "understandsServiceNature",
     translationKey: "checks.understandsServiceNature",
-    Icon: PreparationIcon,
+    emblem: "/images/consent-understood.webp",
   },
   {
     key: "understandsNotMedicalTreatment",
     translationKey: "checks.understandsNotMedicalTreatment",
-    Icon: ShieldIcon,
+    emblem: "/images/consent-not-medical.webp",
   },
   {
     key: "truthfulHealthInformation",
     translationKey: "checks.truthfulHealthInformation",
-    Icon: PersonIcon,
+    emblem: "/images/consent-truthful.webp",
   },
   {
     key: "mayStopAnyTime",
     translationKey: "checks.mayStopAnyTime",
-    Icon: CycleIcon,
+    emblem: "/images/consent-may-stop.webp",
   },
 ];
 
@@ -457,8 +452,19 @@ export default function BookingConsentPage() {
             <ul className="consent-declarations">
               {declarationItems.map((item) => (
                 <li key={item.key} className="consent-declaration">
+                  {/* Joanna's own consent glyphs. They are photographs of
+                      line-art, so they cannot inherit currentColor the way the
+                      old components did — the checked state now brightens them
+                      with a filter instead. */}
                   <span className="consent-row-icon" aria-hidden="true">
-                    <item.Icon />
+                    <Image
+                      src={item.emblem}
+                      alt=""
+                      width={400}
+                      height={400}
+                      sizes="88px"
+                      className="consent-row-emblem"
+                    />
                   </span>
 
                   <span className="consent-declaration-text">

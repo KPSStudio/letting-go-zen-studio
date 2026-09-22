@@ -9216,8 +9216,14 @@ body::after {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 34px;
-    height: 34px;
+    /* A FIXED box, wider than tall. Joanna's consent glyphs are drawn at very
+       different proportions — the widest is 2.45:1, the shield is square — and
+       .consent-row's icon column is `auto`, so letting each image size the
+       column would step the text in and out down the list. A fixed box keeps
+       one text edge while `contain` gives each glyph its natural shape.
+       34px was right for the old line icons; this artwork needs the room. */
+    width: 88px;
+    height: 56px;
     flex: 0 0 auto;
     color: var(--gold-lt);
     opacity: 1;
@@ -11879,4 +11885,31 @@ body {
     height: 100%;
     object-fit: contain;
     filter: drop-shadow(0 0 12px rgba(210, 159, 57, 0.18));
+}
+
+
+/* The consent glyphs are raster line-art, so they cannot take currentColor the
+   way the icon components did. The row's checked state lifts them with a
+   filter instead, which keeps the same "this one is confirmed" feedback. */
+.consent-row-emblem {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    opacity: 0.82;
+    filter: drop-shadow(0 0 10px rgba(210, 159, 57, 0.14));
+    transition: opacity 0.3s ease, filter 0.3s ease;
+}
+
+.consent-row.is-checked .consent-row-emblem {
+    opacity: 1;
+    filter:
+            drop-shadow(0 0 16px rgba(239, 215, 129, 0.34))
+            brightness(1.12);
+}
+
+@media (max-width: 600px) {
+    .consent-row-icon {
+        width: 68px;
+        height: 44px;
+    }
 }
